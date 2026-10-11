@@ -1,0 +1,1460 @@
+{
+  "schema": 1,
+  "source": "数值与内容扩展方案.md v1.1",
+  "tool": "built-in image_gen",
+  "jobs": [
+    {
+      "id": "wood_club",
+      "label": "木棍",
+      "category": "武器与医疗",
+      "file": "wood_club.png",
+      "description": "A single plain thick wooden club, dark ochre angular shaft, no metal.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. A single plain thick wooden club, dark ochre angular shaft, no metal."
+    },
+    {
+      "id": "wood_spear",
+      "label": "木矛",
+      "category": "武器与医疗",
+      "file": "wood_spear.png",
+      "description": "A single long slender ochre wood spear with ONE gray triangular iron tip, diagonal display, no ornament.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. A single long slender ochre wood spear with ONE gray triangular iron tip, diagonal display, no ornament."
+    },
+    {
+      "id": "iron_axe",
+      "label": "铁斧",
+      "category": "武器与医疗",
+      "file": "iron_axe.png",
+      "description": "A single short ochre wood handle with ONE broad charcoal wedge axe head on one side.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. A single short ochre wood handle with ONE broad charcoal wedge axe head on one side."
+    },
+    {
+      "id": "simple_bow",
+      "label": "简易弓",
+      "category": "武器与医疗",
+      "file": "simple_bow.png",
+      "description": "A single simple angular ochre wooden bow, two bowed limbs and one fine dark string, no arrow attached.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. A single simple angular ochre wooden bow, two bowed limbs and one fine dark string, no arrow attached."
+    },
+    {
+      "id": "hand_crossbow",
+      "label": "手弩",
+      "category": "武器与医疗",
+      "file": "hand_crossbow.png",
+      "description": "One compact handheld crossbow, short ochre wood stock, charcoal horizontal bow, ONE string, clearly much smaller than mounted ballista.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One compact handheld crossbow, short ochre wood stock, charcoal horizontal bow, ONE string, clearly much smaller than mounted ballista."
+    },
+    {
+      "id": "shotgun",
+      "label": "散弹枪",
+      "category": "武器与医疗",
+      "file": "shotgun.png",
+      "description": "A single simple shotgun, ONE long charcoal barrel, short dark ochre wooden butt and stock, no ammo attached, no intricate mechanism.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. A single simple shotgun, ONE long charcoal barrel, short dark ochre wooden butt and stock, no ammo attached, no intricate mechanism."
+    },
+    {
+      "id": "arrow",
+      "label": "箭",
+      "category": "武器与医疗",
+      "file": "arrow.png",
+      "description": "One long slender wood arrow, ONE triangular iron tip and two flat small ochre tail fins, diagonal.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One long slender wood arrow, ONE triangular iron tip and two flat small ochre tail fins, diagonal."
+    },
+    {
+      "id": "bolt",
+      "label": "弩箭",
+      "category": "武器与医疗",
+      "file": "bolt.png",
+      "description": "One shorter thicker crossbow bolt, charcoal triangular point, ochre shaft, two gray tail fins, diagonal.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One shorter thicker crossbow bolt, charcoal triangular point, ochre shaft, two gray tail fins, diagonal."
+    },
+    {
+      "id": "shotgun_shell",
+      "label": "散弹",
+      "category": "武器与医疗",
+      "file": "shotgun_shell.png",
+      "description": "One shotgun shell, short dark muted red cylinder with dark gray circular metal base.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One shotgun shell, short dark muted red cylinder with dark gray circular metal base."
+    },
+    {
+      "id": "bandage",
+      "label": "绷带",
+      "category": "武器与医疗",
+      "file": "bandage.png",
+      "description": "One gray-white rolled cloth bandage with a short loose cloth tail, simple geometry.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One gray-white rolled cloth bandage with a short loose cloth tail, simple geometry."
+    },
+    {
+      "id": "medkit",
+      "label": "急救包",
+      "category": "武器与医疗",
+      "file": "medkit.png",
+      "description": "One small gray-white rectangular medical bag with ONE muted red plus symbol and dark handle, no letters.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small gray-white rectangular medical bag with ONE muted red plus symbol and dark handle, no letters."
+    },
+    {
+      "id": "molotov",
+      "label": "燃烧瓶",
+      "category": "武器与医疗",
+      "file": "molotov.png",
+      "description": "One dark gray glass bottle with a gray-white cloth wick protruding from its neck. UNLIT, no flame.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One dark gray glass bottle with a gray-white cloth wick protruding from its neck. UNLIT, no flame."
+    },
+    {
+      "id": "stone",
+      "label": "石头",
+      "category": "材料",
+      "file": "stone.png",
+      "description": "One grouping of TWO chunky dark gray polygon stones, irregular cuboid geometry.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One grouping of TWO chunky dark gray polygon stones, irregular cuboid geometry."
+    },
+    {
+      "id": "cloth",
+      "label": "布",
+      "category": "材料",
+      "file": "cloth.png",
+      "description": "One folded gray-white cloth square, only two large fold planes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One folded gray-white cloth square, only two large fold planes."
+    },
+    {
+      "id": "scrap",
+      "label": "废料",
+      "category": "材料",
+      "file": "scrap.png",
+      "description": "A small pile of THREE bent charcoal metal strips, clearly scrap plates, not rectangular iron ingots.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. A small pile of THREE bent charcoal metal strips, clearly scrap plates, not rectangular iron ingots."
+    },
+    {
+      "id": "parts",
+      "label": "零件",
+      "category": "材料",
+      "file": "parts.png",
+      "description": "One small simple charcoal gear with six large teeth and ONE short gray shaft beside it, as one pickup asset.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small simple charcoal gear with six large teeth and ONE short gray shaft beside it, as one pickup asset."
+    },
+    {
+      "id": "herb",
+      "label": "药草",
+      "category": "材料",
+      "file": "herb.png",
+      "description": "One small bunch of TWO muted gray-olive herb leaves with one short stem.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small bunch of TWO muted gray-olive herb leaves with one short stem."
+    },
+    {
+      "id": "alcohol",
+      "label": "酒精",
+      "category": "材料",
+      "file": "alcohol.png",
+      "description": "One small charcoal square bottle with gray-white stopper and ONE blank pale rectangular label, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small charcoal square bottle with gray-white stopper and ONE blank pale rectangular label, no text."
+    },
+    {
+      "id": "gunpowder",
+      "label": "火药",
+      "category": "材料",
+      "file": "gunpowder.png",
+      "description": "One squat charcoal cylindrical canister with closed lid and ONE simple ochre triangular mark, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One squat charcoal cylindrical canister with closed lid and ONE simple ochre triangular mark, no text."
+    },
+    {
+      "id": "raw_water",
+      "label": "原水",
+      "category": "材料",
+      "file": "raw_water.png",
+      "description": "One transparent-style polygon bottle with gray-ochre dirty water and ONE dark sediment block at bottom, gray stopper, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One transparent-style polygon bottle with gray-ochre dirty water and ONE dark sediment block at bottom, gray stopper, no text."
+    },
+    {
+      "id": "clean_water",
+      "label": "清水",
+      "category": "材料",
+      "file": "clean_water.png",
+      "description": "One same simple polygon water bottle, pale desaturated gray-blue clean liquid, pale stopper, NO sediment, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One same simple polygon water bottle, pale desaturated gray-blue clean liquid, pale stopper, NO sediment, no text."
+    },
+    {
+      "id": "potato",
+      "label": "土豆",
+      "category": "食材",
+      "file": "potato.png",
+      "description": "One plain ochre irregular potato represented by five large flat faces, no spots or skin detail.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One plain ochre irregular potato represented by five large flat faces, no spots or skin detail."
+    },
+    {
+      "id": "vegetable",
+      "label": "蔬菜",
+      "category": "食材",
+      "file": "vegetable.png",
+      "description": "One small vegetable made from TWO muted gray-olive broad folded leaves, pale short base.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small vegetable made from TWO muted gray-olive broad folded leaves, pale short base."
+    },
+    {
+      "id": "raw_meat",
+      "label": "生肉",
+      "category": "食材",
+      "file": "raw_meat.png",
+      "description": "One raw meat block, muted dark red with ONE pale angular fat edge, no bone and no gore.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One raw meat block, muted dark red with ONE pale angular fat edge, no bone and no gore."
+    },
+    {
+      "id": "grain",
+      "label": "谷物",
+      "category": "食材",
+      "file": "grain.png",
+      "description": "One little ochre cloth grain sack, open top with only THREE simple gray-yellow geometric grains visible, no detailed texture.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One little ochre cloth grain sack, open top with only THREE simple gray-yellow geometric grains visible, no detailed texture."
+    },
+    {
+      "id": "canned_food",
+      "label": "罐头",
+      "category": "食材",
+      "file": "canned_food.png",
+      "description": "One short charcoal cylindrical food can with ochre blank band and simple flat lid, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One short charcoal cylindrical food can with ochre blank band and simple flat lid, no text."
+    },
+    {
+      "id": "baked_potato",
+      "label": "烤土豆",
+      "category": "料理",
+      "file": "baked_potato.png",
+      "description": "One dark ochre baked potato cut with ONE simple pale yellow triangular split, no plate.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One dark ochre baked potato cut with ONE simple pale yellow triangular split, no plate."
+    },
+    {
+      "id": "roast_meat",
+      "label": "烤肉",
+      "category": "料理",
+      "file": "roast_meat.png",
+      "description": "One dark brown-gray rectangular roasted meat slab with two broad flat faces, no grill marks or plate.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One dark brown-gray rectangular roasted meat slab with two broad flat faces, no grill marks or plate."
+    },
+    {
+      "id": "vegetable_soup",
+      "label": "蔬菜汤",
+      "category": "料理",
+      "file": "vegetable_soup.png",
+      "description": "One low charcoal bowl of muted ochre soup with TWO gray-olive vegetable chunks, no spoon.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One low charcoal bowl of muted ochre soup with TWO gray-olive vegetable chunks, no spoon."
+    },
+    {
+      "id": "grain_porridge",
+      "label": "谷物粥",
+      "category": "料理",
+      "file": "grain_porridge.png",
+      "description": "One shallow charcoal bowl of pale gray-yellow thick porridge with THREE large grain shapes, no spoon.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One shallow charcoal bowl of pale gray-yellow thick porridge with THREE large grain shapes, no spoon."
+    },
+    {
+      "id": "meat_vegetable_stew",
+      "label": "肉菜炖锅",
+      "category": "料理",
+      "file": "meat_vegetable_stew.png",
+      "description": "One small dark gray two-handle cooking pot with ochre broth, ONE dark meat cube and ONE olive vegetable block.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small dark gray two-handle cooking pot with ochre broth, ONE dark meat cube and ONE olive vegetable block."
+    },
+    {
+      "id": "potato_meat_pie",
+      "label": "土豆肉派",
+      "category": "料理",
+      "file": "potato_meat_pie.png",
+      "description": "One thick triangular pie wedge, ochre crust and ONE dark gray-brown rectangular filling layer, no plate.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One thick triangular pie wedge, ochre crust and ONE dark gray-brown rectangular filling layer, no plate."
+    },
+    {
+      "id": "herb_tea",
+      "label": "药草茶",
+      "category": "料理",
+      "file": "herb_tea.png",
+      "description": "One charcoal mug with gray-yellow tea and ONE small muted olive leaf symbol on front, no letters or steam.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One charcoal mug with gray-yellow tea and ONE small muted olive leaf symbol on front, no letters or steam."
+    },
+    {
+      "id": "jerky",
+      "label": "肉干",
+      "category": "料理",
+      "file": "jerky.png",
+      "description": "One pickup grouping of exactly TWO flat dark brown meat strips, no tiny wrinkles.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One pickup grouping of exactly TWO flat dark brown meat strips, no tiny wrinkles."
+    },
+    {
+      "id": "wood_fence",
+      "label": "木围栏",
+      "category": "防御与家具",
+      "file": "wood_fence.png",
+      "description": "One one-meter modular low wooden fence, TWO ochre vertical posts and TWO horizontal rails, no iron rods.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One one-meter modular low wooden fence, TWO ochre vertical posts and TWO horizontal rails, no iron rods."
+    },
+    {
+      "id": "iron_fence",
+      "label": "铁围栏",
+      "category": "防御与家具",
+      "file": "iron_fence.png",
+      "description": "One one-meter modular reinforced iron fence, thick charcoal top and bottom frame and THREE thick vertical rods, two gray posts; heavier than initial fence.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One one-meter modular reinforced iron fence, thick charcoal top and bottom frame and THREE thick vertical rods, two gray posts; heavier than initial fence."
+    },
+    {
+      "id": "brick_wall",
+      "label": "砖墙",
+      "category": "防御与家具",
+      "file": "brick_wall.png",
+      "description": "One one-meter low gray block wall, only THREE large rectangular masonry blocks and flat shading, no small brick texture.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One one-meter low gray block wall, only THREE large rectangular masonry blocks and flat shading, no small brick texture."
+    },
+    {
+      "id": "spike_floor",
+      "label": "木刺地板",
+      "category": "防御与家具",
+      "file": "spike_floor.png",
+      "description": "One very low square ochre wooden floor tile carrying exactly FIVE short triangular wood spikes pointing upward. Low flat ground device, no tall wall.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One very low square ochre wooden floor tile carrying exactly FIVE short triangular wood spikes pointing upward. Low flat ground device, no tall wall."
+    },
+    {
+      "id": "workbench",
+      "label": "工作台",
+      "category": "防御与家具",
+      "file": "workbench.png",
+      "description": "One plain rectangular ochre work table with four legs, ONE charcoal block vise on top and ONE simple tool block, no many tools.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One plain rectangular ochre work table with four legs, ONE charcoal block vise on top and ONE simple tool block, no many tools."
+    },
+    {
+      "id": "storage_chest_closed",
+      "label": "储物箱·关闭",
+      "category": "防御与家具",
+      "file": "storage_chest_closed.png",
+      "description": "One closed ochre rectangular wooden chest with TWO charcoal straps, simple cuboid hinged lid and ONE square latch.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One closed ochre rectangular wooden chest with TWO charcoal straps, simple cuboid hinged lid and ONE square latch."
+    },
+    {
+      "id": "drying_rack_empty",
+      "label": "晾晒架·空",
+      "category": "防御与家具",
+      "file": "drying_rack_empty.png",
+      "description": "One empty ochre wooden drying frame, TWO upright posts, ONE top crossbar and triangular feet, no meat or ropes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One empty ochre wooden drying frame, TWO upright posts, ONE top crossbar and triangular feet, no meat or ropes."
+    },
+    {
+      "id": "grill",
+      "label": "篝火烤架",
+      "category": "防御与家具",
+      "file": "grill.png",
+      "description": "One unlit campfire cooking grill: TWO gray stone supports, charcoal rectangular grate of four rods, TWO ochre wood logs below. NO flames.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One unlit campfire cooking grill: TWO gray stone supports, charcoal rectangular grate of four rods, TWO ochre wood logs below. NO flames."
+    },
+    {
+      "id": "stove",
+      "label": "简易炉灶",
+      "category": "防御与家具",
+      "file": "stove.png",
+      "description": "One simple squat charcoal rectangular cooking stove on four short ochre legs, TWO large circular top burner rings, one plain front door, no cookware or flames.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One simple squat charcoal rectangular cooking stove on four short ochre legs, TWO large circular top burner rings, one plain front door, no cookware or flames."
+    },
+    {
+      "id": "water_purifier",
+      "label": "净水器",
+      "category": "防御与家具",
+      "file": "water_purifier.png",
+      "description": "One simple ochre wooden purifier stand holding gray-white cloth funnel above a charcoal receiving bucket, one gray raw-water reservoir above, few large shapes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One simple ochre wooden purifier stand holding gray-white cloth funnel above a charcoal receiving bucket, one gray raw-water reservoir above, few large shapes."
+    },
+    {
+      "id": "planter_empty",
+      "label": "菜箱·空",
+      "category": "防御与家具",
+      "file": "planter_empty.png",
+      "description": "One low square ochre wooden raised planter, plain gray-brown soil surface and TWO stone feet, no plants.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One low square ochre wooden raised planter, plain gray-brown soil surface and TWO stone feet, no plants."
+    },
+    {
+      "id": "serrated_trap_open",
+      "label": "锯齿捕兽夹·张开",
+      "category": "防御与家具",
+      "file": "serrated_trap_open.png",
+      "description": "One upgraded open bear trap on a smooth solid ROUND charcoal disk base. TWO thick semicircular metal jaws lying flat open, each with FIVE large triangular teeth, no chains, no extra ring. Simple geometry, larger teeth than basic trap.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One upgraded open bear trap on a smooth solid ROUND charcoal disk base. TWO thick semicircular metal jaws lying flat open, each with FIVE large triangular teeth, no chains, no extra ring. Simple geometry, larger teeth than basic trap."
+    },
+    {
+      "id": "ballista_strong",
+      "label": "加强巨弩",
+      "category": "防御与家具",
+      "file": "ballista_strong.png",
+      "description": "One mounted wooden ballista, ochre angular base and thick diagonal braces, ONE charcoal bow with gray reinforcement sleeves, ONE bolt track, no ammo crates. More reinforced than basic ballista but not multi-barrel.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One mounted wooden ballista, ochre angular base and thick diagonal braces, ONE charcoal bow with gray reinforcement sleeves, ONE bolt track, no ammo crates. More reinforced than basic ballista but not multi-barrel."
+    },
+    {
+      "id": "ballista_repeating",
+      "label": "连射巨弩",
+      "category": "防御与家具",
+      "file": "ballista_repeating.png",
+      "description": "One mounted ochre reinforced ballista with ONE horizontal charcoal bow and ONE bolt track. Add ONE compact rectangular charcoal bolt magazine above the rear track. SINGLE barrel and bow, not multiple ballistas.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One mounted ochre reinforced ballista with ONE horizontal charcoal bow and ONE bolt track. Add ONE compact rectangular charcoal bolt magazine above the rear track. SINGLE barrel and bow, not multiple ballistas."
+    },
+    {
+      "id": "stone_pile",
+      "label": "路边石堆",
+      "category": "探索地点",
+      "file": "stone_pile.png",
+      "description": "One small roadside pile of exactly THREE chunky charcoal polygon rocks, no ground patch.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small roadside pile of exactly THREE chunky charcoal polygon rocks, no ground patch."
+    },
+    {
+      "id": "water_point",
+      "label": "公共水点",
+      "category": "探索地点",
+      "file": "water_point.png",
+      "description": "One fixed charcoal hand-operated water pump with ONE lever handle standing beside ONE small rectangular gray trough, no running water.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One fixed charcoal hand-operated water pump with ONE lever handle standing beside ONE small rectangular gray trough, no running water."
+    },
+    {
+      "id": "herb_bed_full",
+      "label": "花圃·有草",
+      "category": "探索地点",
+      "file": "herb_bed_full.png",
+      "description": "One small low polygon gray-brown soil bed containing TWO clumps of muted gray-olive herbs, no flowers.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small low polygon gray-brown soil bed containing TWO clumps of muted gray-olive herbs, no flowers."
+    },
+    {
+      "id": "freezer_closed",
+      "label": "商店冷柜·关闭",
+      "category": "探索地点",
+      "file": "freezer_closed.png",
+      "description": "One small closed charcoal-gray commercial chest freezer, plain pale gray lid, TWO short feet, ONE simple ochre blank strip on front, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small closed charcoal-gray commercial chest freezer, plain pale gray lid, TWO short feet, ONE simple ochre blank strip on front, no text."
+    },
+    {
+      "id": "rubble_wood",
+      "label": "木制废墟",
+      "category": "状态与废墟",
+      "file": "rubble_wood.png",
+      "description": "One small flat ground grouping of THREE broken ochre wood beams, no intact furniture.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small flat ground grouping of THREE broken ochre wood beams, no intact furniture."
+    },
+    {
+      "id": "rubble_metal",
+      "label": "铁制废墟",
+      "category": "状态与废墟",
+      "file": "rubble_metal.png",
+      "description": "One small flat ground grouping of THREE bent charcoal metal blocks, no intact device.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small flat ground grouping of THREE bent charcoal metal blocks, no intact device."
+    },
+    {
+      "id": "rubble_stone",
+      "label": "石制废墟",
+      "category": "状态与废墟",
+      "file": "rubble_stone.png",
+      "description": "One small flat ground grouping of THREE gray broken masonry blocks.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small flat ground grouping of THREE gray broken masonry blocks."
+    },
+    {
+      "id": "damage_wood",
+      "label": "木损伤提示",
+      "category": "状态与废墟",
+      "file": "damage_wood.png",
+      "description": "Transparent game overlay, THREE short broken ochre angular beam fragments arranged on an invisible central object, do not draw intact object or background.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Transparent game overlay, THREE short broken ochre angular beam fragments arranged on an invisible central object, do not draw intact object or background."
+    },
+    {
+      "id": "damage_metal",
+      "label": "铁损伤提示",
+      "category": "状态与废墟",
+      "file": "damage_metal.png",
+      "description": "Transparent game overlay, TWO bent gray bracket fragments and ONE little separated square charcoal piece, no intact object.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Transparent game overlay, TWO bent gray bracket fragments and ONE little separated square charcoal piece, no intact object."
+    },
+    {
+      "id": "damage_stone",
+      "label": "石损伤提示",
+      "category": "状态与废墟",
+      "file": "damage_stone.png",
+      "description": "Transparent game overlay, THREE short dark gray angular crack lines concentrated at center, very minimal, no wall or background.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Transparent game overlay, THREE short dark gray angular crack lines concentrated at center, very minimal, no wall or background."
+    },
+    {
+      "id": "hunger_bar",
+      "label": "饱食条",
+      "category": "界面",
+      "file": "hunger_bar.png",
+      "description": "2D FRONT VIEW interface asset. ONE long horizontal continuous solid dark ochre fill inside charcoal rectangular outline. Aspect ratio 6:1. No segmented cells, no numbers or icon. Transparent outside.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D FRONT VIEW interface asset. ONE long horizontal continuous solid dark ochre fill inside charcoal rectangular outline. Aspect ratio 6:1. No segmented cells, no numbers or icon. Transparent outside."
+    },
+    {
+      "id": "progress_bar",
+      "label": "操作进度条",
+      "category": "界面",
+      "file": "progress_bar.png",
+      "description": "2D FRONT VIEW interface asset. ONE long horizontal continuous gray-yellow progress bar in charcoal rectangular frame. Aspect ratio 6:1, no cells, no text. Transparent outside.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D FRONT VIEW interface asset. ONE long horizontal continuous gray-yellow progress bar in charcoal rectangular frame. Aspect ratio 6:1, no cells, no text. Transparent outside."
+    },
+    {
+      "id": "day_icon",
+      "label": "白昼",
+      "category": "界面",
+      "file": "day_icon.png",
+      "description": "2D flat UI icon, ONE muted ochre sun disk with FOUR short geometric rays, simple.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE muted ochre sun disk with FOUR short geometric rays, simple."
+    },
+    {
+      "id": "night_icon",
+      "label": "夜晚",
+      "category": "界面",
+      "file": "night_icon.png",
+      "description": "2D flat UI icon, ONE pale charcoal-gray crescent moon, simple.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE pale charcoal-gray crescent moon, simple."
+    },
+    {
+      "id": "wave_arrow",
+      "label": "尸潮方位箭头",
+      "category": "界面",
+      "file": "wave_arrow.png",
+      "description": "2D flat UI icon, ONE broad ochre triangular arrow pointing UP, charcoal outline. No number. Can rotate in game.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE broad ochre triangular arrow pointing UP, charcoal outline. No number. Can rotate in game."
+    },
+    {
+      "id": "backpack_upgrade",
+      "label": "背包扩容",
+      "category": "界面",
+      "file": "backpack_upgrade.png",
+      "description": "2D flat UI icon, ONE charcoal rectangular backpack with ONE ochre plus symbol, simple straps.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE charcoal rectangular backpack with ONE ochre plus symbol, simple straps."
+    },
+    {
+      "id": "trade_icon",
+      "label": "交易",
+      "category": "界面",
+      "file": "trade_icon.png",
+      "description": "2D flat UI icon, TWO opposing ochre horizontal arrows, no coins or text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, TWO opposing ochre horizontal arrows, no coins or text."
+    },
+    {
+      "id": "helper_rest",
+      "label": "助手休息",
+      "category": "界面",
+      "file": "helper_rest.png",
+      "description": "2D flat UI icon, ONE charcoal chair with ONE small ochre crescent above it, no character and no letters.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE charcoal chair with ONE small ochre crescent above it, no character and no letters."
+    },
+    {
+      "id": "repair_icon",
+      "label": "维修",
+      "category": "界面",
+      "file": "repair_icon.png",
+      "description": "2D flat UI icon, ONE ochre simple hammer over ONE charcoal square, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE ochre simple hammer over ONE charcoal square, no text."
+    },
+    {
+      "id": "build_icon",
+      "label": "建造",
+      "category": "界面",
+      "file": "build_icon.png",
+      "description": "2D flat UI icon, ONE charcoal house outline and ONE ochre plus symbol, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE charcoal house outline and ONE ochre plus symbol, no text."
+    },
+    {
+      "id": "search_icon",
+      "label": "搜索",
+      "category": "界面",
+      "file": "search_icon.png",
+      "description": "2D flat UI icon, ONE ochre magnifying glass, plain circular rim and short handle.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE ochre magnifying glass, plain circular rim and short handle."
+    },
+    {
+      "id": "recipe_lock",
+      "label": "配方锁定",
+      "category": "界面",
+      "file": "recipe_lock.png",
+      "description": "2D flat UI icon, ONE charcoal padlock with ONE ochre keyhole, no text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE charcoal padlock with ONE ochre keyhole, no text."
+    },
+    {
+      "id": "buff_health_cap",
+      "label": "血量上限增益",
+      "category": "界面",
+      "file": "buff_health_cap.png",
+      "description": "2D flat UI icon, ONE muted red heart with ONE small pale plus symbol, simple geometric shape.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE muted red heart with ONE small pale plus symbol, simple geometric shape."
+    },
+    {
+      "id": "buff_stamina_cap",
+      "label": "体力上限增益",
+      "category": "界面",
+      "file": "buff_stamina_cap.png",
+      "description": "2D flat UI icon, ONE muted green lightning bolt with ONE small pale plus symbol.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE muted green lightning bolt with ONE small pale plus symbol."
+    },
+    {
+      "id": "buff_melee",
+      "label": "近战增强",
+      "category": "界面",
+      "file": "buff_melee.png",
+      "description": "2D flat UI icon, ONE ochre fist polygon and ONE small pale upward arrow.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE ochre fist polygon and ONE small pale upward arrow."
+    },
+    {
+      "id": "buff_recovery",
+      "label": "体力恢复",
+      "category": "界面",
+      "file": "buff_recovery.png",
+      "description": "2D flat UI icon, ONE muted green circular arrow around ONE small charcoal lightning bolt.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE muted green circular arrow around ONE small charcoal lightning bolt."
+    },
+    {
+      "id": "buff_armor",
+      "label": "减伤",
+      "category": "界面",
+      "file": "buff_armor.png",
+      "description": "2D flat UI icon, ONE charcoal shield with ochre central stripe, no helmet.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE charcoal shield with ochre central stripe, no helmet."
+    },
+    {
+      "id": "buff_run",
+      "label": "奔跑节省体力",
+      "category": "界面",
+      "file": "buff_run.png",
+      "description": "2D flat UI icon, ONE simple ochre boot with ONE muted green small downward arrow.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE simple ochre boot with ONE muted green small downward arrow."
+    },
+    {
+      "id": "acid_projectile",
+      "label": "酸液弹",
+      "category": "效果",
+      "file": "acid_projectile.png",
+      "description": "One small desaturated olive-green polygon sphere projectile, only THREE flat faces, no glow, no trail.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small desaturated olive-green polygon sphere projectile, only THREE flat faces, no glow, no trail."
+    },
+    {
+      "id": "acid_pool",
+      "label": "酸液区",
+      "category": "效果",
+      "file": "acid_pool.png",
+      "description": "One FLAT ground decal, irregular desaturated dark olive-green polygon puddle with a slightly lighter olive rim defining boundary, no bubbles or particles.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One FLAT ground decal, irregular desaturated dark olive-green polygon puddle with a slightly lighter olive rim defining boundary, no bubbles or particles."
+    },
+    {
+      "id": "fire_pool",
+      "label": "燃烧区",
+      "category": "效果",
+      "file": "fire_pool.png",
+      "description": "One FLAT ground danger decal, irregular dark ochre-orange patch with FOUR low triangular orange flame peaks, charcoal boundary, no smoke or sparks.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One FLAT ground danger decal, irregular dark ochre-orange patch with FOUR low triangular orange flame peaks, charcoal boundary, no smoke or sparks."
+    },
+    {
+      "id": "stove_fire",
+      "label": "炉火",
+      "category": "效果",
+      "file": "stove_fire.png",
+      "description": "One small compact vertical flame layer made from THREE dark orange-ochre triangles, no logs or ground patch.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small compact vertical flame layer made from THREE dark orange-ochre triangles, no logs or ground patch."
+    },
+    {
+      "id": "scream_ring",
+      "label": "尖啸环",
+      "category": "效果",
+      "file": "scream_ring.png",
+      "description": "One flat ground ring, thin pale gray-ochre elliptical circle seen at fixed elevated camera, completely transparent center, no monster, no glow.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One flat ground ring, thin pale gray-ochre elliptical circle seen at fixed elevated camera, completely transparent center, no monster, no glow."
+    },
+    {
+      "id": "root_marker",
+      "label": "定身标记",
+      "category": "效果",
+      "file": "root_marker.png",
+      "description": "2D flat UI icon, ONE closed charcoal clamp jaw symbol on smooth small round base, no monster, no chains.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE closed charcoal clamp jaw symbol on smooth small round base, no monster, no chains."
+    },
+    {
+      "id": "speed_buff",
+      "label": "移速增益",
+      "category": "效果",
+      "file": "speed_buff.png",
+      "description": "2D flat UI icon, TWO small ochre forward chevrons pointing right, no trail or text.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, TWO small ochre forward chevrons pointing right, no trail or text."
+    },
+    {
+      "id": "melee_arc",
+      "label": "挥击弧",
+      "category": "效果",
+      "file": "melee_arc.png",
+      "description": "One short broad crescent slash arc, muted pale ochre with charcoal thin edge, flat game effect, no weapon or glow.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One short broad crescent slash arc, muted pale ochre with charcoal thin edge, flat game effect, no weapon or glow."
+    },
+    {
+      "id": "thrust_line",
+      "label": "突刺",
+      "category": "效果",
+      "file": "thrust_line.png",
+      "description": "One straight short pale ochre tapered line with pointed tip, flat game effect, no weapon.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One straight short pale ochre tapered line with pointed tip, flat game effect, no weapon."
+    },
+    {
+      "id": "shot_pellet",
+      "label": "散弹丸",
+      "category": "效果",
+      "file": "shot_pellet.png",
+      "description": "One tiny muted dark ochre octagonal projectile dot, no shadow or trail.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One tiny muted dark ochre octagonal projectile dot, no shadow or trail."
+    },
+    {
+      "id": "hurt_border",
+      "label": "受伤红框",
+      "category": "效果",
+      "file": "hurt_border.png",
+      "description": "2D UI screen overlay, widescreen 16:9. Thin muted dark RED border along all FOUR outer edges. Entire central area fully transparent. No text, no vignette gradient.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D UI screen overlay, widescreen 16:9. Thin muted dark RED border along all FOUR outer edges. Entire central area fully transparent. No text, no vignette gradient."
+    },
+    {
+      "id": "zombie_runner_south",
+      "label": "疾跑者·南",
+      "category": "敌人",
+      "file": "zombie_runner_south.png",
+      "description": "ONE zombie character, very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE zombie character, very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/zombie_south.png"
+      ],
+      "enemyType": "runner",
+      "direction": "south",
+      "state": "run"
+    },
+    {
+      "id": "zombie_runner_east",
+      "label": "疾跑者·东",
+      "category": "敌人",
+      "file": "zombie_runner_east.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_runner_south"
+      ],
+      "enemyType": "runner",
+      "direction": "east",
+      "state": "run"
+    },
+    {
+      "id": "zombie_runner_west",
+      "label": "疾跑者·西",
+      "category": "敌人",
+      "file": "zombie_runner_west.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_runner_south"
+      ],
+      "enemyType": "runner",
+      "direction": "west",
+      "state": "run"
+    },
+    {
+      "id": "zombie_runner_north",
+      "label": "疾跑者·北",
+      "category": "敌人",
+      "file": "zombie_runner_north.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve very slim long limbs, narrow shoulders, forward-leaning torso, short gray-ochre ragged shirt, charcoal pants, olive-gray skin. Pose is mid-run with bent elbows and a clear split stride. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_runner_south"
+      ],
+      "enemyType": "runner",
+      "direction": "north",
+      "state": "run"
+    },
+    {
+      "id": "zombie_brute_south",
+      "label": "厚皮者·南",
+      "category": "敌人",
+      "file": "zombie_brute_south.png",
+      "description": "ONE zombie character, very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE zombie character, very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/zombie_south.png"
+      ],
+      "enemyType": "brute",
+      "direction": "south",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_brute_east",
+      "label": "厚皮者·东",
+      "category": "敌人",
+      "file": "zombie_brute_east.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_brute_south"
+      ],
+      "enemyType": "brute",
+      "direction": "east",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_brute_west",
+      "label": "厚皮者·西",
+      "category": "敌人",
+      "file": "zombie_brute_west.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_brute_south"
+      ],
+      "enemyType": "brute",
+      "direction": "west",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_brute_north",
+      "label": "厚皮者·北",
+      "category": "敌人",
+      "file": "zombie_brute_north.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_brute_south"
+      ],
+      "enemyType": "brute",
+      "direction": "north",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_brute_south_windup",
+      "label": "厚皮者·南前摇",
+      "category": "敌人",
+      "file": "zombie_brute_south_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_brute_south"
+      ],
+      "enemyType": "brute",
+      "direction": "south",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_brute_east_windup",
+      "label": "厚皮者·东前摇",
+      "category": "敌人",
+      "file": "zombie_brute_east_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_brute_east"
+      ],
+      "enemyType": "brute",
+      "direction": "east",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_brute_west_windup",
+      "label": "厚皮者·西前摇",
+      "category": "敌人",
+      "file": "zombie_brute_west_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_brute_west"
+      ],
+      "enemyType": "brute",
+      "direction": "west",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_brute_north_windup",
+      "label": "厚皮者·北前摇",
+      "category": "敌人",
+      "file": "zombie_brute_north_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_brute_north"
+      ],
+      "enemyType": "brute",
+      "direction": "north",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_spitter_south",
+      "label": "酸液者·南",
+      "category": "敌人",
+      "file": "zombie_spitter_south.png",
+      "description": "ONE zombie character, hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE zombie character, hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/zombie_south.png"
+      ],
+      "enemyType": "spitter",
+      "direction": "south",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_spitter_east",
+      "label": "酸液者·东",
+      "category": "敌人",
+      "file": "zombie_spitter_east.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_spitter_south"
+      ],
+      "enemyType": "spitter",
+      "direction": "east",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_spitter_west",
+      "label": "酸液者·西",
+      "category": "敌人",
+      "file": "zombie_spitter_west.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_spitter_south"
+      ],
+      "enemyType": "spitter",
+      "direction": "west",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_spitter_north",
+      "label": "酸液者·北",
+      "category": "敌人",
+      "file": "zombie_spitter_north.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_spitter_south"
+      ],
+      "enemyType": "spitter",
+      "direction": "north",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_spitter_south_windup",
+      "label": "酸液者·南前摇",
+      "category": "敌人",
+      "file": "zombie_spitter_south_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_spitter_south"
+      ],
+      "enemyType": "spitter",
+      "direction": "south",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_spitter_east_windup",
+      "label": "酸液者·东前摇",
+      "category": "敌人",
+      "file": "zombie_spitter_east_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_spitter_east"
+      ],
+      "enemyType": "spitter",
+      "direction": "east",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_spitter_west_windup",
+      "label": "酸液者·西前摇",
+      "category": "敌人",
+      "file": "zombie_spitter_west_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_spitter_west"
+      ],
+      "enemyType": "spitter",
+      "direction": "west",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_spitter_north_windup",
+      "label": "酸液者·北前摇",
+      "category": "敌人",
+      "file": "zombie_spitter_north_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_spitter_north"
+      ],
+      "enemyType": "spitter",
+      "direction": "north",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_demolisher_south",
+      "label": "拆墙者·南",
+      "category": "敌人",
+      "file": "zombie_demolisher_south.png",
+      "description": "ONE zombie character, oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE zombie character, oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/zombie_south.png"
+      ],
+      "enemyType": "demolisher",
+      "direction": "south",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_demolisher_east",
+      "label": "拆墙者·东",
+      "category": "敌人",
+      "file": "zombie_demolisher_east.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_demolisher_south"
+      ],
+      "enemyType": "demolisher",
+      "direction": "east",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_demolisher_west",
+      "label": "拆墙者·西",
+      "category": "敌人",
+      "file": "zombie_demolisher_west.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_demolisher_south"
+      ],
+      "enemyType": "demolisher",
+      "direction": "west",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_demolisher_north",
+      "label": "拆墙者·北",
+      "category": "敌人",
+      "file": "zombie_demolisher_north.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_demolisher_south"
+      ],
+      "enemyType": "demolisher",
+      "direction": "north",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_demolisher_south_windup",
+      "label": "拆墙者·南前摇",
+      "category": "敌人",
+      "file": "zombie_demolisher_south_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_demolisher_south"
+      ],
+      "enemyType": "demolisher",
+      "direction": "south",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_demolisher_east_windup",
+      "label": "拆墙者·东前摇",
+      "category": "敌人",
+      "file": "zombie_demolisher_east_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_demolisher_east"
+      ],
+      "enemyType": "demolisher",
+      "direction": "east",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_demolisher_west_windup",
+      "label": "拆墙者·西前摇",
+      "category": "敌人",
+      "file": "zombie_demolisher_west_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_demolisher_west"
+      ],
+      "enemyType": "demolisher",
+      "direction": "west",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_demolisher_north_windup",
+      "label": "拆墙者·北前摇",
+      "category": "敌人",
+      "file": "zombie_demolisher_north_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_demolisher_north"
+      ],
+      "enemyType": "demolisher",
+      "direction": "north",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_screamer_south",
+      "label": "尖啸者·南",
+      "category": "敌人",
+      "file": "zombie_screamer_south.png",
+      "description": "ONE zombie character, thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE zombie character, thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/zombie_south.png"
+      ],
+      "enemyType": "screamer",
+      "direction": "south",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_screamer_east",
+      "label": "尖啸者·东",
+      "category": "敌人",
+      "file": "zombie_screamer_east.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_screamer_south"
+      ],
+      "enemyType": "screamer",
+      "direction": "east",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_screamer_west",
+      "label": "尖啸者·西",
+      "category": "敌人",
+      "file": "zombie_screamer_west.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_screamer_south"
+      ],
+      "enemyType": "screamer",
+      "direction": "west",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_screamer_north",
+      "label": "尖啸者·北",
+      "category": "敌人",
+      "file": "zombie_screamer_north.png",
+      "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+      "deps": [
+        "zombie_screamer_south"
+      ],
+      "enemyType": "screamer",
+      "direction": "north",
+      "state": "idle"
+    },
+    {
+      "id": "zombie_screamer_south_windup",
+      "label": "尖啸者·南前摇",
+      "category": "敌人",
+      "file": "zombie_screamer_south_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_screamer_south"
+      ],
+      "enemyType": "screamer",
+      "direction": "south",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_screamer_east_windup",
+      "label": "尖啸者·东前摇",
+      "category": "敌人",
+      "file": "zombie_screamer_east_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_screamer_east"
+      ],
+      "enemyType": "screamer",
+      "direction": "east",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_screamer_west_windup",
+      "label": "尖啸者·西前摇",
+      "category": "敌人",
+      "file": "zombie_screamer_west_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_screamer_west"
+      ],
+      "enemyType": "screamer",
+      "direction": "west",
+      "state": "windup"
+    },
+    {
+      "id": "zombie_screamer_north_windup",
+      "label": "尖啸者·北前摇",
+      "category": "敌人",
+      "file": "zombie_screamer_north_windup.png",
+      "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+      "deps": [
+        "zombie_screamer_north"
+      ],
+      "enemyType": "screamer",
+      "direction": "north",
+      "state": "windup"
+    },
+    {
+      "id": "storage_chest_open",
+      "label": "储物箱·打开",
+      "category": "防御与家具",
+      "file": "storage_chest_open.png",
+      "description": "Same chest and camera. Open the hinged lid to 90 degrees. Empty dark interior, keep two straps, dimensions and simple geometry.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same chest and camera. Open the hinged lid to 90 degrees. Empty dark interior, keep two straps, dimensions and simple geometry.",
+      "deps": [
+        "storage_chest_closed"
+      ]
+    },
+    {
+      "id": "drying_rack_full",
+      "label": "晾晒架·晾晒中",
+      "category": "防御与家具",
+      "file": "drying_rack_full.png",
+      "description": "Same wooden rack; add exactly THREE hanging dark brown simple meat blocks under the crossbar. Preserve frame dimensions.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same wooden rack; add exactly THREE hanging dark brown simple meat blocks under the crossbar. Preserve frame dimensions.",
+      "deps": [
+        "drying_rack_empty"
+      ]
+    },
+    {
+      "id": "serrated_trap_hit",
+      "label": "锯齿捕兽夹·命中",
+      "category": "防御与家具",
+      "file": "serrated_trap_hit.png",
+      "description": "Change the trap to TRIGGERED CLOSED state. Keep smooth solid ROUND disk base. Remove BOTH original flat-open toothed jaws entirely. Replace with exactly TWO upright clamped zigzag jaws meeting along center. NO open toothed ring around perimeter, NO duplicate clamp, no chain, no victim.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Change the trap to TRIGGERED CLOSED state. Keep smooth solid ROUND disk base. Remove BOTH original flat-open toothed jaws entirely. Replace with exactly TWO upright clamped zigzag jaws meeting along center. NO open toothed ring around perimeter, NO duplicate clamp, no chain, no victim.",
+      "deps": [
+        "serrated_trap_open"
+      ]
+    },
+    {
+      "id": "planter_potato_seedling",
+      "label": "菜箱·土豆幼苗",
+      "category": "防御与家具",
+      "file": "planter_potato_seedling.png",
+      "description": "Same planter with TWO very small muted olive leaf sprouts rising from soil. No potato visible; early growth.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO very small muted olive leaf sprouts rising from soil. No potato visible; early growth.",
+      "deps": [
+        "planter_empty"
+      ]
+    },
+    {
+      "id": "planter_potato_mature",
+      "label": "菜箱·土豆成熟",
+      "category": "防御与家具",
+      "file": "planter_potato_mature.png",
+      "description": "Same planter with TWO larger olive leaf clusters and TWO ochre potato geometric blocks partially showing on soil, mature harvestable.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO larger olive leaf clusters and TWO ochre potato geometric blocks partially showing on soil, mature harvestable.",
+      "deps": [
+        "planter_empty"
+      ]
+    },
+    {
+      "id": "planter_vegetable_seedling",
+      "label": "菜箱·蔬菜幼苗",
+      "category": "防御与家具",
+      "file": "planter_vegetable_seedling.png",
+      "description": "Same planter with TWO tiny paired pointed olive leaf sprouts, clearly small seedlings.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO tiny paired pointed olive leaf sprouts, clearly small seedlings.",
+      "deps": [
+        "planter_empty"
+      ]
+    },
+    {
+      "id": "planter_vegetable_mature",
+      "label": "菜箱·蔬菜成熟",
+      "category": "防御与家具",
+      "file": "planter_vegetable_mature.png",
+      "description": "Same planter with TWO large broad folded gray-olive vegetable leaf heads, mature harvestable, no potato.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO large broad folded gray-olive vegetable leaf heads, mature harvestable, no potato.",
+      "deps": [
+        "planter_empty"
+      ]
+    },
+    {
+      "id": "herb_bed_empty",
+      "label": "花圃·采空",
+      "category": "探索地点",
+      "file": "herb_bed_empty.png",
+      "description": "Remove all herb leaves and stems; preserve identical small low polygon soil bed and camera.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Remove all herb leaves and stems; preserve identical small low polygon soil bed and camera.",
+      "deps": [
+        "herb_bed_full"
+      ]
+    },
+    {
+      "id": "freezer_open",
+      "label": "商店冷柜·打开",
+      "category": "探索地点",
+      "file": "freezer_open.png",
+      "description": "Same freezer, hinged pale gray lid opened to 90 degrees, simple empty dark interior, preserve body and camera.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same freezer, hinged pale gray lid opened to 90 degrees, simple empty dark interior, preserve body and camera.",
+      "deps": [
+        "freezer_closed"
+      ]
+    },
+    {
+      "id": "yard_gate_reinforced_closed",
+      "label": "加固院门·关闭",
+      "category": "防御与家具",
+      "file": "yard_gate_reinforced_closed.png",
+      "description": "Use reference as exact base gate/door. Add TWO broad charcoal iron braces across the leaf to clearly reinforce it. Keep original framing, CLOSED leaf orientation, simple muted ochre-gray style. No second door.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Use reference as exact base gate/door. Add TWO broad charcoal iron braces across the leaf to clearly reinforce it. Keep original framing, CLOSED leaf orientation, simple muted ochre-gray style. No second door.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/yard_gate_closed.png"
+      ]
+    },
+    {
+      "id": "yard_gate_reinforced_open",
+      "label": "加固院门·打开",
+      "category": "防御与家具",
+      "file": "yard_gate_reinforced_open.png",
+      "description": "Same reinforced door and frame as reference. Swing the SINGLE leaf 90 degrees open; braces move with leaf; doorway visibly clear. Preserve dimensions and camera.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same reinforced door and frame as reference. Swing the SINGLE leaf 90 degrees open; braces move with leaf; doorway visibly clear. Preserve dimensions and camera.",
+      "deps": [
+        "yard_gate_reinforced_closed"
+      ]
+    },
+    {
+      "id": "house_door_reinforced_closed",
+      "label": "加固房门·关闭",
+      "category": "防御与家具",
+      "file": "house_door_reinforced_closed.png",
+      "description": "Use reference as exact base gate/door. Add TWO broad charcoal iron braces across the leaf to clearly reinforce it. Keep original framing, CLOSED leaf orientation, simple muted ochre-gray style. No second door.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Use reference as exact base gate/door. Add TWO broad charcoal iron braces across the leaf to clearly reinforce it. Keep original framing, CLOSED leaf orientation, simple muted ochre-gray style. No second door.",
+      "refs": [
+        "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/house_door_closed.png"
+      ]
+    },
+    {
+      "id": "house_door_reinforced_open",
+      "label": "加固房门·打开",
+      "category": "防御与家具",
+      "file": "house_door_reinforced_open.png",
+      "description": "Same reinforced door and frame as reference. Swing the SINGLE leaf 90 degrees open; braces move with leaf; doorway visibly clear. Preserve dimensions and camera.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same reinforced door and frame as reference. Swing the SINGLE leaf 90 degrees open; braces move with leaf; doorway visibly clear. Preserve dimensions and camera.",
+      "deps": [
+        "house_door_reinforced_closed"
+      ]
+    },
+    {
+      "id": "food_shop_base",
+      "label": "食品商店·基体",
+      "category": "探索地点",
+      "file": "food_shop_base.png",
+      "description": "ONE building WITHOUT ROOF: wide squat charcoal shop shell with ochre short awning and ONE can-shaped facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: wide squat charcoal shop shell with ochre short awning and ONE can-shaped facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "building": "food_shop"
+    },
+    {
+      "id": "food_shop_roof",
+      "label": "食品商店·屋顶",
+      "category": "探索地点",
+      "file": "food_shop_roof.png",
+      "description": "Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "deps": [
+        "food_shop_base"
+      ],
+      "building": "food_shop",
+      "state": "roof"
+    },
+    {
+      "id": "repair_shop_base",
+      "label": "维修铺·基体",
+      "category": "探索地点",
+      "file": "repair_shop_base.png",
+      "description": "ONE building WITHOUT ROOF: wide charcoal workshop shell with broad garage doorway and ONE ochre simple wrench symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: wide charcoal workshop shell with broad garage doorway and ONE ochre simple wrench symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "building": "repair_shop"
+    },
+    {
+      "id": "repair_shop_roof",
+      "label": "维修铺·屋顶",
+      "category": "探索地点",
+      "file": "repair_shop_roof.png",
+      "description": "Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "deps": [
+        "repair_shop_base"
+      ],
+      "building": "repair_shop",
+      "state": "roof"
+    },
+    {
+      "id": "pharmacy_base",
+      "label": "药店·基体",
+      "category": "探索地点",
+      "file": "pharmacy_base.png",
+      "description": "ONE building WITHOUT ROOF: small pale-gray shop shell with ONE muted olive-green plus facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: small pale-gray shop shell with ONE muted olive-green plus facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "building": "pharmacy"
+    },
+    {
+      "id": "pharmacy_roof",
+      "label": "药店·屋顶",
+      "category": "探索地点",
+      "file": "pharmacy_roof.png",
+      "description": "Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "deps": [
+        "pharmacy_base"
+      ],
+      "building": "pharmacy",
+      "state": "roof"
+    },
+    {
+      "id": "security_room_base",
+      "label": "保安室·基体",
+      "category": "探索地点",
+      "file": "security_room_base.png",
+      "description": "ONE building WITHOUT ROOF: small charcoal square room shell with narrow windows and ONE ochre shield facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: small charcoal square room shell with narrow windows and ONE ochre shield facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping.",
+      "building": "security_room"
+    },
+    {
+      "id": "security_room_roof",
+      "label": "保安室·屋顶",
+      "category": "探索地点",
+      "file": "security_room_roof.png",
+      "description": "Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes.",
+      "deps": [
+        "security_room_base"
+      ],
+      "building": "security_room",
+      "state": "roof"
+    },
+    {
+      "id": "supply_box_closed",
+      "label": "家中补给箱·关闭",
+      "category": "探索地点",
+      "file": "supply_box_closed.png",
+      "description": "Same reference wooden chest, add ONE pale-gray cloth band across lid to distinguish one-time home supplies. Closed lid; no text or extra items.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same reference wooden chest, add ONE pale-gray cloth band across lid to distinguish one-time home supplies. Closed lid; no text or extra items.",
+      "deps": [
+        "storage_chest_closed"
+      ]
+    },
+    {
+      "id": "supply_box_open",
+      "label": "家中补给箱·搜空",
+      "category": "探索地点",
+      "file": "supply_box_open.png",
+      "description": "Same reference supply chest, open lid upright, EMPTY interior, retain cloth band on lid, no items.",
+      "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same reference supply chest, open lid upright, EMPTY interior, retain cloth band on lid, no items.",
+      "deps": [
+        "supply_box_closed"
+      ]
+    }
+  ]
+}
