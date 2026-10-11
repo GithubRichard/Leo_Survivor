@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>守到天明 · 末世生存初版</title>
+  <link rel="stylesheet" href="game.css">
+</head>
+<body>
+  <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
+  <div id="run-edge" class="screen-edge"></div>
+  <div id="hurt-edge" class="screen-edge"></div>
+  <header id="hud" class="hidden">
+    <div class="status panel"><div class="eyebrow">幸存者 <span id="player-name"></span></div>
+      <div class="bar-label"><span>血量</span><b id="hp-label"></b></div><div class="bar"><i id="hp-fill"></i></div>
+      <div class="bar-label"><span>体力</span><b id="stamina-label"></b></div><div class="bar stamina"><i id="stamina-fill"></i></div>
+      <div id="resources"></div>
+    </div>
+    <div class="clock panel"><div class="eyebrow">第一天 · 生存试炼</div><strong id="clock"></strong><div id="phase"></div></div>
+  </header>
+  <div id="objective" class="panel hidden"></div>
+  <div id="messages" aria-live="polite"></div>
+  <div id="interaction" class="hidden"></div>
+  <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
+  <div id="menu" class="scrim">
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 可玩初版 0.2</div><h1>守到天明<span>准备你的领地，活过第一晚。</span></h1>
+      <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
+      <div class="menu-option selected" data-mode="0"><b>01　完整的一天</b><span>05:00开局 · 白天12分45秒，夜晚5分15秒</span></div>
+      <div class="menu-option" data-mode="1"><b>02　快速试玩</b><span>21:00开局 · 45秒准备，然后进入完整夜晚</span></div>
+      <div class="menu-hint">W / S 选择　·　E 输入名字并开始</div>
+      <small id="asset-status">正在加载美术素材……</small><br><small>背包、地图与窗口切换时暂停游戏。</small>
+    </section>
+  </div>
+  <div id="overlay" class="scrim hidden"><section id="overlay-card" class="overlay-card"></section></div>
+  <script src="simulation.js"></script>
+  <script src="asset-manifest.js"></script>
+  <script src="art-renderer.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

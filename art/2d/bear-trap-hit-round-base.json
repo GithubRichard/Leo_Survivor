@@ -1,0 +1,5 @@
+{
+  "tool": "built-in image_gen",
+  "target": "sprites-v2/bear_trap_hit.png",
+  "prompt": "Use case: precise-object-edit. Attached image is edit target: single closed bear trap jaws. Add back ONE plain circular BASE PLATE beneath the closed jaw assembly, a low flat charcoal gray round disk, seen as an ellipse in this same elevated isometric camera. Base plate diameter approximately length of jaw assembly; show a smooth circular front rim and visible flat surface on both sides beneath jaws. Preserve EXACT existing closed pair of jaws, central zigzag meeting seam, two end hinges, camera angle, dark gray palette and minimal geometric 2D polygon style. Circular base is smooth and completely TOOTHLESS: absolutely no open semicircular jaws, no old flat toothed ring, no extra peripheral teeth, no second trap. Keep the closed jaws mounted on the circular base, one centered fully visible object, genuine transparent background, no text no ground shadow no glow no victim."
+}

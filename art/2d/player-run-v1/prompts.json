@@ -1,0 +1,203 @@
+{
+  "tool": "built-in image_gen",
+  "playback": [
+    1,
+    2,
+    3,
+    2
+  ],
+  "jobs": [
+    {
+      "name": "player_run_east_01",
+      "direction": "east",
+      "label": "东",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_east.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing EAST: screen RIGHT, strict right-facing side profile. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_east_02",
+      "direction": "east",
+      "label": "东",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_east.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing EAST: screen RIGHT, strict right-facing side profile. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_east_03",
+      "direction": "east",
+      "label": "东",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_east.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing EAST: screen RIGHT, strict right-facing side profile. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_south_01",
+      "direction": "south",
+      "label": "南",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_south.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing SOUTH: screen DOWN toward viewer, frontal view. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_south_02",
+      "direction": "south",
+      "label": "南",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_south.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing SOUTH: screen DOWN toward viewer, frontal view. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_south_03",
+      "direction": "south",
+      "label": "南",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_south.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing SOUTH: screen DOWN toward viewer, frontal view. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_west_01",
+      "direction": "west",
+      "label": "西",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_west.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing WEST: screen LEFT, strict left-facing side profile. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_west_02",
+      "direction": "west",
+      "label": "西",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_west.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing WEST: screen LEFT, strict left-facing side profile. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_west_03",
+      "direction": "west",
+      "label": "西",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_west.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing WEST: screen LEFT, strict left-facing side profile. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_north_01",
+      "direction": "north",
+      "label": "北",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing NORTH: screen UP away from viewer, back view with no face or chest. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_north_02",
+      "direction": "north",
+      "label": "北",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing NORTH: screen UP away from viewer, back view with no face or chest. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_north_03",
+      "direction": "north",
+      "label": "北",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing NORTH: screen UP away from viewer, back view with no face or chest. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_southeast_01",
+      "direction": "southeast",
+      "label": "东南",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_east.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing SOUTHEAST: screen LOWER RIGHT, front three-quarter view halfway between south and east. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_southeast_02",
+      "direction": "southeast",
+      "label": "东南",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_east.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing SOUTHEAST: screen LOWER RIGHT, front three-quarter view halfway between south and east. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_southeast_03",
+      "direction": "southeast",
+      "label": "东南",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_east.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing SOUTHEAST: screen LOWER RIGHT, front three-quarter view halfway between south and east. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_northeast_01",
+      "direction": "northeast",
+      "label": "东北",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing NORTHEAST: screen UPPER RIGHT, rear three-quarter view halfway between north and east. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_northeast_02",
+      "direction": "northeast",
+      "label": "东北",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing NORTHEAST: screen UPPER RIGHT, rear three-quarter view halfway between north and east. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_northeast_03",
+      "direction": "northeast",
+      "label": "东北",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing NORTHEAST: screen UPPER RIGHT, rear three-quarter view halfway between north and east. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_southwest_01",
+      "direction": "southwest",
+      "label": "西南",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_west.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing SOUTHWEST: screen LOWER LEFT, front three-quarter view halfway between south and west. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_southwest_02",
+      "direction": "southwest",
+      "label": "西南",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_west.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing SOUTHWEST: screen LOWER LEFT, front three-quarter view halfway between south and west. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_southwest_03",
+      "direction": "southwest",
+      "label": "西南",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_west.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing SOUTHWEST: screen LOWER LEFT, front three-quarter view halfway between south and west. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_northwest_01",
+      "direction": "northwest",
+      "label": "西北",
+      "frame": 1,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 1 of 3 of this SAME main player. Facing NORTHWEST: screen UPPER LEFT, rear three-quarter view halfway between north and west. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE A: character LEFT leg stretched forward along movement direction, RIGHT leg extended backward with bent knee; RIGHT arm bent 90 degrees swinging forward, LEFT elbow swinging backward. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_northwest_02",
+      "direction": "northwest",
+      "label": "西北",
+      "frame": 2,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 2 of 3 of this SAME main player. Facing NORTHWEST: screen UPPER LEFT, rear three-quarter view halfway between north and west. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: COMPACT PASSING POSE: both knees bent under hips, feet passing close together beneath body, elbows bent 90 degrees near torso in mid-swing. A clear running transition pose, not a standing pose. Preserve same torso center and head height. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    },
+    {
+      "name": "player_run_northwest_03",
+      "direction": "northwest",
+      "label": "西北",
+      "frame": 3,
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/player_north.png",
+      "prompt": "Use case: identity-preserve. Attached image is character identity reference. Create exactly ONE individual transparent PNG RUNNING animation frame 3 of 3 of this SAME main player. Facing NORTHWEST: screen UPPER LEFT, rear three-quarter view halfway between north and west. Elevated 45-degree overhead camera stays fixed; rotate the body in space, never rotate the flat image. Pose: EXTENDED STRIDE B: character RIGHT leg stretched forward along movement direction, LEFT leg extended backward with bent knee; LEFT arm bent 90 degrees swinging forward, RIGHT elbow swinging backward. Opposite limbs from frame 1. Lean upper body slightly forward in running direction, hands simple closed fists, head looks along movement. Keep identical dark muted ochre open jacket over charcoal shirt, charcoal-gray trousers with block thigh pocket, dark block boots, black block hair, blank face, same body proportions and very simple geometric flat polygon 2D game art. Keep ENTIRE body within image, consistent character size and composition across frames: portrait canvas same as reference, body occupies central 72 percent height, pelvis horizontally centered, nominal ground anchor at x50 percent y86 percent, head around y15 percent; no camera zoom or translation, no text no ground no shadow no glow no motion blur no speed lines no weapons no additional character. Transparent background and ample margin. This is animation artwork; preserve identity and simplify all detail."
+    }
+  ]
+}

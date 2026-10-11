@@ -1,0 +1,114 @@
+[
+  {
+    "Name": "player_east",
+    "Width": 1208,
+    "Height": 1302,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "player_south",
+    "Width": 1208,
+    "Height": 1302,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "player_west",
+    "Width": 1208,
+    "Height": 1302,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "player_north",
+    "Width": 1208,
+    "Height": 1302,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "zombie_east",
+    "Width": 1221,
+    "Height": 1289,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "zombie_south",
+    "Width": 1221,
+    "Height": 1289,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "zombie_west",
+    "Width": 1221,
+    "Height": 1289,
+    "CornerAlpha": 1,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "zombie_north",
+    "Width": 1221,
+    "Height": 1289,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "iron",
+    "Width": 1536,
+    "Height": 1024,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "bear_trap_hit",
+    "Width": 1536,
+    "Height": 1024,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "yard_gate_closed",
+    "Width": 1536,
+    "Height": 1024,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "yard_gate_open",
+    "Width": 1536,
+    "Height": 1024,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "house_door_closed",
+    "Width": 1312,
+    "Height": 1199,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "house_door_open",
+    "Width": 1312,
+    "Height": 1199,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "health_bar",
+    "Width": 2172,
+    "Height": 724,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  },
+  {
+    "Name": "stamina_bar",
+    "Width": 2172,
+    "Height": 724,
+    "CornerAlpha": 0,
+    "PixelFormat": "Format32bppArgb"
+  }
+]

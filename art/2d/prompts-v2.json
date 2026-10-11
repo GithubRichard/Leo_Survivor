@@ -1,0 +1,81 @@
+{
+  "tool": "built-in image_gen",
+  "jobs": [
+    {
+      "name": "player_east",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/player.png",
+      "prompt": "Use case: identity-preserve. Edit target: attached player sprite. Generate one isolated full body sprite of EXACT same survivor character facing EAST, toward screen RIGHT, right-facing profile with a slight front three-quarter view. Keep dark ochre jacket open over charcoal shirt, gray trousers boots, black block hair, blank face, same body proportions, same minimal geometric flat low-poly 2D style and elevated overhead camera. Standing idle, no weapon. Turn character in space, do not rotate image plane. Full body centered with transparent margin, no text no background no ground shadow no glow. Only one character."
+    },
+    {
+      "name": "player_south",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/player.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same player character, facing SOUTH: face toward screen BOTTOM, frontal view, face chest and jacket front visible, both boots point toward viewer. Rotate the character in 3D space, never rotate the image plane. Keep same ochre jacket open over charcoal shirt, gray trousers and boots, black block hair, blank face and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "player_west",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/player.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same player character, facing WEST: face toward screen LEFT, left-facing side profile, face and boot toes point LEFT. Rotate the character in 3D space, never rotate the image plane. Keep same ochre jacket open over charcoal shirt, gray trousers and boots, black block hair, blank face and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "player_north",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/player.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same player character, facing NORTH: face toward screen TOP, rear view, show back of head back of jacket and heels, no face or chest visible. Rotate the character in 3D space, never rotate the image plane. Keep same ochre jacket open over charcoal shirt, gray trousers and boots, black block hair, blank face and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "zombie_east",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/zombie.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same zombie character, facing EAST: face toward screen RIGHT, right-facing side profile, face and boot toes point RIGHT. Rotate the character in 3D space, never rotate the image plane. Keep same gray olive skin, charcoal torn shirt and trousers, hunched pose, empty dark eye sockets, no gore and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "zombie_south",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/zombie.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same zombie character, facing SOUTH: face toward screen BOTTOM, frontal view, face chest and jacket front visible, both boots point toward viewer. Rotate the character in 3D space, never rotate the image plane. Keep same gray olive skin, charcoal torn shirt and trousers, hunched pose, empty dark eye sockets, no gore and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "zombie_west",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/zombie.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same zombie character, facing WEST: face toward screen LEFT, left-facing side profile, face and boot toes point LEFT. Rotate the character in 3D space, never rotate the image plane. Keep same gray olive skin, charcoal torn shirt and trousers, hunched pose, empty dark eye sockets, no gore and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "zombie_north",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v1/zombie.png",
+      "prompt": "Use case: identity-preserve. Attached image is edit target. One full-body idle sprite of EXACT same zombie character, facing NORTH: face toward screen TOP, rear view, show back of head back of jacket and heels, no face or chest visible. Rotate the character in 3D space, never rotate the image plane. Keep same gray olive skin, charcoal torn shirt and trousers, hunched pose, empty dark eye sockets, no gore and same proportions and minimal geometric 2D flat polygon style and elevated 45-degree overhead camera. One character centered fully visible, transparent background, generous margin, no ground shadow no glow no text no labels."
+    },
+    {
+      "name": "iron",
+      "ref": "C:/Users/79264/.codex/generated_images/01a12907-9d78-7eb1-893c-1aaa8372cd15/exec-9d8437b6-0c96-4237-9ea1-a3abc302fe86.png",
+      "prompt": "Use case: precise-object-edit. Attached image is edit target. Change ONLY quantity: exactly TWO iron ingots, remove the third iron bar completely. One upper bar rests offset atop one lower bar. Keep charcoal gray colors, same basic trapezoidal geometric bar shape, isometric 45 degree overhead angle, extremely minimal 2D flat polygon style. No third bar no extra object. Center fully visible on genuine transparent background, no text no glow no ground shadow."
+    },
+    {
+      "name": "bear_trap_hit",
+      "ref": "C:/Users/79264/.codex/generated_images/01a12907-9d78-7eb1-893c-1aaa8372cd15/exec-9a5883e1-ab9a-4bb0-b808-1ebc738ac4a3.png",
+      "prompt": "Use case: precise-object-edit. Attached image is edit target, open bear trap. Create its HIT/TRIGGERED state: same trap snaps CLOSED, two semicircular toothed jaws rotate upward and meet tightly along a central seam, pressure plate depressed. Clearly closed silhouette compared to original open ring. No victim no body parts no blood no gore. Same charcoal gray basic geometry, minimalist 2D flat polygon style and isometric overhead camera. One isolated centered fully visible object, transparent background no glow no outside shadow no text."
+    },
+    {
+      "name": "yard_gate_closed",
+      "prompt": "Use case: stylized-concept. Individual transparent 2D game sprite: a simple iron yard gate between two chunky charcoal iron posts, rectangular charcoal frame and four thick vertical metal bars in closed state. Leaf fills and blocks doorway completely. Minimal basic geometric shapes, no textures no grain no scratches no tiny details. Isometric 45-degree overhead camera, upper left light using flat face colors only. Dark gray #343633, ochre #8e793e, pale gray #aaa99a. Center one fully visible object with transparent margin. No background no text no labels no ground no glow no outside shadow."
+    },
+    {
+      "name": "yard_gate_open",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/yard_gate_closed.png",
+      "prompt": "Use case: precise-object-edit. Attached image is edit target. Change ONLY gate leaf position to OPEN: swing leaf 90 degrees outward on left hinges so gap between two posts is clearly empty. Preserve EXACT same two charcoal block posts, pale gray pyramid caps, pale gray hinge blocks, rectangular charcoal frame and EXACTLY FOUR dark yellow ochre vertical bars. No added top lintel spanning doorway. Preserve post placement, camera, palette, proportions and simple geometric style. One complete fully visible isolated gate, transparent background no text no glow no outside shadow."
+    },
+    {
+      "name": "house_door_closed",
+      "prompt": "Use case: stylized-concept. Individual transparent 2D game sprite: a simple rectangular dark ochre wooden house door inside pale gray-white rectangular doorframe, one small charcoal handle, no surrounding wall in closed state. Leaf fills and blocks doorway completely. Minimal basic geometric shapes, no textures no grain no scratches no tiny details. Isometric 45-degree overhead camera, upper left light using flat face colors only. Dark gray #343633, ochre #8e793e, pale gray #aaa99a. Center one fully visible object with transparent margin. No background no text no labels no ground no glow no outside shadow."
+    },
+    {
+      "name": "house_door_open",
+      "ref": "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/house_door_closed.png",
+      "prompt": "Use case: precise-object-edit. Attached image is edit target. Change ONLY wooden door leaf position to OPEN: swing leaf 90 degrees outward on LEFT hinge, clear rectangular doorway within same pale gray-white frame, same flat ochre solid door slab, same charcoal simple lever handle now on free edge. Keep frame position size and exact isometric camera and minimal geometric style. Doorway hole must be transparent, no opaque wall inside. Full object visible isolated on transparent background no texture no text no glow no outside shadow."
+    },
+    {
+      "name": "health_bar",
+      "prompt": "Use case: ui-mockup. One single horizontal minimalist game health_bar sprite, flat front view. Charcoal gray rectangular frame with small red plus icon on left. Inside is ONE uninterrupted solid #a5413c long rectangular fill bar. Absolutely NO segments NO grids NO cells NO ticks NO separators. Flat solid red health or green stamina fill. Clean basic geometry, no texture no gradients no glow no text no numerals. Center fully visible with transparent margin, transparent PNG."
+    },
+    {
+      "name": "stamina_bar",
+      "prompt": "Use case: ui-mockup. One single horizontal minimalist game stamina_bar sprite, flat front view. Charcoal gray rectangular frame with small green lightning bolt icon on left. Inside is ONE uninterrupted solid #4e8051 long rectangular fill bar. Absolutely NO segments NO grids NO cells NO ticks NO separators. Flat solid red health or green stamina fill. Clean basic geometry, no texture no gradients no glow no text no numerals. Center fully visible with transparent margin, transparent PNG."
+    }
+  ]
+}

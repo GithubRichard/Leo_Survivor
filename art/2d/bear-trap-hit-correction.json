@@ -1,0 +1,5 @@
+{
+  "tool": "built-in image_gen",
+  "target": "sprites-v2/bear_trap_hit.png",
+  "prompt": "Use case: precise-object-edit. Edit target: attached bear trap HIT state image. Correct the duplicated jaws. ERASE COMPLETELY the old open circular toothed jaw ring lying flat around the outside, including all its perimeter teeth and thick polygon circular rail, both front and rear. Keep ONLY the single already raised closed pair of toothed jaws meeting at the diagonal central zigzag seam, the two axle hinges at its ends, and a small simple support bar beneath the hinge axis. No enclosing circular frame, no lower open jaws, no duplicate teeth underneath. The result must be ONE closed bear trap, compact narrow upright closed silhouette, with transparent empty space where the old surrounding open jaws were. Preserve dark charcoal gray low-poly minimal geometric 2D style, exact elevated isometric camera, fully visible centered object. Transparent background, no halo no ground shadow, no text no victim no gore."
+}

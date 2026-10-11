@@ -1,0 +1,41 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+const path=require('node:path');
+const fs=require('node:fs');
+(async()=>{
+  const browser=await chromium.launch({headless:true,channel:process.env.GAME_TEST_BROWSER||'msedge'});
+  try {
+    const page=await browser.newPage({viewport:{width:1280,height:900}}),errors=[];
+    page.on('pageerror',error=>errors.push(error.message));
+    await page.goto('file:///'+path.resolve('index.html').replace(/\\/g,'/'));
+    await page.waitForFunction(()=>window.GameArt?.ready);
+    assert.deepEqual(await page.evaluate(()=>GameArt.failed),[]);
+    await page.evaluate(()=>{const step=Survival.Game.prototype.step;Survival.Game.prototype.step=function(...args){window.testGame=this;return step.apply(this,args);};});
+    page.once('dialog',dialog=>dialog.accept('测试幸存者'));
+    await page.keyboard.press('e');await page.waitForFunction(()=>!!window.testGame);
+    fs.mkdirSync('checks/screenshots',{recursive:true});
+    await page.screenshot({path:'checks/screenshots/outside.png'});
+    await page.keyboard.press('Tab');await page.locator('.inventory-grid').waitFor();
+    assert.equal(await page.locator('.slot .item-thumb').count(),2);
+    assert.equal(await page.locator('.recipe .item-thumb').count(),2);
+    await page.screenshot({path:'checks/screenshots/backpack.png'});await page.keyboard.press('Tab');
+    await page.keyboard.press('f');await page.keyboard.press('f');
+    await page.waitForFunction(()=>testGame.devices.length===1);
+    assert.equal(await page.evaluate(()=>testGame.count('iron')),3);
+    await page.keyboard.press('e');await page.waitForFunction(()=>testGame.devices.length===0);
+    assert.equal(await page.evaluate(()=>testGame.count('iron')),6);
+    await page.evaluate(()=>{testGame.player.x=12;testGame.player.y=12;testGame.player.indoorHome=null;});
+    await page.keyboard.down('Shift');await page.keyboard.down('s');
+    await page.waitForFunction(()=>getComputedStyle(document.getElementById('run-edge')).opacity==='1');
+    await page.screenshot({path:'checks/screenshots/running.png'});
+    await page.keyboard.up('s');await page.keyboard.up('Shift');
+    await page.evaluate(()=>{testGame.damagePlayer(3);});
+    await page.waitForFunction(()=>document.getElementById('hurt-edge').style.opacity==='1');
+    await page.screenshot({path:'checks/screenshots/hurt.png'});
+    await page.waitForFunction(()=>document.getElementById('hurt-edge').style.opacity==='0');
+    await page.evaluate(()=>{testGame.player.x=0;testGame.player.y=-2.8;testGame.updateIndoorHome();});
+    await page.waitForFunction(()=>testGame.player.indoorHome==='0,0');
+    await page.screenshot({path:'checks/screenshots/inside.png'});
+    assert.deepEqual(errors,[]);console.log('PASS: all art loaded; inventory thumbnails; E dismantle/refund; run/hurt borders; indoor view; no browser runtime errors.');
+  }finally{await browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});
