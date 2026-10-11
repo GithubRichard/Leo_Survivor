@@ -47,6 +47,24 @@ GAME_PORT=8081
 
 ## 更新和查看日志
 
+在服务器工程目录执行一键更新：
+
+```bash
+cd /opt/Leo_Survivor
+bash update.sh
+```
+
+脚本会拉取 `origin/main`，构建成功后重新创建游戏容器，最后检查服务健康状态。
+只重启游戏服务，不重启 Ubuntu，也不操作 StudyAssistant。
+自动在需要时使用 `sudo docker`；请使用拥有工程目录的用户运行脚本。
+首次获得脚本时先执行 `git pull --ff-only origin main`，也可以单独上传 `update.sh` 到工程根目录。
+若之前用 `sudo git clone` 导致目录属于 root，先执行 `sudo chown -R ubuntu:ubuntu /opt/Leo_Survivor`。
+服务器无法连接 GitHub 时，先上传并解压最新源码包，再执行 `bash update.sh --local`，跳过 Git 拉取。
+本地改动、拉取失败或镜像构建失败会中止更新；健康检查失败会显示日志，需手动处理，不会自动回滚。
+脚本沿用 `.env` 中的端口设置；若之前通过临时环境变量指定端口，请先写入 `.env`。
+
+手动更新和查看日志也可使用：
+
 ```bash
 git pull
 docker compose up -d --build
