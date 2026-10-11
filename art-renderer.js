@@ -1,6 +1,8 @@
 /* 直接使用美术PNG。图片与逻辑共用地面锚点，地砖只投影顶面。 */
 (() => {
-  const entries=window.GAME_ASSETS||{},images={},failed=[];
+  const entries={...(window.GAME_ASSETS||{})},images={},failed=[];
+  const animation=window.PLAYER_ANIMATION;
+  for(const frames of Object.values(animation?.frames||{}))for(const frame of frames)entries[frame.key]=frame;
   let ready=false;
   const loading=Promise.all(Object.entries(entries).map(([key,data])=>new Promise(resolve=>{
     const img=new Image();images[key]=img;img.onload=resolve;img.onerror=()=>{failed.push(data.src);resolve();};img.src=data.src;
@@ -11,6 +13,27 @@
     const [l,t,r,b]=entries[key].crop,sw=r-l,sh=b-t,w=width||height*sw/sh;
     ctx.save();ctx.translate(x,y);if(flip)ctx.scale(-1,1);
     ctx.drawImage(images[key],l,t,sw,sh,-w/2,-height*anchorY,w,height);ctx.restore();return true;
+  }
+  function animatedPlayer(ctx,facing,x,y,phase,height=50){
+    if(!animation)return false;
+    const sx=facing.x-facing.y,sy=(facing.x+facing.y)*.5;
+    const sectors=['east','southeast','south','southwest','west','northwest','north','northeast'];
+    const sector=(Math.round(Math.atan2(sy,sx)/(Math.PI/4))+8)%8;
+    const dir=animation.frames[sectors[sector]]?sectors[sector]:direction(facing);
+    const frames=animation.frames[dir];if(!frames)return false;
+    const current=Math.floor(phase)%animation.order.length,next=(current+1)%animation.order.length;
+    const frame=frames[animation.order[current]],following=frames[animation.order[next]];
+    if(!available(frame.key)||!available(following.key))return false;
+    // 最后20%帧时长做短过渡；在独立画布相加，避免人体重叠处变透明。
+    const blend=Math.max(0,(phase-Math.floor(phase)-.8)/.2);
+    const layer=animatedPlayer.layer||(animatedPlayer.layer=document.createElement('canvas'));
+    if(layer.width!==160){layer.width=160;layer.height=100;}
+    const c=layer.getContext('2d');c.clearRect(0,0,160,100);c.globalCompositeOperation='lighter';
+    for(const [meta,alpha] of [[frame,1-blend],[following,blend]]){
+      if(alpha<=0)continue;const ratio=height/meta.bodyHeight;
+      c.globalAlpha=alpha;c.drawImage(images[meta.key],80-meta.pivot[0]*ratio,80-meta.pivot[1]*ratio,meta.size[0]*ratio,meta.size[1]*ratio);
+    }
+    c.globalAlpha=1;c.globalCompositeOperation='source-over';ctx.drawImage(layer,x-80,y-80);return true;
   }
   function affine(source,dest){
     const u={x:source[1].x-source[0].x,y:source[1].y-source[0].y},v={x:source[2].x-source[0].x,y:source[2].y-source[0].y};
@@ -77,6 +100,6 @@
     return fullAffine(ctx,key,[{x:428,y:708},{x:1125,y:997},{x:428,y:25}],
       [project(o.x-1,o.y),project(o.x+1,o.y),project(o.x-1,o.y,1.05)]);
   }
-  function direction(facing={x:0,y:1}){const sx=facing.x-facing.y,sy=facing.x+facing.y;return Math.abs(sx)>Math.abs(sy)?sx>0?'east':'west':sy<0?'north':'south';}
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,house,roof,ground,door,direction};
+  function direction(facing={x:0,y:1}){const sx=facing.x-facing.y,sy=(facing.x+facing.y)*.5;return Math.abs(sx)>Math.abs(sy)?sx>0?'east':'west':sy<0?'north':'south';}
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,animatedPlayer,house,roof,ground,door,direction};
 })();

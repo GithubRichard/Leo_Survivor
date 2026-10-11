@@ -9,6 +9,7 @@
   let width=innerWidth,height=innerHeight,game=new Game(),mode='menu',menuChoice=0;
   let placement=false,buildKind='trap',dialogVisitor=null,dialogChoice=0,focused=true;
   let lastTime=performance.now(),uiKey='',nearby=null,notifications=[];
+  let playerMotion={moving:false,phase:0,facing:null};
   const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function resize(){width=innerWidth;height=innerHeight;const ratio=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
   addEventListener('resize',resize);resize();
@@ -27,7 +28,8 @@
     ctx.fillStyle='#10180e66';ctx.beginPath();ctx.ellipse(q.x,q.y,10,5,0,0,Math.PI*2);ctx.fill();
     if(hero){ctx.strokeStyle='#cab57099';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(q.x,q.y,14,7,0,0,Math.PI*2);ctx.stroke();}
     const spriteKey=visitor?'survivor':`${hero?'player':'zombie'}_${art.direction(p.facing)}`;
-    if(!art.sprite(ctx,spriteKey,q.x,q.y,50)){
+    const animated=hero&&playerMotion.moving&&art.animatedPlayer(ctx,playerMotion.facing||p.facing,q.x,q.y,playerMotion.phase,50);
+    if(!animated&&!art.sprite(ctx,spriteKey,q.x,q.y,50)){
     ctx.strokeStyle=hero?'#c5b88c':visitor?'#8d9181':'#465344';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(q.x-3,q.y-12);ctx.lineTo(q.x-5,q.y-2);ctx.moveTo(q.x+3,q.y-12);ctx.lineTo(q.x+5,q.y-2);ctx.stroke();
     ctx.fillStyle=hero?'#bd9f55':visitor?'#6c8790':'#79845e';ctx.fillRect(q.x-7,q.y-26,14,16);
     ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(q.x-7,q.y-23);ctx.lineTo(q.x-12,q.y-(hero?13:21));ctx.moveTo(q.x+7,q.y-23);ctx.lineTo(q.x+12,q.y-(hero?13:21));ctx.stroke();
@@ -131,10 +133,11 @@
     if(night){const p=project(game.player.x,game.player.y),g=ctx.createRadialGradient(p.x,p.y,80,p.x,p.y,Math.max(width,height)*.8);g.addColorStop(0,'#0a142519');g.addColorStop(1,'#07101eae');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);}
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
-  function showMenu(){mode='menu';placement=false;keys.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function showMenu(){playerMotion={moving:false,phase:0,facing:null};mode='menu';placement=false;keys.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
   function updateMenu(){document.querySelectorAll('.menu-option').forEach((el,i)=>el.classList.toggle('selected',i===menuChoice));}
   document.querySelectorAll('.menu-option').forEach((el,i)=>el.addEventListener('pointerenter',()=>{if(mode==='menu'){menuChoice=i;updateMenu();}}));
   function start(){
+    playerMotion={moving:false,phase:0,facing:null};
     if(!art.ready)return;
     const name=prompt('给幸存者起个名字（最多12个字）',game.player.name||'幸存者');if(name===null)return;
     game=new Game({name:name.trim().slice(0,12)||'幸存者',startMinutes:menuChoice===1?1260:300});
@@ -214,7 +217,18 @@
   document.addEventListener('visibilitychange',()=>{keys.clear();lastTime=performance.now();});
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
-    if(mode==='play'&&focused&&!document.hidden){game.step(dt,{up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')});if(game.result)openOverlay('result');}
+    if(mode==='play'&&focused&&!document.hidden){
+      const before={x:game.player.x,y:game.player.y};
+      game.step(dt,{up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')});
+      const moved=dist(before,game.player),moving=moved>1e-7;
+      if(moving){
+        if(!playerMotion.moving)playerMotion.phase=0;
+        playerMotion.phase=(playerMotion.phase+moved/(window.PLAYER_ANIMATION?.metersPerFrame||.4))%4;
+        playerMotion.facing={x:(game.player.x-before.x)/moved,y:(game.player.y-before.y)/moved};
+      }else playerMotion.phase=0;
+      playerMotion.moving=moving;
+      if(game.result)openOverlay('result');
+    }
     nearby=mode==='play'&&!placement?game.nearbyInteraction():null;
     drawWorld();if(mode!=='menu')updateHUD();if(['inventory','map','dialog','result'].includes(mode))renderOverlay();
     requestAnimationFrame(frame);
