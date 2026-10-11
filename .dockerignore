@@ -1,0 +1,11 @@
+.git
+.codex
+.agents
+checks
+*.log
+*.md
+node_modules
+dist
+.env
+*.tar
+*.zip

@@ -1,0 +1,8 @@
+name: leo-survivor
+services:
+  game:
+    image: leo-survivor:latest
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${GAME_BIND_ADDRESS:-0.0.0.0}:${GAME_PORT:-8081}:80"

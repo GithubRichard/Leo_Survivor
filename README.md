@@ -1,5 +1,9 @@
 # 守到天明 · 初版0.6
 
+## 云服务器部署
+
+已提供 Dockerfile 和 compose.yaml，默认访问端口为 8081，可以与其他 Docker 服务同机运行。构建与启动：`docker compose up -d --build`。详细步骤见 [Docker 部署说明](deploy/README.md)。
+
 ## 怎样试玩
 
 用电脑浏览器打开项目中的 `index.html`，也可以使用本地试玩页面。
