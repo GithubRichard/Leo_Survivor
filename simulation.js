@@ -81,12 +81,12 @@
     }
     updateDoors(){for(const home of this.homes.values())for(const door of home.doors){if(door.hp<=0)continue;const d=pointRect(this.player,door);if(d<1.25)door.open=true;else if(d>1.6){const occupied=this.zombies.some(z=>z.hp>0&&pointRect(z,door)<.3);if(!occupied)door.open=false;}}}
     movePlayer(dt,input){
-      let sx=(input.right?1:0)-(input.left?1:0),sy=(input.down?1:0)-(input.up?1:0);
+      let sx=(input.right?1:0)-(input.left?1:0)+(input.moveX||0),sy=(input.down?1:0)-(input.up?1:0)+(input.moveY||0);
       const length=Math.hypot(sx,sy),moving=length>0,running=moving&&input.run&&this.player.stamina>0;
       const before={x:this.player.x,y:this.player.y},wasRunning=this.player.running;
       if(moving){
         sx/=length;sy/=length;const direction={x:(sx+sy)/Math.SQRT2,y:(sy-sx)/Math.SQRT2};this.player.facing=direction;
-        const speed=running?RULES.run:RULES.walk;
+        const speed=(running?RULES.run:RULES.walk)*Math.min(1,length);
         const nx={x:this.player.x+direction.x*speed*dt,y:this.player.y};if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;
         const ny={x:this.player.x,y:this.player.y+direction.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
       }

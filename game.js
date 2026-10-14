@@ -5,15 +5,16 @@
   const art=window.GameArt;
   const $=id=>document.getElementById(id);
   const canvas=$('world'),ctx=canvas.getContext('2d');
-  const keys=new Set(),scale=27;
+  const keys=new Set();let scale=27;
+  const touch=window.TouchControls;
   let width=innerWidth,height=innerHeight,game=new Game(),mode='menu',menuChoice=0;
   let placement=false,buildKind='trap',dialogVisitor=null,dialogChoice=0,focused=true;
   let lastTime=performance.now(),uiKey='',nearby=null,notifications=[];
   let playerMotion={moving:false,phase:0,facing:null};
   const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function resize(){width=innerWidth;height=innerHeight;const ratio=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
+  function resize(){width=innerWidth;height=innerHeight;scale=touch?.enabled?Math.min(27,Math.max(19,width/18)):27;const ratio=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
   addEventListener('resize',resize);resize();
-  art.loading.then(()=>{$('asset-status').textContent=art.failed.length?`${art.failed.length}个素材未能加载，请检查美术文件。`:'美术素材已加载 · E开始';uiKey='';});
+  art.loading.then(()=>{$('start-game').disabled=false;$('start-game').textContent='开始游戏';$('asset-status').textContent=art.failed.length?`${art.failed.length}个素材未能加载，请检查美术文件。`:'美术素材已加载 · 可以开始';uiKey='';});
   const project=(x,y,z=0)=>({x:width/2+(x-game.player.x-y+game.player.y)*scale,y:height*.56+(x-game.player.x+y-game.player.y)*scale*.5-z*scale});
   function polygon(points,fill,stroke){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}}
   function plane(x,y,w,h,color,stroke){polygon([project(x-w/2,y-h/2),project(x+w/2,y-h/2),project(x+w/2,y+h/2),project(x-w/2,y+h/2)],color,stroke);}
@@ -128,35 +129,36 @@
     items.push({depth:actorDepth(game.player),draw:()=>actor(game.player,'player')});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
     if(placement){const p=game.placementPoint(),error=game.canPlace(buildKind,p);plane(p.x,p.y,1,1,error?'#ad5b5666':'#ceb56755',error?'#d1917b':'#e5d99b');drawDevice({...p,kind:buildKind,readyAt:0},true);}
-    if(nearby&&mode==='play'&&!placement){const p=project(nearby.object.x,nearby.object.y,.95);label('E',p.x,p.y-10,'#f0d88b',16);}
+    if(nearby&&mode==='play'&&!placement){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
     const night=game.minutes>=1320&&game.minutes<1740;
     if(night){const p=project(game.player.x,game.player.y),g=ctx.createRadialGradient(p.x,p.y,80,p.x,p.y,Math.max(width,height)*.8);g.addColorStop(0,'#0a142519');g.addColorStop(1,'#07101eae');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);}
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
-  function showMenu(){playerMotion={moving:false,phase:0,facing:null};mode='menu';placement=false;keys.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function showMenu(){playerMotion={moving:false,phase:0,facing:null};mode='menu';placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
   function updateMenu(){document.querySelectorAll('.menu-option').forEach((el,i)=>el.classList.toggle('selected',i===menuChoice));}
   document.querySelectorAll('.menu-option').forEach((el,i)=>el.addEventListener('pointerenter',()=>{if(mode==='menu'){menuChoice=i;updateMenu();}}));
   function start(){
     playerMotion={moving:false,phase:0,facing:null};
     if(!art.ready)return;
-    const name=prompt('给幸存者起个名字（最多12个字）',game.player.name||'幸存者');if(name===null)return;
+    const name=$('name-input').value||'幸存者';$('name-input').blur();
     game=new Game({name:name.trim().slice(0,12)||'幸存者',startMinutes:menuChoice===1?1260:300});
-    mode='play';placement=false;buildKind='trap';keys.clear();notifications=[];uiKey='';lastTime=performance.now();
+    mode='play';placement=false;buildKind='trap';keys.clear();touch.clear();notifications=[];uiKey='';lastTime=performance.now();
     $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective'])$(id).classList.remove('hidden');
-    $('player-name').textContent=game.player.name;game.announce('进入屋内找家具，靠近按E拆除。按F开始部署装置。');
+    $('player-name').textContent=game.player.name;game.announce(touch.enabled?'进入屋内找家具，靠近后点交互拆除。点建造部署装置。':'进入屋内找家具，靠近按E拆除。按F开始部署装置。');
   }
-  function openOverlay(next){mode=next;placement=false;keys.clear();$('overlay').classList.remove('hidden');$('interaction').classList.add('hidden');uiKey='';renderOverlay();}
-  function closeOverlay(){mode='play';keys.clear();$('overlay').classList.add('hidden');lastTime=performance.now();uiKey='';}
+  function openOverlay(next){mode=next;placement=false;keys.clear();touch.clear();$('overlay').classList.remove('hidden');$('interaction').classList.add('hidden');uiKey='';renderOverlay();}
+  function closeOverlay(){mode='play';keys.clear();touch.clear();$('overlay').classList.add('hidden');lastTime=performance.now();uiKey='';}
   function inventoryOverlay(){
     const thumb=(key,cls='')=>`<div class="item-thumb ${cls}" style="background-image:url('${art.entries[key].src}')"></div>`;
-    return `<div class="eyebrow">暂停中 · 20格背包</div><h2>随身物资</h2><p>WASD选择格子，E选择材料；F用该材料部署装置。</p><div class="inventory-grid">${game.inventory.map((s,i)=>`<div class="slot ${i===game.selectedSlot?'selected':''}">${s?thumb(s.kind):''}<div>${s?`${NAMES[s.kind]} × ${s.amount}`:'空'}</div><span>${String(i+1).padStart(2,'0')}</span></div>`).join('')}</div><div class="recipe"><div class="recipe-item">${thumb('bear_trap')}<span>捕兽夹：3铁</span></div><div class="recipe-item">${thumb('ballista')}<span>巨弩：5木头</span></div>当前部署：${NAMES[buildKind]}；巨弩攻击面积9平方米（圆形）。</div><div class="key-hint">E 选择　·　G 丢弃选中格的一份物资　·　F 部署　·　Tab 返回</div>`;
+    return `<div class="eyebrow">暂停中 · 20格背包</div><h2>随身物资</h2><p>${touch.enabled?'点选物品格或装置，再点部署。':'WASD选择格子，E选择材料；F用该材料部署装置。'}</p><div class="inventory-grid">${game.inventory.map((s,i)=>`<button type="button" data-slot="${i}" class="slot ${i===game.selectedSlot?'selected':''}">${s?thumb(s.kind):''}<div>${s?`${NAMES[s.kind]} × ${s.amount}`:'空'}</div><span>${String(i+1).padStart(2,'0')}</span></button>`).join('')}</div><div class="recipe"><button type="button" data-recipe="trap" class="recipe-item">${thumb('bear_trap')}<span>捕兽夹：3铁</span></button><button type="button" data-recipe="ballista" class="recipe-item">${thumb('ballista')}<span>巨弩：5木头</span></button>当前部署：${NAMES[buildKind]}；巨弩攻击面积9平方米（圆形）。</div><div class="overlay-actions"><button data-key="g">丢弃一份</button><button data-key="f" class="primary">部署装置</button><button data-key="tab">返回游戏</button></div><div class="key-hint keyboard-hint">E 选择　·　G 丢弃　·　F 部署　·　Tab 返回</div>`;
   }
   function renderOverlay(){
     let html='',key=mode;
     if(mode==='inventory'){key+=game.selectedSlot+JSON.stringify(game.inventory)+buildKind;html=inventoryOverlay();}
-    else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：邻居房屋</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="key-hint">M 返回游戏。地图范围随玩家的位置更新。</div>';}
-    else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<div class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</div>`).join('')}<div class="key-hint">W / S 选择　·　E 确认</div>`;}
-    else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第一晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':'下一次可以改变陷阱位置，也可以利用院门与房屋安排路线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="key-hint">E 返回开始画面，再试一次</div>`;}
+    else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><p>点继续游戏，回到你的领地。</p><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button></div>';}
+    else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：邻居房屋</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="overlay-actions"><button data-key="m">返回游戏</button></div>';}
+    else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<button data-dialog="${i}" class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</button>`).join('')}<div class="key-hint keyboard-hint">W / S 选择　·　E 确认</div>`;}
+    else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第一晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':'下一次可以改变陷阱位置，也可以利用院门与房屋安排路线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
     if(key!==uiKey){$('overlay-card').innerHTML=html;uiKey=key;}
     if(mode==='map')drawMap();
   }
@@ -169,11 +171,12 @@
     $('resources').textContent=`铁 ${game.count('iron')}　木头 ${game.count('wood')}　击败 ${game.kills}`;
     const t=Math.floor(game.minutes)%1440;$('clock').textContent=`${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
     const night=game.minutes>=1320&&game.minutes<1740;$('phase').textContent=night?`夜间 · ${game.zombies.length}只丧尸在附近`:game.result?'天明':'白天 · 探索与部署';
-    $('objective').innerHTML=night?'<b>活到05:00</b><br>丧尸受阻会攻击护栏。可以移动、奔跑和继续部署。':'<b>22:00前做好准备</b><br>进屋拆家具；Tab查看材料，F布置防御。普通门自动开关。';
+    $('objective').innerHTML=night?'<b>活到05:00</b><br>丧尸受阻会攻击护栏。可以移动、奔跑和继续部署。':(touch.enabled?'<b>22:00前做好准备</b><br>收集材料，布置防御。普通门自动开关。':'<b>22:00前做好准备</b><br>进屋拆家具；Tab查看材料，F布置防御。普通门自动开关。');
     let text='';
     if(!focused&&mode==='play')text='游戏已暂停，回到此窗口继续。';
     else if(mode==='play'&&placement){const error=game.canPlace(buildKind,game.placementPoint());text=`${NAMES[buildKind]} · ${error||'可放置'}　｜　E切换　F确认　Tab打开背包并取消`;}
     else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name} → 1${NAMES[object.material]}`:type==='device'?`E 拆除${NAMES[object.kind]} → 返还${object.kind==='trap'?'3铁':'5木头'}`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
+    if(touch.enabled)text=text.replace(/E /g,'交互：').replace('E切换　F确认　Tab打开背包并取消','点切换装置 / 确认放置；点背包取消').replace('按F','点建造');
     $('interaction').textContent=text;$('interaction').classList.toggle('hidden',!text);
     while(game.events.length){notifications.push({text:game.events.shift(),until:performance.now()+6500});}
     notifications=notifications.filter(n=>n.until>performance.now()).slice(-4);
@@ -181,8 +184,12 @@
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+4)%4)*5+(col+dx+5)%5;}
   function handleKey(event){
+    if(event.target instanceof HTMLInputElement){if(event.key==='Enter'){event.target.blur();if(mode==='menu')start();}return;}
     const k=event.key.toLowerCase();if(['tab',' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))event.preventDefault();
-    keys.add(k);if(event.repeat)return;
+    keys.add(k);if(event.repeat)return;performAction(k);
+  }
+  function performAction(k){
+    if(k==='escape'){if(mode==='play')openOverlay('pause');else if(['pause','inventory','map'].includes(mode))closeOverlay();return;}
     if(mode==='menu'){if(k==='w'||k==='s'){menuChoice=1-menuChoice;updateMenu();}if(k==='e')start();return;}
     if(mode==='result'){if(k==='e'){game=new Game();showMenu();}return;}
     if(mode==='dialog'){
@@ -195,12 +202,12 @@
     }
     if(k==='tab'){mode==='inventory'?closeOverlay():openOverlay('inventory');return;}
     if(k==='m'){mode==='map'?closeOverlay():openOverlay('map');return;}
-    if(mode==='map')return;
+    if(mode==='map'||mode==='pause')return;
     if(mode==='inventory'){
       if(k==='w')chooseSlot(0,-1);if(k==='s')chooseSlot(0,1);if(k==='a')chooseSlot(-1,0);if(k==='d')chooseSlot(1,0);
       if(k==='e'){const slot=game.inventory[game.selectedSlot];if(slot)buildKind=slot.kind==='iron'?'trap':'ballista';}
       if(k==='g')game.drop();
-      if(k==='f'){const slot=game.inventory[game.selectedSlot];if(slot)buildKind=slot.kind==='iron'?'trap':'ballista';closeOverlay();placement=true;}
+      if(k==='f'){closeOverlay();placement=true;}
       return;
     }
     if(k==='g'){game.drop();return;}
@@ -212,14 +219,25 @@
       else if(target)game.interact(target);
     }
   }
+  $('start-game').addEventListener('click',start);
+  $('touch-toggle').addEventListener('click',resize);
+  document.querySelectorAll('.menu-option').forEach((el,i)=>{el.tabIndex=0;el.setAttribute('role','button');el.addEventListener('click',()=>{menuChoice=i;updateMenu();});});
+  $('touch-controls').addEventListener('click',event=>{const button=event.target.closest('[data-key]');if(button)performAction(button.dataset.key);});
+  $('overlay-card').addEventListener('click',event=>{
+    const button=event.target.closest('button');if(!button)return;
+    if(button.dataset.slot!==undefined){game.selectedSlot=Number(button.dataset.slot);performAction('e');}
+    else if(button.dataset.recipe){buildKind=button.dataset.recipe;uiKey='';}
+    else if(button.dataset.dialog!==undefined){dialogChoice=Number(button.dataset.dialog);performAction('e');}
+    else if(button.dataset.key)performAction(button.dataset.key);
+  });
   addEventListener('keydown',handleKey);addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
-  addEventListener('blur',()=>{focused=false;keys.clear();});addEventListener('focus',()=>{focused=true;lastTime=performance.now();});
-  document.addEventListener('visibilitychange',()=>{keys.clear();lastTime=performance.now();});
+  addEventListener('blur',()=>{focused=false;keys.clear();touch.clear();});addEventListener('focus',()=>{focused=true;lastTime=performance.now();});
+  document.addEventListener('visibilitychange',()=>{keys.clear();touch.clear();lastTime=performance.now();});
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
     if(mode==='play'&&focused&&!document.hidden){
       const before={x:game.player.x,y:game.player.y};
-      game.step(dt,{up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')});
+      game.step(dt,{up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY});
       const moved=dist(before,game.player),moving=moved>1e-7;
       if(moving){
         if(!playerMotion.moving)playerMotion.phase=0;
@@ -229,8 +247,9 @@
       playerMotion.moving=moving;
       if(game.result)openOverlay('result');
     }
+    touch.setContext(mode,placement);
     nearby=mode==='play'&&!placement?game.nearbyInteraction():null;
-    drawWorld();if(mode!=='menu')updateHUD();if(['inventory','map','dialog','result'].includes(mode))renderOverlay();
+    drawWorld();if(mode!=='menu')updateHUD();if(['inventory','map','dialog','result','pause'].includes(mode))renderOverlay();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

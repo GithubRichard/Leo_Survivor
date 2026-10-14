@@ -1,0 +1,23 @@
+.touch-mode body{touch-action:manipulation;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+.touch-mode #world{height:100dvh;touch-action:none}
+.touch-mode .scrim{position:fixed;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));touch-action:pan-y}
+.touch-mode .menu-card,.touch-mode .overlay-card{max-height:calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch}
+.touch-mode .keyboard-hint,.touch-mode #controls{display:none!important}.touch-mode .touch-hint{display:inline}
+.touch-mode #hud{position:fixed;inset:calc(env(safe-area-inset-top) + 10px) max(10px,env(safe-area-inset-right)) auto max(10px,env(safe-area-inset-left))}
+.touch-mode #messages{bottom:calc(env(safe-area-inset-bottom) + 178px);left:max(12px,env(safe-area-inset-left));max-width:240px}
+.touch-mode #messages div{padding:5px 9px;font-size:11px}.touch-mode #messages div:not(:last-child){display:none}
+.touch-mode #interaction{bottom:calc(env(safe-area-inset-bottom) + 168px);width:max-content;max-width:90vw;padding:7px 12px;font-size:12px;pointer-events:none}
+.touch-mode #objective{display:none}.touch-mode .status{padding:9px 12px;width:185px}.touch-mode .clock{padding:8px 12px;min-width:128px}.touch-mode .clock strong{font-size:26px}
+.touch-mode #resources{margin-top:7px;font-size:11px}.touch-mode .bar-label{margin-top:4px}.touch-mode .eyebrow{font-size:10px;letter-spacing:1px}
+.touch-mode .overlay-actions{position:sticky;bottom:0;background:#252c24;padding:8px 0;z-index:1}.touch-mode .overlay-actions button{flex:1;white-space:nowrap;padding:9px}
+.touch-mode .map-view{height:auto;aspect-ratio:550/350}
+@media(max-width:480px){
+ .touch-mode .menu-card,.touch-mode .overlay-card{padding:18px}.touch-mode .menu-card h1{font-size:34px;margin:10px 0}.touch-mode .menu-card p{font-size:13px;margin-bottom:14px}.touch-mode .menu-option{padding:10px 12px}.touch-mode .menu-hint{margin:14px 0 8px}
+ .touch-mode .status{width:173px}.touch-mode .clock{min-width:116px;padding:8px}.touch-mode .inventory-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:14px 0}.touch-mode .slot{height:85px!important}.touch-mode .item-thumb{height:36px}.touch-mode .slot>div{font-size:11px}.touch-mode .recipe{padding:8px}.touch-mode #messages{max-width:180px}
+ .touch-tools{top:calc(env(safe-area-inset-top) + 142px)}.touch-tools button{font-size:12px!important}.touch-mode .overlay-card h2{font-size:23px}.touch-mode .overlay-card p{font-size:13px}
+}
+@media(max-height:520px){
+ .touch-mode .status{width:160px;padding:6px 9px}.touch-mode .clock{padding:5px 9px;min-width:116px}.touch-mode .clock strong{font-size:22px}.touch-mode #hud .eyebrow{display:none}.touch-mode #phase{font-size:10px}.touch-mode .bar{height:6px}.touch-mode #resources{margin-top:3px}.touch-tools{top:calc(env(safe-area-inset-top) + 86px)}
+ .touch-mode #messages{bottom:145px;max-width:210px}.touch-mode #interaction{bottom:145px}#touch-stick{width:112px;height:112px;bottom:16px}.touch-actions{grid-template-columns:repeat(2,64px);gap:7px;bottom:12px}.touch-actions button{height:50px}
+ .touch-mode .menu-card h1{font-size:30px;margin:7px 0}.touch-mode .menu-card h1 span{margin-top:5px;font-size:13px}.touch-mode .menu-card p{margin-bottom:10px;font-size:12px}.touch-mode .menu-option{padding:8px 12px;margin:7px 0}.touch-mode .name-field{margin:10px 0}.touch-mode .menu-hint{margin:10px 0}.touch-mode .menu-card,.touch-mode .overlay-card{padding:16px 22px}
+}

@@ -2,9 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>守到天明 · 末世生存初版</title>
   <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="touch-layout.css">
 </head>
 <body>
   <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
@@ -23,15 +24,23 @@
   <div id="interaction" class="hidden"></div>
   <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
   <div id="menu" class="scrim">
-    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 可玩初版 0.2</div><h1>守到天明<span>准备你的领地，活过第一晚。</span></h1>
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 可玩初版 0.8 · 支持触屏</div><h1>守到天明<span>准备你的领地，活过第一晚。</span></h1>
       <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
       <div class="menu-option selected" data-mode="0"><b>01　完整的一天</b><span>05:00开局 · 白天12分45秒，夜晚5分15秒</span></div>
       <div class="menu-option" data-mode="1"><b>02　快速试玩</b><span>21:00开局 · 45秒准备，然后进入完整夜晚</span></div>
-      <div class="menu-hint">W / S 选择　·　E 输入名字并开始</div>
+      <label class="name-field">幸存者名字<input id="name-input" maxlength="12" value="幸存者" autocomplete="off" enterkeyhint="done"></label>
+      <div class="menu-actions"><button id="start-game" class="primary" disabled>素材载入中…</button><button id="touch-toggle" aria-pressed="false">触屏操作</button></div>
+      <div class="menu-hint"><span class="keyboard-hint">W / S 选择　·　E 开始</span><span class="touch-hint">点选模式后开始。横屏玩，视野更宽。</span></div>
       <small id="asset-status">正在加载美术素材……</small><br><small>背包、地图与窗口切换时暂停游戏。</small>
     </section>
   </div>
   <div id="overlay" class="scrim hidden"><section id="overlay-card" class="overlay-card"></section></div>
+  <div id="touch-controls" class="hidden" aria-label="触屏游戏操作">
+    <div class="touch-tools"><button data-key="tab">背包</button><button data-key="m">地图</button><button data-key="escape" aria-label="暂停游戏">暂停</button><button id="fullscreen-button">全屏</button></div>
+    <div id="touch-stick" role="group" aria-label="移动摇杆"><div class="stick-ring"></div><div id="stick-knob"></div><span>移动</span></div>
+    <div class="touch-actions"><button id="touch-run" aria-label="按住奔跑">奔跑<small>按住</small></button><button data-key="e" id="touch-interact" class="primary">交互</button><button data-key="f" id="touch-build">建造</button><button data-key="g">丢弃</button></div>
+  </div>
+  <script src="touch-controls.js"></script>
   <script src="simulation.js"></script>
   <script src="asset-manifest.js"></script>
   <script src="player-animation-assets.js"></script>
