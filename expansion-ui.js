@@ -29,6 +29,9 @@
     }else if(target.type==='helper'){
       const h=game.helper;description=h.fedDay===game.day?(h.collected?'今天补给已领取。':h.ready?'中午补给已准备好。':'中午可以领取2木和1铁。'):'今天缺少食物，助手休息。';
       commands=button('helper-collect','领取助手物资','',!h.ready||h.collected)+`<p>次日05:00使用：${N[h.food]}</p>`+Object.entries(D.foods).filter(([k,f])=>k==='canned_food'||f.cost&&f.hunger>=20).map(([k])=>button('helper-food',N[k],`data-kind="${k}"`)).join('');
+    }else if(target.type==='container'){
+      description='物资已收集完，不能重复搜索。空容器仍占位置，可以拆除腾出空间。移动或受伤会中断拆除。';
+      commands=button('dismantle','拆除空容器（3秒）');
     }else {
       description=`血量 ${Number(o.hp.toFixed(1))} / ${o.maxHP}。操作时保持站立，受伤会中断。`;
       if(o.hp<o.maxHP){const k=o.material==='stone'||o.kind==='brick_wall'?'stone':o.kind==='trap'||o.kind==='iron_fence'?'iron':'wood';commands+=button('repair',`维修1秒 · ${N[k]}1恢复${k==='stone'?10:6}血`);}
@@ -46,7 +49,7 @@
         commands+=`<p>点击背包物品整格存入，点击箱内物品整格取出。</p><h3>背包</h3><div class="storage-grid">${game.inventory.map((s,i)=>s?button('store',`${thumb(s.kind)}${N[s.kind]}×${s.amount}`,`data-index="${i}"`):'').join('')}</div><h3>储物箱 · 20格</h3><div class="storage-grid">${o.storage.map((s,i)=>s?button('retrieve',`${thumb(s.kind)}${N[s.kind]}×${s.amount}`,`data-index="${i}"`):'').join('')||'空'}</div>`;
       }
     }
-    return `<div class="eyebrow">暂停中 · E交互</div><h2>${escape(N[o.kind]||o.name|| (target.type==='helper'?'后勤助手':target.type==='visitor'?'来访幸存者':o.type==='door'?'门':'墙 / 围栏'))}</h2><p>${escape(description)}</p><div class="context-actions">${commands}</div><div class="overlay-actions"><button data-key="escape">返回游戏</button></div><small class="keyboard-hint">W/S选择，E确认，Esc返回</small>`;
+    return `<div class="eyebrow">暂停中 · E交互</div><h2>${escape((o.type==='site'?D.siteNames[o.kind]:N[o.kind])||o.name|| (target.type==='container'?'空容器':target.type==='helper'?'后勤助手':target.type==='visitor'?'来访幸存者':o.type==='door'?'门':'墙 / 围栏'))}</h2><p>${escape(description)}</p><div class="context-actions">${commands}</div><div class="overlay-actions"><button data-key="escape">返回游戏</button></div><small class="keyboard-hint">W/S选择，E确认，Esc返回</small>`;
   }
   const api={inventory,context,thumb,cost};window.ExpansionUI=api;
 })();

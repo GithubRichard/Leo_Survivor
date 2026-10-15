@@ -5,6 +5,7 @@
     potato:['土豆',20],vegetable:['蔬菜',20],raw_meat:['生肉',20],grain:['谷物',20],canned_food:['罐头',20],arrow:['箭',50],bolt:['弩箭',50],shotgun_shell:['散弹',50],bandage:['绷带',20],medkit:['急救包',20],molotov:['燃烧瓶',20],
     baked_potato:['烤土豆',20],roast_meat:['烤肉',20],vegetable_soup:['蔬菜汤',20],grain_porridge:['谷物粥',20],meat_vegetable_stew:['肉菜炖锅',20],potato_meat_pie:['土豆肉派',20],herb_tea:['药草茶',20],jerky:['肉干',20]
   };
+  const siteNames={kitchen:'厨房储物处',misc:'杂物柜',supply:'补给箱',freezer:'冷柜',repair_shop:'维修铺物资箱',pharmacy:'药店物资柜',security_room:'保安室物资箱',stone_pile:'石堆',water_point:'公共水点',herb_bed:'花圃'};
   const weapons={
     fists:{name:'徒手',day:1,cost:{},damage:1,interval:1,range:1,stamina:0},
     wood_club:{name:'木棍',day:1,cost:{wood:2},damage:1,interval:.7,range:1.2,stamina:.5},
@@ -42,6 +43,6 @@
     trap:{day:5,cost:{iron:2,scrap:1},hp:12,level:1},ballista:{day:5,cost:{wood:4,iron:3,scrap:2},hp:30,level:1},repeating:{day:10,cost:{iron:5,scrap:3,parts:2},hp:36,level:2},door:{day:1,cost:{wood:3,iron:1},hp:18,level:1}
   };
   const trades=[{cost:{wood:3},gain:{iron:1}},{cost:{iron:1},gain:{clean_water:2}},{cost:{iron:1},gain:{canned_food:1}},{cost:{iron:2},gain:{cloth:2}},{cost:{iron:3},gain:{herb:2}}];
-  const api={items,weapons,builds,crafts,foods,enemies,upgrades,trades};
+  const api={items,siteNames,weapons,builds,crafts,foods,enemies,upgrades,trades};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ExpansionData=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

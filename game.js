@@ -145,7 +145,7 @@
         if(site.hp<=0)continue;
         const outside=['stone_pile','water_point','herb_bed'].includes(site.kind);
         if(!outside&&!inside||site.searched&&!site.repeat&&site.kind==='stone_pile')continue;
-        const key=site.kind==='supply'?`supply_box_${site.searched?'open':'closed'}`:site.kind==='freezer'?`freezer_${site.searched?'open':'closed'}`:site.kind==='herb_bed'?`herb_bed_${site.searched?'empty':'full'}`:site.kind==='misc'?'wood_cabinet':site.kind==='kitchen'?'stove':['repair_shop','security_room','pharmacy'].includes(site.kind)?'storage_chest_closed':site.kind;
+        const key=site.kind==='supply'?`supply_box_${site.searched?'open':'closed'}`:site.kind==='freezer'?`freezer_${site.searched?'open':'closed'}`:site.kind==='herb_bed'?`herb_bed_${site.searched?'empty':'full'}`:site.kind==='misc'?'wood_cabinet':site.kind==='kitchen'?'stove':['repair_shop','security_room','pharmacy'].includes(site.kind)?`storage_chest_${site.searched?'open':'closed'}`:site.kind;
         items.push({depth:Math.min(site.x+site.y,home.x+home.y-.1),draw:()=>{const q=project(site.x,site.y);if(!art.sprite(ctx,key,q.x,q.y,site.kind==='water_point'?45:30,{width:44}))box({...site},.4,'#8c8a69','#505948','#767e5a');}});
       }
     }
@@ -236,7 +236,7 @@
     if(!focused&&mode==='play')text='游戏已暂停，回到此窗口继续。';
     else if(mode==='play'&&placement){const error=game.canPlace(buildKind,game.placementPoint());text=`${NAMES[buildKind]} · ${error||'可放置'}　｜　E切换　F确认　Tab打开背包并取消`;}
     else if(mode==='play'&&game.action)text='正在操作，移动或受伤会中断；可点取消操作。';
-    else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name} → 1${NAMES[object.material]}`:type==='device'||type==='structure'?`E 管理${NAMES[object.kind]||'防线'}（维修 / 升级 / 使用）`:type==='site'?`E 搜索 / 采集（${object.time}秒）`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
+    else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name} → 1${NAMES[object.material]}`:type==='container'?`E 查看${D.siteNames[object.kind]||'容器'}（已搜空，可拆除）`:type==='device'||type==='structure'?`E 管理${NAMES[object.kind]||'防线'}（维修 / 升级 / 使用）`:type==='site'?`E 搜索 / 采集${D.siteNames[object.kind]||'物资'}（${object.time}秒）`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
     if(!text&&mode==='play')text=`E 攻击 · ${NAMES[game.player.weapon]||'徒手'} · 朝向前方敌人`;
     if(touch.enabled)text=text.replace(/E /g,'交互：').replace('E切换　F确认　Tab打开背包并取消','点切换装置 / 确认放置；点背包取消').replace('按F','点建造');
     $('interaction').textContent=text;$('interaction').classList.toggle('hidden',!text);
@@ -281,7 +281,7 @@
       if(game.action){game.cancelAction();return;}
       if(game.attack())return;
       const target=game.nearbyInteraction();
-      if(target&&['visitor','helper','device','structure'].includes(target.type)){contextTarget=target;contextChoice=0;openOverlay('context');}
+      if(target&&['visitor','helper','device','structure','container'].includes(target.type)){contextTarget=target;contextChoice=0;openOverlay('context');}
       else if(target)game.interact(target);
     }
   }

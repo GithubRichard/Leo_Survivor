@@ -115,7 +115,7 @@
         const extra={...gain};for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s)extra[s.kind]=(extra[s.kind]||0)+s.amount;
         for(const j of o.jobs||[])for(const [k,n] of Object.entries(j.cost))extra[k]=(extra[k]||0)+n;
         if(o.crop)extra[o.crop.kind]=(extra[o.crop.kind]||0)+1;
-        if(!this.pay({},extra))return;o.hp=0;this.devices=this.devices.filter(d=>d!==o);if(this.player.weapon!=='fists'&&!this.count(this.player.weapon))this.player.weapon='fists';this.announce('拆除完成，已返还全部投入材料。');
+        if(!this.pay({},extra))return;o.hp=0;this.devices=this.devices.filter(d=>d!==o);if(this.player.weapon!=='fists'&&!this.count(this.player.weapon))this.player.weapon='fists';this.announce(o.type==='site'&&o.searched?'空容器已拆除。':'拆除完成，已返还全部投入材料。');
       }else if(a.type==='repair'){
         const k=o.material==='stone'||o.kind==='brick_wall'?'stone':o.kind==='trap'||o.kind==='iron_fence'?'iron':'wood';if(o.hp>=o.maxHP)return;if(this.pay({[k]:1}))o.hp=Math.min(o.maxHP,o.hp+(k==='stone'?10:6));
       }else if(a.type==='upgrade'){
@@ -169,7 +169,7 @@
     }
     nearbyInteraction(){
       const choices=[];for(const h of this.nearbyHomes(this.player,10)){
-        for(const s of h.sites)if(s.hp>0&&dist(s,this.player)<1.8&&(s.blocking||!s.searched||s.repeat))choices.push({type:s.searched&&s.blocking?'structure':'site',object:s,distance:dist(s,this.player)});
+        for(const s of h.sites)if(s.hp>0&&dist(s,this.player)<1.8&&(s.blocking||!s.searched||s.repeat))choices.push({type:s.searched&&!s.repeat&&s.blocking?'container':'site',object:s,distance:dist(s,this.player)});
         for(const o of h.objects)if(o.hp>0&&dist(o,this.player)<1.6)choices.push({type:o.type==='furniture'?'furniture':'structure',object:o,distance:dist(o,this.player)});
       }
       for(const o of this.devices)if(o.hp>0&&dist(o,this.player)<1.8)choices.push({type:'device',object:o,distance:dist(o,this.player)});
@@ -177,7 +177,7 @@
       for(const o of this.visitors)if(dist(o,this.player)<1.8)choices.push({type:o.recruited?'helper':'visitor',object:o,distance:dist(o,this.player)});
       return choices.filter(c=>this.clearLine(this.player,c.object,c.object)).sort((a,b)=>a.distance-b.distance)[0]||null;
     }
-    interact(target){if(target?.type==='site'){const o=target.object;return this.beginAction('search',o.time,{target:o.id});}if(target?.type==='drop')return super.interact(target);if(target?.type==='furniture')return this.dismantle(target.object);return false;}
+    interact(target){if(target?.type==='site'){const o=target.object;if(o.hp<=0||o.searched&&!o.repeat)return false;return this.beginAction('search',o.time,{target:o.id});}if(target?.type==='drop')return super.interact(target);if(target?.type==='furniture')return this.dismantle(target.object);return false;}
     drop(){if(this.action){this.announce('操作中无法丢弃。');return false;}const kind=this.inventory[this.selectedSlot]?.kind,result=super.drop();if(result)this.recordResource('spent',{[kind]:1});if(!this.count(this.player.weapon))this.player.weapon='fists';return result;}
     equip(kind){if(kind==='fists'||this.count(kind)&&D.weapons[kind]){this.player.weapon=kind;this.announce(`已装备${S.NAMES[kind]||'徒手'}。`);return true;}return false;}
     use(kind){
@@ -354,12 +354,13 @@
         objects:h.objects.filter(o=>o.hp!==o.maxHP||o.level||o.open).map(o=>({id:o.id,hp:o.hp,maxHP:o.maxHP,level:o.level||0,open:!!o.open,invested:o.invested})),
         sites:h.sites.filter(s=>s.searched||s.blocking&&s.hp!==s.maxHP).map(s=>({id:s.id,searched:s.searched,hp:Number.isFinite(s.hp)?s.hp:null}))
       })).filter(h=>h.objects.length||h.sites.length);
-      return copy({version:1,day:this.day,seconds:this.seconds,minutes:this.minutes,player:this.player,inventory:this.inventory,homes:homeData,devices:this.devices.map(({target,...d})=>d),zombies:this.zombies,visitors:this.visitors,projectiles:this.projectiles,zones:this.zones,effects:this.effects,nextWave:this.nextWave,plan:this.plan,pendingSpawn:this.pendingSpawn,waveDirections:this.waveDirections,warnedWaves:this.warnedWaves,spawned:this.spawned,kills:this.kills,deviceId:this.deviceId,visitFailures:this.visitFailures,visitDay:this.visitDay,helper:this.helper,mainBuff:this.mainBuff,teaBuff:this.teaBuff,foodRegen:this.foodRegen,bandage:this.bandage,nextRecoveryAt:Number.isFinite(this.nextRecoveryAt)?this.nextRecoveryAt:null,lastSpent:Number.isFinite(this.lastSpent)?this.lastSpent:null,lastRecoveryAt:this.lastRecoveryAt,recoveryInterval:this.recoveryInterval,attackAt:this.attackAt,foodAt:this.foodAt,waterAt:this.waterAt,throwAt:this.throwAt,starving:this.starving||0,acidTime:this.acidTime||0,fireTime:this.fireTime||0,history:this.history,stats:this.stats,result:this.result,deathReason:this.deathReason||null});
+      return copy({version:1,day:this.day,seconds:this.seconds,minutes:this.minutes,player:this.player,inventory:this.inventory,drops:this.drops,homes:homeData,devices:this.devices.map(({target,...d})=>d),zombies:this.zombies,visitors:this.visitors,projectiles:this.projectiles,zones:this.zones,effects:this.effects,nextWave:this.nextWave,plan:this.plan,pendingSpawn:this.pendingSpawn,waveDirections:this.waveDirections,warnedWaves:this.warnedWaves,spawned:this.spawned,kills:this.kills,deviceId:this.deviceId,visitFailures:this.visitFailures,visitDay:this.visitDay,helper:this.helper,mainBuff:this.mainBuff,teaBuff:this.teaBuff,foodRegen:this.foodRegen,bandage:this.bandage,nextRecoveryAt:Number.isFinite(this.nextRecoveryAt)?this.nextRecoveryAt:null,lastSpent:Number.isFinite(this.lastSpent)?this.lastSpent:null,lastRecoveryAt:this.lastRecoveryAt,recoveryInterval:this.recoveryInterval,attackAt:this.attackAt,foodAt:this.foodAt,waterAt:this.waterAt,throwAt:this.throwAt,starving:this.starving||0,acidTime:this.acidTime||0,fireTime:this.fireTime||0,history:this.history,stats:this.stats,result:this.result,deathReason:this.deathReason||null});
     }
     static restore(data){
       if(!data||data.version!==1||!Array.isArray(data.inventory)||!data.player||!Number.isFinite(data.day))throw new Error('存档格式不兼容');
-      const game=new SurvivalGame();for(const [key,value] of Object.entries(data))if(!['version','homes'].includes(key))game[key]=copy(value);
-      game.homes=new Map();for(const saved of data.homes){const h=game.getHome(saved.cx,saved.cy);
+      const game=new SurvivalGame();for(const [key,value] of Object.entries(data))if(!['version','homes','drops'].includes(key))game[key]=copy(value);
+      game.drops=Array.isArray(data.drops)?copy(data.drops):[];
+      game.drops=Array.isArray(data.drops)?copy(data.drops):[];game.homes=new Map();for(const saved of data.homes){const h=game.getHome(saved.cx,saved.cy);
         if(saved.format==='delta'){for(const state of saved.objects){const o=h.objects.find(o=>o.id===state.id);if(o)Object.assign(o,state);}for(const state of saved.sites){const s=h.sites.find(s=>s.id===state.id);if(s)Object.assign(s,state,{hp:state.hp===null?Infinity:state.hp});}}
         else {h.objects=saved.objects.map(o=>({...o,home:h}));h.sites=saved.sites.map(o=>({...o,hp:o.hp===null?Infinity:o.hp,home:h}));}
         h.furniture=h.objects.filter(o=>o.type==='furniture');h.doors=h.objects.filter(o=>o.type==='door');
