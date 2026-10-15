@@ -360,7 +360,7 @@
       if(!data||data.version!==1||!Array.isArray(data.inventory)||!data.player||!Number.isFinite(data.day))throw new Error('存档格式不兼容');
       const game=new SurvivalGame();for(const [key,value] of Object.entries(data))if(!['version','homes','drops'].includes(key))game[key]=copy(value);
       game.drops=Array.isArray(data.drops)?copy(data.drops):[];
-      game.drops=Array.isArray(data.drops)?copy(data.drops):[];game.homes=new Map();for(const saved of data.homes){const h=game.getHome(saved.cx,saved.cy);
+      game.homes=new Map();for(const saved of data.homes){const h=game.getHome(saved.cx,saved.cy);
         if(saved.format==='delta'){for(const state of saved.objects){const o=h.objects.find(o=>o.id===state.id);if(o)Object.assign(o,state);}for(const state of saved.sites){const s=h.sites.find(s=>s.id===state.id);if(s)Object.assign(s,state,{hp:state.hp===null?Infinity:state.hp});}}
         else {h.objects=saved.objects.map(o=>({...o,home:h}));h.sites=saved.sites.map(o=>({...o,hp:o.hp===null?Infinity:o.hp,home:h}));}
         h.furniture=h.objects.filter(o=>o.type==='furniture');h.doors=h.objects.filter(o=>o.type==='door');
