@@ -1,0 +1,50 @@
+[
+  {
+    "id": "molotov",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c58d74f4-32c7-4f66-8a1e-c4a24578d3e3.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One dark gray glass bottle with a gray-white cloth wick protruding from its neck. UNLIT, no flame. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "wood_fence",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-034be44b-b8da-4a60-8086-c5ef507a1191.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One one-meter modular low wooden fence, TWO ochre vertical posts and TWO horizontal rails, no iron rods. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "stone",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-5fd4436c-a348-404c-9591-f570f55836b5.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One grouping of TWO chunky dark gray polygon stones, irregular cuboid geometry. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "hunger_bar",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3d0ca4ff-e135-4034-ac4e-ad111168827b.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D FRONT VIEW interface asset. ONE long horizontal continuous solid dark ochre fill inside charcoal rectangular outline. Aspect ratio 6:1. No segmented cells, no numbers or icon. Transparent outside. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "iron_fence",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-2c1dcf8d-076a-4267-87cd-5fcae774224d.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One one-meter modular reinforced iron fence, thick charcoal top and bottom frame and THREE thick vertical rods, two gray posts; heavier than initial fence. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "progress_bar",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-67a1067c-e9ab-41ae-9e93-9df78ba4b3f0.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D FRONT VIEW interface asset. ONE long horizontal continuous gray-yellow progress bar in charcoal rectangular frame. Aspect ratio 6:1, no cells, no text. Transparent outside. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "cloth",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3642afbd-e321-4470-8ad9-8b26227ff4d7.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One folded gray-white cloth square, only two large fold planes. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "brick_wall",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a43267ec-fe15-4f9b-959b-269a15b03d26.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One one-meter low gray block wall, only THREE large rectangular masonry blocks and flat shading, no small brick texture. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  }
+]

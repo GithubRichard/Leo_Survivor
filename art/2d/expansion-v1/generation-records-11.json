@@ -1,0 +1,66 @@
+[
+  {
+    "id": "planter_potato_mature",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d274d683-0960-4e3a-8e85-2e413d0121cd.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO larger olive leaf clusters and TWO ochre potato geometric blocks partially showing on soil, mature harvestable. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/planter_empty.png"
+    ]
+  },
+  {
+    "id": "planter_vegetable_seedling",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a7067090-53eb-4f70-8dd2-33a17c25e831.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO tiny paired pointed olive leaf sprouts, clearly small seedlings. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/planter_empty.png"
+    ]
+  },
+  {
+    "id": "planter_vegetable_mature",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-90287258-5256-437c-b659-63da8b2c212f.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same planter with TWO large broad folded gray-olive vegetable leaf heads, mature harvestable, no potato. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/planter_empty.png"
+    ]
+  },
+  {
+    "id": "herb_bed_empty",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-72a5535e-77dc-4a41-9814-8c4c22785d5f.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Remove all herb leaves and stems; preserve identical small low polygon soil bed and camera. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/herb_bed_full.png"
+    ]
+  },
+  {
+    "id": "freezer_open",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-23a719e7-2f27-4758-bdb8-ce562e68549d.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same freezer, hinged pale gray lid opened to 90 degrees, simple empty dark interior, preserve body and camera. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/freezer_closed.png"
+    ]
+  },
+  {
+    "id": "yard_gate_reinforced_closed",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-6bdcd9eb-205f-4122-9271-b097352f76cb.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Use reference as exact base gate/door. Add TWO broad charcoal iron braces across the leaf to clearly reinforce it. Keep original framing, CLOSED leaf orientation, simple muted ochre-gray style. No second door. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/yard_gate_closed.png"
+    ]
+  },
+  {
+    "id": "yard_gate_reinforced_open",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-35b21224-9eb0-416c-a93f-59567879ecc7.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same reinforced door and frame as reference. Swing the SINGLE leaf 90 degrees open; braces move with leaf; doorway visibly clear. Preserve dimensions and camera. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/yard_gate_reinforced_closed.png"
+    ]
+  },
+  {
+    "id": "house_door_reinforced_closed",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d035ffcd-26ba-4ddb-94dc-b46d27ae5682.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Use reference as exact base gate/door. Add TWO broad charcoal iron braces across the leaf to clearly reinforce it. Keep original framing, CLOSED leaf orientation, simple muted ochre-gray style. No second door. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/house_door_closed.png"
+    ]
+  }
+]

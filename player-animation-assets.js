@@ -1,4 +1,4 @@
-/* Animation frames use calibrated head/ground anchors; PNGs are unchanged. */
+/* Eight directions, aligned using the art delivery manifest. */
 window.PLAYER_ANIMATION = {
   "order": [
     0,
@@ -12,236 +12,472 @@ window.PLAYER_ANIMATION = {
       {
         "key": "player_run_east_01",
         "src": "art/2d/player-run-v1/player_run_east_01.png",
-        "crop": [
-          305,
-          182,
-          927,
-          1090
-        ],
         "size": [
           1208,
           1302
         ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
         "pivot": [
-          684,
+          584.06,
           1090
         ],
-        "bodyHeight": 908
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_east_02",
         "src": "art/2d/player-run-v1/player_run_east_02.png",
-        "crop": [
-          444,
-          178,
-          814,
-          1111
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          688,
-          1111
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 933
+        "pivot": [
+          602.29,
+          1095.38
+        ],
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_east_03",
         "src": "art/2d/player-run-v1/player_run_east_03.png",
-        "crop": [
-          277,
-          183,
-          997,
-          1116
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          699,
-          1116
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 933
+        "pivot": [
+          614.61,
+          1101.53
+        ],
+        "bodyHeight": 937.44
       }
     ],
     "south": [
       {
         "key": "player_run_south_01",
         "src": "art/2d/player-run-v1/player_run_south_01.png",
-        "crop": [
-          366,
-          154,
-          853,
-          1157
-        ],
         "size": [
           1208,
           1302
         ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
         "pivot": [
-          613.0,
+          580.34,
           1157
         ],
-        "bodyHeight": 1003
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_south_02",
         "src": "art/2d/player-run-v1/player_run_south_02.png",
-        "crop": [
-          384,
-          162,
-          853,
-          1078
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          613,
-          1078
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 916
+        "pivot": [
+          606.2,
+          1158.5
+        ],
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_south_03",
         "src": "art/2d/player-run-v1/player_run_south_03.png",
-        "crop": [
-          361,
-          86,
-          867,
-          1199
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          617.0,
-          1199
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 1113
+        "pivot": [
+          676.39,
+          1158.99
+        ],
+        "bodyHeight": 937.44
       }
     ],
     "west": [
       {
         "key": "player_run_west_01",
         "src": "art/2d/player-run-v1/player_run_west_01.png",
-        "crop": [
-          342,
-          160,
-          939,
-          1089
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          547.0,
-          1089
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 929
+        "pivot": [
+          655.64,
+          1088
+        ],
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_west_02",
         "src": "art/2d/player-run-v1/player_run_west_02.png",
-        "crop": [
-          347,
-          159,
-          881,
-          1061
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          549.0,
-          1061
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 902
+        "pivot": [
+          660.11,
+          1095.81
+        ],
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_west_03",
         "src": "art/2d/player-run-v1/player_run_west_03.png",
-        "crop": [
-          315,
-          156,
-          968,
-          1106
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          548,
-          1106
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 950
+        "pivot": [
+          644.64,
+          1095.78
+        ],
+        "bodyHeight": 937.44
       }
     ],
     "north": [
       {
         "key": "player_run_north_01",
         "src": "art/2d/player-run-v1/player_run_north_01.png",
-        "crop": [
-          389,
-          159,
-          825,
-          1119
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          630.0,
-          1119
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 960
+        "pivot": [
+          607.96,
+          1118
+        ],
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_north_02",
         "src": "art/2d/player-run-v1/player_run_north_02.png",
-        "crop": [
-          391,
-          158,
-          850,
-          1090
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          633,
-          1090
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 932
+        "pivot": [
+          632.44,
+          1128.69
+        ],
+        "bodyHeight": 937.44
       },
       {
         "key": "player_run_north_03",
         "src": "art/2d/player-run-v1/player_run_north_03.png",
-        "crop": [
-          386,
-          164,
-          828,
-          1123
-        ],
         "size": [
           1208,
           1302
         ],
-        "pivot": [
-          631,
-          1123
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
         ],
-        "bodyHeight": 959
+        "pivot": [
+          607.57,
+          1119.44
+        ],
+        "bodyHeight": 937.44
+      }
+    ],
+    "southeast": [
+      {
+        "key": "player_run_southeast_01",
+        "src": "art/2d/player-run-v1/player_run_southeast_01.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          581.3,
+          1151
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_southeast_02",
+        "src": "art/2d/player-run-v1/player_run_southeast_02.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          588.04,
+          1157.9
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_southeast_03",
+        "src": "art/2d/player-run-v1/player_run_southeast_03.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          583.22,
+          1152.93
+        ],
+        "bodyHeight": 937.44
+      }
+    ],
+    "northeast": [
+      {
+        "key": "player_run_northeast_01",
+        "src": "art/2d/player-run-v1/player_run_northeast_01.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          641.27,
+          1164
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_northeast_02",
+        "src": "art/2d/player-run-v1/player_run_northeast_02.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          630.7,
+          1195.95
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_northeast_03",
+        "src": "art/2d/player-run-v1/player_run_northeast_03.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          646.98,
+          1178.17
+        ],
+        "bodyHeight": 937.44
+      }
+    ],
+    "southwest": [
+      {
+        "key": "player_run_southwest_01",
+        "src": "art/2d/player-run-v1/player_run_southwest_01.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          650.35,
+          1126
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_southwest_02",
+        "src": "art/2d/player-run-v1/player_run_southwest_02.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          642.44,
+          1135.56
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_southwest_03",
+        "src": "art/2d/player-run-v1/player_run_southwest_03.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          666.91,
+          1121.5
+        ],
+        "bodyHeight": 937.44
+      }
+    ],
+    "northwest": [
+      {
+        "key": "player_run_northwest_01",
+        "src": "art/2d/player-run-v1/player_run_northwest_01.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          615.33,
+          1155
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_northwest_02",
+        "src": "art/2d/player-run-v1/player_run_northwest_02.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          633.02,
+          1177.62
+        ],
+        "bodyHeight": 937.44
+      },
+      {
+        "key": "player_run_northwest_03",
+        "src": "art/2d/player-run-v1/player_run_northwest_03.png",
+        "size": [
+          1208,
+          1302
+        ],
+        "crop": [
+          0,
+          0,
+          1208,
+          1302
+        ],
+        "pivot": [
+          625.99,
+          1162.03
+        ],
+        "bodyHeight": 937.44
       }
     ]
   }

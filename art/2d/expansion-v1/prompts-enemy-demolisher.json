@@ -1,0 +1,111 @@
+[
+  {
+    "id": "zombie_demolisher_south",
+    "label": "拆墙者·南",
+    "category": "敌人",
+    "file": "zombie_demolisher_south.png",
+    "description": "ONE zombie character, oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE new DEMOLISHER zombie. Giant squared forearms twice as thick as upper arms, massive fists reaching knee level, broad angular shoulders but narrow triangular waist and slim legs. Sleeveless charcoal shirt with ONE broad ochre belt. Olive-gray polygon skin and block bald head. NO weapon or tool. Different from round barrel brute. Facing SOUTH toward viewer; full body, fixed elevated 45-degree camera, generous transparent margins, no shadows or glow.",
+    "enemyType": "demolisher",
+    "direction": "south",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_demolisher_east",
+    "label": "拆墙者·东",
+    "category": "敌人",
+    "file": "zombie_demolisher_east.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_demolisher_south"
+    ],
+    "enemyType": "demolisher",
+    "direction": "east",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_demolisher_west",
+    "label": "拆墙者·西",
+    "category": "敌人",
+    "file": "zombie_demolisher_west.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_demolisher_south"
+    ],
+    "enemyType": "demolisher",
+    "direction": "west",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_demolisher_north",
+    "label": "拆墙者·北",
+    "category": "敌人",
+    "file": "zombie_demolisher_north.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_demolisher_south"
+    ],
+    "enemyType": "demolisher",
+    "direction": "north",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_demolisher_south_windup",
+    "label": "拆墙者·南前摇",
+    "category": "敌人",
+    "file": "zombie_demolisher_south_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_demolisher_south"
+    ],
+    "enemyType": "demolisher",
+    "direction": "south",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_demolisher_east_windup",
+    "label": "拆墙者·东前摇",
+    "category": "敌人",
+    "file": "zombie_demolisher_east_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_demolisher_east"
+    ],
+    "enemyType": "demolisher",
+    "direction": "east",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_demolisher_west_windup",
+    "label": "拆墙者·西前摇",
+    "category": "敌人",
+    "file": "zombie_demolisher_west_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_demolisher_west"
+    ],
+    "enemyType": "demolisher",
+    "direction": "west",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_demolisher_north_windup",
+    "label": "拆墙者·北前摇",
+    "category": "敌人",
+    "file": "zombie_demolisher_north_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_demolisher_north"
+    ],
+    "enemyType": "demolisher",
+    "direction": "north",
+    "state": "windup"
+  }
+]

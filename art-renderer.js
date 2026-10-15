@@ -1,18 +1,22 @@
 /* 直接使用美术PNG。图片与逻辑共用地面锚点，地砖只投影顶面。 */
 (() => {
-  const entries={...(window.GAME_ASSETS||{})},images={},failed=[];
+  const entries={...(window.GAME_ASSETS||{}),...(window.EXPANSION_ASSETS||{})},images={},failed=[],pending={};
   const animation=window.PLAYER_ANIMATION;
   for(const frames of Object.values(animation?.frames||{}))for(const frame of frames)entries[frame.key]=frame;
   let ready=false;
-  const loading=Promise.all(Object.entries(entries).map(([key,data])=>new Promise(resolve=>{
-    const img=new Image();images[key]=img;img.onload=resolve;img.onerror=()=>{failed.push(data.src);resolve();};img.src=data.src;
-  }))).then(()=>{ready=true;});
-  function available(key){return images[key]?.complete&&images[key].naturalWidth>0;}
+  function load(key){
+    if(pending[key])return pending[key];const data=entries[key];if(!data)return Promise.resolve();
+    return pending[key]=new Promise(resolve=>{const img=new Image();images[key]=img;img.onload=()=>{
+      if(!/^house_|^yard_|^grass$|^road$|_(base|roof)$/.test(key)&&img.width>384){const small=document.createElement('canvas');small.width=384;small.height=Math.round(img.height*384/img.width);small.getContext('2d').drawImage(img,0,0,small.width,small.height);images[key]=small;}
+      resolve();};img.onerror=()=>{failed.push(data.src);resolve();};img.src=data.src;});
+  }
+  const loading=Promise.all(Object.keys(entries).filter(key=>!entries[key].lazy).map(load)).then(()=>{ready=true;});
+  function available(key){if(entries[key]&&!pending[key])load(key);const img=images[key];return Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));}
   function sprite(ctx,key,x,y,height,{width,flip=false,anchorY=1}={}){
     if(!available(key))return false;
     const [l,t,r,b]=entries[key].crop,sw=r-l,sh=b-t,w=width||height*sw/sh;
     ctx.save();ctx.translate(x,y);if(flip)ctx.scale(-1,1);
-    ctx.drawImage(images[key],l,t,sw,sh,-w/2,-height*anchorY,w,height);ctx.restore();return true;
+    const ratio=images[key].width/entries[key].size[0];ctx.drawImage(images[key],l*ratio,t*ratio,sw*ratio,sh*ratio,-w/2,-height*anchorY,w,height);ctx.restore();return true;
   }
   function animatedPlayer(ctx,facing,x,y,phase,height=50){
     if(!animation)return false;
@@ -55,7 +59,15 @@
   // 每面墙单独投影；竖直方向始终使用世界高度，不剪切整栋房屋。
   function house(ctx,home,project,inside=false,front=false){
     const point=(x,y,z=0)=>project(home.x+x,home.y+y,z);
-    const wall=(source,a,b,alpha=1)=>{ctx.save();ctx.globalAlpha=alpha;surface(ctx,'house_base',source,[point(...a),point(...b),point(...b,2.2),point(...a,2.2)],'#c0bbaa');ctx.restore();};
+    const special=home.kind&&home.kind!=='house',key=special?`${home.kind}_base`:'house_base';
+    const wall=(source,a,b,alpha=1)=>{
+      ctx.save();ctx.globalAlpha=alpha;ctx.beginPath();
+      const segments=home.objects.filter(o=>o.type==='wall'&&o.hp>0&&(a[0]===b[0]?Math.abs(o.x-home.x-a[0])<.15&&o.y>=home.y+Math.min(a[1],b[1])-.1&&o.y<=home.y+Math.max(a[1],b[1])+.1:Math.abs(o.y-home.y-a[1])<.15&&o.x>=home.x+Math.min(a[0],b[0])-.1&&o.x<=home.x+Math.max(a[0],b[0])+.1));
+      for(const o of segments){const aa=a[0]===b[0]?[a[0],o.y-home.y-o.h/2]:[o.x-home.x-o.w/2,a[1]],bb=a[0]===b[0]?[a[0],o.y-home.y+o.h/2]:[o.x-home.x+o.w/2,a[1]];[point(...aa),point(...bb),point(...bb,2.2),point(...aa,2.2)].forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();}
+      ctx.clip();
+      if(special){const meta=entries[key],c=meta?.crop||[0,0,1280,1280],w=c[2]-c[0],h=c[3]-c[1],p=(x,y)=>({x:c[0]+w*x,y:c[1]+h*y});source=home.kind==='food_shop'?[p(.2,.72),p(.66,.5),p(.66,.05),p(.2,.3)]:[p(.43,.48),p(.92,.66),p(.92,.32),p(.43,.04)];}
+      surface(ctx,key,source,[point(...a),point(...b),point(...b,2.2),point(...a,2.2)],special?'#505154':'#c0bbaa');ctx.restore();
+    };
     if(!front){
       wall([{x:350,y:418},{x:553,y:314},{x:553,y:121},{x:350,y:312}],[-5,0],[-5,-6]);
       wall([{x:553,y:314},{x:1115,y:578},{x:1115,y:380},{x:553,y:121}],[-5,-6],[5,-6]);
@@ -73,6 +85,7 @@
   }
   function roof(ctx,home,project){
     const p=(x,y,z)=>project(home.x+x,home.y+y,z);
+    if(home.kind&&home.kind!=='house'){const key=home.kind+'_roof',meta=entries[key];if(meta){const [l,t,r,b]=meta.crop;return surface(ctx,key,[{x:l,y:(t+b)/2},{x:(l+r)/2,y:b},{x:r,y:(t+b)/2},{x:(l+r)/2,y:t}],[p(-5.2,.2,2.2),p(5.2,.2,2.2),p(5.2,-6.2,2.2),p(-5.2,-6.2,2.2)],'#57595b');}}
     // 旧三角屋顶的坡面纹理，屋檐直接落在同一组墙顶坐标上。
     surface(ctx,'house_roof',[{x:520,y:127},{x:1040,y:532},{x:1284,y:617},{x:765,y:212}],
       [p(-5.2,-3,3.6),p(5.2,-3,3.6),p(5.2,-6.2,2.2),p(-5.2,-6.2,2.2)],'#75483c');
@@ -89,6 +102,7 @@
     return surface(ctx,key,source,dest,key==='grass'?'#63664c':'#3f433a');
   }
   function door(ctx,o,room,project){
+    if(o.level){const key=`${room?'house_door':'yard_gate'}_reinforced_${o.open?'open':'closed'}`,q=project(o.x,o.y);return sprite(ctx,key,q.x,q.y,room?58:37,{width:room?46:64,anchorY:.92});}
     const key=`${room?'house_door':'yard_gate'}_${o.open?'open':'closed'}`;
     if(!available(key))return false;
     // 开关状态使用同一门框三点标定；只改变门扇姿态，不改变尺寸。

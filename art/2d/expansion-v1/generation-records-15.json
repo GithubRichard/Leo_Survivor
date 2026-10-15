@@ -1,0 +1,82 @@
+[
+  {
+    "id": "zombie_screamer_west",
+    "file": "zombie_screamer_west.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_screamer_south.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1ada045a-37f9-4b10-b0a1-83ece7765b26.png",
+    "savedAt": "2026-10-11T18:31:38.000Z"
+  },
+  {
+    "id": "zombie_demolisher_north",
+    "file": "zombie_demolisher_north.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve oversized massive forearms but NARROW waist, angular shoulders, charcoal short shirt with ochre belt and olive-gray skin. No weapon, distinct from barrel-bodied brute. Full body fixed elevated camera, no image rotation.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_demolisher_south.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-fafce2ce-dc16-410e-817a-d003d09e24a3.png",
+    "savedAt": "2026-10-11T18:34:10.468Z"
+  },
+  {
+    "id": "zombie_brute_south_windup",
+    "file": "zombie_brute_south_windup.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_brute_south.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-27d4013c-8b0b-4fbf-a7a1-d5c32dcc7bd1.png",
+    "savedAt": "2026-10-11T18:34:16.125Z"
+  },
+  {
+    "id": "zombie_brute_east_windup",
+    "file": "zombie_brute_east_windup.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_brute_east.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a539e4ea-ccc6-4ef3-8d23-81fcd8514173.png",
+    "savedAt": "2026-10-11T18:36:07.850Z"
+  },
+  {
+    "id": "zombie_screamer_north",
+    "file": "zombie_screamer_north.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve thin long neck, narrow shoulders, exaggerated ochre angular collar, charcoal clothes, olive-gray skin, very slim body. Full body fixed elevated camera, no image rotation.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_screamer_south.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e4a85656-52a1-4c75-97d1-13c9838e00f3.png",
+    "savedAt": "2026-10-11T18:36:45.130Z"
+  },
+  {
+    "id": "zombie_demolisher_south_windup",
+    "file": "zombie_demolisher_south_windup.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: ONE massive arm lifted high overhead to strike a wall; second arm down, obvious windup. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_demolisher_south.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-77c0b6ad-76ed-4c66-9125-593dd67eca2c.png",
+    "savedAt": "2026-10-11T18:35:11.918Z"
+  },
+  {
+    "id": "zombie_brute_west_windup",
+    "file": "zombie_brute_west_windup.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_brute_west.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-77830af4-641e-486d-80fd-5ea9bde5d42b.png",
+    "savedAt": "2026-10-11T18:36:50.755Z"
+  },
+  {
+    "id": "zombie_screamer_south_windup",
+    "file": "zombie_screamer_south_windup.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted back mouth open, BOTH arms spread sideways in screaming windup, no sound ring embedded. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/zombie_screamer_south.png"
+    ],
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d098f445-29bd-4797-95a0-565dc63c5ed4.png",
+    "savedAt": "2026-10-11T18:37:27.711Z"
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "house_door_reinforced_open",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e8aca150-b870-4b2b-936e-652b0a637efc.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Same reinforced door and frame as reference. Swing the SINGLE leaf 90 degrees open; braces move with leaf; doorway visibly clear. Preserve dimensions and camera. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/house_door_reinforced_closed.png"
+    ]
+  },
+  {
+    "id": "food_shop_base",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-bb2e2a31-899a-48e4-b602-f3fbdd056771.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: wide squat charcoal shop shell with ochre short awning and ONE can-shaped facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "food_shop_roof",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d733f592-12e2-4caa-a53d-5afadff1fd60.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/food_shop_base.png"
+    ]
+  },
+  {
+    "id": "repair_shop_base",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-dcb0132d-9c56-4bc3-959e-fdaae8c4f73f.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: wide charcoal workshop shell with broad garage doorway and ONE ochre simple wrench symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "repair_shop_roof",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-63be8030-ee43-46b2-ba4d-6fd88c170a18.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/repair_shop_base.png"
+    ]
+  },
+  {
+    "id": "pharmacy_base",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-ff95053f-d6e9-4d84-b308-7cdadb0f889e.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: small pale-gray shop shell with ONE muted olive-green plus facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "pharmacy_roof",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-497e758a-1aeb-46fc-9143-09a1faf11f89.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Create ONLY the separate simple charcoal rectangular hip roof for reference building. Roofless shell is reference for exact matching footprint, camera and position. Do NOT include any wall, floor, facade or base. Keep same square canvas, same pixel-space registration; roof lower rim sits exactly at existing wall-top polygon. Transparent everywhere except roof; large untextured planes. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/expansion-v1/pharmacy_base.png"
+    ]
+  },
+  {
+    "id": "security_room_base",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-4f3f5797-db6a-4a2b-a214-17e33b421b7a.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE building WITHOUT ROOF: small charcoal square room shell with narrow windows and ONE ochre shield facade symbol. Cutaway shell showing flat gray floor, back wall and side walls; FRONT open for interior visibility, empty no furniture. Orthographic isometric elevated 45-degree camera, base centered on square canvas, footprint centered x50 y65 percent width70 percent. Highest wall y35 percent, floor bottom y85 percent. Doorway has no leaf; doors are separate. No roof at all, no street or landscaping. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  }
+]

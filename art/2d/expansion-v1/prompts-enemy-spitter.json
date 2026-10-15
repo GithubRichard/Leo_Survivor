@@ -1,0 +1,111 @@
+[
+  {
+    "id": "zombie_spitter_south",
+    "label": "酸液者·南",
+    "category": "敌人",
+    "file": "zombie_spitter_south.png",
+    "description": "ONE zombie character, hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. ONE new SPITTER zombie. Extremely hunched slim torso with very long neck protruding forward, angular black mouth, visibly bulging muted olive-green abdominal block, very thin arms and legs. Charcoal ragged shirt open over the olive belly, charcoal trousers, olive-gray skin. Forward-projecting head and belly, NOT big shoulders. Facing SOUTH toward viewer; full body, fixed elevated 45-degree camera, generous transparent margins, no shadows or glow.",
+    "enemyType": "spitter",
+    "direction": "south",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_spitter_east",
+    "label": "酸液者·东",
+    "category": "敌人",
+    "file": "zombie_spitter_east.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_spitter_south"
+    ],
+    "enemyType": "spitter",
+    "direction": "east",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_spitter_west",
+    "label": "酸液者·西",
+    "category": "敌人",
+    "file": "zombie_spitter_west.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_spitter_south"
+    ],
+    "enemyType": "spitter",
+    "direction": "west",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_spitter_north",
+    "label": "酸液者·北",
+    "category": "敌人",
+    "file": "zombie_spitter_north.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve hunched torso, protruding long neck, narrow arms, small desaturated olive-green abdominal patch, charcoal clothes and olive-gray skin. Mouth simple dark block. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_spitter_south"
+    ],
+    "enemyType": "spitter",
+    "direction": "north",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_spitter_south_windup",
+    "label": "酸液者·南前摇",
+    "category": "敌人",
+    "file": "zombie_spitter_south_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_spitter_south"
+    ],
+    "enemyType": "spitter",
+    "direction": "south",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_spitter_east_windup",
+    "label": "酸液者·东前摇",
+    "category": "敌人",
+    "file": "zombie_spitter_east_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_spitter_east"
+    ],
+    "enemyType": "spitter",
+    "direction": "east",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_spitter_west_windup",
+    "label": "酸液者·西前摇",
+    "category": "敌人",
+    "file": "zombie_spitter_west_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_spitter_west"
+    ],
+    "enemyType": "spitter",
+    "direction": "west",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_spitter_north_windup",
+    "label": "酸液者·北前摇",
+    "category": "敌人",
+    "file": "zombie_spitter_north_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: head tilted BACK with mouth open preparing to spit, neck extended upward, torso stable. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_spitter_north"
+    ],
+    "enemyType": "spitter",
+    "direction": "north",
+    "state": "windup"
+  }
+]

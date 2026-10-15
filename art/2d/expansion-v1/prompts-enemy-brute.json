@@ -1,0 +1,114 @@
+[
+  {
+    "id": "zombie_brute_south",
+    "label": "厚皮者·南",
+    "category": "敌人",
+    "file": "zombie_brute_south.png",
+    "description": "ONE zombie character, very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Facing SOUTH: front view looking down toward viewer. Full body, same game scale as ordinary zombie, fixed elevated camera. No gore, no ground.",
+    "prompt": "Use case: stylized-concept. ONE new BRUTE ZOMBIE for a minimalist 2D geometric survival game. Full body transparent cutout, fixed elevated 45-degree overhead camera. Facing SOUTH toward viewer. Extremely WIDE, HEAVY barrel-shaped torso and waist, huge square shoulders spanning nearly twice the head width, very thick heavy forearms and block fists, stubby stout legs. Silhouette must look like a massive rectangular heavyweight, clearly different from a slim normal zombie. Small olive-gray polygon bald head with two black square eyes; NO facial details or gore. Simple SLEEVELESS charcoal vest with one broad muted dark ochre collar, charcoal trousers, chunky gray boots. Only few large flat polygon planes, untextured matte dark gray and dark ochre. Arms lowered at sides, slow step, no weapon, no armor, no ground, no text, no shadow or glow. Entire body central 75% height with ample transparent margins.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/sprites-v2/zombie_south.png"
+    ],
+    "enemyType": "brute",
+    "direction": "south",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_brute_east",
+    "label": "厚皮者·东",
+    "category": "敌人",
+    "file": "zombie_brute_east.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to RIGHT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_brute_south"
+    ],
+    "enemyType": "brute",
+    "direction": "east",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_brute_west",
+    "label": "厚皮者·西",
+    "category": "敌人",
+    "file": "zombie_brute_west.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to LEFT-facing strict side profile. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_brute_south"
+    ],
+    "enemyType": "brute",
+    "direction": "west",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_brute_north",
+    "label": "厚皮者·北",
+    "category": "敌人",
+    "file": "zombie_brute_north.png",
+    "description": "Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity. Rotate this character to AWAY from viewer, show the BACK of head and body, no face. Preserve very broad shoulders, barrel waist, heavy thick arms, large olive-gray block head, dark gray vest with ochre collar. No armor or weapon. Neutral slow-step pose. Full body fixed elevated camera, no image rotation.",
+    "deps": [
+      "zombie_brute_south"
+    ],
+    "enemyType": "brute",
+    "direction": "north",
+    "state": "idle"
+  },
+  {
+    "id": "zombie_brute_south_windup",
+    "label": "厚皮者·南前摇",
+    "category": "敌人",
+    "file": "zombie_brute_south_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing FRONT. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_brute_south"
+    ],
+    "enemyType": "brute",
+    "direction": "south",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_brute_east_windup",
+    "label": "厚皮者·东前摇",
+    "category": "敌人",
+    "file": "zombie_brute_east_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing RIGHT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_brute_east"
+    ],
+    "enemyType": "brute",
+    "direction": "east",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_brute_west_windup",
+    "label": "厚皮者·西前摇",
+    "category": "敌人",
+    "file": "zombie_brute_west_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing LEFT-facing profile. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_brute_west"
+    ],
+    "enemyType": "brute",
+    "direction": "west",
+    "state": "windup"
+  },
+  {
+    "id": "zombie_brute_north_windup",
+    "label": "厚皮者·北前摇",
+    "category": "敌人",
+    "file": "zombie_brute_north_windup.png",
+    "description": "Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. Reference is SAME zombie identity and facing. Change ONLY pose to: BOTH thick arms raised high above shoulders ready to slam downward; obvious windup silhouette. Facing BACK. Preserve body proportions, clothing, full body scale and camera. No embedded projectile, aura, text or ring.",
+    "deps": [
+      "zombie_brute_north"
+    ],
+    "enemyType": "brute",
+    "direction": "north",
+    "state": "windup"
+  }
+]

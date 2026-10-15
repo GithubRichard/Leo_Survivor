@@ -1,0 +1,50 @@
+[
+  {
+    "id": "recipe_lock",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-82edafef-c91b-4cc6-a314-7f965699a120.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE charcoal padlock with ONE ochre keyhole, no text. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "potato",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d33085b7-be98-4985-a3a1-101ea22c8b10.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One plain ochre irregular potato represented by five large flat faces, no spots or skin detail. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "serrated_trap_open",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-972accad-50a4-4880-9595-285372f351e7.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One upgraded open bear trap on a smooth solid ROUND charcoal disk base. TWO thick semicircular metal jaws lying flat open, each with FIVE large triangular teeth, no chains, no extra ring. Simple geometry, larger teeth than basic trap. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "vegetable",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c6b76dce-933e-4f67-81de-70926cb9b150.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small vegetable made from TWO muted gray-olive broad folded leaves, pale short base. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "buff_health_cap",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-ac3ab8c8-4b34-41ae-8bbd-3c6e4dfd27c1.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE muted red heart with ONE small pale plus symbol, simple geometric shape. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "raw_meat",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-fa22e29b-7992-41f9-94b3-5e8d1ae0a24f.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One raw meat block, muted dark red with ONE pale angular fat edge, no bone and no gore. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "buff_stamina_cap",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1c66ef7f-3b05-44a6-bfb9-731d3b95dfc8.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE muted green lightning bolt with ONE small pale plus symbol. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "buff_melee",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e7e33baa-39cf-4b8d-91a2-807c23214cc5.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. 2D flat UI icon, ONE ochre fist polygon and ONE small pale upward arrow. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  }
+]

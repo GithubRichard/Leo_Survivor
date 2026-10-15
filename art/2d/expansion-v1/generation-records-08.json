@@ -1,0 +1,50 @@
+[
+  {
+    "id": "vegetable_soup",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d993437c-4727-4123-ab70-20dbf1158a2c.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One low charcoal bowl of muted ochre soup with TWO gray-olive vegetable chunks, no spoon. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "rubble_wood",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-cb5a3156-2852-475e-a328-ec7f5d58f8e2.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small flat ground grouping of THREE broken ochre wood beams, no intact furniture. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "stove_fire",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a95b0b39-154e-4c04-8052-9ebc0d349abd.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small compact vertical flame layer made from THREE dark orange-ochre triangles, no logs or ground patch. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "rubble_metal",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-dc0c51c9-a1ac-4735-8720-27aa4f2d9400.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small flat ground grouping of THREE bent charcoal metal blocks, no intact device. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "grain_porridge",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3443fbc5-9279-4cc3-8fcd-d30513c29dc2.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One shallow charcoal bowl of pale gray-yellow thick porridge with THREE large grain shapes, no spoon. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "meat_vegetable_stew",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-b3bb716c-767d-403e-a8d1-635e290c9e51.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One small dark gray two-handle cooking pot with ochre broth, ONE dark meat cube and ONE olive vegetable block. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "scream_ring",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1948828a-3560-4035-bcc4-d8d81fead0ce.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One flat ground ring, thin pale gray-ochre elliptical circle seen at fixed elevated camera, completely transparent center, no monster, no glow. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  },
+  {
+    "id": "potato_meat_pie",
+    "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e73001da-7f4f-4839-b377-39fbe3e95598.png",
+    "prompt": "Use case: stylized-concept. Asset type: individual transparent PNG 2D game sprite. Exactly ONE requested asset, no sprite sheet or labels. Minimal basic geometric polygon shapes, flat matte colors, dark charcoal gray and muted dark ochre palette, very few large faces, no fine texture, no realistic materials, no gradients or glow, no decorative details, no ground plane or cast shadow. Fixed elevated 45-degree game camera for world objects; entire object centered with generous transparent margins. No text, watermark or border. One thick triangular pie wedge, ochre crust and ONE dark gray-brown rectangular filling layer, no plate. Production cutout: crisp flat-shaded 2D polygon illustration; fully transparent outside silhouette; no colored haze, vignette, glow or bloom.",
+    "refs": []
+  }
+]

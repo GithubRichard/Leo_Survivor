@@ -1,3 +1,5 @@
 /dist/
 *.log
 __pycache__/
+/运维文档.local.md
+/art/2d-assets-*.zip

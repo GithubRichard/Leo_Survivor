@@ -1,0 +1,1028 @@
+{
+  "checkedAt": "2026-10-11T19:22:51.711Z",
+  "method": "Unchanged native PNG bytes verified by SHA-256. prompts.json is the final design plan; generation-log.jsonl contains recorded calls, including superseded revisions.",
+  "records": [
+    {
+      "id": "wood_club",
+      "file": "wood_club.png",
+      "sha256": "3ccedadd7f8bb2d38a5e7bf4f2fba62b4dee7c573f722d38942c65fdfe08ea4c",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c9de6370-2ec4-40ee-b794-83f65b9ded4e.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "wood_spear",
+      "file": "wood_spear.png",
+      "sha256": "a029d4922a9153040bcd8463d2d3db53300cb6fb7f43013dba290892ade7ae65",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-abf2f1bf-8cde-4a2e-b73b-75d813e61ffc.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "iron_axe",
+      "file": "iron_axe.png",
+      "sha256": "1afd8532f16eeda12e9718868478432e0f2d83ae2bd9838c5d35a28ace7f8fe5",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-9b4cda2e-209a-4605-becc-c8b72375a652.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "simple_bow",
+      "file": "simple_bow.png",
+      "sha256": "3144c427b91873d82bc5ec7a15b1820cdfa3b6ecfaa6d7d3c5bed5d0cdd47337",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-039c366f-d372-4d16-bc97-ef81ae29c632.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "hand_crossbow",
+      "file": "hand_crossbow.png",
+      "sha256": "56245957afaa5d8870b7d8b26839bf95334fb45ebda8bdefef206e32ef2934fe",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-0020f990-a6f6-4bab-8658-a9368030a32a.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "shotgun",
+      "file": "shotgun.png",
+      "sha256": "d6bf81891de41513de64b4f85ae66fa87587291a261d40e4a16f15b07de23e15",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-fa4360a9-8121-4d72-b80f-247fa320023f.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "arrow",
+      "file": "arrow.png",
+      "sha256": "00e994e1893fb5c146d9a3d87f08e8dc021bbfc7ef19d0dc63a4a8289ee8557f",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-82606077-d880-40a7-960b-3ef7afe451f9.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "bolt",
+      "file": "bolt.png",
+      "sha256": "5851dfbee4ce3bd1ab65ab857fb0c4ec48fc23ebd683fe4c508b2dd090afe701",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-78f49cf5-decd-4e8c-b333-551c92e11a86.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "shotgun_shell",
+      "file": "shotgun_shell.png",
+      "sha256": "9fe7866ddaac15e4f2549450a956593d30eaff31c65bc0ac99b75ec01873a411",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c2883472-d3f1-42db-b642-6e0c04b9eb12.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "bandage",
+      "file": "bandage.png",
+      "sha256": "51fb174aee23a6758d2f35160dfd483fb256d866f72cbb29c00ca71d2b866e5e",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-796e5f45-d990-4cc7-96cc-0b251951f02c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "medkit",
+      "file": "medkit.png",
+      "sha256": "bc2731c085df5adf903c5e40083296aee2815237a9eecb42837d220c1897ef26",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1c0700dc-7b2e-494b-ab28-3782cd7a1708.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "molotov",
+      "file": "molotov.png",
+      "sha256": "9ebacbadafa7f06400dbc47aa2862c9c85b18e6c62845fc6270a99c3e0c23d31",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c58d74f4-32c7-4f66-8a1e-c4a24578d3e3.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "stone",
+      "file": "stone.png",
+      "sha256": "bd2112603c2211e9de4c3ddde88b1ff49693f8d5a00c185a2d273433c95cba97",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-5fd4436c-a348-404c-9591-f570f55836b5.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "cloth",
+      "file": "cloth.png",
+      "sha256": "5f5a388d093319c8176f28191401e3afa6db389dc893c5bb6d68d9b604852287",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3642afbd-e321-4470-8ad9-8b26227ff4d7.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "scrap",
+      "file": "scrap.png",
+      "sha256": "f95f4df1866382da4325854ff3b252b04a78f7c3199ef42073e6a186d654273a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-940b84df-9ed0-4c6a-b1e7-bd624fa1c155.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "parts",
+      "file": "parts.png",
+      "sha256": "32748a27ef1a3e1b6c9ac854dc23cf3c529a56c7ad807d966453719ce14e20b1",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-4a264bc7-96d6-4383-bbad-848fc0572950.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "herb",
+      "file": "herb.png",
+      "sha256": "bba87abaa38bcaab70f889c9b3d8776dabe6de655fe66c2b93f2f42634dd6296",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-70b3d6d8-eabd-44fd-a0c2-e4c58cdb9cff.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "alcohol",
+      "file": "alcohol.png",
+      "sha256": "d2e34175b332541e421cdc92ee8fa68b51ae34e25b0166115566c3e6a0fd3f9a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-b294ddb2-2219-4645-84d0-8bbdd804c3b0.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "gunpowder",
+      "file": "gunpowder.png",
+      "sha256": "d76d6ea8c223039ff4aae83137087670fabe493d971fd1e6f3c649e623e6331d",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-09227cc4-a112-4c4e-b8f2-68cd410febeb.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "raw_water",
+      "file": "raw_water.png",
+      "sha256": "12214c642200aac1ff64eb40aaecf6321c299a3e48a078b2d9ab22dc6b190f11",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-2af0a0ca-c46a-4039-accb-e54473502c34.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "clean_water",
+      "file": "clean_water.png",
+      "sha256": "7726eb99ac9b2d6e5f784137c4e6899a839b03a652b748fbec4e2f24fa9dfb80",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-8b7b6250-6995-44a1-ad8e-785757f984b5.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "potato",
+      "file": "potato.png",
+      "sha256": "839cc7aaec516e376ab071bc83889ade277fb4d042f5fd46f08ed55d58be21f3",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d33085b7-be98-4985-a3a1-101ea22c8b10.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "vegetable",
+      "file": "vegetable.png",
+      "sha256": "3407cf06a68128235c3c1d3be11008516b0cfd21daaa2b6d764dc2e752384525",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c6b76dce-933e-4f67-81de-70926cb9b150.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "raw_meat",
+      "file": "raw_meat.png",
+      "sha256": "a71d3b36685730712cec222fd608df96fe25678f632b41ac62fce0d21e04135a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-fa22e29b-7992-41f9-94b3-5e8d1ae0a24f.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "grain",
+      "file": "grain.png",
+      "sha256": "2547b52fd40524fdc7c577a616b5bbf96287e2b23a2f1406099756d3e3e7743f",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-037e2d91-1de7-43ad-b794-d94640132387.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "canned_food",
+      "file": "canned_food.png",
+      "sha256": "f8b99451003cf91921041737e8dbae4f8ea8a571fdac772c669f386466031a0f",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a8ed4d28-96b8-4571-90f4-7b3b9f6529d6.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "baked_potato",
+      "file": "baked_potato.png",
+      "sha256": "9bcf32fbcf8357e4e71fba7b70ec4a3e51ead4c2a8e757908a534a5cc6ddbd54",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-f81abcda-8e4f-467e-99f9-ecaaf207e052.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "roast_meat",
+      "file": "roast_meat.png",
+      "sha256": "5b5a6ef206b8ddc8707aea055ae2aaf6a179684883c30f67131dd7d9add88c94",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a7cdabb6-bcff-491c-814e-b3c60597e3cb.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "vegetable_soup",
+      "file": "vegetable_soup.png",
+      "sha256": "3a63e44fe96e9595ff804ea35a1bc67c1e2c850def4c17f7798c7d6115c1a288",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d993437c-4727-4123-ab70-20dbf1158a2c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "grain_porridge",
+      "file": "grain_porridge.png",
+      "sha256": "e0bdd6e80fe3d86925ee360572e45456549934253cc53e889d03ff03b3ff3bee",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3443fbc5-9279-4cc3-8fcd-d30513c29dc2.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "meat_vegetable_stew",
+      "file": "meat_vegetable_stew.png",
+      "sha256": "2810487b916098365aff312f3f044e00220c7295266e4f8b93ff4ed55474f066",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-b3bb716c-767d-403e-a8d1-635e290c9e51.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "potato_meat_pie",
+      "file": "potato_meat_pie.png",
+      "sha256": "e13723b5cd63f1813e55e1d847d35d0db7110a184c7b3ec5297fd323bca0d41f",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e73001da-7f4f-4839-b377-39fbe3e95598.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "herb_tea",
+      "file": "herb_tea.png",
+      "sha256": "614433c0677cf5a1d93139f319c701c7d0b77decb903bdb0148e7900f5db56c3",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-7159d9ff-d736-4a0b-8023-f3e62dbe50e4.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "jerky",
+      "file": "jerky.png",
+      "sha256": "f2231cd37bf788e8907ece9fb924098624e996802e95aaeeaf419d1aa52ddc96",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d2c3dd31-e942-4d4b-9c33-5af3fff03302.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "wood_fence",
+      "file": "wood_fence.png",
+      "sha256": "2ae1e9a44ed3de2f29fe408e5e369c9dad7f69542324a8cd30df7fa7e6871f7e",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-034be44b-b8da-4a60-8086-c5ef507a1191.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "iron_fence",
+      "file": "iron_fence.png",
+      "sha256": "b12b2d4262e462369314c528a7baffed68154e69072b8b29693be01c9eaece6a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-2c1dcf8d-076a-4267-87cd-5fcae774224d.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "brick_wall",
+      "file": "brick_wall.png",
+      "sha256": "e8020421b3d58ce7dde5ad12e99d19148f50015d5d02d75dc0456f0a76456cae",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a43267ec-fe15-4f9b-959b-269a15b03d26.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "spike_floor",
+      "file": "spike_floor.png",
+      "sha256": "c6b277dab02f4b6599f5dbd19e71ce67d027a7d4faae62981a9689dfd472b58a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-98959610-ddc7-411b-9756-ec79e20297e3.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "workbench",
+      "file": "workbench.png",
+      "sha256": "86c1fbb496719c5259b7c913ca314b2f47def18966f18206737397104f7376c2",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-7e152ab8-c3b8-4578-bd9c-a67167fba784.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "storage_chest_closed",
+      "file": "storage_chest_closed.png",
+      "sha256": "18687119212f11b10761098f1b29091dc9aa04bfbf57b90ee69817ee96d1fc10",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-6ce5ca0f-4c35-4059-b74e-0ecf6d702938.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "drying_rack_empty",
+      "file": "drying_rack_empty.png",
+      "sha256": "687e982d9078185b13507c99c0e1ab1ca8264f0dedc8bd40c0f75b8003ca749a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-86f4f608-e76d-4d8a-8e0d-a3c3c48dc749.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "grill",
+      "file": "grill.png",
+      "sha256": "a19ac48ffa9fd9e62a7a0e2ec357e9699919cd03fa3228575aa43f9b9ed785d5",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-87042b82-6fc2-4b17-80d4-8995a274849a.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "stove",
+      "file": "stove.png",
+      "sha256": "875a61d65dcdf6e26fbfa3fd188a22eae259ffd27e753a52008e9187bae74c76",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-78a2d130-833b-44ed-abb6-7fcbd4f379be.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "water_purifier",
+      "file": "water_purifier.png",
+      "sha256": "f8e8fff57d67c0fc500fea2b91981dff72fe665c62fbeb5f8ade62df8e458447",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a7928d19-f1bd-42df-99cf-e4c53deaf58c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "planter_empty",
+      "file": "planter_empty.png",
+      "sha256": "8e859746e274451ce7785abc80eebf78bf2f8bf493219fc2960f2a7c0b04edfd",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1d70f2ba-1db5-4781-8961-6919b89552d7.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "serrated_trap_open",
+      "file": "serrated_trap_open.png",
+      "sha256": "1209561aa53845434cab7121c1b69028fcf71981f1adbdf1b025f243bd14d2a7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-972accad-50a4-4880-9595-285372f351e7.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "ballista_strong",
+      "file": "ballista_strong.png",
+      "sha256": "d4b310b1c464f6976873ced92af121f552eaed5d3106d56778c88d1208018aaf",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-caa76fd1-a6a5-4aba-917f-331e7a899ae3.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "ballista_repeating",
+      "file": "ballista_repeating.png",
+      "sha256": "451b0359e05822fe27d8aaeb5be9aa96370cb872b8628ce469044153780a0b43",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-b79374d7-7097-44d0-9a39-e96d117f63a0.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "stone_pile",
+      "file": "stone_pile.png",
+      "sha256": "70a6bff907e4710eb569780b70b348c3b6f345349680036479f5e3646d9c6c22",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-67fdd68c-48b3-4a40-bdb0-322798ee789c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "water_point",
+      "file": "water_point.png",
+      "sha256": "19d0d76e6189f6761409f2322cd71bd451833d3c0e82dfae6487e401b27a6838",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c5732d5e-3028-4f8b-8264-103bc248e7d1.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "herb_bed_full",
+      "file": "herb_bed_full.png",
+      "sha256": "b4edf3a5cbb7e03f99d620fb40b93e853184f3617c83d7ffc61f3ff9e1a819d2",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-91d90c49-3aec-43f2-b8e8-c9583884a7b2.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "freezer_closed",
+      "file": "freezer_closed.png",
+      "sha256": "a7c094dd4c8edd83b8964a7556e0ad2cfd66cfd47ef4a33a1890b2f9a60da2ec",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d7b7c2ae-9ed2-4ccc-a86f-e44e31390397.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "rubble_wood",
+      "file": "rubble_wood.png",
+      "sha256": "b32b9818312f5a84650248204446419acd22e50314f1f9f80b1355b249489d75",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-cb5a3156-2852-475e-a328-ec7f5d58f8e2.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "rubble_metal",
+      "file": "rubble_metal.png",
+      "sha256": "3969c36993e7655c6bf6b4a44f9030b48aef4f2e0f022ad437be52bd5580f702",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-dc0c51c9-a1ac-4735-8720-27aa4f2d9400.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "rubble_stone",
+      "file": "rubble_stone.png",
+      "sha256": "35aa2ad8a1200af1e6536b31f289452ed362863119f6912c2b525adb749b77f7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-2c2fc51a-6c1e-450a-acb6-59e2dc740aeb.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "damage_wood",
+      "file": "damage_wood.png",
+      "sha256": "37c923415f4a9caffaba02a0d3e249f85f3f8a1a365205cc23f9a35ce8979d6a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-46d61761-b75b-409c-b841-452d1d7e52ff.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "damage_metal",
+      "file": "damage_metal.png",
+      "sha256": "68a3f232f96bc5d7a8b42daa2e9aeecf8e3a4fa906e177c93bab22afb2c4771b",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-7ed028a3-de41-4936-98f0-dff5b72e0725.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "damage_stone",
+      "file": "damage_stone.png",
+      "sha256": "9151eb72e54fedc05df3550fd720f3d2345e9d0a09e88cb3f723dcdd0984e301",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-4c4dcd48-dc9b-466e-98a2-ad18a9f1a2b8.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "hunger_bar",
+      "file": "hunger_bar.png",
+      "sha256": "4092d5014d3ddafcfd7a882b866de24e2673ac89a310d7afc9960f3937850687",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3d0ca4ff-e135-4034-ac4e-ad111168827b.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "progress_bar",
+      "file": "progress_bar.png",
+      "sha256": "0792382edeb9830a47059dab109024b186f4fc852b03806842930263c6e9e47f",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-67a1067c-e9ab-41ae-9e93-9df78ba4b3f0.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "day_icon",
+      "file": "day_icon.png",
+      "sha256": "a2b1b4ab0491edf4156f7638ca68fcb0bcb2bbfa852fa976a896437e52efcc8c",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-06314a6e-8ce4-473f-bc53-4090a584f617.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "night_icon",
+      "file": "night_icon.png",
+      "sha256": "8c4f68447f25cf1a4ad35283ce7bf23dec84e8fc106d1cff36b9b9e39bc91a2d",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1c803234-e6cd-43a6-b0b7-058c108939ec.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "wave_arrow",
+      "file": "wave_arrow.png",
+      "sha256": "de0b8320297a149b9b5e089a511ce2a5a0cca6c9675ada756af4523378e5e6a8",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-030a6d4a-b53e-4f1e-a8f3-c29e9a374d50.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "backpack_upgrade",
+      "file": "backpack_upgrade.png",
+      "sha256": "f69a5a16ee0b4390703098d098e52b2885217c752b9f27943f4050fc0ec3fc3d",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-00ddae71-6629-4f4d-8926-3cd315dcdbb9.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "trade_icon",
+      "file": "trade_icon.png",
+      "sha256": "dafc291c7dbb8275da392e1b5903c91877e02e0e749be48668b5ce69ab2cb94a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-7119c82b-2b96-470a-bf6f-44412ff11730.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "helper_rest",
+      "file": "helper_rest.png",
+      "sha256": "6845e131678b11587cea8d67f177837ff223c4476dd6c64a60d9cb9403265634",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-607943df-f275-4a21-a832-6eb8bbec7fc7.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "repair_icon",
+      "file": "repair_icon.png",
+      "sha256": "727a08b5b75ee1ddabc44bdc8441ef6b5084304ce22fbc5527aabdafeace182a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-5435989f-79b8-43bd-9c60-85a4aa2b8f79.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "build_icon",
+      "file": "build_icon.png",
+      "sha256": "b49405523accb70c7fd834b51669eb2f2364a54be9987840234db17d5275e12b",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-26d1108d-4a00-42b3-bd25-ecc2e627f796.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "search_icon",
+      "file": "search_icon.png",
+      "sha256": "ad37ebcf548aab3cb70c390afaa0715604850173c8b84bc1a4081701778f35cd",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3a20d267-9043-4628-8e03-232fc72bab7e.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "recipe_lock",
+      "file": "recipe_lock.png",
+      "sha256": "4d39e1763c3b3c1296077db611d02dab0cef9d1f6d8eaaafc025809a0d473b4e",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-82edafef-c91b-4cc6-a314-7f965699a120.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "buff_health_cap",
+      "file": "buff_health_cap.png",
+      "sha256": "5c85035861eb21cbc2c02ef2a833ea2caf9d19666577d5e7433e121f13e0954e",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-ac3ab8c8-4b34-41ae-8bbd-3c6e4dfd27c1.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "buff_stamina_cap",
+      "file": "buff_stamina_cap.png",
+      "sha256": "a7c030e004610529cee0f76765758cba9ba67acf36f7d66ac9d66cc7337424a3",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1c66ef7f-3b05-44a6-bfb9-731d3b95dfc8.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "buff_melee",
+      "file": "buff_melee.png",
+      "sha256": "2eaf90ffd5bc16e6e619f6be812c5bf9c614e1b73375bc6008aac9bc756722fb",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e7e33baa-39cf-4b8d-91a2-807c23214cc5.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "buff_recovery",
+      "file": "buff_recovery.png",
+      "sha256": "c4b9011e607775a99e75af897f00dab8ddfb18fd9c6137ba7c495293c09685f6",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e5d7fedf-3d33-4335-8985-c453c3ed9cde.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "buff_armor",
+      "file": "buff_armor.png",
+      "sha256": "d1d353cfe2df2c9ecbb25b3c339558e6739cea616715316bc61b17d7f242a63a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c5bcbe37-08d5-4b29-a44a-90ab28930005.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "buff_run",
+      "file": "buff_run.png",
+      "sha256": "408f398957dbe1a1498ea19066c4c85741387025e4d91f462c5dbfb18cc080d2",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d3caa33b-341d-489b-9637-1c9fe6ff4dab.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "acid_projectile",
+      "file": "acid_projectile.png",
+      "sha256": "eab75dcb81785406ca89f10c3cb4a38f0fb4cc2d73cda4274ec391be8a9aa823",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-770174de-18c3-4851-80ae-fe3679e6f29c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "acid_pool",
+      "file": "acid_pool.png",
+      "sha256": "e7e210295017648a7288ca3abaaf17979d63be26301c0ddbe333d43f6c9251ca",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-9ac5ac30-a0fd-4e40-a838-e3997d358e3a.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "fire_pool",
+      "file": "fire_pool.png",
+      "sha256": "279c7e2f83261da38a7d8b432909e7a1d88d1c3cf2c50d533b7c5c15c7e70dc7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d386315d-655a-4577-8aa1-846e9b0a3297.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "stove_fire",
+      "file": "stove_fire.png",
+      "sha256": "5c91f382dac53a3c42ebd3d174588173ed5ded9229fe38eae461981a5a51c528",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a95b0b39-154e-4c04-8052-9ebc0d349abd.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "scream_ring",
+      "file": "scream_ring.png",
+      "sha256": "3707a792fbeea711fc9999c4efe5d3e09695f33a3aa899c715e7db281069971b",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1948828a-3560-4035-bcc4-d8d81fead0ce.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "root_marker",
+      "file": "root_marker.png",
+      "sha256": "72e1c7f037fc50ec109800ab848731b947b612941b54ddb57dc3edff2d52fbe6",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3a1389b0-8474-4eb0-83c3-4b986f65c069.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "speed_buff",
+      "file": "speed_buff.png",
+      "sha256": "0d342877938090bc14cf5db84edb4800cec1e0891fa256a23d27f61169928ee2",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-02040794-b453-401e-ad58-26ce511b4625.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "melee_arc",
+      "file": "melee_arc.png",
+      "sha256": "a1c324e3cc5a7c3125d387f559ac2ea46ffe7ce0b88fd65753b469f333dee2c8",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-5f88f1ea-41db-45f8-83cf-23d88dcc96b9.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "thrust_line",
+      "file": "thrust_line.png",
+      "sha256": "e06bd5d134f7f69cdbcf008d21b1695a7be562010c202628d972d67422e6dd4a",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-bd899890-ec72-409e-bc46-4fdd474de4ad.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "shot_pellet",
+      "file": "shot_pellet.png",
+      "sha256": "862c020ac8d2c0be8ace66224e6573186b124e67b9c56507e67f08d95a5b4c9c",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-8a6c7ba2-9cf7-45cb-be55-9049e9e8dae0.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "hurt_border",
+      "file": "hurt_border.png",
+      "sha256": "e7a7c5dc6a85c903402c08baf9a744f4a2124b24550293cc6496bd5adb2c912f",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e928d10a-6dfe-40b2-beb0-994bc5f3a81a.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_runner_south",
+      "file": "zombie_runner_south.png",
+      "sha256": "de05e9e4ab4837a2ca7750a746f04d1042b8927278ab2dc377253ec0806209ee",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-9c5dc7e8-6c12-4722-845f-0cb3044e3a91.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_runner_east",
+      "file": "zombie_runner_east.png",
+      "sha256": "1ef8fb75910cd41687ede70b3394c48b64b703344957a89bbe17dcccd107ae05",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-37c1fde3-9c38-4060-8b98-5469c7bf2740.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_runner_west",
+      "file": "zombie_runner_west.png",
+      "sha256": "6758ba2889f2cde7c93dae5c6cbca18964fa73a851302d4ac7e360d867221db3",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-41e59906-28b2-40d4-ab8c-51f990dbd6f4.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_runner_north",
+      "file": "zombie_runner_north.png",
+      "sha256": "cfe9a805ea0c4a660560f64587058d03c63721a79824eaff8589a5df8bea0019",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3dcea940-8fd1-4887-9f42-3808d6e69f56.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_south",
+      "file": "zombie_brute_south.png",
+      "sha256": "36e52760be39800f3fe9245b4e546b6a122307548891cdbe8af87401658e74e3",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-61abb7ec-42ab-4fb4-9d0a-18308c208e62.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_east",
+      "file": "zombie_brute_east.png",
+      "sha256": "39922b1015ef810c42af33a5ee6a9156d1103e64adeca0cb62c71b388f95f7a9",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-09e8fd9d-ad3e-469c-9fde-2cd3781fee81.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_west",
+      "file": "zombie_brute_west.png",
+      "sha256": "610d4f083576211c1394a83631b58016a2113dc2a808d6c6b6d2b5137a285811",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-4080f5de-8597-43fa-bbd1-98fbe763d248.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_north",
+      "file": "zombie_brute_north.png",
+      "sha256": "74735e60dfdfc82f7a976010ed559735a227cd715a4aa3bf60eaac4d01b08ea1",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3769c9e5-8e96-48be-9389-84af4e8ed090.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_south_windup",
+      "file": "zombie_brute_south_windup.png",
+      "sha256": "bb31df2ea8bd47a1bca1b774606612986ec81135095693cd8d2ef0c7f812b05d",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-27d4013c-8b0b-4fbf-a7a1-d5c32dcc7bd1.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_east_windup",
+      "file": "zombie_brute_east_windup.png",
+      "sha256": "f68530389da1f7bd9f7587d277b69a35455ace49b8b7cb11f687747a1e526274",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a539e4ea-ccc6-4ef3-8d23-81fcd8514173.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_west_windup",
+      "file": "zombie_brute_west_windup.png",
+      "sha256": "3a0477c7540a0b8dde51b29aa789900954423566fee540af1a44c50a3510d6ce",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-77830af4-641e-486d-80fd-5ea9bde5d42b.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_brute_north_windup",
+      "file": "zombie_brute_north_windup.png",
+      "sha256": "5a7af4ea717d2dc682fb266a6d5b5c4d11fc482401aefd4b9d6ca532a91b00a7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-37cbaa8f-df22-4468-890f-0f69f1d6efd5.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_south",
+      "file": "zombie_spitter_south.png",
+      "sha256": "432442b99a991e747866198830b556a4aa90e49f7e2fe2cf1504db4e971c04b0",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1d2033eb-4e7f-43e8-b09e-c9a7b0a028c1.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_east",
+      "file": "zombie_spitter_east.png",
+      "sha256": "902851d0ca377cdb6ab27c59ae2430a5784fa8b65556d903bf278ec502a46fa5",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-48f3908c-1259-4a4b-b173-b8b18f0ad88d.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_west",
+      "file": "zombie_spitter_west.png",
+      "sha256": "afaf4b4746cf763ffd7edefea4dea076ce652811a065fb816c47d6adff9a81fe",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d55fc64c-63c1-4263-b300-204e33e4a602.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_north",
+      "file": "zombie_spitter_north.png",
+      "sha256": "6f239f2ae357f1444e75a6da528bed5c9c0d04b80c09af453a16593049553667",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3f9f22a2-6aa0-42af-95a2-f8eb35c4a785.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_south_windup",
+      "file": "zombie_spitter_south_windup.png",
+      "sha256": "ad3c927f8e67f0d5db1f1decc720eb9ae87e15c6961c917a1cb115f6b8261494",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-9ce94a26-2651-4f72-b80a-60a9d303a3cd.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_east_windup",
+      "file": "zombie_spitter_east_windup.png",
+      "sha256": "7390659db0524871096d0e35fe44529c7ec6d93fe2aa40066d489f6d9ed6f3cd",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-35c4105e-88aa-4318-a15e-76a8d53d9bff.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_west_windup",
+      "file": "zombie_spitter_west_windup.png",
+      "sha256": "fb2b875f939ef87209356b7b96a371791cf3f334c7f172b41a71024dadc233a5",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-502dcc87-8aa9-43fa-a289-f55b94707b74.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_spitter_north_windup",
+      "file": "zombie_spitter_north_windup.png",
+      "sha256": "53e8883a0406d97163436c433c99eb57178a322a43655b3a9ce6f404a7f78ec1",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-df03dee8-316c-4021-a700-77f2a4f81861.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_south",
+      "file": "zombie_demolisher_south.png",
+      "sha256": "e0d1b53f73becc652664acb110260307951e41c24ce5ff61c10357aacac85aaa",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-78228ba3-2dff-4afe-b370-200f064dc8c1.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_east",
+      "file": "zombie_demolisher_east.png",
+      "sha256": "84d17b62682ec2d9bf9f88a62b0aad3f57198b882a6ed55e7f2dd61e1a1e9da7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-9477cd62-5901-4bfd-9dca-09ad56f5f9ac.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_west",
+      "file": "zombie_demolisher_west.png",
+      "sha256": "d36f234b3e97f050c6faf70045cde1a650c75aabec86cee5276eb7075deda188",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-77d903bb-02fc-4578-9860-f0d9c64d1168.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_north",
+      "file": "zombie_demolisher_north.png",
+      "sha256": "d48d183b4f9a341b6b6ddb00c477731b9c2f38271cd63bdd85b0a166486a1a9b",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-fafce2ce-dc16-410e-817a-d003d09e24a3.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_south_windup",
+      "file": "zombie_demolisher_south_windup.png",
+      "sha256": "33894677f83203124962fc48a283e8c73ec75a08042660a681e15f78a7cca850",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-77c0b6ad-76ed-4c66-9125-593dd67eca2c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_east_windup",
+      "file": "zombie_demolisher_east_windup.png",
+      "sha256": "11c4fb368d7977b808c937007a2c50c4041d48ece7eaa24cc3823fbfd4e2ba91",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-bdecbc65-0c17-4822-a7da-e8bd3987e50c.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_west_windup",
+      "file": "zombie_demolisher_west_windup.png",
+      "sha256": "3db7ba1bb642a16f22d3e5b050bc65a3623dfd4abe69310f92b4ceda9a828ffe",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-af69b34e-1dd1-48eb-aa8a-97be9d116b75.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_demolisher_north_windup",
+      "file": "zombie_demolisher_north_windup.png",
+      "sha256": "7639d8237fb4bb2efb8c44228ecfebfb6657963e886442a263987594eb7f56e6",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-13fa1ff6-b91e-489f-9ea3-fcf39fdb223f.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_south",
+      "file": "zombie_screamer_south.png",
+      "sha256": "b42a194923adaca48fb74cbc8303cf33f6fce6a7c85c41325fc7c8da0bf74320",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-c126b769-6b9f-4049-87e2-bfef2635d143.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_east",
+      "file": "zombie_screamer_east.png",
+      "sha256": "b7ab13484e6f0c76a7687928df38ff6dd49355caf51c8a5e0c23dc53ea728e30",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-6cf139d4-2f20-422b-bda8-cc1c7a45ca6b.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_west",
+      "file": "zombie_screamer_west.png",
+      "sha256": "618ee55206187ed407e52ac0571e563e16cd070c376a54948887914f59683e45",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-1ada045a-37f9-4b10-b0a1-83ece7765b26.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_north",
+      "file": "zombie_screamer_north.png",
+      "sha256": "edf38b1f7405b45de848e80dec01ea471443d8497606eb5dcd455a3fbe69b4d7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e4a85656-52a1-4c75-97d1-13c9838e00f3.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_south_windup",
+      "file": "zombie_screamer_south_windup.png",
+      "sha256": "13d85045c9a345086c48e5a2838e2a9d2cb409036fdf0ba92e062aa5f280e924",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d098f445-29bd-4797-95a0-565dc63c5ed4.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_east_windup",
+      "file": "zombie_screamer_east_windup.png",
+      "sha256": "b570d720b1b5bb08d4bbf761bc347df3bcdcca6b30835dc7db797904c96e29fd",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-61edf0c7-4c01-4f5c-bfd6-8d984ccd84bd.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_west_windup",
+      "file": "zombie_screamer_west_windup.png",
+      "sha256": "59d7a00f9f0301fa2fefc2de55e03a6208532b841f1e25fef1180d68b7a737f9",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d2398da5-7eda-4f03-8940-1a1f3aeb8776.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "zombie_screamer_north_windup",
+      "file": "zombie_screamer_north_windup.png",
+      "sha256": "e5ac7e53cd943cdfb3ffbb589d87cfeb4df53ed875719b412519f314fefc106d",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e82b06dc-e1eb-4baa-acfa-f23f942cf039.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "storage_chest_open",
+      "file": "storage_chest_open.png",
+      "sha256": "7c579e18e141b6a92628ba7f56a08aa3139b033255d752b1848271b246ce478c",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-240b3612-2af3-4ede-8d85-ccc7ae9595b8.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "drying_rack_full",
+      "file": "drying_rack_full.png",
+      "sha256": "f5eec373b05428a7e1daa3523cd94db2838edef83b745251f39bacc4ea2be372",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-25fc436d-8462-472b-869d-ccc0d3ac764b.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "serrated_trap_hit",
+      "file": "serrated_trap_hit.png",
+      "sha256": "b86bf8b85a3aa201f9a991451b45ba0d55213e3733c49c711c8c8eb2e70294a8",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-19e64103-1664-4ac8-a4dc-76badad1cb45.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "planter_potato_seedling",
+      "file": "planter_potato_seedling.png",
+      "sha256": "9d1c0cc58e45a72981987ff7c6d86aa586637d030e4e325367bb43e940a8d616",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-859b2da7-d5e0-4031-9a6b-40cbe9633254.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "planter_potato_mature",
+      "file": "planter_potato_mature.png",
+      "sha256": "d5025bd091eb3c798d7a90b9d2df2e06cd7b621e3fd2b7a2d79aaecd7bcc9384",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d274d683-0960-4e3a-8e85-2e413d0121cd.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "planter_vegetable_seedling",
+      "file": "planter_vegetable_seedling.png",
+      "sha256": "b9931b28410c1b04ce512914914d5f5512dad424017d243390e734f362415859",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-a7067090-53eb-4f70-8dd2-33a17c25e831.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "planter_vegetable_mature",
+      "file": "planter_vegetable_mature.png",
+      "sha256": "a192bf1cb26358aabddd139fcd2cd21d7b0f05681ecdc91ad41bd02ec1cc9863",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-90287258-5256-437c-b659-63da8b2c212f.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "herb_bed_empty",
+      "file": "herb_bed_empty.png",
+      "sha256": "ed54fa451c02590f8f0f3a274019347a3b822891be6b1c73d440b0e99d6f04a3",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-72a5535e-77dc-4a41-9814-8c4c22785d5f.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "freezer_open",
+      "file": "freezer_open.png",
+      "sha256": "8f70601a36f2b1fb790d5c50fd9cb84e1628f24d820e475f8a2674c0106452d4",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-23a719e7-2f27-4758-bdb8-ce562e68549d.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "yard_gate_reinforced_closed",
+      "file": "yard_gate_reinforced_closed.png",
+      "sha256": "1c7a2f2213e17c900899617c508d964649a3efb89551800e505efa3c5fde50c8",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-6bdcd9eb-205f-4122-9271-b097352f76cb.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "yard_gate_reinforced_open",
+      "file": "yard_gate_reinforced_open.png",
+      "sha256": "8d80752996fc9bf8c294bd8a96c2c2945744f18a032e81e0b2eda14edf6c8085",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-35b21224-9eb0-416c-a93f-59567879ecc7.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "house_door_reinforced_closed",
+      "file": "house_door_reinforced_closed.png",
+      "sha256": "bf95ad6c3b48551c8c5a1f2dac425a686008ac38ec66373cb8a2d33e25ef8ae2",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d035ffcd-26ba-4ddb-94dc-b46d27ae5682.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "house_door_reinforced_open",
+      "file": "house_door_reinforced_open.png",
+      "sha256": "79b2fe5ba3b31d6efe2b106c26c6056f7a97d2a334d8e12623ce6acf8275df23",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-e8aca150-b870-4b2b-936e-652b0a637efc.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "food_shop_base",
+      "file": "food_shop_base.png",
+      "sha256": "9441e0b651d97950cb7ecf895f42ce150de0fc1aa6db013f1142feda879ac334",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-bb2e2a31-899a-48e4-b602-f3fbdd056771.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "food_shop_roof",
+      "file": "food_shop_roof.png",
+      "sha256": "ad914af5ff29b4bd0b807a95996fba2ccfb6a111779310942ece738351a09256",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-d733f592-12e2-4caa-a53d-5afadff1fd60.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "repair_shop_base",
+      "file": "repair_shop_base.png",
+      "sha256": "9f867769556a8749353676a1b0c4c119d1ff2e9d6fa2d22aa74dbd29ebffa2b7",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-dcb0132d-9c56-4bc3-959e-fdaae8c4f73f.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "repair_shop_roof",
+      "file": "repair_shop_roof.png",
+      "sha256": "6fea40077cc5eae1e0245e2a19a0b5e443bee4da3c16d8a70be64e4045e53002",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-63be8030-ee43-46b2-ba4d-6fd88c170a18.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "pharmacy_base",
+      "file": "pharmacy_base.png",
+      "sha256": "7ce7f4a20a8aeaa6ef4b935871a5c2061b5228a00ab490bcd97b660beaa62482",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-5b03ff43-e886-4318-862a-653568081eb0.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "pharmacy_roof",
+      "file": "pharmacy_roof.png",
+      "sha256": "f13baa43d71a82048bc2fa18f095126f66912fb2423d8d593e6ce8d7c519f1e9",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-497e758a-1aeb-46fc-9143-09a1faf11f89.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "security_room_base",
+      "file": "security_room_base.png",
+      "sha256": "4129e3c9fa1c34c765a5a51d151ec979712dbfaec5d9df1d33134b0b02d56214",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-4f3f5797-db6a-4a2b-a214-17e33b421b7a.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "security_room_roof",
+      "file": "security_room_roof.png",
+      "sha256": "4687638dc52d4163bfe738135a19ef36557824b52a1f78edf2ec98bfebb32e63",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-3da0836f-3215-4d2f-89f0-6f2069c19221.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "supply_box_closed",
+      "file": "supply_box_closed.png",
+      "sha256": "ef9f1dc97dd7a25277270538b0d977203a653210b3c84adee0113929997e4e09",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-386350e2-8ab6-4a81-97c0-8733895edb80.png",
+      "status": "source-verified"
+    },
+    {
+      "id": "supply_box_open",
+      "file": "supply_box_open.png",
+      "sha256": "89b212273e74c5a4f9194ff689e7720773346dc3bff7f8fdf89495c82330ed12",
+      "source": "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-0a669df0-3cf7-47bf-aae5-142b82b43558.png",
+      "status": "source-verified"
+    }
+  ]
+}

@@ -268,5 +268,167 @@ window.RUN_ALIGNMENT = {
                                                   ],
                                         "bodyHeight":  937.44,
                                         "cornerAlpha":  0
+                                    },
+    "player_run_northeast_01.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             374,
+                                                             120,
+                                                             907,
+                                                             1164
+                                                         ],
+                                        "pivot":  [
+                                                      641.27,
+                                                      1164
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_northeast_02.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             382,
+                                                             188,
+                                                             883,
+                                                             1057
+                                                         ],
+                                        "pivot":  [
+                                                      630.7,
+                                                      1195.95
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_northeast_03.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             374,
+                                                             156,
+                                                             912,
+                                                             1151
+                                                         ],
+                                        "pivot":  [
+                                                      646.98,
+                                                      1178.17
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_southwest_01.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             347,
+                                                             186,
+                                                             898,
+                                                             1126
+                                                         ],
+                                        "pivot":  [
+                                                      650.35,
+                                                      1126
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_southwest_02.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             353,
+                                                             183,
+                                                             877,
+                                                             1075
+                                                         ],
+                                        "pivot":  [
+                                                      642.44,
+                                                      1135.56
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_southwest_03.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             394,
+                                                             184,
+                                                             907,
+                                                             1127
+                                                         ],
+                                        "pivot":  [
+                                                      666.91,
+                                                      1121.5
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_northwest_01.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             354,
+                                                             98,
+                                                             901,
+                                                             1155
+                                                         ],
+                                        "pivot":  [
+                                                      615.33,
+                                                      1155
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_northwest_02.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             374,
+                                                             137,
+                                                             872,
+                                                             1113
+                                                         ],
+                                        "pivot":  [
+                                                      633.02,
+                                                      1177.62
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
+                                    },
+    "player_run_northwest_03.png":  {
+                                        "size":  [
+                                                     1208,
+                                                     1302
+                                                 ],
+                                        "opaqueBounds":  [
+                                                             352,
+                                                             103,
+                                                             944,
+                                                             1178
+                                                         ],
+                                        "pivot":  [
+                                                      625.99,
+                                                      1162.03
+                                                  ],
+                                        "bodyHeight":  937.44,
+                                        "cornerAlpha":  0
                                     }
 };

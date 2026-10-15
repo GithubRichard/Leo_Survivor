@@ -1,4 +1,4 @@
-/* Art paths and opaque bounds; image files remain unchanged. */
+/* Original PNG paths and refreshed visible bounds. */
 window.GAME_ASSETS = {
   "ballista": {
     "src": "art/2d/sprites-v1/ballista.png",
@@ -68,10 +68,10 @@ window.GAME_ASSETS = {
   "house_roof": {
     "src": "art/2d/sprites-v1/house_roof.png",
     "crop": [
-      189,
-      63,
-      1350,
-      823
+      254,
+      128,
+      1285,
+      881
     ],
     "size": [
       1536,
