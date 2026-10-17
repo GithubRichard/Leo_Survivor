@@ -20,6 +20,7 @@
   addEventListener('resize',resize);resize();
   art.loading.then(()=>{$('start-game').disabled=false;$('start-game').textContent=savedData()&&!savedData().result?'开始新游戏':'开始游戏';$('asset-status').textContent=art.failed.length?`${art.failed.length}个素材未能加载，请检查美术文件。`:'美术素材已加载 · 可以开始';uiKey='';});
   const project=(x,y,z=0)=>({x:width/2+(x-game.player.x-y+game.player.y)*scale,y:height*.56+(x-game.player.x+y-game.player.y)*scale*.5-z*scale});
+  const inView=(o,margin=96)=>{const q=project(o.x,o.y);return q.x>=-margin&&q.x<=width+margin&&q.y>=-margin&&q.y<=height+margin;};
   function polygon(points,fill,stroke){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}}
   function plane(x,y,w,h,color,stroke){polygon([project(x-w/2,y-h/2),project(x+w/2,y-h/2),project(x+w/2,y+h/2),project(x-w/2,y+h/2)],color,stroke);}
   function box(o,h,top,side,front){
@@ -113,7 +114,7 @@
     const roomOf=o=>homes.find(h=>Math.abs(o.x-h.x)<5&&o.y>h.y-6&&o.y<h.y);
     // Rear and front walls use independent anchors, including the rear indoor corners.
     const actorDepth=o=>Layers.actor(o,homes);
-    const visibleOutside=(o,draw)=>{ctx.save();if(indoor&&roomOf(o)!==indoor){ctx.beginPath();ctx.rect(-2000,-2000,width+4000,height+4000);const corners=[project(indoor.x-5,indoor.y-6),project(indoor.x+5,indoor.y-6),project(indoor.x+5,indoor.y),project(indoor.x-5,indoor.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.clip('evenodd');}draw();ctx.restore();};
+    const visibleOutside=(o,draw)=>{if(!indoor||roomOf(o)===indoor){draw();return;}ctx.save();ctx.beginPath();ctx.rect(-2000,-2000,width+4000,height+4000);const corners=[project(indoor.x-5,indoor.y-6),project(indoor.x+5,indoor.y-6),project(indoor.x+5,indoor.y),project(indoor.x-5,indoor.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.clip('evenodd');draw();ctx.restore();};
     for(const home of homes){
       const inside=game.player.indoorHome===`${home.cx},${home.cy}`;
       items.push({depth:Layers.rear(home),draw:()=>art.houseBack(ctx,home,project)});
@@ -144,13 +145,13 @@
       }
     }
     for(const d of game.devices.filter(d=>d.hp>0&&(game.player.indoorHome||!(d.x>-5&&d.x<5&&d.y<0&&d.y>-6))))items.push({depth:roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y,draw:()=>drawDevice(d)});
-    for(const z of game.zombies)if(z.hp>0)items.push({depth:actorDepth(z),draw:()=>visibleOutside(z,()=>actor(z,'zombie'))});
-    for(const v of game.visitors)items.push({depth:actorDepth(v),draw:()=>visibleOutside(v,()=>actor(v,'visitor'))});
-    for(const d of game.drops)items.push({depth:roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y,draw:()=>visibleOutside(d,()=>{const p=project(d.x,d.y);if(!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');})});
+    for(const z of game.zombies)if(z.hp>0&&inView(z))items.push({depth:actorDepth(z),draw:()=>visibleOutside(z,()=>actor(z,'zombie'))});
+    for(const v of game.visitors)if(inView(v))items.push({depth:actorDepth(v),draw:()=>visibleOutside(v,()=>actor(v,'visitor'))});
+    for(const d of game.drops)if(inView(d))items.push({depth:roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y,draw:()=>visibleOutside(d,()=>{const p=project(d.x,d.y);if(!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');})});
     items.push({depth:actorDepth(game.player),draw:()=>actor(game.player,'player')});
     for(const zone of game.zones){const q=project(zone.x,zone.y);art.sprite(ctx,zone.kind,q.x,q.y,zone.radius*scale*Math.SQRT2,{width:zone.radius*scale*2*Math.SQRT2,anchorY:.5});}
     for(const effect of game.effects){const q=project(effect.x,effect.y);art.sprite(ctx,effect.kind,q.x,q.y,effect.radius?effect.radius*scale:25,{width:effect.radius?effect.radius*scale*2:35,anchorY:.5});}
-    for(const shot of game.projectiles)items.push({depth:shot.x+shot.y+.3,draw:()=>{const q=project(shot.x,shot.y,.6);art.sprite(ctx,shot.kind,q.x,q.y,14,{width:20,anchorY:.5});}});
+    for(const shot of game.projectiles)if(inView(shot))items.push({depth:shot.x+shot.y+.3,draw:()=>{const q=project(shot.x,shot.y,.6);art.sprite(ctx,shot.kind,q.x,q.y,14,{width:20,anchorY:.5});}});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
     if(placement){const p=game.placementPoint(),error=game.canPlace(buildKind,p);plane(p.x,p.y,1,1,error?'#ad5b5666':'#ceb56755',error?'#d1917b':'#e5d99b');drawDevice({...p,kind:buildKind,readyAt:0},true);}
     if(nearby&&mode==='play'&&!placement){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
@@ -370,7 +371,9 @@
       const before={x:game.player.x,y:game.player.y};
       const input={up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY};
       const debug=Dev.state(game),speed=debug.enabled?debug.speed:1;
+      game.beginFrame();
       for(let tick=0;tick<speed&&!game.result;tick++)game.step(dt,input);
+      game.endFrame();
       const moved=dist(before,game.player),moving=moved>1e-7;
       if(moving){
         if(!playerMotion.moving)playerMotion.phase=0;

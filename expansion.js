@@ -27,6 +27,33 @@
     push(v){const a=this.a;a.push(v);let i=a.length-1;while(i){const p=(i-1)>>1;if(a[p].f<=v.f)break;a[i]=a[p];i=p;}a[i]=v;}
     pop(){const a=this.a,first=a[0],last=a.pop();if(a.length){let i=0;while(i*2+1<a.length){let c=i*2+1;if(c+1<a.length&&a[c+1].f<a[c].f)c++;if(a[c].f>=last.f)break;a[i]=a[c];i=c;}a[i]=last;}return first;}
   }
+  // Index static bounds once. Health and door state remain live at query time.
+  const COLLISION_CELL=2;
+  function collisionGrid(objects){
+    const cells=new Map();let order=0,minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+    for(const object of objects){
+      const entry={object,order:order++,stamp:0},w=object.w||0,h=object.h||0;
+      for(let x=Math.floor((object.x-w/2)/COLLISION_CELL);x<=Math.floor((object.x+w/2)/COLLISION_CELL);x++)for(let y=Math.floor((object.y-h/2)/COLLISION_CELL);y<=Math.floor((object.y+h/2)/COLLISION_CELL);y++){
+        minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y);
+        const key=`${x},${y}`;if(!cells.has(key))cells.set(key,[]);cells.get(key).push(entry);
+      }
+    }
+    return {cells,stamp:0,minX,maxX,minY,maxY};
+  }
+  function gridHits(game,index,a,b,padding,out){
+    const stamp=++index.stamp,hits=[];
+    const minX=Math.max(index.minX,Math.floor((Math.min(a.x,b.x)-padding)/COLLISION_CELL)),maxX=Math.min(index.maxX,Math.floor((Math.max(a.x,b.x)+padding)/COLLISION_CELL));
+    const minY=Math.max(index.minY,Math.floor((Math.min(a.y,b.y)-padding)/COLLISION_CELL)),maxY=Math.min(index.maxY,Math.floor((Math.max(a.y,b.y)+padding)/COLLISION_CELL));
+    for(let x=minX;x<=maxX;x++)for(let y=minY;y<=maxY;y++){
+      const bucket=index.cells.get(`${x},${y}`);if(!bucket)continue;
+      for(const entry of bucket){
+        if(entry.stamp===stamp)continue;entry.stamp=stamp;const o=entry.object;
+        if(!game.active(o)||o.type==='site'&&!o.blocking||o.type==='device'&&!game.blocking(o))continue;
+        if(segmentHits(a,b,o,padding))hits.push(entry);
+      }
+    }
+    hits.sort((a,b)=>a.order-b.order);for(const entry of hits)out.push(entry.object);
+  }
   function nightPlan(day){
     const types=Object.keys(D.enemies),N=total(day);
     const pct=day<3?[100,0,0,0,0,0]:day<5?[85,15,0,0,0,0]:day<8?[70,20,10,0,0,0]:day<10?[60,20,15,5,0,0]:day<12?[55,20,15,5,5,0]:[50,20,15,5,5,5];
@@ -80,8 +107,25 @@
     }
     active(o){return o.hp>0&&!(o.type==='door'&&o.open);}
     blocking(o){return !D.builds[o.kind]?.ground;}
-    obstacles(a,b=a,padding=.22){const base=super.obstacles(a,b,padding);const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2},h=this.getHome(Math.round(mid.x/28),Math.round(mid.y/28));for(const site of h.sites)if(site.blocking&&site.hp>0&&segmentHits(a,b,site,padding))base.push(site);for(const d of this.devices)if(this.active(d)&&this.blocking(d)&&segmentHits(a,b,d,padding))base.push(d);return base;}
-    updateDoors(){for(const h of this.homes.values())for(const door of h.doors){if(door.hp<=0)continue;const d=pointRect(this.player,door);if(d<1.25)door.open=true;else if(door.open&&d>1.6&&!this.zombies.some(z=>z.hp>0&&pointRect(z,door)<.3))door.open=false;}}
+    obstacles(a,b=a,padding=.22){
+      const out=[],spacing=S.RULES.lotSpacing;this._collisionHomes=this._collisionHomes||new WeakMap();
+      const minX=Math.round((Math.min(a.x,b.x)-padding)/spacing),maxX=Math.round((Math.max(a.x,b.x)+padding)/spacing);
+      const minY=Math.round((Math.min(a.y,b.y)-padding)/spacing),maxY=Math.round((Math.max(a.y,b.y)+padding)/spacing);
+      for(let cx=minX;cx<=maxX;cx++)for(let cy=minY;cy<=maxY;cy++){
+        const h=this.getHome(cx,cy);let cached=this._collisionHomes.get(h);
+        if(!cached||cached.objects!==h.objects||cached.sites!==h.sites||cached.objectCount!==h.objects.length||cached.siteCount!==h.sites.length){
+          cached={objects:h.objects,sites:h.sites,objectCount:h.objects.length,siteCount:h.sites.length,index:collisionGrid([...h.objects,...h.sites])};this._collisionHomes.set(h,cached);
+        }
+        gridHits(this,cached.index,a,b,padding,out);
+      }
+      if(this.devices.length){let devices=this._collisionDevices;
+        if(!devices||devices.objects!==this.devices||devices.count!==this.devices.length)this._collisionDevices=devices={objects:this.devices,count:this.devices.length,index:collisionGrid(this.devices)};
+        gridHits(this,devices.index,a,b,padding,out);
+      }return out;
+    }
+    clearLine(a,b,ignore=null){return a.x===b.x&&a.y===b.y||!this.obstacles(a,b,0).some(o=>o!==ignore);}
+    navigationChanged(){this._navigationRevision=(this._navigationRevision||0)+1;}
+    updateDoors(){for(const h of this.homes.values())for(const door of h.doors){if(door.hp<=0)continue;const wasOpen=door.open,d=pointRect(this.player,door);if(d<1.25)door.open=true;else if(door.open&&d>1.6&&!this.zombies.some(z=>z.hp>0&&pointRect(z,door)<.3))door.open=false;if(wasOpen!==door.open)this.navigationChanged();}}
     canPlace(kind,p){
       const def=D.builds[kind];if(!def)return '未知建筑';if(this.day<def.day)return `第${def.day}天开放`;
       if(Math.abs(p.x)>5||p.y<-6||p.y>4)return '只能建在自己的领地内';
@@ -93,7 +137,7 @@
     placementPoint(){const p=super.placementPoint();return {x:Math.round(p.x*2)/2,y:Math.round(p.y*2)/2};}
     place(kind,p){const error=this.canPlace(kind,p);if(error){this.announce(error);return false;}return this.beginAction('build',3,{kind,p});}
     stationNear(kind){return this.devices.find(d=>d.kind===kind&&d.hp>0&&dist(d,this.player)<2&&this.clearLine(this.player,d,d));}
-    find(id){return this.devices.find(d=>d.id===id)||[...this.homes.values()].flatMap(h=>[...h.objects,...h.sites]).find(o=>o.id===id);}
+    find(id){const device=this.devices.find(d=>d.id===id);if(device)return device;const match=/^(home|site):(-?\d+),(-?\d+):\d+$/.exec(id);if(!match)return undefined;const h=this.homes.get(`${match[2]},${match[3]}`);return h&&(match[1]==='site'?h.sites:h.objects).find(o=>o.id===id);}
     beginAction(type,duration,data={}){
       if(this.action){this.announce('正在操作，请先取消。');return false;}
       this.action={type,duration,elapsed:0,start:{x:this.player.x,y:this.player.y},...data};return true;
@@ -109,13 +153,13 @@
       a.elapsed+=dt;if(a.elapsed+1e-8<a.duration)return;this.action=null;
       if(a.type==='build'){
         const def=D.builds[a.kind],error=this.canPlace(a.kind,a.p);if(error){this.announce(error);return;}if(!this.pay(def.cost))return;
-        const horizontal=Math.abs(this.player.facing.x)>=Math.abs(this.player.facing.y);this.devices.push({...a.p,id:`device:${this.deviceId++}`,kind:a.kind,type:'device',hp:def.hp,maxHP:def.hp,w:horizontal?(def.w||.7):(def.h||.7),h:horizontal?(def.h||.7):(def.w||.7),level:0,invested:{...def.cost},readyAt:this.seconds+(a.kind==='trap'?7:a.kind==='spike_floor'?2:1),target:null,output:Array(6).fill(null),storage:Array(20).fill(null),jobs:[],fuel:0});this.announce(`${def.name}建造完成。`);
+        const horizontal=Math.abs(this.player.facing.x)>=Math.abs(this.player.facing.y);this.devices.push({...a.p,id:`device:${this.deviceId++}`,kind:a.kind,type:'device',hp:def.hp,maxHP:def.hp,w:horizontal?(def.w||.7):(def.h||.7),h:horizontal?(def.h||.7):(def.w||.7),level:0,invested:{...def.cost},readyAt:this.seconds+(a.kind==='trap'?7:a.kind==='spike_floor'?2:1),target:null,output:Array(6).fill(null),storage:Array(20).fill(null),jobs:[],fuel:0});this.navigationChanged();this.announce(`${def.name}建造完成。`);
       }else if(a.type==='dismantle'){
         const gain=o.type==='furniture'?{[o.material]:1}:o.invested||{};
         const extra={...gain};for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s)extra[s.kind]=(extra[s.kind]||0)+s.amount;
         for(const j of o.jobs||[])for(const [k,n] of Object.entries(j.cost))extra[k]=(extra[k]||0)+n;
         if(o.crop)extra[o.crop.kind]=(extra[o.crop.kind]||0)+1;
-        if(!this.pay({},extra))return;o.hp=0;this.devices=this.devices.filter(d=>d!==o);if(this.player.weapon!=='fists'&&!this.count(this.player.weapon))this.player.weapon='fists';this.announce(o.type==='site'&&o.searched?'空容器已拆除。':'拆除完成，已返还全部投入材料。');
+        if(!this.pay({},extra))return;o.hp=0;this.devices=this.devices.filter(d=>d!==o);this.navigationChanged();if(this.player.weapon!=='fists'&&!this.count(this.player.weapon))this.player.weapon='fists';this.announce(o.type==='site'&&o.searched?'空容器已拆除。':'拆除完成，已返还全部投入材料。');
       }else if(a.type==='repair'){
         const k=o.material==='stone'||o.kind==='brick_wall'?'stone':o.kind==='trap'||o.kind==='iron_fence'?'iron':'wood';if(o.hp>=o.maxHP)return;if(this.pay({[k]:1}))o.hp=Math.min(o.maxHP,o.hp+(k==='stone'?10:6));
       }else if(a.type==='upgrade'){
@@ -160,7 +204,7 @@
       if(this.player.hp<=0){this.result='dead';this.deathReason=source;this.finishStats();this.autosaveRequested=true;}return true;
     }
     damageZombie(z,n){if(z.hp<=0)return;z.hp=Math.max(0,z.hp-n);if(!z.hp){this.kills++;this.stats.kills[z.kind]=(this.stats.kills[z.kind]||0)+1;z.windup=null;}}
-    damageBuilding(o,n){if(o.hp<=0)return;o.hp=Math.max(0,o.hp-n);if(o.hp>0)return;this.stats.lost++;
+    damageBuilding(o,n){if(o.hp<=0)return;o.hp=Math.max(0,o.hp-n);if(o.hp>0)return;this.navigationChanged();this.stats.lost++;
       const gain={};for(const [k,v] of Object.entries(o.invested||{})){const n=Math.floor(v/2);if(n)gain[k]=(gain[k]||0)+n;}
       if(o.type==='site'&&!o.searched)for(const [k,n] of Object.entries(o.loot||{}))gain[k]=(gain[k]||0)+n;
       for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s)gain[s.kind]=(gain[s.kind]||0)+s.amount;
@@ -264,11 +308,11 @@
         if(!p)continue;const def=D.enemies[request.kind];this.zombies.push({...p,kind:request.kind,hp:def.hp,maxHP:def.hp,id:this.spawned++,nextAttack:0,path:[],repathAt:0,rootUntil:0,boostUntil:0,screamAt:0,rangedAt:0});this.stats.spawned++;this.pendingSpawn.splice(i,1);
       }
     }
-    pathToTarget(z,target){
+    *pathSearch(z,target){
       const start={x:Math.round(z.x),y:Math.round(z.y)},goal={x:Math.round(target.x),y:Math.round(target.y)},key=p=>`${p.x},${p.y}`;
       const heap=new MinHeap(),cost=new Map([[key(start),0]]),nodes=new Map([[key(start),start]]),parents=new Map();heap.push({...start,g:0,f:dist(start,goal)});
       let best=start,bestH=dist(start,goal),expanded=0;const def=D.enemies[z.kind];
-      while(heap.length&&expanded++<1800){const cur=heap.pop(),k=key(cur);if(cur.g!==cost.get(k))continue;const h=dist(cur,goal);if(h<bestH){best=cur;bestH=h;}if(h<.5){best=cur;break;}
+      while(heap.length&&expanded++<1800){yield;const cur=heap.pop(),k=key(cur);if(cur.g!==cost.get(k))continue;const h=dist(cur,goal);if(h<bestH){best=cur;bestH=h;}if(h<.5){best=cur;break;}
         for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)if(dx||dy){const next={x:cur.x+dx,y:cur.y+dy};if(Math.abs(next.x-start.x)>100||Math.abs(next.y-start.y)>100)continue;
           const blockers=this.obstacles(cur,next,.24),crossing=blockers.reduce((n,o)=>n+Math.ceil(o.hp/def.building)*def.interval*def.speed,0),g=cur.g+Math.hypot(dx,dy)+crossing,nk=key(next);
           if(g<(cost.get(nk)??Infinity)){cost.set(nk,g);parents.set(nk,k);nodes.set(nk,next);heap.push({...next,g,f:g+dist(next,goal)});}
@@ -276,17 +320,49 @@
       }
       const path=[];let k=key(best);while(k!==key(start)&&parents.has(k)){path.push(nodes.get(k));k=parents.get(k);}return path.reverse();
     }
+    // Retain the synchronous helper; live enemy AI uses the bounded queue below.
+    pathToTarget(z,target){const search=this.pathSearch(z,target);let result;do{result=search.next();}while(!result.done);return result.value;}
+    requestPath(z,target){
+      this._pathJobs=this._pathJobs||new Map();this._pathQueue=this._pathQueue||[];
+      if(this._pathJobs.has(z)||this._pathQueue.length>=8)return false;
+      if(!this.obstacles(z,target,.24).some(o=>o!==target)){z.path=[];return true;}
+      const start={x:z.x,y:z.y,kind:z.kind},goal={x:target.x,y:target.y};
+      const job={z,target,start,goal,revision:this._navigationRevision||0,search:this.pathSearch(start,goal)};
+      this._pathJobs.set(z,job);this._pathQueue.push(job);return true;
+    }
+    updatePaths(){
+      const queue=this._pathQueue;if(!queue?.length)return;
+      const alive=new Set(this.zombies),now=()=>root.performance?.now?.()??Date.now();
+      const deadline=this._frameManaged?(this._pathFrameDeadline??=now()+3):now()+3;
+      let remaining=this._pathFrameBudget??256;
+      while(queue.length&&remaining>0&&now()<deadline){
+        const job=queue.shift(),{z,target}=job;
+        if(!alive.has(z)||z.hp<=0||target.hp<=0||job.revision!==(this._navigationRevision||0)||dist(target,job.goal)>12||dist(z,job.start)>4){
+          this._pathJobs.delete(z);z.repathAt=Math.min(z.repathAt,this.seconds);continue;
+        }
+        let result;
+        for(let n=0;n<32&&remaining>0;n++,remaining--){result=job.search.next();if(result.done){remaining--;break;}}
+        if(result?.done){
+          const path=result.value;let closest=0,distance=Infinity;
+          for(let i=0;i<path.length;i++){const d=dist(z,path[i]);if(d<=distance){closest=i;distance=d;}}
+          z.path=path.slice(closest);this._pathJobs.delete(z);
+        }else queue.push(job);
+      }
+      this._pathFrameBudget=remaining;
+    }
+    beginFrame(){this._frameManaged=true;this._pathFrameBudget=256;this._pathFrameDeadline=null;}
+    endFrame(){this._frameManaged=false;}
     updateDevices(){
       const ordered=this.zombies.filter(z=>z.hp>0).sort((a,b)=>a.id-b.id);
-      const aliveIds=new Set(ordered.map(z=>String(z.id)));
       for(const z of ordered)z.slowUntil=0;
       for(const d of this.devices){if(d.hp<=0)continue;
         if(d.kind==='trap'){
           if(this.seconds<d.readyAt)continue;const z=ordered.find(z=>z.hp>0&&dist(z,d)<.6);if(z){this.damageZombie(z,d.level?4:3);d.readyAt=this.seconds+7;d.flashUntil=this.seconds+.35;if(z.hp>0)z.rootUntil=Math.max(z.rootUntil,this.seconds+(z.kind==='brute'?.5:1));}
         }else if(d.kind==='ballista'){
           const radius=d.level===2?4:d.level===1?3:Math.sqrt(9/Math.PI),valid=z=>z.hp>0&&dist(z,d)<=radius&&this.clearLine(d,z,d);
-          d.entered=d.entered||{};for(const id of Object.keys(d.entered))if(!aliveIds.has(id))delete d.entered[id];for(const z of ordered){if(valid(z)){if(d.entered[z.id]===undefined)d.entered[z.id]=this.seconds;}else delete d.entered[z.id];}
-          let z=ordered.find(z=>z.id===d.targetId&&valid(z));if(!z){z=ordered.filter(valid).sort((a,b)=>d.entered[a.id]-d.entered[b.id]||a.id-b.id)[0];d.targetId=z?.id;}
+          const candidates=ordered.filter(valid),visibleIds=new Set(candidates.map(z=>String(z.id)));
+          d.entered=d.entered||{};for(const id of Object.keys(d.entered))if(!visibleIds.has(id))delete d.entered[id];for(const z of candidates)if(d.entered[z.id]===undefined)d.entered[z.id]=this.seconds;
+          let z=candidates.find(z=>z.id===d.targetId);if(!z){for(const candidate of candidates)if(!z||d.entered[candidate.id]<d.entered[z.id]||d.entered[candidate.id]===d.entered[z.id]&&candidate.id<z.id)z=candidate;d.targetId=z?.id;}
           if(z&&this.seconds>=d.readyAt){this.damageZombie(z,d.level?2:1);d.readyAt=this.seconds+(d.level===2?.8:d.level===1?1.2:1);d.flashUntil=this.seconds+.15;d.shot={x:z.x,y:z.y};}
         }else if(d.kind==='spike_floor'){
           const affected=ordered.filter(z=>z.hp>0&&dist(z,d)<.7).slice(0,3);for(const z of affected){z.slowUntil=Math.max(z.slowUntil||0,this.seconds+.08);if(this.seconds>=d.readyAt&&this.seconds>=(z.spikeNext||0)){this.damageZombie(z,1);z.spikeNext=this.seconds+2;}}
@@ -295,12 +371,21 @@
     }
     reachableDevice(z,d){
       if(dist(z,d)>6)return false;if(this.clearLine(z,d,d))return true;
+      this._deviceReachability=this._deviceReachability||new WeakMap();let cache=this._deviceReachability.get(z);
+      if(!cache){cache=new WeakMap();this._deviceReachability.set(z,cache);}
+      const x=Math.round(z.x),y=Math.round(z.y),revision=this._navigationRevision||0,previous=cache.get(d);
+      if(previous&&previous.until>this.seconds&&previous.x===x&&previous.y===y&&previous.revision===revision)return previous.reachable;
+      const reachable=this.searchDeviceReachability(z,d);cache.set(d,{x,y,revision,reachable,until:this.seconds+.5});return reachable;
+    }
+    searchDeviceReachability(z,d){
       const start={x:Math.round(z.x),y:Math.round(z.y)},queue=[start],seen=new Set([`${start.x},${start.y}`]);
       for(let i=0;i<queue.length&&i<200;i++){const p=queue[i];if(pointRect(p,d)<=1&&this.clearLine(p,d,d))return true;
         for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const next={x:p.x+dx,y:p.y+dy},k=`${next.x},${next.y}`;if(seen.has(k)||dist(next,z)>7||this.obstacles(p,next,.24).some(o=>o!==d))continue;seen.add(k);queue.push(next);}
       }return false;
     }
     updateZombies(dt){
+      if(!this._frameManaged)this._pathFrameBudget=256;
+      this.updatePaths();
       for(const z of this.zombies){if(z.hp<=0)continue;const def=D.enemies[z.kind];
         if(!z.arrived&&dist(z,this.player)<=10){z.arrived=true;this.stats.arrived++;}
         if(z.windup){if(this.seconds>=z.windup.until){const attack=z.windup;z.windup=null;
@@ -311,14 +396,14 @@
         if(z.rootUntil>this.seconds)continue;
         if(z.kind==='screamer'&&this.seconds>=z.screamAt&&this.zombies.some(o=>o!==z&&o.kind!=='screamer'&&o.hp>0&&dist(o,z)<=6)){z.screamAt=this.seconds+20;z.windup={type:'scream',until:this.seconds+1.5};continue;}
         let target=this.player;
-        if(z.kind==='demolisher'){const devices=this.devices.filter(d=>d.hp>0&&this.reachableDevice(z,d)).sort((a,b)=>dist(a,z)-dist(b,z));if(devices.length)target=devices[0];}
+        if(z.kind==='demolisher'){const devices=this.devices.filter(d=>d.hp>0&&dist(d,z)<=6).sort((a,b)=>dist(a,z)-dist(b,z)),device=devices.find(d=>this.reachableDevice(z,d));if(device)target=device;}
         if(z.kind==='spitter'&&this.seconds>=z.rangedAt&&this.seconds>=z.nextAttack&&dist(z,target)<=7&&dist(z,target)>1&&this.clearLine(z,target,target)){z.rangedAt=this.seconds+4;z.nextAttack=this.seconds+4;z.facing={x:target.x-z.x,y:target.y-z.y};z.windup={type:'spit',target:target===this.player?'player':target.id,until:this.seconds+1};continue;}
         const attack=obstacle=>{if(this.seconds<z.nextAttack)return;z.nextAttack=this.seconds+def.interval;z.facing={x:obstacle.x-z.x,y:obstacle.y-z.y};const id=obstacle===this.player?'player':obstacle.id;
           if(['brute','demolisher'].includes(z.kind))z.windup={type:'melee',target:id,until:this.seconds+def.windup};else if(id==='player')this.damagePlayer(def.damage,z.kind);else this.damageBuilding(obstacle,def.building);
         };
         const distanceToTarget=target===this.player?dist(z,target):pointRect(z,target);
         if(distanceToTarget<=1&&this.clearLine(z,target,target)){attack(target);continue;}
-        if(this.seconds>=z.repathAt&&this.pathBudget>0){this.pathBudget--;z.path=this.pathToTarget(z,target);z.repathAt=this.seconds+3+z.id%7*.15;}
+        if(this.seconds>=z.repathAt&&this.pathBudget>0&&this.requestPath(z,target)){this.pathBudget--;z.repathAt=this.seconds+3+z.id%7*.15;}
         while(z.path.length&&dist(z,z.path[0])<.15)z.path.shift();
         const waypoint=z.path[0]||target,distance=dist(z,waypoint);if(!distance)continue;
         const speed=def.speed*(z.boostUntil>this.seconds?1.2:1)*(z.slowUntil>this.seconds ? .7 : 1),step=Math.min(distance,speed*dt),next={x:z.x+(waypoint.x-z.x)/distance*step,y:z.y+(waypoint.y-z.y)/distance*step};
@@ -366,11 +451,12 @@
         else {h.objects=saved.objects.map(o=>({...o,home:h}));h.sites=saved.sites.map(o=>({...o,hp:o.hp===null?Infinity:o.hp,home:h}));}
         h.furniture=h.objects.filter(o=>o.type==='furniture');h.doors=h.objects.filter(o=>o.type==='door');
       }
+      for(const z of game.zombies)if(!z.path?.length)z.repathAt=Math.min(z.repathAt??0,game.seconds);
       game.nextRecoveryAt=data.nextRecoveryAt===null?Infinity:data.nextRecoveryAt;game.lastSpent=data.lastSpent===null?-Infinity:data.lastSpent;game.action=null;game.events=[];game.selectedSlot=0;game.pathBudget=2;game.autosaveRequested=false;game.announce('存档已恢复。');return game;
     }
     step(dt,input={}){
       if(this.result||dt<=0)return;this.seconds+=dt;this.pathBudget=2;this.updateDoors();this.movePlayer(dt,input);this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;
-      this.updateAction(dt);this.updateProduction(dt);this.advanceClock(dt);this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);this.effects=this.effects.filter(e=>e.until>this.seconds);this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);
+      this.updateAction(dt);this.updateProduction(dt);this.advanceClock(dt);this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);this.effects=this.effects.filter(e=>e.until>this.seconds);if(this.devices.some(d=>d.hp<=0))this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);
     }
   }
   S.Game=SurvivalGame;S.RECIPES=Object.fromEntries(Object.entries(D.builds).map(([k,d])=>[k,d.cost]));S.Expansion=D;S.nightPlan=nightPlan;S.transaction=transaction;
