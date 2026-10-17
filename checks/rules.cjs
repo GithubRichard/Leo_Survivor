@@ -2,8 +2,8 @@ const assert=require('node:assert/strict');
 const {Game,RULES,dist}=require('../simulation.js');
 function test(name,fn){fn();console.log('PASS '+name);}
 function walk(g,dt,input={}){g.seconds+=dt;g.movePlayer(dt,input);}
-test('walk and run measure 2m/s and 4m/s without diagonal speed bonus',()=>{
-  for(const [run,speed]of [[false,2],[true,4]]){const g=new Game();g.player.x=12;g.player.y=12;const start={...g.player};walk(g,1,{right:true,run});assert.ok(Math.abs(dist(start,g.player)-speed)<1e-9);}
+test('walk and run preserve horizontal speed and use equal projected speed in all eight directions',()=>{
+  for(const [run,speed]of [[false,2],[true,4]])for(const input of [{right:true},{left:true},{up:true},{down:true},{right:true,up:true},{right:true,down:true},{left:true,up:true},{left:true,down:true}]){const g=new Game();g.player.x=12;g.player.y=12;g.obstacles=()=>[];const start={...g.player};walk(g,1,{...input,run});const dx=g.player.x-start.x,dy=g.player.y-start.y;assert.ok(Math.abs(Math.hypot(dx-dy,(dx+dy)*.5)-speed*Math.SQRT2)<1e-9);assert.ok(Math.abs(Math.hypot(g.player.facing.x,g.player.facing.y)-1)<1e-9);}
 });
 test('stamina waits two seconds, restores one point every two seconds, resets when running',()=>{
   const g=new Game();g.player.x=12;g.player.y=12;walk(g,3,{right:true,run:true});assert.equal(g.player.stamina,7);

@@ -2,7 +2,7 @@
 (function(root){
   const S=typeof module!=='undefined'&&module.exports?require('./simulation.js'):root.Survival;
   const D=typeof module!=='undefined'&&module.exports?require('./expansion-data.js'):root.ExpansionData;
-  const {dist,pointRect,segmentHits}=S,Base=S.Game;
+  const {dist,pointRect,segmentHits,screenDirection}=S,Base=S.Game;
   const copy=x=>JSON.parse(JSON.stringify(x)),limit=k=>D.weapons[k]?1:D.items[k]?.[1]||99;
   Object.entries(D.items).forEach(([k,v])=>S.NAMES[k]=v[0]);
   for(const group of [D.weapons,D.builds,D.crafts])for(const [k,v] of Object.entries(group))if(!D.items[k])S.NAMES[k]=v.name;
@@ -132,14 +132,14 @@
         const cost=this.count('medkit')?{medkit:1}:{cloth:3,herb:2};if(this.day>=8&&this.pay(cost))this.player.hp=Math.min(this.maxHP,this.player.hp+8);
       }
     }
-    spendStamina(n){if(n<=0)return true;if(this.player.stamina+1e-8<n)return false;this.player.stamina=Math.max(0,this.player.stamina-n);this.lastSpent=this.seconds;this.lastRecoveryAt=null;this.nextRecoveryAt=this.seconds+2;return true;}
+    spendStamina(n){if(n<=0)return true;if(this.developer?.enabled&&this.developer.infiniteStamina){this.player.stamina=this.maxStamina;return true;}if(this.player.stamina+1e-8<n)return false;this.player.stamina=Math.max(0,this.player.stamina-n);this.lastSpent=this.seconds;this.lastRecoveryAt=null;this.nextRecoveryAt=this.seconds+2;return true;}
     movePlayer(dt,input){
       let sx=(input.right?1:0)-(input.left?1:0)+(input.moveX||0),sy=(input.down?1:0)-(input.up?1:0)+(input.moveY||0);
       const length=Math.hypot(sx,sy),before={x:this.player.x,y:this.player.y};this.player.running=false;
       if(length&&this.action?.type!=='medkit'){
-        const direction={x:(sx+sy)/length/Math.SQRT2,y:(sy-sx)/length/Math.SQRT2};this.player.facing=direction;
-        const running=input.run&&this.player.stamina>0,speed=(running?4:2)*Math.min(1,length),nx={x:this.player.x+direction.x*speed*dt,y:this.player.y};
-        if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+direction.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
+        const movement=screenDirection(sx,sy),n=Math.hypot(movement.x,movement.y);this.player.facing={x:movement.x/n,y:movement.y/n};
+        const running=input.run&&this.player.stamina>0,speed=(running?4:2)*Math.min(1,length),nx={x:this.player.x+movement.x*speed*dt,y:this.player.y};
+        if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+movement.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
         this.player.running=Boolean(running&&dist(before,this.player)>1e-8);
       }
       if(this.player.running){this.spendStamina(Math.min(this.player.stamina,dt*(this.teaBuff?.until>this.seconds ? .8 : 1)));this.bandage=null;}
@@ -152,6 +152,7 @@
       }
     }
     damagePlayer(amount,source='normal',ground=false){
+      if(this.developer?.enabled&&this.developer.invincible)return false;
       if(amount<=0||this.result||!ground&&this.player.invulnerableUntil>this.seconds)return false;
       if(this.mainBuff?.type==='armor'&&amount>=1)amount=Math.max(1,amount-1);
       this.player.hp=Math.max(0,this.player.hp-amount);this.player.hurtUntil=this.seconds+1;if(!ground)this.player.invulnerableUntil=this.seconds+.5;
@@ -354,7 +355,7 @@
         objects:h.objects.filter(o=>o.hp!==o.maxHP||o.level||o.open).map(o=>({id:o.id,hp:o.hp,maxHP:o.maxHP,level:o.level||0,open:!!o.open,invested:o.invested})),
         sites:h.sites.filter(s=>s.searched||s.blocking&&s.hp!==s.maxHP).map(s=>({id:s.id,searched:s.searched,hp:Number.isFinite(s.hp)?s.hp:null}))
       })).filter(h=>h.objects.length||h.sites.length);
-      return copy({version:1,day:this.day,seconds:this.seconds,minutes:this.minutes,player:this.player,inventory:this.inventory,drops:this.drops,homes:homeData,devices:this.devices.map(({target,...d})=>d),zombies:this.zombies,visitors:this.visitors,projectiles:this.projectiles,zones:this.zones,effects:this.effects,nextWave:this.nextWave,plan:this.plan,pendingSpawn:this.pendingSpawn,waveDirections:this.waveDirections,warnedWaves:this.warnedWaves,spawned:this.spawned,kills:this.kills,deviceId:this.deviceId,visitFailures:this.visitFailures,visitDay:this.visitDay,helper:this.helper,mainBuff:this.mainBuff,teaBuff:this.teaBuff,foodRegen:this.foodRegen,bandage:this.bandage,nextRecoveryAt:Number.isFinite(this.nextRecoveryAt)?this.nextRecoveryAt:null,lastSpent:Number.isFinite(this.lastSpent)?this.lastSpent:null,lastRecoveryAt:this.lastRecoveryAt,recoveryInterval:this.recoveryInterval,attackAt:this.attackAt,foodAt:this.foodAt,waterAt:this.waterAt,throwAt:this.throwAt,starving:this.starving||0,acidTime:this.acidTime||0,fireTime:this.fireTime||0,history:this.history,stats:this.stats,result:this.result,deathReason:this.deathReason||null});
+      return copy({version:1,developerUsed:!!this.developerUsed,day:this.day,seconds:this.seconds,minutes:this.minutes,player:this.player,inventory:this.inventory,drops:this.drops,homes:homeData,devices:this.devices.map(({target,...d})=>d),zombies:this.zombies,visitors:this.visitors,projectiles:this.projectiles,zones:this.zones,effects:this.effects,nextWave:this.nextWave,plan:this.plan,pendingSpawn:this.pendingSpawn,waveDirections:this.waveDirections,warnedWaves:this.warnedWaves,spawned:this.spawned,kills:this.kills,deviceId:this.deviceId,visitFailures:this.visitFailures,visitDay:this.visitDay,helper:this.helper,mainBuff:this.mainBuff,teaBuff:this.teaBuff,foodRegen:this.foodRegen,bandage:this.bandage,nextRecoveryAt:Number.isFinite(this.nextRecoveryAt)?this.nextRecoveryAt:null,lastSpent:Number.isFinite(this.lastSpent)?this.lastSpent:null,lastRecoveryAt:this.lastRecoveryAt,recoveryInterval:this.recoveryInterval,attackAt:this.attackAt,foodAt:this.foodAt,waterAt:this.waterAt,throwAt:this.throwAt,starving:this.starving||0,acidTime:this.acidTime||0,fireTime:this.fireTime||0,history:this.history,stats:this.stats,result:this.result,deathReason:this.deathReason||null});
     }
     static restore(data){
       if(!data||data.version!==1||!Array.isArray(data.inventory)||!data.player||!Number.isFinite(data.day))throw new Error('存档格式不兼容');

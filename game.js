@@ -4,6 +4,7 @@
   const {Game,RULES,NAMES,dist}=Survival;
   const D=Survival.Expansion,UI=window.ExpansionUI;
   const SAVE_KEY="survivor-save-v1";
+  const DEV_SAVE_KEY="survivor-dev-save-v1",Dev=window.DeveloperMode,Layers=window.SceneLayers;
   let inventoryPane="bag",contextTarget=null,contextChoice=0,overlayNotice="";
   const art=window.GameArt;
   const $=id=>document.getElementById(id);
@@ -110,20 +111,13 @@
     const items=[];
     const indoor=homes.find(h=>game.player.indoorHome===`${h.cx},${h.cy}`);
     const roomOf=o=>homes.find(h=>Math.abs(o.x-h.x)<5&&o.y>h.y-6&&o.y<h.y);
-    // 整面前墙共用一个绘制层，墙外角色也必须排在整面墙之后。
-    const actorDepth=o=>{
-      let depth=o.x+o.y+.2;
-      for(const h of homes){
-        if(Math.abs(o.x-h.x)<=5.3&&o.y>=h.y&&o.y<=h.y+4.3)depth=Math.max(depth,h.x+h.y+.06);
-        else if(roomOf(o)===h)depth=Math.min(depth,h.x+h.y-.05);
-      }
-      return depth;
-    };
+    // Rear and front walls use independent anchors, including the rear indoor corners.
+    const actorDepth=o=>Layers.actor(o,homes);
     const visibleOutside=(o,draw)=>{ctx.save();if(indoor&&roomOf(o)!==indoor){ctx.beginPath();ctx.rect(-2000,-2000,width+4000,height+4000);const corners=[project(indoor.x-5,indoor.y-6),project(indoor.x+5,indoor.y-6),project(indoor.x+5,indoor.y),project(indoor.x-5,indoor.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.clip('evenodd');}draw();ctx.restore();};
     for(const home of homes){
       const inside=game.player.indoorHome===`${home.cx},${home.cy}`;
-      items.push({depth:home.x+home.y-6,draw:()=>art.house(ctx,home,project,inside,false)});
-      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;items.push({depth:o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
+      items.push({depth:Layers.rear(home),draw:()=>art.houseBack(ctx,home,project)});
+      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
         if(o.type==='wall'){if(!art.available('house_base'))box(o,1.8,'#b9b7a4','#777d6b','#969b88');if(o.hp<o.maxHP){const q=project(o.x,o.y,1);art.sprite(ctx,'damage_stone',q.x,q.y,20,{width:24});}}
         else if(o.type==='furniture'){
           const file={'铁柜':'metal_cabinet','铁架':'metal_shelf','木桌':'wood_table','木椅':'wood_chair','木柜':'wood_cabinet'}[o.name],p=project(o.x,o.y);
@@ -139,8 +133,8 @@
           else box(o,o.y===home.y?1.6:.8,'#a59059','#625539','#88764a');
         }
       }});}
-      items.push({depth:home.x+home.y+.01,draw:()=>art.house(ctx,home,project,inside,true)});
-      if(!inside&&home.objects.some(o=>o.type==='wall'&&o.hp>0))items.push({depth:home.x+home.y+.02,draw:()=>roof(home)});
+      items.push({depth:Layers.front(home),draw:()=>art.houseFront(ctx,home,project,inside)});
+      if(!inside&&!(game.developer?.enabled&&game.developer.hideRoofs)&&home.objects.some(o=>o.type==='wall'&&o.hp>0))items.push({depth:home.x+home.y+.02,draw:()=>roof(home)});
       for(const site of home.sites){
         if(site.hp<=0)continue;
         const outside=['stone_pile','water_point','herb_bed'].includes(site.kind);
@@ -162,34 +156,55 @@
     if(nearby&&mode==='play'&&!placement){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
     const night=game.minutes>=1320&&game.minutes<1740;
     if(night){const p=project(game.player.x,game.player.y),g=ctx.createRadialGradient(p.x,p.y,80,p.x,p.y,Math.max(width,height)*.8);g.addColorStop(0,'#0a142519');g.addColorStop(1,'#07101eae');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);}
+    Dev.draw(ctx,game,project,homes);
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
-  function showMenu(){playerMotion={moving:false,phase:0,facing:null};mode='menu';placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function showMenu(){playerMotion={moving:false,phase:0,facing:null};mode='menu';placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('developer-badge').classList.add('hidden');$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
   function updateMenu(){document.querySelectorAll('.menu-option').forEach((el,i)=>el.classList.toggle('selected',i===menuChoice));}
-  function savedData(){try{const value=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');return value?.version===1?value:null;}catch{return null;}}
+  function savedData(key=SAVE_KEY){try{const value=JSON.parse(localStorage.getItem(key)||'null');return value?.version===1?value:null;}catch{return null;}}
   function saveGame(announce=true){
     if(mode==='menu')return false;
-    try{localStorage.setItem(SAVE_KEY,JSON.stringify(game.snapshot()));$('continue-game').disabled=!!game.result;if(announce)game.announce('进度已保存到当前浏览器。');return true;}
+    try{const test=!!game.developerUsed;localStorage.setItem(test?DEV_SAVE_KEY:SAVE_KEY,JSON.stringify(game.snapshot()));$(test?'continue-developer':'continue-game').disabled=!!game.result;if(announce)game.announce(test?'开发测试进度已保存，正常存档未被覆盖。':'进度已保存到当前浏览器。');return true;}
     catch{game.announce('无法保存：浏览器存储不可用或已满。请保留本页，暂勿刷新。');return false;}
   }
   function enterGame(){
     mode='play';placement=false;playerMotion={moving:false,phase:0,facing:null};keys.clear();touch.clear();uiKey='';overlayNotice='';notifications=[];lastTime=performance.now();
     $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective'])$(id).classList.remove('hidden');$('player-name').textContent=game.player.name;
   }
-  function resumeGame(){if(!art.ready)return;try{const data=savedData();if(!data||data.result)return;game=Game.restore(data);enterGame();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
+  function resumeGame(test=false){if(!art.ready)return;try{const data=savedData(test?DEV_SAVE_KEY:SAVE_KEY);if(!data||data.result)return;game=Game.restore(data);if(test)Dev.enable(game);enterGame();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
   document.querySelectorAll('.menu-option').forEach((el,i)=>el.addEventListener('pointerenter',()=>{if(mode==='menu'){menuChoice=i;updateMenu();}}));
-  function start(){
+  function start(developer=false){
     playerMotion={moving:false,phase:0,facing:null};
     if(!art.ready)return;
     const name=$('name-input').value||'幸存者';$('name-input').blur();
     game=new Game({name:name.trim().slice(0,12)||'幸存者',startMinutes:menuChoice===1?1260:300});
+    if(developer)Dev.enable(game);
     mode='play';placement=false;buildKind='trap';keys.clear();touch.clear();notifications=[];uiKey='';lastTime=performance.now();
     $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective'])$(id).classList.remove('hidden');
     $('player-name').textContent=game.player.name;game.announce(touch.enabled?'进入屋内找家具，靠近后点交互拆除。点建造部署装置。':'进入屋内找家具，靠近按E拆除。按F开始部署装置。');
     overlayNotice='';inventoryPane='bag';contextTarget=null;game.announce('先搜索家中的补给箱；Tab里可以制作武器和建筑。E攻击朝向范围内的敌人。');saveGame(false);
   }
-  function openOverlay(next){mode=next;overlayNotice='';placement=false;keys.clear();touch.clear();$('overlay').classList.remove('hidden');$('interaction').classList.add('hidden');uiKey='';renderOverlay();}
+  function openOverlay(next){mode=next;overlayNotice='';placement=false;keys.clear();touch.clear();$('overlay').classList.remove('hidden');$('interaction').classList.add('hidden');uiKey='';renderOverlay();$('overlay-card').scrollTop=0;}
   function closeOverlay(){mode='play';keys.clear();touch.clear();$('overlay').classList.add('hidden');lastTime=performance.now();uiKey='';}
+  function openDeveloper(){
+    if(mode==='menu'){start(true);if(mode==='menu')return;}
+    if(mode==='result')return;
+    if(!game.developerUsed){saveGame(false);Dev.enable(game);}
+    openOverlay('developer');
+  }
+  function developerCommand(button){
+    const action=button.dataset.dev;let ok=true;
+    if(action==='toggle')ok=Dev.toggle(game,button.dataset.option);
+    else if(action==='heal'){Dev.enable(game);game.player.hp=game.maxHP;game.player.stamina=game.maxStamina;game.player.hunger=100;game.starving=0;}
+    else if(action==='clear'){Dev.enable(game);Dev.clear(game);}
+    else if(action==='day'||action==='night')ok=Dev.jump(game,Number($('dev-day').value),action==='night');
+    else if(action==='give')ok=Dev.give(game,$('dev-item').value,Number($('dev-amount').value));
+    else if(action==='spawn')ok=Dev.spawn(game,$('dev-enemy').value,Number($('dev-count').value));
+    else if(action==='teleport')ok=Dev.teleport(game,button.dataset.position);
+    else if(action==='speed'){const speed=Number($('dev-speed').value);ok=[1,2,5].includes(speed);if(ok){Dev.enable(game);Dev.state(game).speed=speed;}}
+    else if(action==='save')ok=saveGame();
+    overlayNotice=ok?'开发操作完成。':'未完成：请检查输入、背包空间或目标位置是否被占用。';uiKey='';
+  }
   function inventoryOverlay(){return UI.inventory(game,buildKind,inventoryPane);}
   function statsOverlay(){
     const damageNames={hunger:'饥饿',acid_pool:'酸液区',fire_pool:'燃烧区'};
@@ -207,7 +222,8 @@
     if(mode==='inventory'){key+=game.selectedSlot+JSON.stringify(game.inventory)+buildKind+inventoryPane;html=inventoryOverlay();}
     else if(mode==='context'){key+=contextTarget?.object.id+JSON.stringify(game.inventory);html=UI.context(game,contextTarget);}
     else if(mode==='stats'){html=statsOverlay();}
-    else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><p>点继续游戏，回到你的领地。</p><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button></div>';}
+    else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><p>点继续游戏，回到你的领地。</p><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button><button data-command="developer">开发者模式（F2）</button></div>';}
+    else if(mode==='developer'){key+=JSON.stringify(Dev.state(game));html=Dev.panel(game);}
     else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：民居 · 食/修/药/保：商店 · 灰点：石头 · 蓝点：水 · 绿点：药草</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="overlay-actions"><button data-key="m">返回游戏</button></div>';}
     else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<button data-dialog="${i}" class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</button>`).join('')}<div class="key-hint keyboard-hint">W / S 选择　·　E 确认</div>`;}
     else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第${game.day}晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':'下次可以先搜补给箱、做武器和料理、修补受损的防线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
@@ -218,6 +234,7 @@
   }
   function drawMap(){const c=$('map-canvas');if(!c)return;const m=c.getContext('2d'),s=.65,cx=275,cy=175;const p=o=>({x:cx+(o.x-game.player.x)*s,y:cy+(o.y-game.player.y)*s});m.fillStyle='#1e281e';m.fillRect(0,0,550,350);for(const h of game.nearbyHomes(game.player,300)){const q=p(h);m.fillStyle=h.own?'#b7a05b':h.kind==='house'?'#63705b':'#81aabc';m.fillRect(q.x-3.25,q.y-3.9,6.5,3.9);m.strokeStyle=h.own?'#cfbd7c':'#485c43';m.strokeRect(q.x-3.25,q.y,6.5,2.6);if(h.kind!=='house'){m.fillStyle='#dfd8b7';m.font='10px sans-serif';m.fillText(({food_shop:'食',repair_shop:'修',pharmacy:'药',security_room:'保'})[h.kind],q.x+5,q.y);}for(const site of h.sites)if(['stone_pile','water_point','herb_bed'].includes(site.kind)&&(!site.searched||site.repeat)){const a=p(site);m.fillStyle=site.kind==='water_point'?'#82bfd7':site.kind==='herb_bed'?'#90bb67':'#91958e';m.fillRect(a.x,a.y,3,3);}}for(const z of game.zombies){const q=p(z);m.fillStyle='#d18673';m.beginPath();m.arc(q.x,q.y,3,0,Math.PI*2);m.fill();}m.fillStyle='#f0da91';m.beginPath();m.arc(cx,cy,5,0,Math.PI*2);m.fill();}
   function updateHUD(){
+    const debug=Dev.state(game);$('developer-badge').classList.toggle('hidden',!game.developerUsed);$('developer-badge').textContent=game.developerUsed?`测试存档 · ${debug.enabled?'开发工具开启':'工具关闭'} · ${debug.enabled?debug.speed:1}倍速 · F2`:'';
     $('run-edge').style.opacity=mode==='play'&&focused&&game.player.running?'1':'0';
     $('hurt-edge').style.opacity=mode==='play'&&game.player.hurtUntil>game.seconds?'1':'0';
     $('hp-label').textContent=`${Number(game.player.hp.toFixed(1))} / ${game.maxHP}`;$('hp-fill').style.width=`${game.player.hp/game.maxHP*100}%`;
@@ -246,12 +263,15 @@
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+Math.ceil(game.inventory.length/5))%Math.ceil(game.inventory.length/5))*5+(col+dx+5)%5;}
   function handleKey(event){
-    if(event.target instanceof HTMLInputElement){if(event.key==='Enter'){event.target.blur();if(mode==='menu')start();}return;}
+    if(event.key==='F2'){event.preventDefault();if(!event.repeat)performAction('f2');return;}
+    if(event.target instanceof HTMLInputElement||event.target instanceof HTMLSelectElement||event.target instanceof HTMLTextAreaElement){if(event.key==='Escape'){event.preventDefault();performAction('escape');}if(event.key==='Enter'){event.target.blur();if(mode==='menu')start();}return;}
     const k=event.key.toLowerCase();if(['tab',' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))event.preventDefault();
     keys.add(k);if(event.repeat)return;performAction(k);
   }
   function performAction(k){
-    if(k==='escape'){if(mode==='play')openOverlay('pause');else if(['pause','inventory','map','context','stats'].includes(mode))closeOverlay();return;}
+    if(k==='f2'){if(mode==='developer')closeOverlay();else openDeveloper();return;}
+    if(k==='escape'){if(mode==='play')openOverlay('pause');else if(['pause','inventory','map','context','stats','developer'].includes(mode))closeOverlay();return;}
+    if(mode==='developer')return;
     if(mode==='menu'){if(k==='w'||k==='s'){menuChoice=1-menuChoice;updateMenu();}if(k==='e')start();return;}
     if(mode==='result'){if(k==='e'){game=new Game();showMenu();}return;}
     if(mode==='context'){const buttons=[...$('overlay-card').querySelectorAll('[data-command]:not([disabled])')];if(k==='w'||k==='s'){contextChoice=(contextChoice+(k==='w'?-1:1)+buttons.length)%Math.max(1,buttons.length);buttons[contextChoice]?.focus();}if(k==='e')buttons[contextChoice]?.click();return;}
@@ -295,6 +315,7 @@
     else if(command==='cancel'){game.cancelAction();return;}
     else if(command==='save'){ok=saveGame();}
     else if(command==='stats'){openOverlay('stats');return;}
+    else if(command==='developer'){openDeveloper();return;}
     else if(o){
       if(command==='repair')ok=game.repair(o),leave=ok;
       if(command==='upgrade')ok=game.upgrade(o),leave=ok;
@@ -314,16 +335,20 @@
     if(leave){closeOverlay();return;}
     overlayNotice=ok?'操作完成。':game.events.at(-1)||'条件不足或空间不够，未完成操作。';uiKey='';
   }
-  $('start-game').addEventListener('click',start);
-  $('continue-game').addEventListener('click',resumeGame);
-  art.loading.then(()=>{$('continue-game').disabled=!savedData()||!!savedData()?.result;});
+  $('start-game').addEventListener('click',()=>start());
+  $('continue-game').addEventListener('click',()=>resumeGame());
+  $('start-developer').addEventListener('click',()=>start(true));
+  $('continue-developer').addEventListener('click',()=>resumeGame(true));
+  $('developer-badge').addEventListener('click',()=>openDeveloper());
+  art.loading.then(()=>{$('continue-game').disabled=!savedData()||!!savedData()?.result;$('start-developer').disabled=false;$('continue-developer').disabled=!savedData(DEV_SAVE_KEY)||!!savedData(DEV_SAVE_KEY)?.result;});
   $('action-progress').addEventListener('pointerdown',event=>{if(event.target.closest('[data-command="cancel"]')){event.preventDefault();game.cancelAction();}});
   $('touch-toggle').addEventListener('click',resize);
   document.querySelectorAll('.menu-option').forEach((el,i)=>{el.tabIndex=0;el.setAttribute('role','button');el.addEventListener('click',()=>{menuChoice=i;updateMenu();});});
   $('touch-controls').addEventListener('click',event=>{const button=event.target.closest('[data-key]');if(button)performAction(button.dataset.key);});
   $('overlay-card').addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button)return;
-    if(button.dataset.slot!==undefined){game.selectedSlot=Number(button.dataset.slot);uiKey='';}
+    if(button.dataset.dev){developerCommand(button);}
+    else if(button.dataset.slot!==undefined){game.selectedSlot=Number(button.dataset.slot);uiKey='';}
     else if(button.dataset.pane){inventoryPane=button.dataset.pane;contextChoice=0;overlayNotice='';uiKey='';}
     else if(button.dataset.command){handleCommand(button);}
     else if(button.dataset.recipe){buildKind=button.dataset.recipe;uiKey='';}
@@ -343,11 +368,14 @@
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
     if(mode==='play'&&focused&&!document.hidden){
       const before={x:game.player.x,y:game.player.y};
-      game.step(dt,{up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY});
+      const input={up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY};
+      const debug=Dev.state(game),speed=debug.enabled?debug.speed:1;
+      for(let tick=0;tick<speed&&!game.result;tick++)game.step(dt,input);
       const moved=dist(before,game.player),moving=moved>1e-7;
       if(moving){
         if(!playerMotion.moving)playerMotion.phase=0;
-        playerMotion.phase=(playerMotion.phase+moved/(window.PLAYER_ANIMATION?.metersPerFrame||.4))%4;
+        const dx=game.player.x-before.x,dy=game.player.y-before.y,screenMoved=Math.hypot(dx-dy,(dx+dy)*.5)/Math.SQRT2;
+        playerMotion.phase=(playerMotion.phase+screenMoved/(window.PLAYER_ANIMATION?.metersPerFrame||.4))%4;
         playerMotion.facing={x:(game.player.x-before.x)/moved,y:(game.player.y-before.y)/moved};
       }else playerMotion.phase=0;
       playerMotion.moving=moving;
@@ -356,7 +384,7 @@
     touch.setContext(mode,placement);
     nearby=mode==='play'&&!placement?game.nearbyInteraction():null;
     if(game.autosaveRequested){game.autosaveRequested=false;saveGame(false);}
-    drawWorld();if(mode!=='menu')updateHUD();if(['inventory','map','dialog','result','pause','context','stats'].includes(mode))renderOverlay();
+    drawWorld();if(mode!=='menu')updateHUD();if(['inventory','map','dialog','result','pause','context','stats','developer'].includes(mode))renderOverlay();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

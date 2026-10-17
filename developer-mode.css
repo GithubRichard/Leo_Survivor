@@ -1,0 +1,11 @@
+/* Debug tools share the existing pause overlay and remain usable on touch screens. */
+.dev-menu{border-top:1px solid var(--line);padding-top:12px}.dev-menu small{flex-basis:100%}
+.dev-toggles,.dev-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.dev-toggles button[aria-pressed="true"]{border-color:#d9b65f;background:#665329}
+.dev-section{padding:12px 0;border-top:1px solid var(--line)}.dev-section h3{margin:0 0 8px;font-size:16px}
+.dev-row label{display:flex;gap:8px;align-items:center;font-size:13px;max-width:100%}
+.dev-row input,.dev-row select{font:inherit;color:var(--ink);background:#192218;border:1px solid var(--line);border-radius:5px;padding:8px;min-height:42px;min-width:0;max-width:100%}
+.dev-row input{width:80px}.dev-row select{max-width:200px}
+#developer-badge{position:fixed;z-index:4;right:16px;bottom:80px;max-width:calc(100vw - 32px);font-size:11px;min-height:34px;padding:5px 9px;border-color:#d2aa54;background:#3b321be8;color:#f5d487}
+.touch-mode #developer-badge{top:calc(env(safe-area-inset-top) + 90px);bottom:auto;right:max(12px,env(safe-area-inset-right));max-width:55vw}
+@media(max-width:600px){.dev-row{align-items:stretch}.dev-row button{flex:1}.dev-row label{flex-wrap:wrap}.dev-toggles button{flex:1 1 42%}.dev-menu button{flex:1;font-size:12px}}

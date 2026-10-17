@@ -102,18 +102,21 @@
     return surface(ctx,key,source,dest,key==='grass'?'#63664c':'#3f433a');
   }
   function door(ctx,o,room,project){
-    if(o.level){const key=`${room?'house_door':'yard_gate'}_reinforced_${o.open?'open':'closed'}`,q=project(o.x,o.y);return sprite(ctx,key,q.x,q.y,room?58:37,{width:room?46:64,anchorY:.92});}
-    const key=`${room?'house_door':'yard_gate'}_${o.open?'open':'closed'}`;
+    const key=`${room?'house_door':'yard_gate'}_${o.level?'reinforced_':''}${o.open?'open':'closed'}`;
     if(!available(key))return false;
     // 开关状态使用同一门框三点标定；只改变门扇姿态，不改变尺寸。
     if(room){
-      const source=o.open?[{x:398,y:897},{x:854,y:1158},{x:398,y:66}]:[{x:390,y:895},{x:850,y:1154},{x:390,y:66}];
+      const source=o.level?(o.open?[{x:520,y:875},{x:982,y:1149},{x:520,y:70}]:[{x:388,y:894},{x:848,y:1158},{x:388,y:64}]):o.open?[{x:398,y:897},{x:854,y:1158},{x:398,y:66}]:[{x:390,y:895},{x:850,y:1154},{x:390,y:66}];
       return fullAffine(ctx,key,source,[project(o.x-.82,o.y),project(o.x+.82,o.y),project(o.x-.82,o.y,2.0)]);
     }
     // 两根门柱的脚点与院墙缺口两端重合，门顶沿用院墙高度。
-    return fullAffine(ctx,key,[{x:428,y:708},{x:1125,y:997},{x:428,y:25}],
+    const source=o.level&&o.open?[{x:604,y:728},{x:1285,y:1003},{x:604,y:11}]:[{x:428,y:708},{x:1125,y:997},{x:428,y:25}];
+    return fullAffine(ctx,key,source,
       [project(o.x-1,o.y),project(o.x+1,o.y),project(o.x-1,o.y,1.05)]);
   }
   function direction(facing={x:0,y:1}){const sx=facing.x-facing.y,sy=(facing.x+facing.y)*.5;return Math.abs(sx)>Math.abs(sy)?sx>0?'east':'west':sy<0?'north':'south';}
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,animatedPlayer,house,roof,ground,door,direction};
+  // Rear-wall sorting is independent from front-wall fading and door layering.
+  const houseBack=(ctx,home,project)=>house(ctx,home,project,false,false);
+  const houseFront=(ctx,home,project,inside)=>house(ctx,home,project,inside,true);
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,animatedPlayer,house,houseBack,houseFront,roof,ground,door,direction};
 })();

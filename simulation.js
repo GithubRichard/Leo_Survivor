@@ -11,6 +11,9 @@
   const RECIPES = { trap: { iron: 3 }, ballista: { wood: 5 } };
   const NAMES = { iron: '铁', wood: '木头', trap: '捕兽夹', ballista: '巨弩' };
   const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  // Inverse isometric projection: equal screen speed in all eight directions.
+  // Preserve the previous horizontal speed; vertical world travel needs compensation.
+  const screenDirection=(sx,sy)=>{const n=Math.hypot(sx,sy);return n?{x:(sx+2*sy)/n/Math.SQRT2,y:(2*sy-sx)/n/Math.SQRT2}:{x:0,y:0};};
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const pointRect = (p, r) => Math.hypot(p.x - clamp(p.x, r.x-r.w/2, r.x+r.w/2), p.y-clamp(p.y, r.y-r.h/2, r.y+r.h/2));
   function segmentHits(a, b, r, padding = 0) {
@@ -85,10 +88,10 @@
       const length=Math.hypot(sx,sy),moving=length>0,running=moving&&input.run&&this.player.stamina>0;
       const before={x:this.player.x,y:this.player.y},wasRunning=this.player.running;
       if(moving){
-        sx/=length;sy/=length;const direction={x:(sx+sy)/Math.SQRT2,y:(sy-sx)/Math.SQRT2};this.player.facing=direction;
+        const movement=screenDirection(sx,sy),n=Math.hypot(movement.x,movement.y);this.player.facing={x:movement.x/n,y:movement.y/n};
         const speed=(running?RULES.run:RULES.walk)*Math.min(1,length);
-        const nx={x:this.player.x+direction.x*speed*dt,y:this.player.y};if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;
-        const ny={x:this.player.x,y:this.player.y+direction.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
+        const nx={x:this.player.x+movement.x*speed*dt,y:this.player.y};if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;
+        const ny={x:this.player.x,y:this.player.y+movement.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
       }
       this.player.running=Boolean(running&&dist(before,this.player)>1e-8);
       if(this.player.running){this.player.stamina=Math.max(0,this.player.stamina-dt);this.nextRecoveryAt=Infinity;}
@@ -237,6 +240,6 @@
       this.announce(`用3份${NAMES[give]}换取1份${NAMES[take]}。`);return true;
     }
   }
-  const api={Game,RULES,RECIPES,NAMES,dist,pointRect,segmentHits};
+  const api={Game,RULES,RECIPES,NAMES,dist,pointRect,segmentHits,screenDirection};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Survival=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>守到天明 · 生存扩展版0.9</title>
+  <title>守到天明 · 生存扩展版0.9.1</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="touch-layout.css">
   <link rel="stylesheet" href="expansion.css">
+  <link rel="stylesheet" href="developer-mode.css">
 </head>
 <body>
   <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
@@ -25,14 +26,16 @@
   <div id="objective" class="panel hidden"></div>
   <div id="messages" aria-live="polite"></div>
   <div id="interaction" class="hidden"></div>
+  <button id="developer-badge" class="hidden" aria-label="打开开发者模式"></button>
   <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互/攻击　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
   <div id="menu" class="scrim">
-    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存扩展版 0.9 · 支持触屏</div><h1>守到天明<span>准备领地，连续活过7晚与14晚。</span></h1>
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存扩展版 0.9.1 · 支持触屏</div><h1>守到天明<span>准备领地，连续活过7晚与14晚。</span></h1>
       <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
       <div class="menu-option selected" data-mode="0"><b>01　完整的一天</b><span>05:00开局 · 白天12分45秒，夜晚5分15秒</span></div>
       <div class="menu-option" data-mode="1"><b>02　快速试玩</b><span>21:00开局 · 45秒准备，然后进入完整夜晚</span></div>
       <label class="name-field">幸存者名字<input id="name-input" maxlength="12" value="幸存者" autocomplete="off" enterkeyhint="done"></label>
       <div class="menu-actions"><button id="start-game" class="primary" disabled>素材载入中…</button><button id="continue-game" disabled>继续存档</button><button id="touch-toggle" aria-pressed="false">触屏操作</button></div>
+      <div class="menu-actions dev-menu"><button id="start-developer" disabled>开发者试玩</button><button id="continue-developer" disabled>继续测试存档</button><small>测试进度与正常存档分开保存 · 游戏中按F2打开工具</small></div>
       <div class="menu-hint"><span class="keyboard-hint">W / S 选择　·　E 开始</span><span class="touch-hint">点选模式后开始。横屏玩，视野更宽。</span></div>
       <small id="asset-status">正在加载美术素材……</small><br><small>天亮自动保存。新游戏会替换存档。背包、地图与窗口切换时暂停。</small>
     </section>
@@ -47,6 +50,8 @@
   <script src="simulation.js"></script>
   <script src="expansion-data.js"></script>
   <script src="expansion.js"></script>
+  <script src="developer-mode.js"></script>
+  <script src="scene-layers.js"></script>
   <script src="asset-manifest.js"></script>
   <script src="expansion-assets.js"></script>
   <script src="player-animation-assets.js"></script>
