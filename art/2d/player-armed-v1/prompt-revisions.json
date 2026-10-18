@@ -1,0 +1,44 @@
+[
+  {
+    "id": "atlas_wood_spear_south",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the attack aiming direction in occupied CELLS 5 and 6 (middle row center and middle row right) of this 3x3 transparent game sprite atlas. Keep cells1-4 and cell7 unchanged. Keep cells8-9 empty transparent. Same protagonist, weapon, dark gray/ochre geometric style, same grid, scale and positions. The character is facing SOUTH, directly toward the viewer, down-screen. In CELL 5 draw the spear back with its tip aligned toward the VIEWER at the BOTTOM CENTER of its cell. In CELL 6 thrust directly TOWARD THE VIEWER/BOTTOM CENTER, strongly foreshortened shaft with the single gray triangular tip below the hands. NOT toward the right edge. Keep two spaced grips. Character torso, face and feet remain front-facing, not turned sideways. Keep entire figure/weapon within its own cell with clear transparent gutters. No text, grid lines, backgrounds, glow, shadows or extra figures. Preserve transparent background.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/wood_spear_south.png"
+    ]
+  },
+  {
+    "id": "atlas_simple_bow_south",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the attack aiming direction in occupied CELLS 5 and 6 (middle row center and middle row right) of this 3x3 transparent game sprite atlas. Keep cells1-4 and cell7 unchanged. Keep cells8-9 empty transparent. Same protagonist, weapon, dark gray/ochre geometric style, same grid, scale and positions. The character is facing SOUTH, directly toward the viewer, down-screen. In CELL 5 aim the drawn bow and nocked arrow directly TOWARD THE VIEWER/BOTTOM CENTER. Foreshorten the arrow so its tip points down-screen, not rightward; left arm projects toward viewer, right hand at cheek. In CELL 6 retain that same FRONT-FACING aim while releasing the string, right hand draws back, no arrow remains. Do NOT draw a long horizontal arrow pointing to screen right. Character torso, face and feet remain front-facing, not turned sideways. Keep entire figure/weapon within its own cell with clear transparent gutters. No text, grid lines, backgrounds, glow, shadows or extra figures. Preserve transparent background.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/simple_bow_south.png"
+    ]
+  },
+  {
+    "id": "atlas_hand_crossbow_south",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the attack aiming direction in occupied CELLS 5 and 6 (middle row center and middle row right) of this 3x3 transparent game sprite atlas. Keep cells1-4 and cell7 unchanged. Keep cells8-9 empty transparent. Same protagonist, weapon, dark gray/ochre geometric style, same grid, scale and positions. The character is facing SOUTH, directly toward the viewer, down-screen. In CELLS 5 and 6 point the crossbow directly TOWARD THE VIEWER/BOTTOM CENTER. The transverse charcoal bow limbs run left-to-right across the FRONT of chest, stock strongly foreshortened with the muzzle centered below hands. CELL5 aim and CELL6 slight recoil remain FRONT-facing. No diagonal rightward aim, no detached bolt. Character torso, face and feet remain front-facing, not turned sideways. Keep entire figure/weapon within its own cell with clear transparent gutters. No text, grid lines, backgrounds, glow, shadows or extra figures. Preserve transparent background.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/hand_crossbow_south.png"
+    ]
+  },
+  {
+    "id": "atlas_shotgun_south",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the attack aiming direction in occupied CELLS 5 and 6 (middle row center and middle row right) of this 3x3 transparent game sprite atlas. Keep cells1-4 and cell7 unchanged. Keep cells8-9 empty transparent. Same protagonist, weapon, dark gray/ochre geometric style, same grid, scale and positions. The character is facing SOUTH, directly toward the viewer, down-screen. In CELLS 5 and 6 point shotgun muzzle directly TOWARD THE VIEWER/BOTTOM CENTER, strongly foreshortened so the small dark barrel opening is seen front-on below the face, stock recedes toward right shoulder. CELL5 braced aim; CELL6 slight recoil and one tiny flat ochre muzzle flash at that FRONT-FACING barrel opening. No long sideways barrel, no aiming toward screen right. Character torso, face and feet remain front-facing, not turned sideways. Keep entire figure/weapon within its own cell with clear transparent gutters. No text, grid lines, backgrounds, glow, shadows or extra figures. Preserve transparent background.",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/shotgun_south.png"
+    ]
+  },
+  {
+    "id": "atlas_wood_spear_east",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/wood_spear_east.png"
+    ],
+    "prompt": "Use case: precise-object-edit. Input image is the edit target: one 3 by 3 transparent animation sprite atlas containing exactly seven occupied cells, last two cells empty. Fix ONLY spacing and cutout cleanliness. Uniformly SHRINK all seven complete characters with their spears by about 25 percent INSIDE THEIR OWN ORIGINAL CELLS, preserving exact seven action poses, proportions, outfit, ochre/charcoal palette, weapon identity and EAST/right-facing direction. Center each complete figure+weapon within its equal third-by-third cell. Preserve row1 cells1-3 and row2 cells4-6 and row3 cell7 at left. Create wide perfectly transparent horizontal and vertical gutters at EXACT one-third and two-thirds of canvas dimensions. In particular cell5 spear tip must not extend into cell6's column and cell6 trailing boot must not enter cell5's column. No cropped figures, no missing weapon tips. Remove red/ochre edge fringes and any colored haze outside crisp polygon silhouettes. Flat geometric 2D sprite art, no shadows, glow, grid lines, text or added objects. Seven figures only, last two cells truly transparent. Preserve transparent background."
+  },
+  {
+    "id": "atlas_hand_crossbow_east",
+    "refs": [
+      "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/hand_crossbow_east.png"
+    ],
+    "prompt": "Use case: background-extraction. Input image is the edit target: one 3 by 3 transparent animation sprite atlas containing exactly seven occupied cells, last two cells empty. REMOVE ALL of the broad dirty gray/ochre/red haze and color contamination surrounding each of the seven figures. All pixels outside the crisp geometric character and held crossbow silhouettes must be truly transparent. Preserve the seven original animation poses and their positions, same angular black-haired blank-face protagonist, ochre jacket, gray cargo trousers, dark boots, same hand crossbow, same EAST/right-facing direction and orthographic camera. Do not replace the haze with white/black background or shadows. Keep colors and shapes inside each body and crossbow unchanged. Keep each figure entirely within its own 3x3 cell with transparent gutters; lower middle and lower right cells completely empty. Exactly seven complete figures, no extra objects, no text or grid lines. Crisp clean transparent PNG cutouts with no halos, no glow and no color fringes."
+  }
+]

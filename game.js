@@ -33,21 +33,37 @@
     const q=project(p.x,p.y),hero=type==='player',visitor=type==='visitor';
     ctx.fillStyle='#10180e66';ctx.beginPath();ctx.ellipse(q.x,q.y,10,5,0,0,Math.PI*2);ctx.fill();
     if(hero){ctx.strokeStyle='#cab57099';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(q.x,q.y,14,7,0,0,Math.PI*2);ctx.stroke();}
-    const spriteKey=visitor?'survivor':hero?`player_${art.direction(p.facing)}`:p.kind&&p.kind!=='normal'?`zombie_${p.kind}_${art.direction(p.facing)}${p.windup?'_windup':''}`:`zombie_${art.direction(p.facing)}`;
-    const animated=hero&&playerMotion.moving&&art.animatedPlayer(ctx,playerMotion.facing||p.facing,q.x,q.y,playerMotion.phase,50);
-    if(!animated&&!art.sprite(ctx,spriteKey,q.x,q.y,p.kind==='brute'?62:50)){
+    const attack=hero?game.playerAttack:null,weapon=attack?.weapon||p.weapon;
+    const facing=attack?.facing||(hero&&playerMotion.moving?playerMotion.facing:null)||p.facing;
+    let phase=attack?3*(game.seconds-attack.startedAt)/(attack.endsAt-attack.startedAt):playerMotion.phase;
+    if(attack)phase=attack.released?Math.max(1,phase):Math.min(.9999,phase);
+    const armed=hero&&art.armedPlayer(ctx,weapon,facing,q.x,q.y,attack?'attack':playerMotion.moving?'run':'idle',phase,50);
+    const spriteKey=visitor?'survivor':hero?`player_${art.direction(facing)}`:p.kind&&p.kind!=='normal'?`zombie_${p.kind}_${art.direction(p.facing)}${p.windup?'_windup':''}`:`zombie_${art.direction(p.facing)}`;
+    const animated=!armed&&!attack&&hero&&playerMotion.moving&&art.animatedPlayer(ctx,playerMotion.facing||p.facing,q.x,q.y,playerMotion.phase,50);
+    if(!armed&&!animated&&!art.sprite(ctx,spriteKey,q.x,q.y,p.kind==='brute'?62:50)){
     ctx.strokeStyle=hero?'#c5b88c':visitor?'#8d9181':'#465344';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(q.x-3,q.y-12);ctx.lineTo(q.x-5,q.y-2);ctx.moveTo(q.x+3,q.y-12);ctx.lineTo(q.x+5,q.y-2);ctx.stroke();
     ctx.fillStyle=hero?'#bd9f55':visitor?'#6c8790':'#79845e';ctx.fillRect(q.x-7,q.y-26,14,16);
     ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(q.x-7,q.y-23);ctx.lineTo(q.x-12,q.y-(hero?13:21));ctx.moveTo(q.x+7,q.y-23);ctx.lineTo(q.x+12,q.y-(hero?13:21));ctx.stroke();
     ctx.fillStyle=hero?'#d0bf92':visitor?'#b5ab8c':'#a2a77f';ctx.beginPath();ctx.arc(q.x,q.y-33,6,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#3a4032';ctx.fillRect(q.x-6,q.y-38,12,4);
     }
-    if(hero&&game.player.weapon!=='fists'){art.sprite(ctx,game.player.weapon,q.x+9,q.y-16,21,{width:28,flip:p.facing.x-p.facing.y<0});}
+    if(hero&&!armed&&weapon!=='fists'&&!(attack?.kind==='throw'&&attack.released)){art.sprite(ctx,weapon,q.x+9,q.y-16,21,{width:28,flip:facing.x-facing.y<0});}
     if(hero)label(game.player.name,q.x,q.y-48,'#e4d599');
     if(visitor)label(p.recruited?'已收留':p.name,q.x,q.y-48,'#a5bec4',11);
     if(p.rootUntil>game.seconds)art.sprite(ctx,'root_marker',q.x,q.y+9,15,{width:25});
     if(p.boostUntil>game.seconds)art.sprite(ctx,'speed_buff',q.x+15,q.y-35,18);
     if(!hero&&!visitor&&p.hp<p.maxHP){ctx.fillStyle='#292519';ctx.fillRect(q.x-10,q.y-47,20,3);ctx.fillStyle='#b8775d';ctx.fillRect(q.x-10,q.y-47,20*p.hp/p.maxHP,3);}
+  }
+  function drawMolotovAim(){
+    if(mode!=='play'||placement||game.playerAttack||game.player.weapon!=='molotov'||!game.count('molotov'))return;
+    const aim=game.molotovAim(),color=aim.valid?'#e7cc78':'#e78676';
+    ctx.save();ctx.globalAlpha=.85;ctx.strokeStyle=color;ctx.lineWidth=2;ctx.setLineDash([6,5]);ctx.beginPath();
+    for(let i=0;i<=24;i++){const p=game.molotovPoint(aim,i/24),q=project(p.x,p.y,p.z);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);}
+    ctx.stroke();ctx.setLineDash([]);
+    const q=project(aim.end.x,aim.end.y);ctx.fillStyle=aim.valid?'#e7cc781a':'#e786761a';ctx.lineWidth=1;
+    ctx.beginPath();ctx.ellipse(q.x,q.y,aim.radius*scale*Math.SQRT2,aim.radius*scale/Math.SQRT2,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.moveTo(q.x-5,q.y);ctx.lineTo(q.x+5,q.y);ctx.moveTo(q.x,q.y-4);ctx.lineTo(q.x,q.y+4);ctx.stroke();
+    label(aim.valid?'预计落点':'暂不可投掷',q.x,q.y+23,color,11);ctx.restore();
   }
   function drawDevice(d,ghost=false){
     if(ghost){const def=D.builds[d.kind],horizontal=Math.abs(game.player.facing.x)>=Math.abs(game.player.facing.y);d={...d,w:horizontal?(def?.w||.7):(def?.h||.7),h:horizontal?(def?.h||.7):(def?.w||.7)};}
@@ -151,10 +167,11 @@
     items.push({depth:actorDepth(game.player),draw:()=>actor(game.player,'player')});
     for(const zone of game.zones){const q=project(zone.x,zone.y);art.sprite(ctx,zone.kind,q.x,q.y,zone.radius*scale*Math.SQRT2,{width:zone.radius*scale*2*Math.SQRT2,anchorY:.5});}
     for(const effect of game.effects){const q=project(effect.x,effect.y);art.sprite(ctx,effect.kind,q.x,q.y,effect.radius?effect.radius*scale:25,{width:effect.radius?effect.radius*scale*2:35,anchorY:.5});}
-    for(const shot of game.projectiles)if(inView(shot))items.push({depth:shot.x+shot.y+.3,draw:()=>{const q=project(shot.x,shot.y,.6);art.sprite(ctx,shot.kind,q.x,q.y,14,{width:20,anchorY:.5});}});
+    for(const shot of game.projectiles)if(inView(shot))items.push({depth:shot.x+shot.y+.3,draw:()=>{const bottle=shot.kind==='molotov_projectile',q=project(shot.x,shot.y,bottle?shot.z:.6);art.sprite(ctx,bottle?'molotov':shot.kind,q.x,q.y,bottle?20:14,{width:20,anchorY:.5});}});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
+    drawMolotovAim();
     if(placement){const p=game.placementPoint(),error=game.canPlace(buildKind,p);plane(p.x,p.y,1,1,error?'#ad5b5666':'#ceb56755',error?'#d1917b':'#e5d99b');drawDevice({...p,kind:buildKind,readyAt:0},true);}
-    if(nearby&&mode==='play'&&!placement){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
+    if(nearby&&mode==='play'&&!placement&&!game.playerAttack&&game.player.weapon!=='molotov'){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
     const night=game.minutes>=1320&&game.minutes<1740;
     if(night){const p=project(game.player.x,game.player.y),g=ctx.createRadialGradient(p.x,p.y,80,p.x,p.y,Math.max(width,height)*.8);g.addColorStop(0,'#0a142519');g.addColorStop(1,'#07101eae');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);}
     Dev.draw(ctx,game,project,homes);
@@ -254,6 +271,8 @@
     if(!focused&&mode==='play')text='游戏已暂停，回到此窗口继续。';
     else if(mode==='play'&&placement){const error=game.canPlace(buildKind,game.placementPoint());text=`${NAMES[buildKind]} · ${error||'可放置'}　｜　E切换　F确认　Tab打开背包并取消`;}
     else if(mode==='play'&&game.action)text='正在操作，移动或受伤会中断；可点取消操作。';
+    else if(mode==='play'&&game.playerAttack)text=`${NAMES[game.playerAttack.weapon]} · ${game.playerAttack.kind==='throw'?'投掷':'攻击'}动作中`;
+    else if(mode==='play'&&game.player.weapon==='molotov'){const aim=game.molotovAim();text=`E 投掷燃烧瓶 · ${aim.valid?'调整朝向，确认抛物线与落点后投掷':aim.reason} · Tab可切换装备`;}
     else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name} → 1${NAMES[object.material]}`:type==='container'?`E 查看${D.siteNames[object.kind]||'容器'}（已搜空，可拆除）`:type==='device'||type==='structure'?`E 管理${NAMES[object.kind]||'防线'}（维修 / 升级 / 使用）`:type==='site'?`E 搜索 / 采集${D.siteNames[object.kind]||'物资'}（${object.time}秒）`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
     if(!text&&mode==='play')text=`E 攻击 · ${NAMES[game.player.weapon]||'徒手'} · 朝向前方敌人`;
     if(touch.enabled)text=text.replace(/E /g,'交互：').replace('E切换　F确认　Tab打开背包并取消','点切换装置 / 确认放置；点背包取消').replace('按F','点建造');
@@ -300,6 +319,8 @@
     if(k==='e'){
       if(placement){const kinds=Object.keys(D.builds).filter(k=>game.day>=D.builds[k].day);buildKind=kinds[(kinds.indexOf(buildKind)+1)%kinds.length];return;}
       if(game.action){game.cancelAction();return;}
+      if(game.playerAttack)return;
+      if(game.player.weapon==='molotov'){game.attack();return;}
       if(game.attack())return;
       const target=game.nearbyInteraction();
       if(target&&['visitor','helper','device','structure','container'].includes(target.type)){contextTarget=target;contextChoice=0;openOverlay('context');}

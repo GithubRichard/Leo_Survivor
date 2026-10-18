@@ -1,0 +1,15 @@
+﻿{
+    "id":  "atlas_simple_bow_south",
+    "file":  "atlas/simple_bow_south.png",
+    "weapon":  "simple_bow",
+    "direction":  "south",
+    "action":  null,
+    "frame":  null,
+    "source":  "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-62b76ab9-beb3-427d-96fc-4f3ac2139407.png",
+    "refs":  [
+                 "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/simple_bow_south.png"
+             ],
+    "prompt":  "Use case: precise-object-edit. Edit ONLY the attack aiming direction in occupied CELLS 5 and 6 (middle row center and middle row right) of this 3x3 transparent game sprite atlas. Keep cells1-4 and cell7 unchanged. Keep cells8-9 empty transparent. Same protagonist, weapon, dark gray/ochre geometric style, same grid, scale and positions. The character is facing SOUTH, directly toward the viewer, down-screen. In CELL 5 aim the drawn bow and nocked arrow directly TOWARD THE VIEWER/BOTTOM CENTER. Foreshorten the arrow so its tip points down-screen, not rightward; left arm projects toward viewer, right hand at cheek. In CELL 6 retain that same FRONT-FACING aim while releasing the string, right hand draws back, no arrow remains. Do NOT draw a long horizontal arrow pointing to screen right. Character torso, face and feet remain front-facing, not turned sideways. Keep entire figure/weapon within its own cell with clear transparent gutters. No text, grid lines, backgrounds, glow, shadows or extra figures. Preserve transparent background.",
+    "savedAt":  "2026-10-17T14:37:38.0796568Z",
+    "sha256":  "672999bbde9659ae7f3be1a38fb128e9b658a8367722803c8b1d57ca75604bab"
+}

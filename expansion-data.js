@@ -15,6 +15,8 @@
     hand_crossbow:{name:'手弩',day:7,cost:{wood:4,iron:6,parts:2},damage:4,interval:2,range:12,stamina:0,ammo:'bolt',station:'workbench'},
     shotgun:{name:'散弹枪',day:12,cost:{iron:10,scrap:4,parts:3},damage:2,interval:2.2,range:6,stamina:0,ammo:'shotgun_shell',station:'workbench',pellets:4}
   };
+  // Three visual poses; impact/release begins with the second pose.
+  const attackAnimations={wood_club:.36,wood_spear:.39,iron_axe:.45,simple_bow:.45,hand_crossbow:.42,shotgun:.48,molotov:.48};
   const builds={
     trap:{name:'捕兽夹',day:1,cost:{iron:3},hp:6,asset:'bear_trap',ground:true},ballista:{name:'巨弩',day:1,cost:{wood:5},hp:18,asset:'ballista'},
     wood_fence:{name:'木围栏',day:1,cost:{wood:2},hp:12,asset:'wood_fence',w:1,h:.16},iron_fence:{name:'铁围栏',day:1,cost:{wood:1,iron:3},hp:24,asset:'iron_fence',w:1,h:.16},brick_wall:{name:'砖墙',day:1,cost:{stone:4,wood:1},hp:30,asset:'brick_wall',w:1,h:.24},
@@ -43,6 +45,6 @@
     trap:{day:5,cost:{iron:2,scrap:1},hp:12,level:1},ballista:{day:5,cost:{wood:4,iron:3,scrap:2},hp:30,level:1},repeating:{day:10,cost:{iron:5,scrap:3,parts:2},hp:36,level:2},door:{day:1,cost:{wood:3,iron:1},hp:18,level:1}
   };
   const trades=[{cost:{wood:3},gain:{iron:1}},{cost:{iron:1},gain:{clean_water:2}},{cost:{iron:1},gain:{canned_food:1}},{cost:{iron:2},gain:{cloth:2}},{cost:{iron:3},gain:{herb:2}}];
-  const api={items,siteNames,weapons,builds,crafts,foods,enemies,upgrades,trades};
+  const api={items,siteNames,weapons,attackAnimations,builds,crafts,foods,enemies,upgrades,trades};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ExpansionData=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

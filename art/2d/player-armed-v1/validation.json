@@ -1,0 +1,22 @@
+﻿{
+    "expectedAtlases":  56,
+    "generatedAtlases":  56,
+    "expectedFrames":  392,
+    "indexedFrames":  392,
+    "missing":  [
+
+                ],
+    "invalidAlphaOrEmpty":  [
+
+                            ],
+    "nativeSourceMismatch":  [
+
+                             ],
+    "unexpectedContentInEmptyCells":  [
+
+                                      ],
+    "gridGutterWarnings":  [
+
+                           ],
+    "checkedAt":  "2026-10-17T15:15:39.4216667Z"
+}

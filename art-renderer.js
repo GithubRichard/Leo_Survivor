@@ -2,16 +2,24 @@
 (() => {
   const entries={...(window.GAME_ASSETS||{}),...(window.EXPANSION_ASSETS||{})},images={},failed=[],pending={};
   const animation=window.PLAYER_ANIMATION;
+  const armed=window.WEAPON_ANIMATION,weaponCache=new Map();
+  Object.assign(entries,armed?.atlases||{});
   for(const frames of Object.values(animation?.frames||{}))for(const frame of frames)entries[frame.key]=frame;
+  function keepWeaponAtlas(key){
+    weaponCache.delete(key);weaponCache.set(key,true);
+    while(weaponCache.size>12){const oldest=weaponCache.keys().next().value;weaponCache.delete(oldest);delete images[oldest];delete pending[oldest];}
+  }
   let ready=false;
   function load(key){
     if(pending[key])return pending[key];const data=entries[key];if(!data)return Promise.resolve();
     return pending[key]=new Promise(resolve=>{const img=new Image();images[key]=img;img.onload=()=>{
-      if(!/^house_|^yard_|^grass$|^road$|_(base|roof)$/.test(key)&&img.width>384){const small=document.createElement('canvas');small.width=384;small.height=Math.round(img.height*384/img.width);small.getContext('2d').drawImage(img,0,0,small.width,small.height);images[key]=small;}
+      const maxWidth=data.maxWidth||384;
+      if(!/^house_|^yard_|^grass$|^road$|_(base|roof)$/.test(key)&&img.width>maxWidth){const small=document.createElement('canvas');small.width=maxWidth;small.height=Math.round(img.height*maxWidth/img.width);small.getContext('2d').drawImage(img,0,0,small.width,small.height);images[key]=small;}
+      if(data.weaponAtlas)keepWeaponAtlas(key);
       resolve();};img.onerror=()=>{failed.push(data.src);resolve();};img.src=data.src;});
   }
   const loading=Promise.all(Object.keys(entries).filter(key=>!entries[key].lazy).map(load)).then(()=>{ready=true;});
-  function available(key){if(entries[key]&&!pending[key])load(key);const img=images[key];return Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));}
+  function available(key){if(entries[key]&&!pending[key])load(key);const img=images[key],ready=Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));if(ready&&entries[key]?.weaponAtlas)keepWeaponAtlas(key);return ready;}
   function sprite(ctx,key,x,y,height,{width,flip=false,anchorY=1}={}){
     if(!available(key))return false;
     const [l,t,r,b]=entries[key].crop,sw=r-l,sh=b-t,w=width||height*sw/sh;
@@ -36,6 +44,29 @@
     for(const [meta,alpha] of [[frame,1-blend],[following,blend]]){
       if(alpha<=0)continue;const ratio=height/meta.bodyHeight;
       c.globalAlpha=alpha;c.drawImage(images[meta.key],80-meta.pivot[0]*ratio,80-meta.pivot[1]*ratio,meta.size[0]*ratio,meta.size[1]*ratio);
+    }
+    c.globalAlpha=1;c.globalCompositeOperation='source-over';ctx.drawImage(layer,x-80,y-80);return true;
+  }
+  function eightDirection(facing={x:0,y:1}){const sx=facing.x-facing.y,sy=(facing.x+facing.y)*.5;return ['east','southeast','south','southwest','west','northwest','north','northeast'][(Math.round(Math.atan2(sy,sx)/(Math.PI/4))+8)%8];}
+  function prepareWeapon(weapon,facing){
+    const groups=armed?.clips[weapon];if(!groups)return;
+    const heading=armed.directions.indexOf(eightDirection(facing));
+    for(const offset of [0,-1,1]){const id=groups[armed.directions[(heading+offset+8)%8]]?.idle[0],key=armed.frames[id]?.atlas;if(key&&!pending[key])load(key);}
+  }
+  function armedPlayer(ctx,weapon,facing,x,y,action='idle',phase=0,height=50){
+    const groups=armed?.clips[weapon];if(!groups)return false;
+    const dir=eightDirection(facing),sequence=groups[dir]?.[action]||groups[dir]?.idle;if(!sequence?.length)return false;
+    // Warm neighbouring headings only; do not decode all 56 atlases on startup.
+    prepareWeapon(weapon,facing);
+    const position=action==='attack'?Math.max(0,Math.min(sequence.length-1,phase)):Math.max(0,phase)%sequence.length;
+    const index=Math.floor(position),next=(index+1)%sequence.length,frame=armed.frames[sequence[index]],following=armed.frames[sequence[next]];
+    if(!frame||!available(frame.atlas))return false;
+    const blend=action==='run'&&following&&available(following.atlas)?Math.max(0,(position-index-.8)/.2):0;
+    const layer=armedPlayer.layer||(armedPlayer.layer=document.createElement('canvas'));if(layer.width!==160){layer.width=160;layer.height=100;}
+    const c=layer.getContext('2d');c.clearRect(0,0,160,100);c.globalCompositeOperation='lighter';
+    for(const [meta,alpha] of [[frame,1-blend],[following,blend]]){
+      if(!meta||alpha<=0)continue;const ratio=height/meta.bodyHeight,imageRatio=images[meta.atlas].width/entries[meta.atlas].size[0],r=meta.rect;
+      c.globalAlpha=alpha;c.drawImage(images[meta.atlas],r[0]*imageRatio,r[1]*imageRatio,r[2]*imageRatio,r[3]*imageRatio,80-meta.pivot[0]*ratio,80-meta.pivot[1]*ratio,r[2]*ratio,r[3]*ratio);
     }
     c.globalAlpha=1;c.globalCompositeOperation='source-over';ctx.drawImage(layer,x-80,y-80);return true;
   }
@@ -118,5 +149,5 @@
   // Rear-wall sorting is independent from front-wall fading and door layering.
   const houseBack=(ctx,home,project)=>house(ctx,home,project,false,false);
   const houseFront=(ctx,home,project,inside)=>house(ctx,home,project,inside,true);
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,animatedPlayer,house,houseBack,houseFront,roof,ground,door,direction};
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,house,houseBack,houseFront,roof,ground,door,direction};
 })();

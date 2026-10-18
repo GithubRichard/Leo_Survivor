@@ -11,7 +11,7 @@
     else {enable(game);s[key]=!s[key];if(key==='infiniteStamina'&&s[key])game.player.stamina=game.maxStamina;}
     return true;
   }
-  function clear(game){game.zombies=[];game.pendingSpawn=[];game.projectiles=[];game.zones=[];game.effects=[];for(const d of game.devices){d.target=null;delete d.targetId;d.entered={};}}
+  function clear(game){game.zombies=[];game.pendingSpawn=[];game.playerAttack=null;game.projectiles=[];game.zones=[];game.effects=[];for(const d of game.devices){d.target=null;delete d.targetId;d.entered={};}}
   function resetNight(game){
     clear(game);game.action=null;game.nextWave=0;game.plan=S.nightPlan(game.day);game.waveDirections=[];game.warnedWaves=[];
     game.stats={planned:0,spawned:0,arrived:0,kills:{},damage:{},lost:0,searches:0,food:[],resourceStart:game.resources()};

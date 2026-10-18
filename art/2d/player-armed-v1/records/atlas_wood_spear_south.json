@@ -1,0 +1,15 @@
+﻿{
+    "id":  "atlas_wood_spear_south",
+    "file":  "atlas/wood_spear_south.png",
+    "weapon":  "wood_spear",
+    "direction":  "south",
+    "action":  null,
+    "frame":  null,
+    "source":  "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-6403aad5-574e-4e1b-a8b7-d7d91e8da629.png",
+    "refs":  [
+                 "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/wood_spear_south.png"
+             ],
+    "prompt":  "Use case: precise-object-edit. Edit ONLY the attack aiming direction in occupied CELLS 5 and 6 (middle row center and middle row right) of this 3x3 transparent game sprite atlas. Keep cells1-4 and cell7 unchanged. Keep cells8-9 empty transparent. Same protagonist, weapon, dark gray/ochre geometric style, same grid, scale and positions. The character is facing SOUTH, directly toward the viewer, down-screen. In CELL 5 draw the spear back with its tip aligned toward the VIEWER at the BOTTOM CENTER of its cell. In CELL 6 thrust directly TOWARD THE VIEWER/BOTTOM CENTER, strongly foreshortened shaft with the single gray triangular tip below the hands. NOT toward the right edge. Keep two spaced grips. Character torso, face and feet remain front-facing, not turned sideways. Keep entire figure/weapon within its own cell with clear transparent gutters. No text, grid lines, backgrounds, glow, shadows or extra figures. Preserve transparent background.",
+    "savedAt":  "2026-10-17T14:39:25.2161359Z",
+    "sha256":  "6ee21422f905d68d087e0a025397cbe9951fa9e77c2a7a18523e8a85299768fc"
+}

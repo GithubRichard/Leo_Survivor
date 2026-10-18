@@ -1,0 +1,2079 @@
+{
+  "format": "frame-id-sequences",
+  "manifest": "manifest.json",
+  "timingNote": "Choose playback speed, world footpoint and damage/cooldown timing in the engine. Frame2 is an artwork cue, not a combat rule.",
+  "clips": [
+    {
+      "id": "wood_club_south_idle",
+      "weapon": "wood_club",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_south_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_south_run",
+      "weapon": "wood_club",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_south_run_01",
+        "player_wood_club_south_run_02",
+        "player_wood_club_south_run_03",
+        "player_wood_club_south_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_south_attack",
+      "weapon": "wood_club",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_south_attack_01",
+        "player_wood_club_south_attack_02",
+        "player_wood_club_south_attack_03"
+      ],
+      "returnTo": "wood_club_south_idle",
+      "impactOrReleaseFrame": "player_wood_club_south_attack_02"
+    },
+    {
+      "id": "wood_club_southeast_idle",
+      "weapon": "wood_club",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_southeast_run",
+      "weapon": "wood_club",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_southeast_run_01",
+        "player_wood_club_southeast_run_02",
+        "player_wood_club_southeast_run_03",
+        "player_wood_club_southeast_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_southeast_attack",
+      "weapon": "wood_club",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_southeast_attack_01",
+        "player_wood_club_southeast_attack_02",
+        "player_wood_club_southeast_attack_03"
+      ],
+      "returnTo": "wood_club_southeast_idle",
+      "impactOrReleaseFrame": "player_wood_club_southeast_attack_02"
+    },
+    {
+      "id": "wood_club_east_idle",
+      "weapon": "wood_club",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_east_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_east_run",
+      "weapon": "wood_club",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_east_run_01",
+        "player_wood_club_east_run_02",
+        "player_wood_club_east_run_03",
+        "player_wood_club_east_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_east_attack",
+      "weapon": "wood_club",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_east_attack_01",
+        "player_wood_club_east_attack_02",
+        "player_wood_club_east_attack_03"
+      ],
+      "returnTo": "wood_club_east_idle",
+      "impactOrReleaseFrame": "player_wood_club_east_attack_02"
+    },
+    {
+      "id": "wood_club_northeast_idle",
+      "weapon": "wood_club",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_northeast_run",
+      "weapon": "wood_club",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_northeast_run_01",
+        "player_wood_club_northeast_run_02",
+        "player_wood_club_northeast_run_03",
+        "player_wood_club_northeast_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_northeast_attack",
+      "weapon": "wood_club",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_northeast_attack_01",
+        "player_wood_club_northeast_attack_02",
+        "player_wood_club_northeast_attack_03"
+      ],
+      "returnTo": "wood_club_northeast_idle",
+      "impactOrReleaseFrame": "player_wood_club_northeast_attack_02"
+    },
+    {
+      "id": "wood_club_north_idle",
+      "weapon": "wood_club",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_north_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_north_run",
+      "weapon": "wood_club",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_north_run_01",
+        "player_wood_club_north_run_02",
+        "player_wood_club_north_run_03",
+        "player_wood_club_north_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_north_attack",
+      "weapon": "wood_club",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_north_attack_01",
+        "player_wood_club_north_attack_02",
+        "player_wood_club_north_attack_03"
+      ],
+      "returnTo": "wood_club_north_idle",
+      "impactOrReleaseFrame": "player_wood_club_north_attack_02"
+    },
+    {
+      "id": "wood_club_northwest_idle",
+      "weapon": "wood_club",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_northwest_run",
+      "weapon": "wood_club",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_northwest_run_01",
+        "player_wood_club_northwest_run_02",
+        "player_wood_club_northwest_run_03",
+        "player_wood_club_northwest_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_northwest_attack",
+      "weapon": "wood_club",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_northwest_attack_01",
+        "player_wood_club_northwest_attack_02",
+        "player_wood_club_northwest_attack_03"
+      ],
+      "returnTo": "wood_club_northwest_idle",
+      "impactOrReleaseFrame": "player_wood_club_northwest_attack_02"
+    },
+    {
+      "id": "wood_club_west_idle",
+      "weapon": "wood_club",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_west_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_west_run",
+      "weapon": "wood_club",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_west_run_01",
+        "player_wood_club_west_run_02",
+        "player_wood_club_west_run_03",
+        "player_wood_club_west_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_west_attack",
+      "weapon": "wood_club",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_west_attack_01",
+        "player_wood_club_west_attack_02",
+        "player_wood_club_west_attack_03"
+      ],
+      "returnTo": "wood_club_west_idle",
+      "impactOrReleaseFrame": "player_wood_club_west_attack_02"
+    },
+    {
+      "id": "wood_club_southwest_idle",
+      "weapon": "wood_club",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_club_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "wood_club_southwest_run",
+      "weapon": "wood_club",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_club_southwest_run_01",
+        "player_wood_club_southwest_run_02",
+        "player_wood_club_southwest_run_03",
+        "player_wood_club_southwest_run_02"
+      ]
+    },
+    {
+      "id": "wood_club_southwest_attack",
+      "weapon": "wood_club",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_club_southwest_attack_01",
+        "player_wood_club_southwest_attack_02",
+        "player_wood_club_southwest_attack_03"
+      ],
+      "returnTo": "wood_club_southwest_idle",
+      "impactOrReleaseFrame": "player_wood_club_southwest_attack_02"
+    },
+    {
+      "id": "wood_spear_south_idle",
+      "weapon": "wood_spear",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_south_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_south_run",
+      "weapon": "wood_spear",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_south_run_01",
+        "player_wood_spear_south_run_02",
+        "player_wood_spear_south_run_03",
+        "player_wood_spear_south_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_south_attack",
+      "weapon": "wood_spear",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_south_attack_01",
+        "player_wood_spear_south_attack_02",
+        "player_wood_spear_south_attack_03"
+      ],
+      "returnTo": "wood_spear_south_idle",
+      "impactOrReleaseFrame": "player_wood_spear_south_attack_02"
+    },
+    {
+      "id": "wood_spear_southeast_idle",
+      "weapon": "wood_spear",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_southeast_run",
+      "weapon": "wood_spear",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_southeast_run_01",
+        "player_wood_spear_southeast_run_02",
+        "player_wood_spear_southeast_run_03",
+        "player_wood_spear_southeast_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_southeast_attack",
+      "weapon": "wood_spear",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_southeast_attack_01",
+        "player_wood_spear_southeast_attack_02",
+        "player_wood_spear_southeast_attack_03"
+      ],
+      "returnTo": "wood_spear_southeast_idle",
+      "impactOrReleaseFrame": "player_wood_spear_southeast_attack_02"
+    },
+    {
+      "id": "wood_spear_east_idle",
+      "weapon": "wood_spear",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_east_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_east_run",
+      "weapon": "wood_spear",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_east_run_01",
+        "player_wood_spear_east_run_02",
+        "player_wood_spear_east_run_03",
+        "player_wood_spear_east_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_east_attack",
+      "weapon": "wood_spear",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_east_attack_01",
+        "player_wood_spear_east_attack_02",
+        "player_wood_spear_east_attack_03"
+      ],
+      "returnTo": "wood_spear_east_idle",
+      "impactOrReleaseFrame": "player_wood_spear_east_attack_02"
+    },
+    {
+      "id": "wood_spear_northeast_idle",
+      "weapon": "wood_spear",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_northeast_run",
+      "weapon": "wood_spear",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_northeast_run_01",
+        "player_wood_spear_northeast_run_02",
+        "player_wood_spear_northeast_run_03",
+        "player_wood_spear_northeast_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_northeast_attack",
+      "weapon": "wood_spear",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_northeast_attack_01",
+        "player_wood_spear_northeast_attack_02",
+        "player_wood_spear_northeast_attack_03"
+      ],
+      "returnTo": "wood_spear_northeast_idle",
+      "impactOrReleaseFrame": "player_wood_spear_northeast_attack_02"
+    },
+    {
+      "id": "wood_spear_north_idle",
+      "weapon": "wood_spear",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_north_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_north_run",
+      "weapon": "wood_spear",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_north_run_01",
+        "player_wood_spear_north_run_02",
+        "player_wood_spear_north_run_03",
+        "player_wood_spear_north_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_north_attack",
+      "weapon": "wood_spear",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_north_attack_01",
+        "player_wood_spear_north_attack_02",
+        "player_wood_spear_north_attack_03"
+      ],
+      "returnTo": "wood_spear_north_idle",
+      "impactOrReleaseFrame": "player_wood_spear_north_attack_02"
+    },
+    {
+      "id": "wood_spear_northwest_idle",
+      "weapon": "wood_spear",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_northwest_run",
+      "weapon": "wood_spear",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_northwest_run_01",
+        "player_wood_spear_northwest_run_02",
+        "player_wood_spear_northwest_run_03",
+        "player_wood_spear_northwest_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_northwest_attack",
+      "weapon": "wood_spear",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_northwest_attack_01",
+        "player_wood_spear_northwest_attack_02",
+        "player_wood_spear_northwest_attack_03"
+      ],
+      "returnTo": "wood_spear_northwest_idle",
+      "impactOrReleaseFrame": "player_wood_spear_northwest_attack_02"
+    },
+    {
+      "id": "wood_spear_west_idle",
+      "weapon": "wood_spear",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_west_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_west_run",
+      "weapon": "wood_spear",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_west_run_01",
+        "player_wood_spear_west_run_02",
+        "player_wood_spear_west_run_03",
+        "player_wood_spear_west_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_west_attack",
+      "weapon": "wood_spear",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_west_attack_01",
+        "player_wood_spear_west_attack_02",
+        "player_wood_spear_west_attack_03"
+      ],
+      "returnTo": "wood_spear_west_idle",
+      "impactOrReleaseFrame": "player_wood_spear_west_attack_02"
+    },
+    {
+      "id": "wood_spear_southwest_idle",
+      "weapon": "wood_spear",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "wood_spear_southwest_run",
+      "weapon": "wood_spear",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_wood_spear_southwest_run_01",
+        "player_wood_spear_southwest_run_02",
+        "player_wood_spear_southwest_run_03",
+        "player_wood_spear_southwest_run_02"
+      ]
+    },
+    {
+      "id": "wood_spear_southwest_attack",
+      "weapon": "wood_spear",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_wood_spear_southwest_attack_01",
+        "player_wood_spear_southwest_attack_02",
+        "player_wood_spear_southwest_attack_03"
+      ],
+      "returnTo": "wood_spear_southwest_idle",
+      "impactOrReleaseFrame": "player_wood_spear_southwest_attack_02"
+    },
+    {
+      "id": "iron_axe_south_idle",
+      "weapon": "iron_axe",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_south_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_south_run",
+      "weapon": "iron_axe",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_south_run_01",
+        "player_iron_axe_south_run_02",
+        "player_iron_axe_south_run_03",
+        "player_iron_axe_south_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_south_attack",
+      "weapon": "iron_axe",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_south_attack_01",
+        "player_iron_axe_south_attack_02",
+        "player_iron_axe_south_attack_03"
+      ],
+      "returnTo": "iron_axe_south_idle",
+      "impactOrReleaseFrame": "player_iron_axe_south_attack_02"
+    },
+    {
+      "id": "iron_axe_southeast_idle",
+      "weapon": "iron_axe",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_southeast_run",
+      "weapon": "iron_axe",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_southeast_run_01",
+        "player_iron_axe_southeast_run_02",
+        "player_iron_axe_southeast_run_03",
+        "player_iron_axe_southeast_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_southeast_attack",
+      "weapon": "iron_axe",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_southeast_attack_01",
+        "player_iron_axe_southeast_attack_02",
+        "player_iron_axe_southeast_attack_03"
+      ],
+      "returnTo": "iron_axe_southeast_idle",
+      "impactOrReleaseFrame": "player_iron_axe_southeast_attack_02"
+    },
+    {
+      "id": "iron_axe_east_idle",
+      "weapon": "iron_axe",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_east_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_east_run",
+      "weapon": "iron_axe",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_east_run_01",
+        "player_iron_axe_east_run_02",
+        "player_iron_axe_east_run_03",
+        "player_iron_axe_east_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_east_attack",
+      "weapon": "iron_axe",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_east_attack_01",
+        "player_iron_axe_east_attack_02",
+        "player_iron_axe_east_attack_03"
+      ],
+      "returnTo": "iron_axe_east_idle",
+      "impactOrReleaseFrame": "player_iron_axe_east_attack_02"
+    },
+    {
+      "id": "iron_axe_northeast_idle",
+      "weapon": "iron_axe",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_northeast_run",
+      "weapon": "iron_axe",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_northeast_run_01",
+        "player_iron_axe_northeast_run_02",
+        "player_iron_axe_northeast_run_03",
+        "player_iron_axe_northeast_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_northeast_attack",
+      "weapon": "iron_axe",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_northeast_attack_01",
+        "player_iron_axe_northeast_attack_02",
+        "player_iron_axe_northeast_attack_03"
+      ],
+      "returnTo": "iron_axe_northeast_idle",
+      "impactOrReleaseFrame": "player_iron_axe_northeast_attack_02"
+    },
+    {
+      "id": "iron_axe_north_idle",
+      "weapon": "iron_axe",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_north_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_north_run",
+      "weapon": "iron_axe",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_north_run_01",
+        "player_iron_axe_north_run_02",
+        "player_iron_axe_north_run_03",
+        "player_iron_axe_north_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_north_attack",
+      "weapon": "iron_axe",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_north_attack_01",
+        "player_iron_axe_north_attack_02",
+        "player_iron_axe_north_attack_03"
+      ],
+      "returnTo": "iron_axe_north_idle",
+      "impactOrReleaseFrame": "player_iron_axe_north_attack_02"
+    },
+    {
+      "id": "iron_axe_northwest_idle",
+      "weapon": "iron_axe",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_northwest_run",
+      "weapon": "iron_axe",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_northwest_run_01",
+        "player_iron_axe_northwest_run_02",
+        "player_iron_axe_northwest_run_03",
+        "player_iron_axe_northwest_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_northwest_attack",
+      "weapon": "iron_axe",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_northwest_attack_01",
+        "player_iron_axe_northwest_attack_02",
+        "player_iron_axe_northwest_attack_03"
+      ],
+      "returnTo": "iron_axe_northwest_idle",
+      "impactOrReleaseFrame": "player_iron_axe_northwest_attack_02"
+    },
+    {
+      "id": "iron_axe_west_idle",
+      "weapon": "iron_axe",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_west_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_west_run",
+      "weapon": "iron_axe",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_west_run_01",
+        "player_iron_axe_west_run_02",
+        "player_iron_axe_west_run_03",
+        "player_iron_axe_west_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_west_attack",
+      "weapon": "iron_axe",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_west_attack_01",
+        "player_iron_axe_west_attack_02",
+        "player_iron_axe_west_attack_03"
+      ],
+      "returnTo": "iron_axe_west_idle",
+      "impactOrReleaseFrame": "player_iron_axe_west_attack_02"
+    },
+    {
+      "id": "iron_axe_southwest_idle",
+      "weapon": "iron_axe",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "iron_axe_southwest_run",
+      "weapon": "iron_axe",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_iron_axe_southwest_run_01",
+        "player_iron_axe_southwest_run_02",
+        "player_iron_axe_southwest_run_03",
+        "player_iron_axe_southwest_run_02"
+      ]
+    },
+    {
+      "id": "iron_axe_southwest_attack",
+      "weapon": "iron_axe",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_iron_axe_southwest_attack_01",
+        "player_iron_axe_southwest_attack_02",
+        "player_iron_axe_southwest_attack_03"
+      ],
+      "returnTo": "iron_axe_southwest_idle",
+      "impactOrReleaseFrame": "player_iron_axe_southwest_attack_02"
+    },
+    {
+      "id": "simple_bow_south_idle",
+      "weapon": "simple_bow",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_south_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_south_run",
+      "weapon": "simple_bow",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_south_run_01",
+        "player_simple_bow_south_run_02",
+        "player_simple_bow_south_run_03",
+        "player_simple_bow_south_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_south_attack",
+      "weapon": "simple_bow",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_south_attack_01",
+        "player_simple_bow_south_attack_02",
+        "player_simple_bow_south_attack_03"
+      ],
+      "returnTo": "simple_bow_south_idle",
+      "impactOrReleaseFrame": "player_simple_bow_south_attack_02"
+    },
+    {
+      "id": "simple_bow_southeast_idle",
+      "weapon": "simple_bow",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_southeast_run",
+      "weapon": "simple_bow",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_southeast_run_01",
+        "player_simple_bow_southeast_run_02",
+        "player_simple_bow_southeast_run_03",
+        "player_simple_bow_southeast_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_southeast_attack",
+      "weapon": "simple_bow",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_southeast_attack_01",
+        "player_simple_bow_southeast_attack_02",
+        "player_simple_bow_southeast_attack_03"
+      ],
+      "returnTo": "simple_bow_southeast_idle",
+      "impactOrReleaseFrame": "player_simple_bow_southeast_attack_02"
+    },
+    {
+      "id": "simple_bow_east_idle",
+      "weapon": "simple_bow",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_east_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_east_run",
+      "weapon": "simple_bow",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_east_run_01",
+        "player_simple_bow_east_run_02",
+        "player_simple_bow_east_run_03",
+        "player_simple_bow_east_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_east_attack",
+      "weapon": "simple_bow",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_east_attack_01",
+        "player_simple_bow_east_attack_02",
+        "player_simple_bow_east_attack_03"
+      ],
+      "returnTo": "simple_bow_east_idle",
+      "impactOrReleaseFrame": "player_simple_bow_east_attack_02"
+    },
+    {
+      "id": "simple_bow_northeast_idle",
+      "weapon": "simple_bow",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_northeast_run",
+      "weapon": "simple_bow",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_northeast_run_01",
+        "player_simple_bow_northeast_run_02",
+        "player_simple_bow_northeast_run_03",
+        "player_simple_bow_northeast_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_northeast_attack",
+      "weapon": "simple_bow",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_northeast_attack_01",
+        "player_simple_bow_northeast_attack_02",
+        "player_simple_bow_northeast_attack_03"
+      ],
+      "returnTo": "simple_bow_northeast_idle",
+      "impactOrReleaseFrame": "player_simple_bow_northeast_attack_02"
+    },
+    {
+      "id": "simple_bow_north_idle",
+      "weapon": "simple_bow",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_north_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_north_run",
+      "weapon": "simple_bow",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_north_run_01",
+        "player_simple_bow_north_run_02",
+        "player_simple_bow_north_run_03",
+        "player_simple_bow_north_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_north_attack",
+      "weapon": "simple_bow",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_north_attack_01",
+        "player_simple_bow_north_attack_02",
+        "player_simple_bow_north_attack_03"
+      ],
+      "returnTo": "simple_bow_north_idle",
+      "impactOrReleaseFrame": "player_simple_bow_north_attack_02"
+    },
+    {
+      "id": "simple_bow_northwest_idle",
+      "weapon": "simple_bow",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_northwest_run",
+      "weapon": "simple_bow",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_northwest_run_01",
+        "player_simple_bow_northwest_run_02",
+        "player_simple_bow_northwest_run_03",
+        "player_simple_bow_northwest_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_northwest_attack",
+      "weapon": "simple_bow",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_northwest_attack_01",
+        "player_simple_bow_northwest_attack_02",
+        "player_simple_bow_northwest_attack_03"
+      ],
+      "returnTo": "simple_bow_northwest_idle",
+      "impactOrReleaseFrame": "player_simple_bow_northwest_attack_02"
+    },
+    {
+      "id": "simple_bow_west_idle",
+      "weapon": "simple_bow",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_west_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_west_run",
+      "weapon": "simple_bow",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_west_run_01",
+        "player_simple_bow_west_run_02",
+        "player_simple_bow_west_run_03",
+        "player_simple_bow_west_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_west_attack",
+      "weapon": "simple_bow",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_west_attack_01",
+        "player_simple_bow_west_attack_02",
+        "player_simple_bow_west_attack_03"
+      ],
+      "returnTo": "simple_bow_west_idle",
+      "impactOrReleaseFrame": "player_simple_bow_west_attack_02"
+    },
+    {
+      "id": "simple_bow_southwest_idle",
+      "weapon": "simple_bow",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "simple_bow_southwest_run",
+      "weapon": "simple_bow",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_simple_bow_southwest_run_01",
+        "player_simple_bow_southwest_run_02",
+        "player_simple_bow_southwest_run_03",
+        "player_simple_bow_southwest_run_02"
+      ]
+    },
+    {
+      "id": "simple_bow_southwest_attack",
+      "weapon": "simple_bow",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_simple_bow_southwest_attack_01",
+        "player_simple_bow_southwest_attack_02",
+        "player_simple_bow_southwest_attack_03"
+      ],
+      "returnTo": "simple_bow_southwest_idle",
+      "impactOrReleaseFrame": "player_simple_bow_southwest_attack_02"
+    },
+    {
+      "id": "hand_crossbow_south_idle",
+      "weapon": "hand_crossbow",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_south_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_south_run",
+      "weapon": "hand_crossbow",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_south_run_01",
+        "player_hand_crossbow_south_run_02",
+        "player_hand_crossbow_south_run_03",
+        "player_hand_crossbow_south_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_south_attack",
+      "weapon": "hand_crossbow",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_south_attack_01",
+        "player_hand_crossbow_south_attack_02",
+        "player_hand_crossbow_south_attack_03"
+      ],
+      "returnTo": "hand_crossbow_south_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_south_attack_02"
+    },
+    {
+      "id": "hand_crossbow_southeast_idle",
+      "weapon": "hand_crossbow",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_southeast_run",
+      "weapon": "hand_crossbow",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_southeast_run_01",
+        "player_hand_crossbow_southeast_run_02",
+        "player_hand_crossbow_southeast_run_03",
+        "player_hand_crossbow_southeast_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_southeast_attack",
+      "weapon": "hand_crossbow",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_southeast_attack_01",
+        "player_hand_crossbow_southeast_attack_02",
+        "player_hand_crossbow_southeast_attack_03"
+      ],
+      "returnTo": "hand_crossbow_southeast_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_southeast_attack_02"
+    },
+    {
+      "id": "hand_crossbow_east_idle",
+      "weapon": "hand_crossbow",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_east_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_east_run",
+      "weapon": "hand_crossbow",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_east_run_01",
+        "player_hand_crossbow_east_run_02",
+        "player_hand_crossbow_east_run_03",
+        "player_hand_crossbow_east_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_east_attack",
+      "weapon": "hand_crossbow",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_east_attack_01",
+        "player_hand_crossbow_east_attack_02",
+        "player_hand_crossbow_east_attack_03"
+      ],
+      "returnTo": "hand_crossbow_east_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_east_attack_02"
+    },
+    {
+      "id": "hand_crossbow_northeast_idle",
+      "weapon": "hand_crossbow",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_northeast_run",
+      "weapon": "hand_crossbow",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_northeast_run_01",
+        "player_hand_crossbow_northeast_run_02",
+        "player_hand_crossbow_northeast_run_03",
+        "player_hand_crossbow_northeast_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_northeast_attack",
+      "weapon": "hand_crossbow",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_northeast_attack_01",
+        "player_hand_crossbow_northeast_attack_02",
+        "player_hand_crossbow_northeast_attack_03"
+      ],
+      "returnTo": "hand_crossbow_northeast_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_northeast_attack_02"
+    },
+    {
+      "id": "hand_crossbow_north_idle",
+      "weapon": "hand_crossbow",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_north_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_north_run",
+      "weapon": "hand_crossbow",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_north_run_01",
+        "player_hand_crossbow_north_run_02",
+        "player_hand_crossbow_north_run_03",
+        "player_hand_crossbow_north_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_north_attack",
+      "weapon": "hand_crossbow",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_north_attack_01",
+        "player_hand_crossbow_north_attack_02",
+        "player_hand_crossbow_north_attack_03"
+      ],
+      "returnTo": "hand_crossbow_north_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_north_attack_02"
+    },
+    {
+      "id": "hand_crossbow_northwest_idle",
+      "weapon": "hand_crossbow",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_northwest_run",
+      "weapon": "hand_crossbow",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_northwest_run_01",
+        "player_hand_crossbow_northwest_run_02",
+        "player_hand_crossbow_northwest_run_03",
+        "player_hand_crossbow_northwest_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_northwest_attack",
+      "weapon": "hand_crossbow",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_northwest_attack_01",
+        "player_hand_crossbow_northwest_attack_02",
+        "player_hand_crossbow_northwest_attack_03"
+      ],
+      "returnTo": "hand_crossbow_northwest_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_northwest_attack_02"
+    },
+    {
+      "id": "hand_crossbow_west_idle",
+      "weapon": "hand_crossbow",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_west_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_west_run",
+      "weapon": "hand_crossbow",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_west_run_01",
+        "player_hand_crossbow_west_run_02",
+        "player_hand_crossbow_west_run_03",
+        "player_hand_crossbow_west_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_west_attack",
+      "weapon": "hand_crossbow",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_west_attack_01",
+        "player_hand_crossbow_west_attack_02",
+        "player_hand_crossbow_west_attack_03"
+      ],
+      "returnTo": "hand_crossbow_west_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_west_attack_02"
+    },
+    {
+      "id": "hand_crossbow_southwest_idle",
+      "weapon": "hand_crossbow",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "hand_crossbow_southwest_run",
+      "weapon": "hand_crossbow",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_hand_crossbow_southwest_run_01",
+        "player_hand_crossbow_southwest_run_02",
+        "player_hand_crossbow_southwest_run_03",
+        "player_hand_crossbow_southwest_run_02"
+      ]
+    },
+    {
+      "id": "hand_crossbow_southwest_attack",
+      "weapon": "hand_crossbow",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_hand_crossbow_southwest_attack_01",
+        "player_hand_crossbow_southwest_attack_02",
+        "player_hand_crossbow_southwest_attack_03"
+      ],
+      "returnTo": "hand_crossbow_southwest_idle",
+      "impactOrReleaseFrame": "player_hand_crossbow_southwest_attack_02"
+    },
+    {
+      "id": "shotgun_south_idle",
+      "weapon": "shotgun",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_south_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_south_run",
+      "weapon": "shotgun",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_south_run_01",
+        "player_shotgun_south_run_02",
+        "player_shotgun_south_run_03",
+        "player_shotgun_south_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_south_attack",
+      "weapon": "shotgun",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_south_attack_01",
+        "player_shotgun_south_attack_02",
+        "player_shotgun_south_attack_03"
+      ],
+      "returnTo": "shotgun_south_idle",
+      "impactOrReleaseFrame": "player_shotgun_south_attack_02"
+    },
+    {
+      "id": "shotgun_southeast_idle",
+      "weapon": "shotgun",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_southeast_run",
+      "weapon": "shotgun",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_southeast_run_01",
+        "player_shotgun_southeast_run_02",
+        "player_shotgun_southeast_run_03",
+        "player_shotgun_southeast_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_southeast_attack",
+      "weapon": "shotgun",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_southeast_attack_01",
+        "player_shotgun_southeast_attack_02",
+        "player_shotgun_southeast_attack_03"
+      ],
+      "returnTo": "shotgun_southeast_idle",
+      "impactOrReleaseFrame": "player_shotgun_southeast_attack_02"
+    },
+    {
+      "id": "shotgun_east_idle",
+      "weapon": "shotgun",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_east_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_east_run",
+      "weapon": "shotgun",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_east_run_01",
+        "player_shotgun_east_run_02",
+        "player_shotgun_east_run_03",
+        "player_shotgun_east_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_east_attack",
+      "weapon": "shotgun",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_east_attack_01",
+        "player_shotgun_east_attack_02",
+        "player_shotgun_east_attack_03"
+      ],
+      "returnTo": "shotgun_east_idle",
+      "impactOrReleaseFrame": "player_shotgun_east_attack_02"
+    },
+    {
+      "id": "shotgun_northeast_idle",
+      "weapon": "shotgun",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_northeast_run",
+      "weapon": "shotgun",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_northeast_run_01",
+        "player_shotgun_northeast_run_02",
+        "player_shotgun_northeast_run_03",
+        "player_shotgun_northeast_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_northeast_attack",
+      "weapon": "shotgun",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_northeast_attack_01",
+        "player_shotgun_northeast_attack_02",
+        "player_shotgun_northeast_attack_03"
+      ],
+      "returnTo": "shotgun_northeast_idle",
+      "impactOrReleaseFrame": "player_shotgun_northeast_attack_02"
+    },
+    {
+      "id": "shotgun_north_idle",
+      "weapon": "shotgun",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_north_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_north_run",
+      "weapon": "shotgun",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_north_run_01",
+        "player_shotgun_north_run_02",
+        "player_shotgun_north_run_03",
+        "player_shotgun_north_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_north_attack",
+      "weapon": "shotgun",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_north_attack_01",
+        "player_shotgun_north_attack_02",
+        "player_shotgun_north_attack_03"
+      ],
+      "returnTo": "shotgun_north_idle",
+      "impactOrReleaseFrame": "player_shotgun_north_attack_02"
+    },
+    {
+      "id": "shotgun_northwest_idle",
+      "weapon": "shotgun",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_northwest_run",
+      "weapon": "shotgun",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_northwest_run_01",
+        "player_shotgun_northwest_run_02",
+        "player_shotgun_northwest_run_03",
+        "player_shotgun_northwest_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_northwest_attack",
+      "weapon": "shotgun",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_northwest_attack_01",
+        "player_shotgun_northwest_attack_02",
+        "player_shotgun_northwest_attack_03"
+      ],
+      "returnTo": "shotgun_northwest_idle",
+      "impactOrReleaseFrame": "player_shotgun_northwest_attack_02"
+    },
+    {
+      "id": "shotgun_west_idle",
+      "weapon": "shotgun",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_west_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_west_run",
+      "weapon": "shotgun",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_west_run_01",
+        "player_shotgun_west_run_02",
+        "player_shotgun_west_run_03",
+        "player_shotgun_west_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_west_attack",
+      "weapon": "shotgun",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_west_attack_01",
+        "player_shotgun_west_attack_02",
+        "player_shotgun_west_attack_03"
+      ],
+      "returnTo": "shotgun_west_idle",
+      "impactOrReleaseFrame": "player_shotgun_west_attack_02"
+    },
+    {
+      "id": "shotgun_southwest_idle",
+      "weapon": "shotgun",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_shotgun_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "shotgun_southwest_run",
+      "weapon": "shotgun",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_shotgun_southwest_run_01",
+        "player_shotgun_southwest_run_02",
+        "player_shotgun_southwest_run_03",
+        "player_shotgun_southwest_run_02"
+      ]
+    },
+    {
+      "id": "shotgun_southwest_attack",
+      "weapon": "shotgun",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_shotgun_southwest_attack_01",
+        "player_shotgun_southwest_attack_02",
+        "player_shotgun_southwest_attack_03"
+      ],
+      "returnTo": "shotgun_southwest_idle",
+      "impactOrReleaseFrame": "player_shotgun_southwest_attack_02"
+    },
+    {
+      "id": "molotov_south_idle",
+      "weapon": "molotov",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_south_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_south_run",
+      "weapon": "molotov",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_south_run_01",
+        "player_molotov_south_run_02",
+        "player_molotov_south_run_03",
+        "player_molotov_south_run_02"
+      ]
+    },
+    {
+      "id": "molotov_south_attack",
+      "weapon": "molotov",
+      "direction": "south",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_south_attack_01",
+        "player_molotov_south_attack_02",
+        "player_molotov_south_attack_03"
+      ],
+      "returnTo": "molotov_south_idle",
+      "impactOrReleaseFrame": "player_molotov_south_attack_02"
+    },
+    {
+      "id": "molotov_southeast_idle",
+      "weapon": "molotov",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_southeast_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_southeast_run",
+      "weapon": "molotov",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_southeast_run_01",
+        "player_molotov_southeast_run_02",
+        "player_molotov_southeast_run_03",
+        "player_molotov_southeast_run_02"
+      ]
+    },
+    {
+      "id": "molotov_southeast_attack",
+      "weapon": "molotov",
+      "direction": "southeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_southeast_attack_01",
+        "player_molotov_southeast_attack_02",
+        "player_molotov_southeast_attack_03"
+      ],
+      "returnTo": "molotov_southeast_idle",
+      "impactOrReleaseFrame": "player_molotov_southeast_attack_02"
+    },
+    {
+      "id": "molotov_east_idle",
+      "weapon": "molotov",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_east_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_east_run",
+      "weapon": "molotov",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_east_run_01",
+        "player_molotov_east_run_02",
+        "player_molotov_east_run_03",
+        "player_molotov_east_run_02"
+      ]
+    },
+    {
+      "id": "molotov_east_attack",
+      "weapon": "molotov",
+      "direction": "east",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_east_attack_01",
+        "player_molotov_east_attack_02",
+        "player_molotov_east_attack_03"
+      ],
+      "returnTo": "molotov_east_idle",
+      "impactOrReleaseFrame": "player_molotov_east_attack_02"
+    },
+    {
+      "id": "molotov_northeast_idle",
+      "weapon": "molotov",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_northeast_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_northeast_run",
+      "weapon": "molotov",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_northeast_run_01",
+        "player_molotov_northeast_run_02",
+        "player_molotov_northeast_run_03",
+        "player_molotov_northeast_run_02"
+      ]
+    },
+    {
+      "id": "molotov_northeast_attack",
+      "weapon": "molotov",
+      "direction": "northeast",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_northeast_attack_01",
+        "player_molotov_northeast_attack_02",
+        "player_molotov_northeast_attack_03"
+      ],
+      "returnTo": "molotov_northeast_idle",
+      "impactOrReleaseFrame": "player_molotov_northeast_attack_02"
+    },
+    {
+      "id": "molotov_north_idle",
+      "weapon": "molotov",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_north_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_north_run",
+      "weapon": "molotov",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_north_run_01",
+        "player_molotov_north_run_02",
+        "player_molotov_north_run_03",
+        "player_molotov_north_run_02"
+      ]
+    },
+    {
+      "id": "molotov_north_attack",
+      "weapon": "molotov",
+      "direction": "north",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_north_attack_01",
+        "player_molotov_north_attack_02",
+        "player_molotov_north_attack_03"
+      ],
+      "returnTo": "molotov_north_idle",
+      "impactOrReleaseFrame": "player_molotov_north_attack_02"
+    },
+    {
+      "id": "molotov_northwest_idle",
+      "weapon": "molotov",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_northwest_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_northwest_run",
+      "weapon": "molotov",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_northwest_run_01",
+        "player_molotov_northwest_run_02",
+        "player_molotov_northwest_run_03",
+        "player_molotov_northwest_run_02"
+      ]
+    },
+    {
+      "id": "molotov_northwest_attack",
+      "weapon": "molotov",
+      "direction": "northwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_northwest_attack_01",
+        "player_molotov_northwest_attack_02",
+        "player_molotov_northwest_attack_03"
+      ],
+      "returnTo": "molotov_northwest_idle",
+      "impactOrReleaseFrame": "player_molotov_northwest_attack_02"
+    },
+    {
+      "id": "molotov_west_idle",
+      "weapon": "molotov",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_west_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_west_run",
+      "weapon": "molotov",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_west_run_01",
+        "player_molotov_west_run_02",
+        "player_molotov_west_run_03",
+        "player_molotov_west_run_02"
+      ]
+    },
+    {
+      "id": "molotov_west_attack",
+      "weapon": "molotov",
+      "direction": "west",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_west_attack_01",
+        "player_molotov_west_attack_02",
+        "player_molotov_west_attack_03"
+      ],
+      "returnTo": "molotov_west_idle",
+      "impactOrReleaseFrame": "player_molotov_west_attack_02"
+    },
+    {
+      "id": "molotov_southwest_idle",
+      "weapon": "molotov",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_molotov_southwest_idle_01"
+      ]
+    },
+    {
+      "id": "molotov_southwest_run",
+      "weapon": "molotov",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_molotov_southwest_run_01",
+        "player_molotov_southwest_run_02",
+        "player_molotov_southwest_run_03",
+        "player_molotov_southwest_run_02"
+      ]
+    },
+    {
+      "id": "molotov_southwest_attack",
+      "weapon": "molotov",
+      "direction": "southwest",
+      "action": "attack",
+      "loop": false,
+      "frames": [
+        "player_molotov_southwest_attack_01",
+        "player_molotov_southwest_attack_02",
+        "player_molotov_southwest_attack_03"
+      ],
+      "returnTo": "molotov_southwest_idle",
+      "impactOrReleaseFrame": "player_molotov_southwest_attack_02"
+    }
+  ]
+}

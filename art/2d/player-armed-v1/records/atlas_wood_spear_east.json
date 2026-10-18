@@ -1,0 +1,15 @@
+﻿{
+    "id":  "atlas_wood_spear_east",
+    "file":  "atlas/wood_spear_east.png",
+    "weapon":  "wood_spear",
+    "direction":  "east",
+    "action":  null,
+    "frame":  null,
+    "source":  "C:\\Users\\79264\\.codex\\generated_images\\01a12907-9d78-7eb1-893c-1aaa8372cd15\\exec-90e2aa21-ae5c-4a01-91b4-c6a82574719c.png",
+    "refs":  [
+                 "C:/Leo_WorkSpace/Game/Cards/art/2d/player-armed-v1/atlas/wood_spear_east.png"
+             ],
+    "prompt":  "Use case: precise-object-edit. Input image is the edit target: one 3 by 3 transparent animation sprite atlas containing exactly seven occupied cells, last two cells empty. Fix ONLY spacing and cutout cleanliness. Uniformly SHRINK all seven complete characters with their spears by about 25 percent INSIDE THEIR OWN ORIGINAL CELLS, preserving exact seven action poses, proportions, outfit, ochre/charcoal palette, weapon identity and EAST/right-facing direction. Center each complete figure+weapon within its equal third-by-third cell. Preserve row1 cells1-3 and row2 cells4-6 and row3 cell7 at left. Create wide perfectly transparent horizontal and vertical gutters at EXACT one-third and two-thirds of canvas dimensions. In particular cell5 spear tip must not extend into cell6\u0027s column and cell6 trailing boot must not enter cell5\u0027s column. No cropped figures, no missing weapon tips. Remove red/ochre edge fringes and any colored haze outside crisp polygon silhouettes. Flat geometric 2D sprite art, no shadows, glow, grid lines, text or added objects. Seven figures only, last two cells truly transparent. Preserve transparent background.",
+    "savedAt":  "2026-10-17T15:14:58.7935724Z",
+    "sha256":  "65c2cdb32d0bc5a36b87a89ee36fed8c481ea8af2fd78bcced93ad2e3d87ae66"
+}
