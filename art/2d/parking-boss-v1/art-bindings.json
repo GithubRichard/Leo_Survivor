@@ -1,0 +1,138 @@
+{
+  "boss": {
+    "bodyDuringBurrow": false,
+    "hiddenBodyTransitions": false,
+    "hiddenGroundOnly": [
+      "lurker_hidden_move",
+      "lurker_hidden_attack",
+      "lurker_burrow",
+      "lurker_emerge"
+    ],
+    "revealedBody": [
+      "lurker_normal_{direction}",
+      "lurker_cowering_{direction}"
+    ],
+    "immunityOnlyInState": "burrowed",
+    "immunityFeedback": "burrow_immunity_icon",
+    "normalDamageStates": [
+      "revealed",
+      "stunned",
+      "roar_charge",
+      "roar_release",
+      "retreat"
+    ],
+    "phaseThresholdHP": 8,
+    "phaseDoesNotGrantImmunity": true,
+    "stunState": "stunned",
+    "stunSeconds": 2,
+    "chargeState": "roar_charge",
+    "chargeSeconds": 1,
+    "roarRadiusMeters": 2,
+    "weaknessSeconds": 5,
+    "summonTelegraph": "lurker_summon",
+    "ordinarySummons": "reuse ordinary zombie x2 plus screamer x1",
+    "healthBar": "reuse continuous red health bar plus boss_portrait and runtime text"
+  },
+  "lightRanges": {
+    "torch": {
+      "radius": 3,
+      "seconds": 180
+    },
+    "flashlight": {
+      "angle": 70,
+      "radius": 10,
+      "seconds": 180
+    },
+    "fuel_lantern": {
+      "radius": 4,
+      "seconds": 300
+    },
+    "headlamp": {
+      "angle": 90,
+      "radius": 6,
+      "seconds": 180
+    },
+    "fixed_fuel_light": {
+      "radius": 6,
+      "seconds": 300,
+      "hp": 18
+    },
+    "generator_light": {
+      "radius": 8,
+      "seconds": 180,
+      "hp": 30
+    },
+    "emergency_light": {
+      "radius": 4,
+      "permanent": true
+    }
+  },
+  "heldLighting": {
+    "offFullBody": "player_lights_off_{direction}",
+    "hand": "left",
+    "rightHandAllowedWeapons": [
+      "fists",
+      "wood_club",
+      "iron_axe"
+    ],
+    "disallowedWithHeldLight": [
+      "wood_spear",
+      "simple_bow",
+      "hand_crossbow",
+      "shotgun",
+      "molotov"
+    ],
+    "headlampKeepsHandsFree": true,
+    "headlampDirectionOverlay": "headlamp_directions",
+    "headlampFullBody": "player_headlamp_{direction}",
+    "attachPoints": "calibrate in engine, not inferred from atlas cell center"
+  },
+  "thrownLighting": {
+    "allowed": [
+      "torch",
+      "fuel_lantern"
+    ],
+    "rangeMeters": 6,
+    "windupSeconds": 0.5,
+    "flightSeconds": 0.5,
+    "lightOnlyAfterLanding": true,
+    "consumesSameItem": true,
+    "releaseHandsEmpty": true,
+    "recoveryCanUseReleasePoseThenSwitchEquipment": true
+  },
+  "playerStealth": {
+    "asset": "player_stealth_{direction}",
+    "stayAboveGround": true,
+    "opacityControlledByRuntime": true,
+    "invisibleOnlyInDarkness": true,
+    "noInvulnerability": true,
+    "lightOnlyRevealsDoesNotEndSkill": true,
+    "durationSeconds": 7,
+    "startStamina": 2,
+    "extraHungerPerSecond": 1.5,
+    "cooldownAfterEnd": 20,
+    "baseSpeed": 3.4,
+    "runDisabled": true,
+    "skillIcon": "stealth_skill"
+  },
+  "cars": {
+    "types": {
+      "civilian_car": 16,
+      "maintenance_van": 4,
+      "supply_van": 2,
+      "security_car": 2
+    },
+    "fuelVehicles": 8,
+    "cargoMarker": "cargo_marker",
+    "fuelMarker": "fuel_marker",
+    "independentClaims": true
+  },
+  "constraints": [
+    "No PNG pixels modified by export scripts",
+    "Use per-frame rect, do not assume equal thirds/quarters",
+    "Calibrate world scale, footpoints, collisions and wearable points",
+    "Runtime occlusion must clip light/vision/roar/projectiles around solid cars, walls, closed gates and columns",
+    "Do not interpret decorative native PNG halos as effective light radius",
+    "Gameplay not integrated by this art delivery"
+  ]
+}

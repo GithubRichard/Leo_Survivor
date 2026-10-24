@@ -1,0 +1,4335 @@
+{
+  "format": "frame-id-sequences",
+  "manifest": "manifest.json",
+  "note": "Playback speed does not define combat cooldown. Player torch/lantern release leaves hands empty; light flight uses prop sprite, landing creates light region.",
+  "clips": [
+    {
+      "id": "lurker_normal_south__idle",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_south__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_south__move",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_south__move_a",
+        "lurker_normal_south__move_mid",
+        "lurker_normal_south__move_b",
+        "lurker_normal_south__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_south__melee",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_south__melee_windup",
+        "lurker_normal_south__melee_hit",
+        "lurker_normal_south__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_south__stunned",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_south__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_south__roar",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_south__roar_charge",
+        "lurker_normal_south__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_south__retreat",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_south__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_south__death",
+      "asset": "lurker_normal_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_south__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__idle",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_southeast__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__move",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_southeast__move_a",
+        "lurker_normal_southeast__move_mid",
+        "lurker_normal_southeast__move_b",
+        "lurker_normal_southeast__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__melee",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southeast__melee_windup",
+        "lurker_normal_southeast__melee_hit",
+        "lurker_normal_southeast__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__stunned",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southeast__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__roar",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southeast__roar_charge",
+        "lurker_normal_southeast__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__retreat",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southeast__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_southeast__death",
+      "asset": "lurker_normal_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southeast__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__idle",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_east__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__move",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_east__move_a",
+        "lurker_normal_east__move_mid",
+        "lurker_normal_east__move_b",
+        "lurker_normal_east__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__melee",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_east__melee_windup",
+        "lurker_normal_east__melee_hit",
+        "lurker_normal_east__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__stunned",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_east__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__roar",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_east__roar_charge",
+        "lurker_normal_east__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__retreat",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_east__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_east__death",
+      "asset": "lurker_normal_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_east__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__idle",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_northeast__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__move",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_northeast__move_a",
+        "lurker_normal_northeast__move_mid",
+        "lurker_normal_northeast__move_b",
+        "lurker_normal_northeast__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__melee",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northeast__melee_windup",
+        "lurker_normal_northeast__melee_hit",
+        "lurker_normal_northeast__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__stunned",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northeast__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__roar",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northeast__roar_charge",
+        "lurker_normal_northeast__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__retreat",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northeast__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_northeast__death",
+      "asset": "lurker_normal_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northeast__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__idle",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_north__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__move",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_north__move_a",
+        "lurker_normal_north__move_mid",
+        "lurker_normal_north__move_b",
+        "lurker_normal_north__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__melee",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_north__melee_windup",
+        "lurker_normal_north__melee_hit",
+        "lurker_normal_north__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__stunned",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_north__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__roar",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_north__roar_charge",
+        "lurker_normal_north__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__retreat",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_north__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_north__death",
+      "asset": "lurker_normal_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_north__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__idle",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_northwest__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__move",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_northwest__move_a",
+        "lurker_normal_northwest__move_mid",
+        "lurker_normal_northwest__move_b",
+        "lurker_normal_northwest__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__melee",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northwest__melee_windup",
+        "lurker_normal_northwest__melee_hit",
+        "lurker_normal_northwest__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__stunned",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northwest__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__roar",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northwest__roar_charge",
+        "lurker_normal_northwest__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__retreat",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northwest__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_northwest__death",
+      "asset": "lurker_normal_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_northwest__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__idle",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_west__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__move",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_west__move_a",
+        "lurker_normal_west__move_mid",
+        "lurker_normal_west__move_b",
+        "lurker_normal_west__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__melee",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_west__melee_windup",
+        "lurker_normal_west__melee_hit",
+        "lurker_normal_west__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__stunned",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_west__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__roar",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_west__roar_charge",
+        "lurker_normal_west__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__retreat",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_west__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_west__death",
+      "asset": "lurker_normal_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_west__dead"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__idle",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_normal_southwest__idle"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__move",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_normal_southwest__move_a",
+        "lurker_normal_southwest__move_mid",
+        "lurker_normal_southwest__move_b",
+        "lurker_normal_southwest__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__melee",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southwest__melee_windup",
+        "lurker_normal_southwest__melee_hit",
+        "lurker_normal_southwest__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__stunned",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southwest__stunned"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__roar",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southwest__roar_charge",
+        "lurker_normal_southwest__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__retreat",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southwest__retreat"
+      ]
+    },
+    {
+      "id": "lurker_normal_southwest__death",
+      "asset": "lurker_normal_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "normal",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_normal_southwest__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__idle",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_south__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__move",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_south__move_a",
+        "lurker_cowering_south__move_mid",
+        "lurker_cowering_south__move_b",
+        "lurker_cowering_south__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__melee",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_south__melee_windup",
+        "lurker_cowering_south__melee_hit",
+        "lurker_cowering_south__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__stunned",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_south__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__roar",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_south__roar_charge",
+        "lurker_cowering_south__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__retreat",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_south__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_south__death",
+      "asset": "lurker_cowering_south",
+      "entity": "lurker",
+      "direction": "south",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_south__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__idle",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_southeast__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__move",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_southeast__move_a",
+        "lurker_cowering_southeast__move_mid",
+        "lurker_cowering_southeast__move_b",
+        "lurker_cowering_southeast__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__melee",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southeast__melee_windup",
+        "lurker_cowering_southeast__melee_hit",
+        "lurker_cowering_southeast__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__stunned",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southeast__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__roar",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southeast__roar_charge",
+        "lurker_cowering_southeast__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__retreat",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southeast__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southeast__death",
+      "asset": "lurker_cowering_southeast",
+      "entity": "lurker",
+      "direction": "southeast",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southeast__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__idle",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_east__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__move",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_east__move_a",
+        "lurker_cowering_east__move_mid",
+        "lurker_cowering_east__move_b",
+        "lurker_cowering_east__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__melee",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_east__melee_windup",
+        "lurker_cowering_east__melee_hit",
+        "lurker_cowering_east__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__stunned",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_east__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__roar",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_east__roar_charge",
+        "lurker_cowering_east__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__retreat",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_east__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_east__death",
+      "asset": "lurker_cowering_east",
+      "entity": "lurker",
+      "direction": "east",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_east__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__idle",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_northeast__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__move",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_northeast__move_a",
+        "lurker_cowering_northeast__move_mid",
+        "lurker_cowering_northeast__move_b",
+        "lurker_cowering_northeast__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__melee",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northeast__melee_windup",
+        "lurker_cowering_northeast__melee_hit",
+        "lurker_cowering_northeast__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__stunned",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northeast__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__roar",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northeast__roar_charge",
+        "lurker_cowering_northeast__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__retreat",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northeast__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northeast__death",
+      "asset": "lurker_cowering_northeast",
+      "entity": "lurker",
+      "direction": "northeast",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northeast__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__idle",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_north__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__move",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_north__move_a",
+        "lurker_cowering_north__move_mid",
+        "lurker_cowering_north__move_b",
+        "lurker_cowering_north__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__melee",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_north__melee_windup",
+        "lurker_cowering_north__melee_hit",
+        "lurker_cowering_north__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__stunned",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_north__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__roar",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_north__roar_charge",
+        "lurker_cowering_north__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__retreat",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_north__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_north__death",
+      "asset": "lurker_cowering_north",
+      "entity": "lurker",
+      "direction": "north",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_north__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__idle",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_northwest__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__move",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_northwest__move_a",
+        "lurker_cowering_northwest__move_mid",
+        "lurker_cowering_northwest__move_b",
+        "lurker_cowering_northwest__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__melee",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northwest__melee_windup",
+        "lurker_cowering_northwest__melee_hit",
+        "lurker_cowering_northwest__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__stunned",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northwest__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__roar",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northwest__roar_charge",
+        "lurker_cowering_northwest__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__retreat",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northwest__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_northwest__death",
+      "asset": "lurker_cowering_northwest",
+      "entity": "lurker",
+      "direction": "northwest",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_northwest__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__idle",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_west__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__move",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_west__move_a",
+        "lurker_cowering_west__move_mid",
+        "lurker_cowering_west__move_b",
+        "lurker_cowering_west__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__melee",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_west__melee_windup",
+        "lurker_cowering_west__melee_hit",
+        "lurker_cowering_west__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__stunned",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_west__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__roar",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_west__roar_charge",
+        "lurker_cowering_west__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__retreat",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_west__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_west__death",
+      "asset": "lurker_cowering_west",
+      "entity": "lurker",
+      "direction": "west",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_west__dead"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__idle",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_southwest__idle"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__move",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lurker_cowering_southwest__move_a",
+        "lurker_cowering_southwest__move_mid",
+        "lurker_cowering_southwest__move_b",
+        "lurker_cowering_southwest__move_mid"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__melee",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southwest__melee_windup",
+        "lurker_cowering_southwest__melee_hit",
+        "lurker_cowering_southwest__melee_recover"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__stunned",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "stunned",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southwest__stunned"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__roar",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "roar",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southwest__roar_charge",
+        "lurker_cowering_southwest__roar_release"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__retreat",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southwest__retreat"
+      ]
+    },
+    {
+      "id": "lurker_cowering_southwest__death",
+      "asset": "lurker_cowering_southwest",
+      "entity": "lurker",
+      "direction": "southwest",
+      "phase": "cowering",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lurker_cowering_southwest__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_south__idle",
+      "asset": "lamp_smasher_south",
+      "entity": "lamp_smasher",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_south__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_south__move",
+      "asset": "lamp_smasher_south",
+      "entity": "lamp_smasher",
+      "direction": "south",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_south__move_a",
+        "lamp_smasher_south__move_mid",
+        "lamp_smasher_south__move_b",
+        "lamp_smasher_south__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_south__melee",
+      "asset": "lamp_smasher_south",
+      "entity": "lamp_smasher",
+      "direction": "south",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_south__melee_windup",
+        "lamp_smasher_south__melee_hit",
+        "lamp_smasher_south__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_south__throw",
+      "asset": "lamp_smasher_south",
+      "entity": "lamp_smasher",
+      "direction": "south",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_south__throw_windup",
+        "lamp_smasher_south__throw_release",
+        "lamp_smasher_south__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_south__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_south__retreat",
+      "asset": "lamp_smasher_south",
+      "entity": "lamp_smasher",
+      "direction": "south",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_south__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_south__death",
+      "asset": "lamp_smasher_south",
+      "entity": "lamp_smasher",
+      "direction": "south",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_south__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southeast__idle",
+      "asset": "lamp_smasher_southeast",
+      "entity": "lamp_smasher",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_southeast__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southeast__move",
+      "asset": "lamp_smasher_southeast",
+      "entity": "lamp_smasher",
+      "direction": "southeast",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_southeast__move_a",
+        "lamp_smasher_southeast__move_mid",
+        "lamp_smasher_southeast__move_b",
+        "lamp_smasher_southeast__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southeast__melee",
+      "asset": "lamp_smasher_southeast",
+      "entity": "lamp_smasher",
+      "direction": "southeast",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southeast__melee_windup",
+        "lamp_smasher_southeast__melee_hit",
+        "lamp_smasher_southeast__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southeast__throw",
+      "asset": "lamp_smasher_southeast",
+      "entity": "lamp_smasher",
+      "direction": "southeast",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southeast__throw_windup",
+        "lamp_smasher_southeast__throw_release",
+        "lamp_smasher_southeast__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_southeast__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_southeast__retreat",
+      "asset": "lamp_smasher_southeast",
+      "entity": "lamp_smasher",
+      "direction": "southeast",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southeast__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southeast__death",
+      "asset": "lamp_smasher_southeast",
+      "entity": "lamp_smasher",
+      "direction": "southeast",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southeast__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_east__idle",
+      "asset": "lamp_smasher_east",
+      "entity": "lamp_smasher",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_east__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_east__move",
+      "asset": "lamp_smasher_east",
+      "entity": "lamp_smasher",
+      "direction": "east",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_east__move_a",
+        "lamp_smasher_east__move_mid",
+        "lamp_smasher_east__move_b",
+        "lamp_smasher_east__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_east__melee",
+      "asset": "lamp_smasher_east",
+      "entity": "lamp_smasher",
+      "direction": "east",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_east__melee_windup",
+        "lamp_smasher_east__melee_hit",
+        "lamp_smasher_east__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_east__throw",
+      "asset": "lamp_smasher_east",
+      "entity": "lamp_smasher",
+      "direction": "east",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_east__throw_windup",
+        "lamp_smasher_east__throw_release",
+        "lamp_smasher_east__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_east__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_east__retreat",
+      "asset": "lamp_smasher_east",
+      "entity": "lamp_smasher",
+      "direction": "east",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_east__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_east__death",
+      "asset": "lamp_smasher_east",
+      "entity": "lamp_smasher",
+      "direction": "east",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_east__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northeast__idle",
+      "asset": "lamp_smasher_northeast",
+      "entity": "lamp_smasher",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_northeast__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northeast__move",
+      "asset": "lamp_smasher_northeast",
+      "entity": "lamp_smasher",
+      "direction": "northeast",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_northeast__move_a",
+        "lamp_smasher_northeast__move_mid",
+        "lamp_smasher_northeast__move_b",
+        "lamp_smasher_northeast__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northeast__melee",
+      "asset": "lamp_smasher_northeast",
+      "entity": "lamp_smasher",
+      "direction": "northeast",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northeast__melee_windup",
+        "lamp_smasher_northeast__melee_hit",
+        "lamp_smasher_northeast__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northeast__throw",
+      "asset": "lamp_smasher_northeast",
+      "entity": "lamp_smasher",
+      "direction": "northeast",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northeast__throw_windup",
+        "lamp_smasher_northeast__throw_release",
+        "lamp_smasher_northeast__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_northeast__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_northeast__retreat",
+      "asset": "lamp_smasher_northeast",
+      "entity": "lamp_smasher",
+      "direction": "northeast",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northeast__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northeast__death",
+      "asset": "lamp_smasher_northeast",
+      "entity": "lamp_smasher",
+      "direction": "northeast",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northeast__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_north__idle",
+      "asset": "lamp_smasher_north",
+      "entity": "lamp_smasher",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_north__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_north__move",
+      "asset": "lamp_smasher_north",
+      "entity": "lamp_smasher",
+      "direction": "north",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_north__move_a",
+        "lamp_smasher_north__move_mid",
+        "lamp_smasher_north__move_b",
+        "lamp_smasher_north__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_north__melee",
+      "asset": "lamp_smasher_north",
+      "entity": "lamp_smasher",
+      "direction": "north",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_north__melee_windup",
+        "lamp_smasher_north__melee_hit",
+        "lamp_smasher_north__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_north__throw",
+      "asset": "lamp_smasher_north",
+      "entity": "lamp_smasher",
+      "direction": "north",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_north__throw_windup",
+        "lamp_smasher_north__throw_release",
+        "lamp_smasher_north__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_north__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_north__retreat",
+      "asset": "lamp_smasher_north",
+      "entity": "lamp_smasher",
+      "direction": "north",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_north__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_north__death",
+      "asset": "lamp_smasher_north",
+      "entity": "lamp_smasher",
+      "direction": "north",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_north__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northwest__idle",
+      "asset": "lamp_smasher_northwest",
+      "entity": "lamp_smasher",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_northwest__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northwest__move",
+      "asset": "lamp_smasher_northwest",
+      "entity": "lamp_smasher",
+      "direction": "northwest",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_northwest__move_a",
+        "lamp_smasher_northwest__move_mid",
+        "lamp_smasher_northwest__move_b",
+        "lamp_smasher_northwest__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northwest__melee",
+      "asset": "lamp_smasher_northwest",
+      "entity": "lamp_smasher",
+      "direction": "northwest",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northwest__melee_windup",
+        "lamp_smasher_northwest__melee_hit",
+        "lamp_smasher_northwest__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northwest__throw",
+      "asset": "lamp_smasher_northwest",
+      "entity": "lamp_smasher",
+      "direction": "northwest",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northwest__throw_windup",
+        "lamp_smasher_northwest__throw_release",
+        "lamp_smasher_northwest__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_northwest__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_northwest__retreat",
+      "asset": "lamp_smasher_northwest",
+      "entity": "lamp_smasher",
+      "direction": "northwest",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northwest__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_northwest__death",
+      "asset": "lamp_smasher_northwest",
+      "entity": "lamp_smasher",
+      "direction": "northwest",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_northwest__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_west__idle",
+      "asset": "lamp_smasher_west",
+      "entity": "lamp_smasher",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_west__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_west__move",
+      "asset": "lamp_smasher_west",
+      "entity": "lamp_smasher",
+      "direction": "west",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_west__move_a",
+        "lamp_smasher_west__move_mid",
+        "lamp_smasher_west__move_b",
+        "lamp_smasher_west__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_west__melee",
+      "asset": "lamp_smasher_west",
+      "entity": "lamp_smasher",
+      "direction": "west",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_west__melee_windup",
+        "lamp_smasher_west__melee_hit",
+        "lamp_smasher_west__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_west__throw",
+      "asset": "lamp_smasher_west",
+      "entity": "lamp_smasher",
+      "direction": "west",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_west__throw_windup",
+        "lamp_smasher_west__throw_release",
+        "lamp_smasher_west__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_west__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_west__retreat",
+      "asset": "lamp_smasher_west",
+      "entity": "lamp_smasher",
+      "direction": "west",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_west__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_west__death",
+      "asset": "lamp_smasher_west",
+      "entity": "lamp_smasher",
+      "direction": "west",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_west__dead"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southwest__idle",
+      "asset": "lamp_smasher_southwest",
+      "entity": "lamp_smasher",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_southwest__idle"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southwest__move",
+      "asset": "lamp_smasher_southwest",
+      "entity": "lamp_smasher",
+      "direction": "southwest",
+      "action": "move",
+      "loop": true,
+      "frames": [
+        "lamp_smasher_southwest__move_a",
+        "lamp_smasher_southwest__move_mid",
+        "lamp_smasher_southwest__move_b",
+        "lamp_smasher_southwest__move_mid"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southwest__melee",
+      "asset": "lamp_smasher_southwest",
+      "entity": "lamp_smasher",
+      "direction": "southwest",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southwest__melee_windup",
+        "lamp_smasher_southwest__melee_hit",
+        "lamp_smasher_southwest__melee_recover"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southwest__throw",
+      "asset": "lamp_smasher_southwest",
+      "entity": "lamp_smasher",
+      "direction": "southwest",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southwest__throw_windup",
+        "lamp_smasher_southwest__throw_release",
+        "lamp_smasher_southwest__throw_recover"
+      ],
+      "releaseFrame": "lamp_smasher_southwest__throw_release",
+      "returnPolicy": "recover then idle with next stone on cooldown"
+    },
+    {
+      "id": "lamp_smasher_southwest__retreat",
+      "asset": "lamp_smasher_southwest",
+      "entity": "lamp_smasher",
+      "direction": "southwest",
+      "action": "retreat",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southwest__retreat"
+      ]
+    },
+    {
+      "id": "lamp_smasher_southwest__death",
+      "asset": "lamp_smasher_southwest",
+      "entity": "lamp_smasher",
+      "direction": "southwest",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "lamp_smasher_southwest__dead"
+      ]
+    },
+    {
+      "id": "player_lights_south__torch_idle",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_south__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_south__torch_run",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_south__torch_run_a",
+        "player_lights_south__torch_run_mid",
+        "player_lights_south__torch_run_b",
+        "player_lights_south__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_south__torch_throw",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_south__torch_throw_windup",
+        "player_lights_south__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_south__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_south__lantern_idle",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_south__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_south__lantern_run",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_south__lantern_run_a",
+        "player_lights_south__lantern_run_mid",
+        "player_lights_south__lantern_run_b",
+        "player_lights_south__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_south__lantern_throw",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_south__lantern_throw_windup",
+        "player_lights_south__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_south__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_south__flashlight_idle",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_south__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_south__flashlight_run",
+      "asset": "player_lights_south",
+      "entity": "player_lights",
+      "direction": "south",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_south__flashlight_run_a",
+        "player_lights_south__flashlight_run_mid",
+        "player_lights_south__flashlight_run_b",
+        "player_lights_south__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_southeast__torch_idle",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_southeast__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_southeast__torch_run",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_southeast__torch_run_a",
+        "player_lights_southeast__torch_run_mid",
+        "player_lights_southeast__torch_run_b",
+        "player_lights_southeast__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_southeast__torch_throw",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_southeast__torch_throw_windup",
+        "player_lights_southeast__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_southeast__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_southeast__lantern_idle",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_southeast__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_southeast__lantern_run",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_southeast__lantern_run_a",
+        "player_lights_southeast__lantern_run_mid",
+        "player_lights_southeast__lantern_run_b",
+        "player_lights_southeast__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_southeast__lantern_throw",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_southeast__lantern_throw_windup",
+        "player_lights_southeast__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_southeast__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_southeast__flashlight_idle",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_southeast__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_southeast__flashlight_run",
+      "asset": "player_lights_southeast",
+      "entity": "player_lights",
+      "direction": "southeast",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_southeast__flashlight_run_a",
+        "player_lights_southeast__flashlight_run_mid",
+        "player_lights_southeast__flashlight_run_b",
+        "player_lights_southeast__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_east__torch_idle",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_east__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_east__torch_run",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_east__torch_run_a",
+        "player_lights_east__torch_run_mid",
+        "player_lights_east__torch_run_b",
+        "player_lights_east__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_east__torch_throw",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_east__torch_throw_windup",
+        "player_lights_east__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_east__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_east__lantern_idle",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_east__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_east__lantern_run",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_east__lantern_run_a",
+        "player_lights_east__lantern_run_mid",
+        "player_lights_east__lantern_run_b",
+        "player_lights_east__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_east__lantern_throw",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_east__lantern_throw_windup",
+        "player_lights_east__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_east__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_east__flashlight_idle",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_east__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_east__flashlight_run",
+      "asset": "player_lights_east",
+      "entity": "player_lights",
+      "direction": "east",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_east__flashlight_run_a",
+        "player_lights_east__flashlight_run_mid",
+        "player_lights_east__flashlight_run_b",
+        "player_lights_east__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_northeast__torch_idle",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_northeast__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_northeast__torch_run",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_northeast__torch_run_a",
+        "player_lights_northeast__torch_run_mid",
+        "player_lights_northeast__torch_run_b",
+        "player_lights_northeast__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_northeast__torch_throw",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_northeast__torch_throw_windup",
+        "player_lights_northeast__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_northeast__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_northeast__lantern_idle",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_northeast__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_northeast__lantern_run",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_northeast__lantern_run_a",
+        "player_lights_northeast__lantern_run_mid",
+        "player_lights_northeast__lantern_run_b",
+        "player_lights_northeast__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_northeast__lantern_throw",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_northeast__lantern_throw_windup",
+        "player_lights_northeast__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_northeast__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_northeast__flashlight_idle",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_northeast__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_northeast__flashlight_run",
+      "asset": "player_lights_northeast",
+      "entity": "player_lights",
+      "direction": "northeast",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_northeast__flashlight_run_a",
+        "player_lights_northeast__flashlight_run_mid",
+        "player_lights_northeast__flashlight_run_b",
+        "player_lights_northeast__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_north__torch_idle",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_north__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_north__torch_run",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_north__torch_run_a",
+        "player_lights_north__torch_run_mid",
+        "player_lights_north__torch_run_b",
+        "player_lights_north__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_north__torch_throw",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_north__torch_throw_windup",
+        "player_lights_north__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_north__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_north__lantern_idle",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_north__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_north__lantern_run",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_north__lantern_run_a",
+        "player_lights_north__lantern_run_mid",
+        "player_lights_north__lantern_run_b",
+        "player_lights_north__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_north__lantern_throw",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_north__lantern_throw_windup",
+        "player_lights_north__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_north__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_north__flashlight_idle",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_north__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_north__flashlight_run",
+      "asset": "player_lights_north",
+      "entity": "player_lights",
+      "direction": "north",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_north__flashlight_run_a",
+        "player_lights_north__flashlight_run_mid",
+        "player_lights_north__flashlight_run_b",
+        "player_lights_north__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_northwest__torch_idle",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_northwest__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_northwest__torch_run",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_northwest__torch_run_a",
+        "player_lights_northwest__torch_run_mid",
+        "player_lights_northwest__torch_run_b",
+        "player_lights_northwest__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_northwest__torch_throw",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_northwest__torch_throw_windup",
+        "player_lights_northwest__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_northwest__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_northwest__lantern_idle",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_northwest__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_northwest__lantern_run",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_northwest__lantern_run_a",
+        "player_lights_northwest__lantern_run_mid",
+        "player_lights_northwest__lantern_run_b",
+        "player_lights_northwest__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_northwest__lantern_throw",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_northwest__lantern_throw_windup",
+        "player_lights_northwest__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_northwest__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_northwest__flashlight_idle",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_northwest__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_northwest__flashlight_run",
+      "asset": "player_lights_northwest",
+      "entity": "player_lights",
+      "direction": "northwest",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_northwest__flashlight_run_a",
+        "player_lights_northwest__flashlight_run_mid",
+        "player_lights_northwest__flashlight_run_b",
+        "player_lights_northwest__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_west__torch_idle",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_west__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_west__torch_run",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_west__torch_run_a",
+        "player_lights_west__torch_run_mid",
+        "player_lights_west__torch_run_b",
+        "player_lights_west__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_west__torch_throw",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_west__torch_throw_windup",
+        "player_lights_west__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_west__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_west__lantern_idle",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_west__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_west__lantern_run",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_west__lantern_run_a",
+        "player_lights_west__lantern_run_mid",
+        "player_lights_west__lantern_run_b",
+        "player_lights_west__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_west__lantern_throw",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_west__lantern_throw_windup",
+        "player_lights_west__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_west__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_west__flashlight_idle",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_west__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_west__flashlight_run",
+      "asset": "player_lights_west",
+      "entity": "player_lights",
+      "direction": "west",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_west__flashlight_run_a",
+        "player_lights_west__flashlight_run_mid",
+        "player_lights_west__flashlight_run_b",
+        "player_lights_west__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_southwest__torch_idle",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_southwest__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_southwest__torch_run",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_southwest__torch_run_a",
+        "player_lights_southwest__torch_run_mid",
+        "player_lights_southwest__torch_run_b",
+        "player_lights_southwest__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_southwest__torch_throw",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "torch_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_southwest__torch_throw_windup",
+        "player_lights_southwest__torch_throw_release"
+      ],
+      "releaseFrame": "player_lights_southwest__torch_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_southwest__lantern_idle",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_southwest__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_southwest__lantern_run",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_southwest__lantern_run_a",
+        "player_lights_southwest__lantern_run_mid",
+        "player_lights_southwest__lantern_run_b",
+        "player_lights_southwest__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_southwest__lantern_throw",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "lantern_throw",
+      "loop": false,
+      "frames": [
+        "player_lights_southwest__lantern_throw_windup",
+        "player_lights_southwest__lantern_throw_release"
+      ],
+      "releaseFrame": "player_lights_southwest__lantern_throw_release",
+      "returnPolicy": "switch to current equipment; do not restore thrown lamp"
+    },
+    {
+      "id": "player_lights_southwest__flashlight_idle",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_southwest__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_southwest__flashlight_run",
+      "asset": "player_lights_southwest",
+      "entity": "player_lights",
+      "direction": "southwest",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_southwest__flashlight_run_a",
+        "player_lights_southwest__flashlight_run_mid",
+        "player_lights_southwest__flashlight_run_b",
+        "player_lights_southwest__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_south__idle",
+      "asset": "player_stealth_south",
+      "entity": "player_stealth",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_south__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_south__sneak",
+      "asset": "player_stealth_south",
+      "entity": "player_stealth",
+      "direction": "south",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_south__sneak_a",
+        "player_stealth_south__sneak_mid",
+        "player_stealth_south__sneak_b",
+        "player_stealth_south__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_south__activate",
+      "asset": "player_stealth_south",
+      "entity": "player_stealth",
+      "direction": "south",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_south__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_south__interrupt",
+      "asset": "player_stealth_south",
+      "entity": "player_stealth",
+      "direction": "south",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_south__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_south__end",
+      "asset": "player_stealth_south",
+      "entity": "player_stealth",
+      "direction": "south",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_south__end"
+      ]
+    },
+    {
+      "id": "player_stealth_southeast__idle",
+      "asset": "player_stealth_southeast",
+      "entity": "player_stealth",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_southeast__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_southeast__sneak",
+      "asset": "player_stealth_southeast",
+      "entity": "player_stealth",
+      "direction": "southeast",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_southeast__sneak_a",
+        "player_stealth_southeast__sneak_mid",
+        "player_stealth_southeast__sneak_b",
+        "player_stealth_southeast__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_southeast__activate",
+      "asset": "player_stealth_southeast",
+      "entity": "player_stealth",
+      "direction": "southeast",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_southeast__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_southeast__interrupt",
+      "asset": "player_stealth_southeast",
+      "entity": "player_stealth",
+      "direction": "southeast",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_southeast__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_southeast__end",
+      "asset": "player_stealth_southeast",
+      "entity": "player_stealth",
+      "direction": "southeast",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_southeast__end"
+      ]
+    },
+    {
+      "id": "player_stealth_east__idle",
+      "asset": "player_stealth_east",
+      "entity": "player_stealth",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_east__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_east__sneak",
+      "asset": "player_stealth_east",
+      "entity": "player_stealth",
+      "direction": "east",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_east__sneak_a",
+        "player_stealth_east__sneak_mid",
+        "player_stealth_east__sneak_b",
+        "player_stealth_east__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_east__activate",
+      "asset": "player_stealth_east",
+      "entity": "player_stealth",
+      "direction": "east",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_east__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_east__interrupt",
+      "asset": "player_stealth_east",
+      "entity": "player_stealth",
+      "direction": "east",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_east__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_east__end",
+      "asset": "player_stealth_east",
+      "entity": "player_stealth",
+      "direction": "east",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_east__end"
+      ]
+    },
+    {
+      "id": "player_stealth_northeast__idle",
+      "asset": "player_stealth_northeast",
+      "entity": "player_stealth",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_northeast__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_northeast__sneak",
+      "asset": "player_stealth_northeast",
+      "entity": "player_stealth",
+      "direction": "northeast",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_northeast__sneak_a",
+        "player_stealth_northeast__sneak_mid",
+        "player_stealth_northeast__sneak_b",
+        "player_stealth_northeast__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_northeast__activate",
+      "asset": "player_stealth_northeast",
+      "entity": "player_stealth",
+      "direction": "northeast",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_northeast__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_northeast__interrupt",
+      "asset": "player_stealth_northeast",
+      "entity": "player_stealth",
+      "direction": "northeast",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_northeast__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_northeast__end",
+      "asset": "player_stealth_northeast",
+      "entity": "player_stealth",
+      "direction": "northeast",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_northeast__end"
+      ]
+    },
+    {
+      "id": "player_stealth_north__idle",
+      "asset": "player_stealth_north",
+      "entity": "player_stealth",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_north__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_north__sneak",
+      "asset": "player_stealth_north",
+      "entity": "player_stealth",
+      "direction": "north",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_north__sneak_a",
+        "player_stealth_north__sneak_mid",
+        "player_stealth_north__sneak_b",
+        "player_stealth_north__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_north__activate",
+      "asset": "player_stealth_north",
+      "entity": "player_stealth",
+      "direction": "north",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_north__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_north__interrupt",
+      "asset": "player_stealth_north",
+      "entity": "player_stealth",
+      "direction": "north",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_north__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_north__end",
+      "asset": "player_stealth_north",
+      "entity": "player_stealth",
+      "direction": "north",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_north__end"
+      ]
+    },
+    {
+      "id": "player_stealth_northwest__idle",
+      "asset": "player_stealth_northwest",
+      "entity": "player_stealth",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_northwest__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_northwest__sneak",
+      "asset": "player_stealth_northwest",
+      "entity": "player_stealth",
+      "direction": "northwest",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_northwest__sneak_a",
+        "player_stealth_northwest__sneak_mid",
+        "player_stealth_northwest__sneak_b",
+        "player_stealth_northwest__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_northwest__activate",
+      "asset": "player_stealth_northwest",
+      "entity": "player_stealth",
+      "direction": "northwest",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_northwest__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_northwest__interrupt",
+      "asset": "player_stealth_northwest",
+      "entity": "player_stealth",
+      "direction": "northwest",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_northwest__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_northwest__end",
+      "asset": "player_stealth_northwest",
+      "entity": "player_stealth",
+      "direction": "northwest",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_northwest__end"
+      ]
+    },
+    {
+      "id": "player_stealth_west__idle",
+      "asset": "player_stealth_west",
+      "entity": "player_stealth",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_west__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_west__sneak",
+      "asset": "player_stealth_west",
+      "entity": "player_stealth",
+      "direction": "west",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_west__sneak_a",
+        "player_stealth_west__sneak_mid",
+        "player_stealth_west__sneak_b",
+        "player_stealth_west__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_west__activate",
+      "asset": "player_stealth_west",
+      "entity": "player_stealth",
+      "direction": "west",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_west__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_west__interrupt",
+      "asset": "player_stealth_west",
+      "entity": "player_stealth",
+      "direction": "west",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_west__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_west__end",
+      "asset": "player_stealth_west",
+      "entity": "player_stealth",
+      "direction": "west",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_west__end"
+      ]
+    },
+    {
+      "id": "player_stealth_southwest__idle",
+      "asset": "player_stealth_southwest",
+      "entity": "player_stealth",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_stealth_southwest__idle"
+      ]
+    },
+    {
+      "id": "player_stealth_southwest__sneak",
+      "asset": "player_stealth_southwest",
+      "entity": "player_stealth",
+      "direction": "southwest",
+      "action": "sneak",
+      "loop": true,
+      "frames": [
+        "player_stealth_southwest__sneak_a",
+        "player_stealth_southwest__sneak_mid",
+        "player_stealth_southwest__sneak_b",
+        "player_stealth_southwest__sneak_mid"
+      ]
+    },
+    {
+      "id": "player_stealth_southwest__activate",
+      "asset": "player_stealth_southwest",
+      "entity": "player_stealth",
+      "direction": "southwest",
+      "action": "activate",
+      "loop": false,
+      "frames": [
+        "player_stealth_southwest__activate"
+      ]
+    },
+    {
+      "id": "player_stealth_southwest__interrupt",
+      "asset": "player_stealth_southwest",
+      "entity": "player_stealth",
+      "direction": "southwest",
+      "action": "interrupt",
+      "loop": false,
+      "frames": [
+        "player_stealth_southwest__hurt_interrupt"
+      ]
+    },
+    {
+      "id": "player_stealth_southwest__end",
+      "asset": "player_stealth_southwest",
+      "entity": "player_stealth",
+      "direction": "southwest",
+      "action": "end",
+      "loop": false,
+      "frames": [
+        "player_stealth_southwest__end"
+      ]
+    },
+    {
+      "id": "player_headlamp_south__idle",
+      "asset": "player_headlamp_south",
+      "entity": "player_headlamp",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_south__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_south__run",
+      "asset": "player_headlamp_south",
+      "entity": "player_headlamp",
+      "direction": "south",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_south__run_a",
+        "player_headlamp_south__run_mid",
+        "player_headlamp_south__run_b",
+        "player_headlamp_south__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_southeast__idle",
+      "asset": "player_headlamp_southeast",
+      "entity": "player_headlamp",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_southeast__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_southeast__run",
+      "asset": "player_headlamp_southeast",
+      "entity": "player_headlamp",
+      "direction": "southeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_southeast__run_a",
+        "player_headlamp_southeast__run_mid",
+        "player_headlamp_southeast__run_b",
+        "player_headlamp_southeast__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_east__idle",
+      "asset": "player_headlamp_east",
+      "entity": "player_headlamp",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_east__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_east__run",
+      "asset": "player_headlamp_east",
+      "entity": "player_headlamp",
+      "direction": "east",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_east__run_a",
+        "player_headlamp_east__run_mid",
+        "player_headlamp_east__run_b",
+        "player_headlamp_east__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_northeast__idle",
+      "asset": "player_headlamp_northeast",
+      "entity": "player_headlamp",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_northeast__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_northeast__run",
+      "asset": "player_headlamp_northeast",
+      "entity": "player_headlamp",
+      "direction": "northeast",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_northeast__run_a",
+        "player_headlamp_northeast__run_mid",
+        "player_headlamp_northeast__run_b",
+        "player_headlamp_northeast__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_north__idle",
+      "asset": "player_headlamp_north",
+      "entity": "player_headlamp",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_north__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_north__run",
+      "asset": "player_headlamp_north",
+      "entity": "player_headlamp",
+      "direction": "north",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_north__run_a",
+        "player_headlamp_north__run_mid",
+        "player_headlamp_north__run_b",
+        "player_headlamp_north__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_northwest__idle",
+      "asset": "player_headlamp_northwest",
+      "entity": "player_headlamp",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_northwest__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_northwest__run",
+      "asset": "player_headlamp_northwest",
+      "entity": "player_headlamp",
+      "direction": "northwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_northwest__run_a",
+        "player_headlamp_northwest__run_mid",
+        "player_headlamp_northwest__run_b",
+        "player_headlamp_northwest__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_west__idle",
+      "asset": "player_headlamp_west",
+      "entity": "player_headlamp",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_west__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_west__run",
+      "asset": "player_headlamp_west",
+      "entity": "player_headlamp",
+      "direction": "west",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_west__run_a",
+        "player_headlamp_west__run_mid",
+        "player_headlamp_west__run_b",
+        "player_headlamp_west__run_mid"
+      ]
+    },
+    {
+      "id": "player_headlamp_southwest__idle",
+      "asset": "player_headlamp_southwest",
+      "entity": "player_headlamp",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "player_headlamp_southwest__idle"
+      ]
+    },
+    {
+      "id": "player_headlamp_southwest__run",
+      "asset": "player_headlamp_southwest",
+      "entity": "player_headlamp",
+      "direction": "southwest",
+      "action": "run",
+      "loop": true,
+      "frames": [
+        "player_headlamp_southwest__run_a",
+        "player_headlamp_southwest__run_mid",
+        "player_headlamp_southwest__run_b",
+        "player_headlamp_southwest__run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__torch_idle",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__torch_run",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__torch_run_a",
+        "player_lights_off_south__torch_run_mid",
+        "player_lights_off_south__torch_run_b",
+        "player_lights_off_south__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__lantern_idle",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__lantern_run",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__lantern_run_a",
+        "player_lights_off_south__lantern_run_mid",
+        "player_lights_off_south__lantern_run_b",
+        "player_lights_off_south__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__flashlight_idle",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__flashlight_run",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__flashlight_run_a",
+        "player_lights_off_south__flashlight_run_mid",
+        "player_lights_off_south__flashlight_run_b",
+        "player_lights_off_south__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__headlamp_idle",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_south__headlamp_run",
+      "asset": "player_lights_off_south",
+      "entity": "player_lights_off",
+      "direction": "south",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_south__headlamp_run_a",
+        "player_lights_off_south__headlamp_run_mid",
+        "player_lights_off_south__headlamp_run_b",
+        "player_lights_off_south__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__torch_idle",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__torch_run",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__torch_run_a",
+        "player_lights_off_southeast__torch_run_mid",
+        "player_lights_off_southeast__torch_run_b",
+        "player_lights_off_southeast__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__lantern_idle",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__lantern_run",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__lantern_run_a",
+        "player_lights_off_southeast__lantern_run_mid",
+        "player_lights_off_southeast__lantern_run_b",
+        "player_lights_off_southeast__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__flashlight_idle",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__flashlight_run",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__flashlight_run_a",
+        "player_lights_off_southeast__flashlight_run_mid",
+        "player_lights_off_southeast__flashlight_run_b",
+        "player_lights_off_southeast__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__headlamp_idle",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southeast__headlamp_run",
+      "asset": "player_lights_off_southeast",
+      "entity": "player_lights_off",
+      "direction": "southeast",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southeast__headlamp_run_a",
+        "player_lights_off_southeast__headlamp_run_mid",
+        "player_lights_off_southeast__headlamp_run_b",
+        "player_lights_off_southeast__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__torch_idle",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__torch_run",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__torch_run_a",
+        "player_lights_off_east__torch_run_mid",
+        "player_lights_off_east__torch_run_b",
+        "player_lights_off_east__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__lantern_idle",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__lantern_run",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__lantern_run_a",
+        "player_lights_off_east__lantern_run_mid",
+        "player_lights_off_east__lantern_run_b",
+        "player_lights_off_east__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__flashlight_idle",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__flashlight_run",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__flashlight_run_a",
+        "player_lights_off_east__flashlight_run_mid",
+        "player_lights_off_east__flashlight_run_b",
+        "player_lights_off_east__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__headlamp_idle",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_east__headlamp_run",
+      "asset": "player_lights_off_east",
+      "entity": "player_lights_off",
+      "direction": "east",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_east__headlamp_run_a",
+        "player_lights_off_east__headlamp_run_mid",
+        "player_lights_off_east__headlamp_run_b",
+        "player_lights_off_east__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__torch_idle",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__torch_run",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__torch_run_a",
+        "player_lights_off_northeast__torch_run_mid",
+        "player_lights_off_northeast__torch_run_b",
+        "player_lights_off_northeast__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__lantern_idle",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__lantern_run",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__lantern_run_a",
+        "player_lights_off_northeast__lantern_run_mid",
+        "player_lights_off_northeast__lantern_run_b",
+        "player_lights_off_northeast__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__flashlight_idle",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__flashlight_run",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__flashlight_run_a",
+        "player_lights_off_northeast__flashlight_run_mid",
+        "player_lights_off_northeast__flashlight_run_b",
+        "player_lights_off_northeast__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__headlamp_idle",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northeast__headlamp_run",
+      "asset": "player_lights_off_northeast",
+      "entity": "player_lights_off",
+      "direction": "northeast",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northeast__headlamp_run_a",
+        "player_lights_off_northeast__headlamp_run_mid",
+        "player_lights_off_northeast__headlamp_run_b",
+        "player_lights_off_northeast__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__torch_idle",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__torch_run",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__torch_run_a",
+        "player_lights_off_north__torch_run_mid",
+        "player_lights_off_north__torch_run_b",
+        "player_lights_off_north__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__lantern_idle",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__lantern_run",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__lantern_run_a",
+        "player_lights_off_north__lantern_run_mid",
+        "player_lights_off_north__lantern_run_b",
+        "player_lights_off_north__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__flashlight_idle",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__flashlight_run",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__flashlight_run_a",
+        "player_lights_off_north__flashlight_run_mid",
+        "player_lights_off_north__flashlight_run_b",
+        "player_lights_off_north__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__headlamp_idle",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_north__headlamp_run",
+      "asset": "player_lights_off_north",
+      "entity": "player_lights_off",
+      "direction": "north",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_north__headlamp_run_a",
+        "player_lights_off_north__headlamp_run_mid",
+        "player_lights_off_north__headlamp_run_b",
+        "player_lights_off_north__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__torch_idle",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__torch_run",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__torch_run_a",
+        "player_lights_off_northwest__torch_run_mid",
+        "player_lights_off_northwest__torch_run_b",
+        "player_lights_off_northwest__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__lantern_idle",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__lantern_run",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__lantern_run_a",
+        "player_lights_off_northwest__lantern_run_mid",
+        "player_lights_off_northwest__lantern_run_b",
+        "player_lights_off_northwest__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__flashlight_idle",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__flashlight_run",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__flashlight_run_a",
+        "player_lights_off_northwest__flashlight_run_mid",
+        "player_lights_off_northwest__flashlight_run_b",
+        "player_lights_off_northwest__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__headlamp_idle",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_northwest__headlamp_run",
+      "asset": "player_lights_off_northwest",
+      "entity": "player_lights_off",
+      "direction": "northwest",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_northwest__headlamp_run_a",
+        "player_lights_off_northwest__headlamp_run_mid",
+        "player_lights_off_northwest__headlamp_run_b",
+        "player_lights_off_northwest__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__torch_idle",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__torch_run",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__torch_run_a",
+        "player_lights_off_west__torch_run_mid",
+        "player_lights_off_west__torch_run_b",
+        "player_lights_off_west__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__lantern_idle",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__lantern_run",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__lantern_run_a",
+        "player_lights_off_west__lantern_run_mid",
+        "player_lights_off_west__lantern_run_b",
+        "player_lights_off_west__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__flashlight_idle",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__flashlight_run",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__flashlight_run_a",
+        "player_lights_off_west__flashlight_run_mid",
+        "player_lights_off_west__flashlight_run_b",
+        "player_lights_off_west__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__headlamp_idle",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_west__headlamp_run",
+      "asset": "player_lights_off_west",
+      "entity": "player_lights_off",
+      "direction": "west",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_west__headlamp_run_a",
+        "player_lights_off_west__headlamp_run_mid",
+        "player_lights_off_west__headlamp_run_b",
+        "player_lights_off_west__headlamp_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__torch_idle",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "torch_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__torch_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__torch_run",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "torch_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__torch_run_a",
+        "player_lights_off_southwest__torch_run_mid",
+        "player_lights_off_southwest__torch_run_b",
+        "player_lights_off_southwest__torch_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__lantern_idle",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "lantern_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__lantern_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__lantern_run",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "lantern_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__lantern_run_a",
+        "player_lights_off_southwest__lantern_run_mid",
+        "player_lights_off_southwest__lantern_run_b",
+        "player_lights_off_southwest__lantern_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__flashlight_idle",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "flashlight_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__flashlight_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__flashlight_run",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "flashlight_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__flashlight_run_a",
+        "player_lights_off_southwest__flashlight_run_mid",
+        "player_lights_off_southwest__flashlight_run_b",
+        "player_lights_off_southwest__flashlight_run_mid"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__headlamp_idle",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "headlamp_idle",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__headlamp_idle"
+      ]
+    },
+    {
+      "id": "player_lights_off_southwest__headlamp_run",
+      "asset": "player_lights_off_southwest",
+      "entity": "player_lights_off",
+      "direction": "southwest",
+      "action": "headlamp_run",
+      "loop": true,
+      "frames": [
+        "player_lights_off_southwest__headlamp_run_a",
+        "player_lights_off_southwest__headlamp_run_mid",
+        "player_lights_off_southwest__headlamp_run_b",
+        "player_lights_off_southwest__headlamp_run_mid"
+      ]
+    }
+  ]
+}

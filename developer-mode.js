@@ -11,18 +11,20 @@
     else {enable(game);s[key]=!s[key];if(key==='infiniteStamina'&&s[key])game.player.stamina=game.maxStamina;}
     return true;
   }
-  function clear(game){game.zombies=[];game.pendingSpawn=[];game.playerAttack=null;game.projectiles=[];game.zones=[];game.effects=[];for(const d of game.devices){d.target=null;delete d.targetId;d.entered={};}}
+  function clear(game){if(game.scene==='parking'){const boss=game.zombies.find(z=>z.kind==='lurker'&&z.hp>0);if(boss)game.damageZombie(boss,boss.hp,'molotov');}game.zombies=[];game.pendingSpawn=[];game.playerAttack=null;game.projectiles=[];game.zones=[];game.effects=[];for(const d of game.devices){d.target=null;delete d.targetId;d.entered={};}}
   function resetNight(game){
     clear(game);game.action=null;game.nextWave=0;game.plan=S.nightPlan(game.day);game.waveDirections=[];game.warnedWaves=[];
     game.stats={planned:0,spawned:0,arrived:0,kills:{},damage:{},lost:0,searches:0,food:[],resourceStart:game.resources()};
   }
   function jump(game,day,night=false){
     if(!Number.isInteger(day)||day<1||day>365)return false;
+    if(game.scene==='parking')game.switchScene();
     enable(game);game.day=day;resetNight(game);game.minutes=night?1320:300;game.visitors=game.visitors.filter(v=>v.recruited);game.initVisit();
     if(night)game.advanceClock(0);game.announce(`开发测试：第${day}天${night?'22:00':'05:00'}，已重置当晚批次，不结算跳过日期的奖励。`);return true;
   }
   const positions={rear_left:{x:-4.5,y:-5.5},rear_right:{x:4.5,y:-5.5},front_left:{x:-4.5,y:-.5},front_right:{x:4.5,y:-.5},yard:{x:0,y:2},outside_front:{x:-4,y:.6},outside_back:{x:0,y:-6.7},outside_right:{x:5.7,y:-3},outside_left:{x:-5.7,y:-3}};
   function teleport(game,key){
+    if(game.scene==='parking'){game.announce('地下请使用停车场专用传送入口。');return false;}
     const p=positions[key];if(!p)return false;if(game.obstacles(p,p,.24).length)return false;
     enable(game);game.cancelAction();game.player.x=p.x;game.player.y=p.y;game.player.indoorHome=null;game.player.running=false;game.updateIndoorHome();game.updateDoors();return true;
   }

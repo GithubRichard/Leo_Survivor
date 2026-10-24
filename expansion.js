@@ -128,10 +128,13 @@
     updateDoors(){for(const h of this.homes.values())for(const door of h.doors){if(door.hp<=0)continue;const wasOpen=door.open,d=pointRect(this.player,door);if(d<1.25)door.open=true;else if(door.open&&d>1.6&&!this.zombies.some(z=>z.hp>0&&pointRect(z,door)<.3))door.open=false;if(wasOpen!==door.open)this.navigationChanged();}}
     canPlace(kind,p){
       const def=D.builds[kind];if(!def)return '未知建筑';if(this.day<def.day)return `第${def.day}天开放`;
-      if(Math.abs(p.x)>5||p.y<-6||p.y>4)return '只能建在自己的领地内';
+      if(!p||!Number.isFinite(p.x)||!Number.isFinite(p.y))return '请选择有效的放置位置';
+      if(dist(this.player,p)>2)return '请靠近建造位置（2米内）';
       for(const [k,n] of Object.entries(def.cost))if(this.count(k)<n)return `${S.NAMES[k]}不足，需要${n}`;
-      if(this.getHome(0,0).doors.some(o=>o.hp>0&&pointRect(p,o)<.45))return '这里是门的位置，不能重叠建造';
+      const spacing=S.RULES.lotSpacing,home=this.getHome(Math.round(p.x/spacing),Math.round(p.y/spacing));
+      if(home.doors.some(o=>o.hp>0&&pointRect(p,o)<.45))return '这里是门的位置，不能重叠建造';
       if(this.obstacles(p,p,.45).length||this.devices.some(d=>d.hp>0&&dist(d,p)<1))return '建筑或装置太近（至少1米）';
+      if(!this.clearLine(this.player,p))return '无法隔着墙或障碍物建造';
       if(this.zombies.some(z=>z.hp>0&&dist(z,p)<.5)||dist(this.player,p)<.5)return '这里有生物';return null;
     }
     placementPoint(){const p=super.placementPoint();return {x:Math.round(p.x*2)/2,y:Math.round(p.y*2)/2};}
@@ -153,18 +156,25 @@
       a.elapsed+=dt;if(a.elapsed+1e-8<a.duration)return;this.action=null;
       if(a.type==='build'){
         const def=D.builds[a.kind],error=this.canPlace(a.kind,a.p);if(error){this.announce(error);return;}if(!this.pay(def.cost))return;
-        const horizontal=Math.abs(this.player.facing.x)>=Math.abs(this.player.facing.y);this.devices.push({...a.p,id:`device:${this.deviceId++}`,kind:a.kind,type:'device',hp:def.hp,maxHP:def.hp,w:horizontal?(def.w||.7):(def.h||.7),h:horizontal?(def.h||.7):(def.w||.7),level:0,invested:{...def.cost},readyAt:this.seconds+(a.kind==='trap'?7:a.kind==='spike_floor'?2:1),target:null,output:Array(6).fill(null),storage:Array(20).fill(null),jobs:[],fuel:0});this.navigationChanged();this.announce(`${def.name}建造完成。`);
+        const horizontal=Math.abs(this.player.facing.x)>=Math.abs(this.player.facing.y);this.devices.push({...a.p,id:`device:${this.deviceId++}`,kind:a.kind,type:'device',hp:def.hp,maxHP:def.hp,w:horizontal?(def.w||.7):(def.h||.7),h:horizontal?(def.h||.7):(def.w||.7),level:0,invested:{...def.cost},readyAt:this.seconds+(D.combatStats(a.kind)?.interval||(a.kind==='spike_floor'?2:1)),target:null,output:Array(6).fill(null),storage:Array(20).fill(null),jobs:[],fuel:0});this.navigationChanged();this.announce(`${def.name}建造完成。`);
       }else if(a.type==='dismantle'){
         const gain=o.type==='furniture'?{[o.material]:1}:o.invested||{};
-        const extra={...gain};for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s)extra[s.kind]=(extra[s.kind]||0)+s.amount;
+        const extra={...gain},lamps=[];for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s){if(s.lampId)lamps.push({...s,active:false});else extra[s.kind]=(extra[s.kind]||0)+s.amount;}
         for(const j of o.jobs||[])for(const [k,n] of Object.entries(j.cost))extra[k]=(extra[k]||0)+n;
         if(o.crop)extra[o.crop.kind]=(extra[o.crop.kind]||0)+1;
-        if(!this.pay({},extra))return;o.hp=0;this.devices=this.devices.filter(d=>d!==o);this.navigationChanged();if(this.player.weapon!=='fists'&&!this.count(this.player.weapon))this.player.weapon='fists';this.announce(o.type==='site'&&o.searched?'空容器已拆除。':'拆除完成，已返还全部投入材料。');
+        const refund=cloneSlots(this.inventory);if(!transaction(refund,{},extra)||refund.filter(s=>!s).length<lamps.length){this.announce('背包空间不足，建筑及其中物资保留。');return;}
+        for(const lamp of lamps)refund[refund.indexOf(null)]=lamp;this.inventory=refund;this.recordResource('income',extra);
+        o.hp=0;this.devices=this.devices.filter(d=>d!==o);this.navigationChanged();if(this.player.weapon!=='fists'&&!this.count(this.player.weapon))this.player.weapon='fists';this.announce(o.type==='site'&&o.searched?'空容器已拆除。':'拆除完成，已返还全部投入材料。');
       }else if(a.type==='repair'){
         const k=o.material==='stone'||o.kind==='brick_wall'?'stone':o.kind==='trap'||o.kind==='iron_fence'?'iron':'wood';if(o.hp>=o.maxHP)return;if(this.pay({[k]:1}))o.hp=Math.min(o.maxHP,o.hp+(k==='stone'?10:6));
       }else if(a.type==='upgrade'){
         const def=D.upgrades[a.key];if(this.day<def.day||o.level===def.level||o.type!=='door'&&!this.stationNear('workbench'))return;
-        if(this.pay(def.cost)){const ratio=o.hp/o.maxHP;o.level=def.level;o.maxHP=def.hp;o.hp=ratio*def.hp;for(const [k,n] of Object.entries(def.cost))o.invested[k]=(o.invested[k]||0)+n;this.announce('改造完成，保留原血量比例。');}
+        if(this.pay(def.cost)){
+          const ratio=o.hp/o.maxHP,oldCombat=D.combatStats(o.kind,o.level),newCombat=D.combatStats(o.kind,def.level);
+          if(oldCombat&&newCombat)o.readyAt=this.seconds+Math.max(0,(o.readyAt||0)-this.seconds)*newCombat.interval/oldCombat.interval;
+          o.level=def.level;o.maxHP=def.hp;o.hp=ratio*def.hp;for(const [k,n] of Object.entries(def.cost))o.invested[k]=(o.invested[k]||0)+n;
+          this.announce(newCombat?`${newCombat.name}改造完成：${newCombat.damage}伤害，每${newCombat.interval}秒一次，保留原血量比例。`:'改造完成，保留原血量比例。');
+        }
       }else if(a.type==='craft'){
         const def=D.weapons[a.kind]||D.crafts[a.kind];if(this.day<def.day||def.station&&!this.stationNear(def.station))return;
         if(a.kind==='backpack_upgrade'){if(this.inventory.length===20&&this.pay(def.cost))this.inventory.push(...Array(10).fill(null));}
@@ -187,8 +197,8 @@
         if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+movement.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
         this.player.running=Boolean(running&&dist(before,this.player)>1e-8);
       }
-      if(this.player.running){this.spendStamina(Math.min(this.player.stamina,dt*(this.teaBuff?.until>this.seconds ? .8 : 1)));this.bandage=null;}
-      else {
+      if(this.player.running){this.spendStamina(Math.min(this.player.stamina,dt*(this.teaBuff?.until>this.seconds ? .8 : 1)));this.interruptBandage('奔跑');}
+      else if(!this._skipRecovery){
         const interval=this.player.hunger<20?3:this.mainBuff?.type==='recovery'?1.5:2;
         if(this.recoveryInterval!==interval&&this.lastRecoveryAt!==null)this.nextRecoveryAt=this.lastRecoveryAt+interval;
         this.recoveryInterval=interval;
@@ -201,14 +211,14 @@
       if(amount<=0||this.result||!ground&&this.player.invulnerableUntil>this.seconds)return false;
       if(this.mainBuff?.type==='armor'&&amount>=1)amount=Math.max(1,amount-1);
       this.player.hp=Math.max(0,this.player.hp-amount);this.player.hurtUntil=this.seconds+1;if(!ground)this.player.invulnerableUntil=this.seconds+.5;
-      this.cancelAction('受伤中断了操作。');this.bandage=null;this.stats.damage[source]=(this.stats.damage[source]||0)+amount;
+      this.cancelAction('受伤中断了操作。');this.interruptBandage('受伤');this.stats.damage[source]=(this.stats.damage[source]||0)+amount;
       if(this.player.hp<=0){this.result='dead';this.deathReason=source;this.finishStats();this.autosaveRequested=true;}return true;
     }
     damageZombie(z,n){if(z.hp<=0)return;z.hp=Math.max(0,z.hp-n);if(!z.hp){this.kills++;this.stats.kills[z.kind]=(this.stats.kills[z.kind]||0)+1;z.windup=null;}}
     damageBuilding(o,n){if(o.hp<=0)return;o.hp=Math.max(0,o.hp-n);if(o.hp>0)return;this.navigationChanged();this.stats.lost++;
       const gain={};for(const [k,v] of Object.entries(o.invested||{})){const n=Math.floor(v/2);if(n)gain[k]=(gain[k]||0)+n;}
       if(o.type==='site'&&!o.searched)for(const [k,n] of Object.entries(o.loot||{}))gain[k]=(gain[k]||0)+n;
-      for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s)gain[s.kind]=(gain[s.kind]||0)+s.amount;
+      for(const slots of [o.storage||[],o.output||[]])for(const s of slots)if(s){if(s.lampId)this.drops.push({...s,active:false,x:o.x,y:o.y});else gain[s.kind]=(gain[s.kind]||0)+s.amount;}
       for(const j of o.jobs||[])for(const [k,n] of Object.entries(j.cost))gain[k]=(gain[k]||0)+n;
       for(const [kind,amount] of Object.entries(gain))this.drops.push({kind,amount,x:o.x,y:o.y});o.jobs=[];o.output=[];o.storage=[];
       this.effects.push({kind:o.material==='stone'||o.kind==='brick_wall'?'rubble_stone':o.kind==='trap'||o.kind==='iron_fence'?'rubble_metal':'rubble_wood',x:o.x,y:o.y,until:this.seconds+30});this.announce('防线被摧毁，部分材料留在原地。');
@@ -226,11 +236,12 @@
     interact(target){if(target?.type==='site'){const o=target.object;if(o.hp<=0||o.searched&&!o.repeat)return false;return this.beginAction('search',o.time,{target:o.id});}if(target?.type==='drop')return super.interact(target);if(target?.type==='furniture')return this.dismantle(target.object);return false;}
     drop(){if(this.action){this.announce('操作中无法丢弃。');return false;}const kind=this.inventory[this.selectedSlot]?.kind,result=super.drop();if(result)this.recordResource('spent',{[kind]:1});if(!this.count(this.player.weapon))this.player.weapon='fists';return result;}
     equip(kind){if(kind==='fists'||this.count(kind)&&(D.weapons[kind]||kind==='molotov')){this.player.weapon=kind;this.announce(kind==='molotov'?'已手持燃烧瓶，调整朝向后按交互投掷。':`已装备${S.NAMES[kind]||'徒手'}。`);return true;}return false;}
+    interruptBandage(reason){if(!this.bandage)return;this.bandage=null;this.announce(`${reason}中断了绷带治疗，剩余恢复已停止。`);}
     use(kind){
       if(!this.count(kind))return false;
       if(D.weapons[kind]||kind==='molotov')return this.equip(kind);
       if(D.foods[kind]){const f=D.foods[kind];if(this.seconds<(f.water?this.waterAt:this.foodAt)){this.announce('食用冷却尚未结束。');return false;}return this.beginAction('eat',1.5,{kind});}
-      if(kind==='bandage'){if(this.bandage||this.player.hp>=this.maxHP||!this.remove(kind,1))return false;this.bandage={next:this.seconds+2,left:4};this.announce('包扎中：可以步行，奔跑、攻击或受伤会中断。');return true;}
+      if(kind==='bandage'){if(this.bandage||this.player.hp>=this.maxHP||!this.remove(kind,1))return false;this.bandage={next:this.seconds+2,left:4};this.announce('绷带治疗中：可以步行。一旦奔跑、攻击或受伤，剩余治疗立即停止。');return true;}
       if(kind==='medkit'){if(this.player.hp>=this.maxHP){this.announce('血量已满，无需急救。');return false;}return this.day>=8&&this.beginAction('medkit',3);}
       this.announce('这件物品不能直接食用。');return false;
     }
@@ -252,12 +263,12 @@
       if(this.player.weapon==='molotov')return this.throwMolotov();
       const w=D.weapons[this.player.weapon]||D.weapons.fists;if(this.action||this.playerAttack||this.seconds<this.attackAt)return false;
       const facing=this.player.facing,aim=Math.hypot(facing.x,facing.y)||1;
-      const targets=this.zombies.filter(z=>z.hp>0&&dist(z,this.player)<=w.range&&((z.x-this.player.x)*facing.x+(z.y-this.player.y)*facing.y)/Math.max(.001,dist(z,this.player))/aim>.35&&this.clearLine(this.player,z)).sort((a,b)=>dist(a,this.player)-dist(b,this.player));
+      const targets=this.zombies.filter(z=>z.hp>0&&(!this.canSee||this.canSee(z))&&dist(z,this.player)<=w.range&&((z.x-this.player.x)*facing.x+(z.y-this.player.y)*facing.y)/Math.max(.001,dist(z,this.player))/aim>.35&&this.clearLine(this.player,z)).sort((a,b)=>dist(a,this.player)-dist(b,this.player));
       if(!targets.length){this.announce('朝向范围内没有敌人。');return false;}
       if(this.player.stamina<w.stamina||w.ammo&&!this.count(w.ammo)){this.announce(w.ammo&&!this.count(w.ammo)?'弹药不足。':'体力不足。');return false;}
-      if(w.ammo)this.remove(w.ammo,1);this.spendStamina(w.stamina);this.bandage=null;this.attackAt=this.seconds+w.interval;
+      if(w.ammo)this.remove(w.ammo,1);this.spendStamina(w.stamina);this.interruptBandage('攻击');this.attackAt=this.seconds+w.interval;
       const damage=w.damage+(!w.ammo&&this.mainBuff?.type==='melee'?1:0),duration=D.attackAnimations[this.player.weapon];
-      if(!duration){this.damageZombie(targets[0],damage);this.effects.push({kind:'melee_arc',x:targets[0].x,y:targets[0].y,until:this.seconds+.25});return true;}
+      if(!duration){this.damageZombie(targets[0],this.directDamage?this.directDamage(damage):damage,'weapon');this.effects.push({kind:'melee_arc',x:targets[0].x,y:targets[0].y,until:this.seconds+.25});return true;}
       this.playerAttack={weapon:this.player.weapon,kind:w.ammo?'ranged':'melee',facing:{x:facing.x/aim,y:facing.y/aim},targetId:targets[0].id,damage,startedAt:this.seconds,releaseAt:this.seconds+duration/3,endsAt:this.seconds+duration,released:false};return true;
     }
     updatePlayerAttack(){
@@ -274,7 +285,7 @@
           }else {
             const target=this.zombies.find(z=>z.id===a.targetId),distance=target?dist(target,this.player):Infinity;
             if(target&&target.hp>0&&distance<=w.range&&((target.x-this.player.x)*a.facing.x+(target.y-this.player.y)*a.facing.y)/Math.max(.001,distance)>.35&&this.clearLine(this.player,target)){
-              this.damageZombie(target,a.damage);this.effects.push({kind:a.weapon==='wood_spear'?'thrust_line':'melee_arc',x:target.x,y:target.y,until:this.seconds+.25});
+              this.damageZombie(target,this.directDamage?this.directDamage(a.damage):a.damage,'weapon');this.effects.push({kind:a.weapon==='wood_spear'?'thrust_line':'melee_arc',x:target.x,y:target.y,until:this.seconds+.25});
             }
           }
         }
@@ -300,14 +311,14 @@
     throwMolotov(){
       const aim=this.molotovAim();if(!aim.valid){this.announce(aim.reason+'。');return false;}
       if(!this.remove('molotov',1))return false;
-      this.throwAt=this.seconds+2;this.bandage=null;
+      this.throwAt=this.seconds+2;this.interruptBandage('投掷攻击');
       const duration=D.attackAnimations.molotov,f=this.player.facing,length=Math.hypot(f.x,f.y);
       this.playerAttack={weapon:'molotov',kind:'throw',facing:{x:length?f.x/length:0,y:length?f.y/length:1},end:aim.end,startedAt:this.seconds,releaseAt:this.seconds+duration/3,endsAt:this.seconds+duration,released:false};
       if(!this.count('molotov'))this.player.weapon='fists';return true;
     }
     igniteMolotov(p){
-      this.zones.push({x:p.x,y:p.y,kind:'fire_pool',radius:1.5,until:this.seconds+6,id:`fire:${this.seconds}`});
-      for(const z of this.zombies)if(z.hp>0&&dist(z,p)<=1.5&&this.clearLine(p,z)){this.damageZombie(z,1);z.burningUntil=this.seconds+6;z.burnNext=this.seconds+1;}
+      this.zones.push({x:p.x,y:p.y,kind:'fire_pool',source:'molotov',radius:1.5,until:this.seconds+6,id:`fire:${this.seconds}`});
+      for(const z of this.zombies)if(z.hp>0&&dist(z,p)<=1.5&&this.clearLine(p,z)){this.damageZombie(z,this.directDamage?this.directDamage(1):1,'molotov');z.burningUntil=this.seconds+6;z.burnNext=this.seconds+1;z.burnSource='molotov';}
     }
     startProduction(o,kind){
       if(o.hp<=0||dist(o,this.player)>2)return false;let cost,time,fuel=false;
@@ -408,13 +419,14 @@
       for(const z of ordered)z.slowUntil=0;
       for(const d of this.devices){if(d.hp<=0)continue;
         if(d.kind==='trap'){
-          if(this.seconds<d.readyAt)continue;const z=ordered.find(z=>z.hp>0&&dist(z,d)<.6);if(z){this.damageZombie(z,d.level?4:3);d.readyAt=this.seconds+7;d.flashUntil=this.seconds+.35;if(z.hp>0)z.rootUntil=Math.max(z.rootUntil,this.seconds+(z.kind==='brute'?.5:1));}
+          const combat=D.combatStats(d.kind,d.level);
+          if(this.seconds<d.readyAt)continue;const z=ordered.find(z=>z.hp>0&&dist(z,d)<.6);if(z){this.damageZombie(z,combat.damage);d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.35;if(z.hp>0)z.rootUntil=Math.max(z.rootUntil,this.seconds+(z.kind==='brute'?.5:1));}
         }else if(d.kind==='ballista'){
-          const radius=d.level===2?4:d.level===1?3:Math.sqrt(9/Math.PI),valid=z=>z.hp>0&&dist(z,d)<=radius&&this.clearLine(d,z,d);
+          const combat=D.combatStats(d.kind,d.level),valid=z=>z.hp>0&&dist(z,d)<=combat.radius&&this.clearLine(d,z,d);
           const candidates=ordered.filter(valid),visibleIds=new Set(candidates.map(z=>String(z.id)));
           d.entered=d.entered||{};for(const id of Object.keys(d.entered))if(!visibleIds.has(id))delete d.entered[id];for(const z of candidates)if(d.entered[z.id]===undefined)d.entered[z.id]=this.seconds;
           let z=candidates.find(z=>z.id===d.targetId);if(!z){for(const candidate of candidates)if(!z||d.entered[candidate.id]<d.entered[z.id]||d.entered[candidate.id]===d.entered[z.id]&&candidate.id<z.id)z=candidate;d.targetId=z?.id;}
-          if(z&&this.seconds>=d.readyAt){this.damageZombie(z,d.level?2:1);d.readyAt=this.seconds+(d.level===2?.8:d.level===1?1.2:1);d.flashUntil=this.seconds+.15;d.shot={x:z.x,y:z.y};}
+          if(z&&this.seconds>=d.readyAt){this.damageZombie(z,combat.damage);d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.15;d.shot={x:z.x,y:z.y};}
         }else if(d.kind==='spike_floor'){
           const affected=ordered.filter(z=>z.hp>0&&dist(z,d)<.7).slice(0,3);for(const z of affected){z.slowUntil=Math.max(z.slowUntil||0,this.seconds+.08);if(this.seconds>=d.readyAt&&this.seconds>=(z.spikeNext||0)){this.damageZombie(z,1);z.spikeNext=this.seconds+2;}}
         }
@@ -441,19 +453,19 @@
         if(!z.arrived&&dist(z,this.player)<=10){z.arrived=true;this.stats.arrived++;}
         if(z.windup){if(this.seconds>=z.windup.until){const attack=z.windup;z.windup=null;
           if(attack.type==='scream'){for(const other of this.zombies)if(other!==z&&other.hp>0&&other.kind!=='screamer'&&dist(other,z)<=6)other.boostUntil=Math.max(other.boostUntil,this.seconds+8);this.effects.push({kind:'scream_ring',x:z.x,y:z.y,radius:6,until:this.seconds+.8});}
-          else if(attack.type==='spit'){const target=attack.target==='player'?this.player:this.find(attack.target);if(target&&target.hp>0&&dist(z,target)<=7&&this.clearLine(z,target,target)){const dx=target.x-z.x,dy=target.y-z.y,length=Math.hypot(dx,dy)||1;this.projectiles.push({kind:'acid_projectile',x:z.x,y:z.y,vx:dx/length*5,vy:dy/length*5,range:7,damage:2,owner:'enemy'});}}
-          else {const target=attack.target==='player'?this.player:this.find(attack.target);if(target&&target.hp>0&&(attack.target==='player'?dist(z,target):pointRect(z,target))<=1&&this.clearLine(z,target,target)){if(attack.target==='player')this.damagePlayer(def.damage,z.kind);else this.damageBuilding(target,def.building);}}
+          else if(attack.type==='spit'){const target=attack.target==='player'?(this.hidden?null:this.player):this.find(attack.target);if(target&&target.hp>0&&dist(z,target)<=7&&this.clearLine(z,target,target)){const dx=target.x-z.x,dy=target.y-z.y,length=Math.hypot(dx,dy)||1;this.projectiles.push({kind:'acid_projectile',x:z.x,y:z.y,vx:dx/length*5,vy:dy/length*5,range:7,damage:2,owner:'enemy'});}}
+          else {const target=attack.target==='player'?(this.hidden?null:this.player):this.find(attack.target);if(target&&target.hp>0&&(attack.target==='player'?dist(z,target):pointRect(z,target))<=1&&this.clearLine(z,target,target)){if(attack.target==='player')this.damagePlayer(def.damage,z.kind);else this.damageBuilding(target,def.building);}}
         }continue;}
         if(z.rootUntil>this.seconds)continue;
         if(z.kind==='screamer'&&this.seconds>=z.screamAt&&this.zombies.some(o=>o!==z&&o.kind!=='screamer'&&o.hp>0&&dist(o,z)<=6)){z.screamAt=this.seconds+20;z.windup={type:'scream',until:this.seconds+1.5};continue;}
-        let target=this.player;
+        let target=this.enemyTarget?this.enemyTarget(z):this.player;
         if(z.kind==='demolisher'){const devices=this.devices.filter(d=>d.hp>0&&dist(d,z)<=6).sort((a,b)=>dist(a,z)-dist(b,z)),device=devices.find(d=>this.reachableDevice(z,d));if(device)target=device;}
-        if(z.kind==='spitter'&&this.seconds>=z.rangedAt&&this.seconds>=z.nextAttack&&dist(z,target)<=7&&dist(z,target)>1&&this.clearLine(z,target,target)){z.rangedAt=this.seconds+4;z.nextAttack=this.seconds+4;z.facing={x:target.x-z.x,y:target.y-z.y};z.windup={type:'spit',target:target===this.player?'player':target.id,until:this.seconds+1};continue;}
+        if(z.kind==='spitter'&&(target===this.player||target.id)&&this.seconds>=z.rangedAt&&this.seconds>=z.nextAttack&&dist(z,target)<=7&&dist(z,target)>1&&this.clearLine(z,target,target)){z.rangedAt=this.seconds+4;z.nextAttack=this.seconds+4;z.facing={x:target.x-z.x,y:target.y-z.y};z.windup={type:'spit',target:target===this.player?'player':target.id,until:this.seconds+1};continue;}
         const attack=obstacle=>{if(this.seconds<z.nextAttack)return;z.nextAttack=this.seconds+def.interval;z.facing={x:obstacle.x-z.x,y:obstacle.y-z.y};const id=obstacle===this.player?'player':obstacle.id;
           if(['brute','demolisher'].includes(z.kind))z.windup={type:'melee',target:id,until:this.seconds+def.windup};else if(id==='player')this.damagePlayer(def.damage,z.kind);else this.damageBuilding(obstacle,def.building);
         };
-        const distanceToTarget=target===this.player?dist(z,target):pointRect(z,target);
-        if(distanceToTarget<=1&&this.clearLine(z,target,target)){attack(target);continue;}
+        const distanceToTarget=target.type?pointRect(z,target):dist(z,target);
+        if((target===this.player||target.id)&&distanceToTarget<=1&&this.clearLine(z,target,target)){attack(target);continue;}
         if(this.seconds>=z.repathAt&&this.pathBudget>0&&this.requestPath(z,target)){this.pathBudget--;z.repathAt=this.seconds+3+z.id%7*.15;}
         while(z.path.length&&dist(z,z.path[0])<.15)z.path.shift();
         const waypoint=z.path[0]||target,distance=dist(z,waypoint);if(!distance)continue;
@@ -479,8 +491,9 @@
         // Sort by first intersection along the segment, rather than object centers.
         for(const hit of hits){let lo=0,hi=1;for(let i=0;i<12;i++){const t=(lo+hi)/2,p={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t},o=hit.object,r=hit.type==='building'?o:{x:o.x,y:o.y,w:.45,h:.45};if(segmentHits(from,p,r,0))hi=t;else lo=t;}hit.t=hi;}
         hits.sort((a,b)=>a.t-b.t);const hit=hits[0];shot.x=to.x;shot.y=to.y;shot.range-=length;
-        if(hit){shot.x=from.x+(to.x-from.x)*hit.t;shot.y=from.y+(to.y-from.y)*hit.t;shot.dead=true;if(hit.type==='zombie')this.damageZombie(hit.object,shot.damage);else if(shot.owner==='enemy'){if(hit.type==='player')this.damagePlayer(2,'spitter');else this.damageBuilding(hit.object,1);}}
+        if(hit){shot.x=from.x+(to.x-from.x)*hit.t;shot.y=from.y+(to.y-from.y)*hit.t;shot.dead=true;if(hit.type==='zombie')this.damageZombie(hit.object,this.directDamage?this.directDamage(shot.damage):shot.damage,'weapon');else if(shot.owner==='enemy'){if(hit.type==='player')this.damagePlayer(shot.damage??2,shot.source||'spitter');else this.damageBuilding(hit.object,(this.ParkingLampKind?.(hit.object.kind)?shot.lampDamage:null)??shot.buildingDamage??1);}}
         if(shot.range<=.001)shot.dead=true;
+        if(shot.dead&&shot.kind==='stone_projectile')this.parkingVisual?.('stone_impact',shot,.35,22);
         if(shot.dead&&shot.kind==='acid_projectile')this.zones.push({kind:'acid_pool',x:shot.x,y:shot.y,radius:1,until:this.seconds+3});
       }
       this.projectiles=this.projectiles.filter(p=>!p.dead);
@@ -488,9 +501,11 @@
     updateZones(dt){
       this.zones=this.zones.filter(z=>z.until>this.seconds);
       for(const [kind,amount] of [['acid_pool',1],['fire_pool',.5]]){const inside=this.zones.some(z=>z.kind===kind&&dist(z,this.player)<=z.radius&&this.clearLine(z,this.player));const key=kind==='acid_pool'?'acidTime':'fireTime';if(!inside)this[key]=0;else{this[key]=(this[key]||0)+dt;if(this[key]>=1){this[key]-=1;this.damagePlayer(amount,kind,true);}}}
-      for(const z of this.zombies)if(z.hp>0){if(z.burningUntil+1e-8<this.seconds)z.burningUntil=0;
-        if(this.zones.some(p=>p.kind==='fire_pool'&&dist(z,p)<=p.radius&&this.clearLine(p,z))&&!z.burningUntil){z.burningUntil=this.seconds+6;z.burnNext=this.seconds+1;}
-        if(z.burningUntil&&z.burningUntil+1e-8>=this.seconds&&this.seconds+1e-8>=z.burnNext){this.damageZombie(z,.5);z.burnNext+=1;}
+      for(const z of this.zombies)if(z.hp>0){
+        const pool=this.zones.find(p=>p.kind==='fire_pool'&&dist(z,p)<=p.radius&&this.clearLine(p,z));
+        if(pool&&!z.burningUntil){z.burningUntil=pool.until;z.burnNext=this.seconds+1;z.burnSource=pool.source||'molotov';}
+        if(z.burningUntil&&z.burnNext<=z.burningUntil+1e-8&&this.seconds+1e-8>=z.burnNext){this.damageZombie(z,.5,z.burnSource||'molotov');z.burnNext+=1;}
+        if(z.burningUntil+1e-8<this.seconds&&z.burnNext>z.burningUntil+1e-8)z.burningUntil=0;
       }
     }
     snapshot(){

@@ -3,11 +3,19 @@
   const entries={...(window.GAME_ASSETS||{}),...(window.EXPANSION_ASSETS||{})},images={},failed=[],pending={};
   const animation=window.PLAYER_ANIMATION;
   const armed=window.WEAPON_ANIMATION,weaponCache=new Map();
+  const parking=window.PARKING_ART,parkingCache=new Map(),parkingThumbs=new Map();let parkingRevision=0;
   Object.assign(entries,armed?.atlases||{});
+  Object.assign(entries,parking?.atlases||{});
+  for(const [name,meta] of Object.entries(parking?.masks||{}))entries['parking_mask_'+name]=meta;
   for(const frames of Object.values(animation?.frames||{}))for(const frame of frames)entries[frame.key]=frame;
   function keepWeaponAtlas(key){
     weaponCache.delete(key);weaponCache.set(key,true);
     while(weaponCache.size>12){const oldest=weaponCache.keys().next().value;weaponCache.delete(oldest);delete images[oldest];delete pending[oldest];}
+  }
+  function keepParkingAtlas(key){
+    parkingCache.delete(key);parkingCache.set(key,true);
+    const bytes=()=>[...parkingCache.keys()].reduce((n,k)=>n+(images[k]?.width||0)*(images[k]?.height||0)*4,0);
+    while(parkingCache.size>36||bytes()>64*1024*1024){const oldest=parkingCache.keys().next().value;parkingCache.delete(oldest);delete images[oldest];delete pending[oldest];}
   }
   let ready=false;
   function load(key){
@@ -16,11 +24,13 @@
       const maxWidth=data.maxWidth||384;
       if(!/^house_|^yard_|^grass$|^road$|_(base|roof)$/.test(key)&&img.width>maxWidth){const small=document.createElement('canvas');small.width=maxWidth;small.height=Math.round(img.height*maxWidth/img.width);small.getContext('2d').drawImage(img,0,0,small.width,small.height);images[key]=small;}
       if(data.weaponAtlas)keepWeaponAtlas(key);
-      resolve();};img.onerror=()=>{failed.push(data.src);resolve();};img.src=data.src;});
+      if(data.parkingAtlas){keepParkingAtlas(key);parkingRevision++;}
+      resolve();};img.onerror=()=>{failed.push(data.src);if(data.parkingAtlas)parkingRevision++;resolve();};img.src=data.src;});
   }
   const loading=Promise.all(Object.keys(entries).filter(key=>!entries[key].lazy).map(load)).then(()=>{ready=true;});
-  function available(key){if(entries[key]&&!pending[key])load(key);const img=images[key],ready=Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));if(ready&&entries[key]?.weaponAtlas)keepWeaponAtlas(key);return ready;}
+  function available(key){if(entries[key]&&!pending[key])load(key);const img=images[key],ready=Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));if(ready&&entries[key]?.weaponAtlas)keepWeaponAtlas(key);if(ready&&entries[key]?.parkingAtlas)keepParkingAtlas(key);return ready;}
   function sprite(ctx,key,x,y,height,{width,flip=false,anchorY=1}={}){
+    const alias=parking?.aliases[key];if(alias&&parkingSprite(ctx,...alias,x,y,height,{flip}))return true;
     if(!available(key))return false;
     const [l,t,r,b]=entries[key].crop,sw=r-l,sh=b-t,w=width||height*sw/sh;
     ctx.save();ctx.translate(x,y);if(flip)ctx.scale(-1,1);
@@ -48,6 +58,113 @@
     c.globalAlpha=1;c.globalCompositeOperation='source-over';ctx.drawImage(layer,x-80,y-80);return true;
   }
   function eightDirection(facing={x:0,y:1}){const sx=facing.x-facing.y,sy=(facing.x+facing.y)*.5;return ['east','southeast','south','southwest','west','northwest','north','northeast'][(Math.round(Math.atan2(sy,sx)/(Math.PI/4))+8)%8];}
+  function parkingFrameId(asset,state){
+    const states=parking?.assets[asset]?.states;if(!states)return null;
+    return state==null?(states.default||states.idle||states.off||Object.values(states)[0]):states[state]||null;
+  }
+  function drawParkingFrame(ctx,id,x,y,height,options={}){
+    const meta=parking?.frames[id];if(!meta||!available(meta.atlas))return false;
+    const img=images[meta.atlas],imageRatio=img.width/entries[meta.atlas].size[0],r=meta.rect,ratio=height/meta.bodyHeight;
+    ctx.save();ctx.globalAlpha*=options.alpha??1;
+    if(options.anchors&&options.dest){
+      const m=affine(options.anchors.map(p=>({x:p[0]*r[2],y:p[1]*r[3]})),options.dest);
+      ctx.transform(m.a,m.b,m.c,m.d,m.e,m.f);ctx.drawImage(img,r[0]*imageRatio,r[1]*imageRatio,r[2]*imageRatio,r[3]*imageRatio,0,0,r[2],r[3]);ctx.restore();return true;
+    }
+    ctx.translate(x,y);if(options.flip)ctx.scale(-1,1);
+    ctx.drawImage(img,r[0]*imageRatio,r[1]*imageRatio,r[2]*imageRatio,r[3]*imageRatio,-meta.pivot[0]*ratio,-meta.pivot[1]*ratio,r[2]*ratio,r[3]*ratio);ctx.restore();return true;
+  }
+  function parkingSprite(ctx,asset,state,x,y,height,options={}){return drawParkingFrame(ctx,parkingFrameId(asset,state),x,y,height,options);}
+  function parkingSurface(ctx,asset,state,source,dest,fill){
+    const meta=parking?.frames[parkingFrameId(asset,state)];if(!meta||!available(meta.atlas))return false;
+    const r=meta.rect,ratio=images[meta.atlas].width/entries[meta.atlas].size[0];
+    return surface(ctx,meta.atlas,source.map(p=>({x:(r[0]+p[0]*r[2])*ratio,y:(r[1]+p[1]*r[3])*ratio})),dest,fill);
+  }
+  function parkingClipStates(asset,action){
+    return (parking?.clips[asset+'__'+action]?.frames||[]).map(id=>parking.frames[id].state);
+  }
+  function parkingMask(ctx,name,origin,radius,project,facing={x:1,y:0}){
+    const key='parking_mask_'+name;if(!available(key))return false;
+    const ratio=images[key].width/1024,n=Math.hypot(facing.x,facing.y)||1,dx=facing.x/n,dy=facing.y/n;
+    return fullAffine(ctx,key,[{x:512*ratio,y:512*ratio},{x:992*ratio,y:512*ratio},{x:512*ratio,y:992*ratio}],
+      [project(origin.x,origin.y),project(origin.x+dx*radius,origin.y+dy*radius),project(origin.x-dy*radius,origin.y+dx*radius)]);
+  }
+  function parkingSequence(ctx,asset,elapsed,duration,x,y,height,options={}){
+    const states=Object.keys(parking?.assets[asset]?.states||{});if(!states.length)return false;
+    const progress=options.loop?((elapsed%duration)+duration)%duration/duration:Math.max(0,Math.min(.9999,elapsed/duration));
+    return parkingSprite(ctx,asset,states[Math.floor(progress*states.length)],x,y,height,options);
+  }
+  function parkingAsset(entity,facing,phase){
+    return parking?.characters[entity]?.[phase||'default']?.[eightDirection(facing)]||null;
+  }
+  function parkingActor(ctx,z,seconds,x,y,height=55){
+    if(z.kind==='lurker'&&z.state==='burrowed')return false;
+    const facing=z.visualAttack?.until>seconds?z.visualAttack.facing:z.facing||{x:0,y:1};
+    let asset=parkingAsset(z.kind,facing,z.kind==='lurker'?z.phase:null);
+    if(!asset)asset=parkingAsset(z.kind,facing,z.kind==='lurker'?'normal':null);
+    if(!asset)return false;
+    let state='idle',blend=0,nextState=null;const attack=z.visualAttack;
+    if(z.hp<=0)state='dead';
+    else if(z.state==='stunned')state='stunned';
+    else if(z.state==='charging')state='roar_charge';
+    else if(z.lastRoar!=null&&seconds-z.lastRoar<.25)state='roar_release';
+    else if(z.windup)state=z.windup.type==='ranged'?'throw_windup':'melee_windup';
+    else if(attack?.until>seconds)state=seconds<attack.releaseUntil?(attack.kind==='throw'?'throw_release':'melee_hit'):(attack.kind==='throw'?'throw_recover':'melee_recover');
+    else if(z.visualRetreatUntil>seconds)state='retreat';
+    else if(z.visualMoveAt>=seconds-.08){const order=parkingClipStates(asset,'move'),phase=(z.visualDistance||0)/.38;if(order.length){state=order[Math.floor(phase)%order.length];nextState=order[(Math.floor(phase)+1)%order.length];blend=Math.max(0,(phase-Math.floor(phase)-.8)/.2);}}
+    const frame=parking?.frames[parkingFrameId(asset,state)],following=parking?.frames[parkingFrameId(asset,nextState)];
+    if(blend>0&&frame&&following&&available(frame.atlas)&&available(following.atlas)){
+      const layer=parkingActor.layer||(parkingActor.layer=document.createElement('canvas'));if(layer.width!==220){layer.width=220;layer.height=150;}
+      const c=layer.getContext('2d');c.clearRect(0,0,220,150);c.globalCompositeOperation='lighter';
+      parkingSprite(c,asset,state,110,120,height,{alpha:1-blend});parkingSprite(c,asset,nextState,110,120,height,{alpha:blend});c.globalCompositeOperation='source-over';ctx.drawImage(layer,x-110,y-120);return true;
+    }
+    return parkingSprite(ctx,asset,state,x,y,height);
+  }
+  function parkingPlayer(ctx,game,facing,x,y,moving,phase,height=50){
+    if(game.playerAttack)return null;
+    const find=entity=>parkingAsset(entity,facing);
+    const order=['a','mid','b','mid'],frame=order[Math.floor(phase)%4];let asset=null,state=null,includesHand=false,includesHead=false;
+    const stealthEnd=game.playerSkillVisual?.until>game.seconds?game.playerSkillVisual:null;
+    if(game.skill?.active||stealthEnd){asset=find('player_stealth');state=stealthEnd?.state||(game.seconds-game.skill.startedAt<.25?'activate':moving?'sneak_'+frame:'idle');if(state!=='end')height*=.86;}
+    const preparing=game.action?.type==='lamp_throw',lamp=game.lampById(preparing?game.action.lampId:game.heldLightId),released=game.playerLampVisual?.until>game.seconds?game.playerLampVisual:null;
+    const lampKind=released?.kind||lamp?.kind,type={torch:'torch',oil_lantern:'lantern',flashlight:'flashlight'}[lampKind];
+    if(!asset&&type){
+      const lit=released||lamp?.active&&lamp.energy>0;
+      const specific=lit&&(find('player_'+type)||find('player_'+(lampKind||''))),combined=find(lit?'player_lights':'player_lights_off');asset=specific||combined;
+      if(asset){const prefix=specific?'':type+'_';state=prefix+(released?'throw_release':preparing?'throw_windup':moving?'run_'+frame:'idle');includesHand=true;}
+    }
+    const head=game.lampById(game.headLightId);
+    if(!asset&&!lamp&&game.player.weapon==='fists'&&head){
+      const lit=head.active&&head.energy>0;asset=find(lit?'player_headlamp':'player_lights_off');state=(lit?'':'headlamp_')+(moving?'run_'+frame:'idle');includesHead=!!asset;
+    }
+    if(!asset||!parking.assets[asset].states[state])return null;
+    let headMeta=parking.frames[parkingFrameId(asset,state)],nextHead=null,headBlend=0;
+    const movingAction=/^(.*(?:run|sneak))_(?:a|mid|b)$/.exec(state),sequence=movingAction&&parkingClipStates(asset,movingAction[1]);
+    if(sequence?.length){
+      const index=Math.floor(phase)%sequence.length,blend=Math.max(0,(phase-Math.floor(phase)-.8)/.2),id=parkingFrameId(asset,sequence[index]);
+      if(!id||!available(parking.frames[id].atlas))return null;
+      headMeta=parking.frames[id];nextHead=parking.frames[parkingFrameId(asset,sequence[(index+1)%sequence.length])];headBlend=blend;
+      const layer=parkingPlayer.layer||(parkingPlayer.layer=document.createElement('canvas'));if(layer.width!==220){layer.width=220;layer.height=150;}
+      const c=layer.getContext('2d');c.clearRect(0,0,220,150);c.globalCompositeOperation='lighter';
+      parkingSprite(c,asset,sequence[index],110,120,height,{alpha:1-blend});parkingSprite(c,asset,sequence[(index+1)%sequence.length],110,120,height,{alpha:blend});c.globalCompositeOperation='source-over';ctx.drawImage(layer,x-110,y-120);
+    }else if(!parkingSprite(ctx,asset,state,x,y,height))return null;
+    const headPoint=m=>({x:(m.head[0]-m.pivot[0])*height/m.bodyHeight,y:(m.head[1]-m.pivot[1])*height/m.bodyHeight}),headOffset=headPoint(headMeta),next=nextHead&&headPoint(nextHead);
+    if(next){headOffset.x+=(next.x-headOffset.x)*headBlend;headOffset.y+=(next.y-headOffset.y)*headBlend;}
+    const weaponOffset={south:[-13,-19],southeast:[-8,-20],east:[-3,-22],northeast:[9,-22],north:[13,-22],northwest:[10,-20],west:[5,-18],southwest:[-7,-18]}[eightDirection(facing)];
+    return {includesHand,includesHead,ownsArms:!!(preparing||released),headOffset,weaponOffset};
+  }
+  function parkingThumb(kind){
+    const alias=parking?.aliases[kind];if(!alias)return null;
+    return parkingIcon(...alias,40);
+  }
+  function parkingIcon(asset,state='default',size=24){
+    const id=parkingFrameId(asset,state),m=parking?.frames[id];if(!m)return null;
+    const cacheKey=id+':'+size;if(parkingThumbs.has(cacheKey))return parkingThumbs.get(cacheKey);
+    const b=m.bounds,r=m.rect,entry=entries[m.atlas],w=b[2]-b[0],h=b[3]-b[1],scale=(size-2)/Math.max(w,h);
+    const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    // CSS crops the chosen frame. No synchronous GPU readback or PNG encoding in a frame.
+    const html=`<span class="parking-atlas-icon" style="width:${size}px;height:${size}px"><img src="${escape(entry.src)}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${(size-w*scale)/2-(r[0]+b[0])*scale}px;top:${(size-h*scale)/2-(r[1]+b[1])*scale}px"></span>`;
+    parkingThumbs.set(cacheKey,html);return html;
+  }
   function prepareWeapon(weapon,facing){
     const groups=armed?.clips[weapon];if(!groups)return;
     const heading=armed.directions.indexOf(eightDirection(facing));
@@ -79,7 +196,7 @@
   const map=(m,p)=>({x:m.a*p.x+m.c*p.y+m.e,y:m.b*p.x+m.d*p.y+m.f});
   function fullAffine(ctx,key,source,dest){if(!available(key))return false;const m=affine(source,dest);ctx.save();ctx.transform(m.a,m.b,m.c,m.d,m.e,m.f);ctx.drawImage(images[key],0,0);ctx.restore();return true;}
   function surface(ctx,key,source,dest,fill){
-    ctx.save();ctx.beginPath();dest.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();
+    if(fill){ctx.save();ctx.beginPath();dest.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();}
     if(!available(key))return false;
     for(const indices of [[0,1,2],[0,2,3]]){
       const s=indices.map(i=>source[i]),q=indices.map(i=>dest[i]),m=affine(s,q);
@@ -149,5 +266,5 @@
   // Rear-wall sorting is independent from front-wall fading and door layering.
   const houseBack=(ctx,home,project)=>house(ctx,home,project,false,false);
   const houseFront=(ctx,home,project,inside)=>house(ctx,home,project,inside,true);
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,house,houseBack,houseFront,roof,ground,door,direction};
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,house,houseBack,houseFront,roof,ground,door,direction};
 })();

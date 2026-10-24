@@ -1,4 +1,4 @@
-/* Rules from 数值与内容扩展方案 v1.1. Times are real seconds. */
+/* Rules from 数值与内容扩展方案, including 2026-10-18 trap cooldown revision. Times are real seconds. */
 (function(root){
   const items={
     stone:['石头',99],cloth:['布',20],scrap:['废料',99],parts:['零件',10],herb:['药草',20],alcohol:['酒精',20],gunpowder:['火药',20],raw_water:['原水',20],clean_water:['清水',20],
@@ -44,7 +44,12 @@
   const upgrades={
     trap:{day:5,cost:{iron:2,scrap:1},hp:12,level:1},ballista:{day:5,cost:{wood:4,iron:3,scrap:2},hp:30,level:1},repeating:{day:10,cost:{iron:5,scrap:3,parts:2},hp:36,level:2},door:{day:1,cost:{wood:3,iron:1},hp:18,level:1}
   };
+  const deviceCombat={
+    trap:[{name:'捕兽夹',damage:3,interval:7},{name:'锯齿捕兽夹',damage:4,interval:5}],
+    ballista:[{name:'巨弩',damage:1,interval:1,radius:Math.sqrt(9/Math.PI)},{name:'加强巨弩',damage:2,interval:1.2,radius:3},{name:'连射巨弩',damage:2,interval:.8,radius:4}]
+  };
+  const combatStats=(kind,level=0)=>deviceCombat[kind]?.[Math.max(0,Math.min(deviceCombat[kind].length-1,Math.trunc(level)||0))];
   const trades=[{cost:{wood:3},gain:{iron:1}},{cost:{iron:1},gain:{clean_water:2}},{cost:{iron:1},gain:{canned_food:1}},{cost:{iron:2},gain:{cloth:2}},{cost:{iron:3},gain:{herb:2}}];
-  const api={items,siteNames,weapons,attackAnimations,builds,crafts,foods,enemies,upgrades,trades};
+  const api={items,siteNames,weapons,attackAnimations,builds,crafts,foods,enemies,upgrades,deviceCombat,combatStats,trades};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.ExpansionData=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

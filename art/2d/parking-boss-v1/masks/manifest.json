@@ -1,0 +1,54 @@
+{
+  "tool": "code-native SVG geometry, no PNG pixel editing",
+  "note": "World radius and occlusion are engine responsibilities; decorative native PNG glows never extend effective bounds. These overlays are not collision or line-of-sight implementation.",
+  "assets": [
+    {
+      "file": "light_circle.svg",
+      "label": "圆形照明",
+      "shape": "circle",
+      "radiiMeters": {
+        "torch": 3,
+        "lantern": 4,
+        "fixed": 6,
+        "generator": 8,
+        "emergency": 4
+      }
+    },
+    {
+      "file": "flashlight_70.svg",
+      "label": "手电70度扇形",
+      "shape": "sector",
+      "angleDegrees": 70,
+      "radiusMeters": 10,
+      "forward": "right"
+    },
+    {
+      "file": "headlamp_90.svg",
+      "label": "头灯90度扇形",
+      "shape": "sector",
+      "angleDegrees": 90,
+      "radiusMeters": 6,
+      "forward": "right"
+    },
+    {
+      "file": "roar_telegraph.svg",
+      "label": "怒吼蓄力预警",
+      "shape": "circle",
+      "radiusMeters": 2
+    },
+    {
+      "file": "roar_wave.svg",
+      "label": "怒吼释放波纹",
+      "shape": "circle",
+      "radiusMeters": 2
+    },
+    {
+      "file": "vision_mask.svg",
+      "label": "基础圆形视野遮罩",
+      "shape": "inverse-circle",
+      "radiusRatioToSurface": 0.3333333333333333,
+      "referenceRadiusMeters": 8,
+      "isLight": false
+    }
+  ]
+}

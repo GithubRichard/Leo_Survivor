@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>守到天明 · 生存扩展版0.9.4</title>
+  <title>守到天明 · 停车场登场预览0.10.6</title>
   <link rel="stylesheet" href="game.css">
   <link rel="stylesheet" href="touch-layout.css">
   <link rel="stylesheet" href="expansion.css">
   <link rel="stylesheet" href="developer-mode.css">
+  <link rel="stylesheet" href="parking.css?v=0.10.6">
 </head>
 <body>
   <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
@@ -27,9 +28,11 @@
   <div id="messages" aria-live="polite"></div>
   <div id="interaction" class="hidden"></div>
   <button id="developer-badge" class="hidden" aria-label="打开开发者模式"></button>
+  <div id="boss-status" class="hidden" aria-live="polite"></div>
+  <button id="parking-skill" class="hidden" aria-label="启动或结束潜伏技能">潜伏 Q</button>
   <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互/攻击　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
   <div id="menu" class="scrim">
-    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存扩展版 0.9.4 · 支持触屏</div><h1>守到天明<span>准备领地，连续活过7晚与14晚。</span></h1>
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 停车场登场预览 0.10.6 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
       <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
       <div class="menu-option selected" data-mode="0"><b>01　完整的一天</b><span>05:00开局 · 白天12分45秒，夜晚5分15秒</span></div>
       <div class="menu-option" data-mode="1"><b>02　快速试玩</b><span>21:00开局 · 45秒准备，然后进入完整夜晚</span></div>
@@ -49,15 +52,21 @@
   <script src="touch-controls.js"></script>
   <script src="simulation.js"></script>
   <script src="expansion-data.js"></script>
+  <script src="parking-data.js"></script>
   <script src="expansion.js"></script>
+  <script src="parking.js?v=0.10.6"></script>
+  <script src="parking-lights.js?v=0.10.6"></script>
+  <script src="parking-ai.js?v=0.10.6"></script>
   <script src="developer-mode.js"></script>
   <script src="scene-layers.js"></script>
   <script src="asset-manifest.js"></script>
   <script src="expansion-assets.js"></script>
   <script src="player-animation-assets.js"></script>
   <script src="weapon-animation-assets.js"></script>
-  <script src="art-renderer.js"></script>
-  <script src="expansion-ui.js"></script>
-  <script src="game.js"></script>
+  <script src="parking-assets.js?v=0.10.6"></script>
+  <script src="art-renderer.js?v=0.10.6"></script>
+  <script src="parking-view.js?v=0.10.6"></script>
+  <script src="expansion-ui.js?v=0.10.6"></script>
+  <script src="game.js?v=0.10.6"></script>
 </body>
 </html>
