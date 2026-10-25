@@ -284,7 +284,7 @@
     const q=p(game.player);ctx.fillStyle='#ffe0a0';ctx.beginPath();ctx.arc(q.x,q.y,4,0,Math.PI*2);ctx.fill();
   }
   let lastCue=0,audio=null;
-  function unlockAudio(){try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();}catch{}}
+  function unlockAudio(){if(window.GameSound){GameSound.unlock();return;}try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();}catch{}}
   function hideCombatHUD(){
     document.getElementById('bone-skill')?.classList.add('hidden');const bar=document.getElementById('boss-status');bar.classList.add('hidden');bar.replaceChildren();bar._parkingHtml=null;document.getElementById('parking-skill').classList.add('hidden');
   }
@@ -309,7 +309,7 @@
     if(game.weaknessUntil>game.seconds)document.getElementById('buffs').textContent+=` · 虚弱 ${Math.ceil(game.weaknessUntil-game.seconds)}秒（伤害/移速-0.7）`;
     for(const id of [game.heldLightId,game.headLightId]){const l=game.lampById(id);if(l)document.getElementById('buffs').textContent+=` · ${S.NAMES[l.kind]} ${l.active?'亮':'灭'} ${Math.ceil(l.energy)}秒`;}
     if(game.skill.active)document.getElementById('buffs').textContent+=` · 潜伏 ${Math.ceil(game.skill.until-game.seconds)}秒（${game.hidden?'已隐身':'有光，未隐身'}）`;
-    if(game.audioCueSerial!==lastCue){lastCue=game.audioCueSerial;if(audio?.state==='running'){const o=audio.createOscillator(),gain=audio.createGain();o.connect(gain);gain.connect(audio.destination);o.frequency.value=330;gain.gain.setValueAtTime(.035,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.18);o.start();o.stop(audio.currentTime+.18);}}
+    if(game.audioCueSerial!==lastCue){lastCue=game.audioCueSerial;if(window.GameSound)GameSound.tone(330,.18,.035);else if(audio?.state==='running'){const o=audio.createOscillator(),gain=audio.createGain();o.connect(gain);gain.connect(audio.destination);o.frequency.value=330;gain.gain.setValueAtTime(.035,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.18);o.start();o.stop(audio.currentTime+.18);}}
   }
   const developer=game=>`<div class="dev-section"><h3>停车场模型接入</h3><p>已索引${window.PARKING_ART?.coverage.availableAtlases||0}/${window.PARKING_ART?.coverage.plannedAtlases||115}张图集、${window.PARKING_ART?.coverage.availableFrames||0}帧；包含两阶段与八方向动作。以下操作仅影响测试存档。</p><div class="dev-row"><button data-dev="parking">前往地下首层（第15天）</button><button data-dev="skeleton-floor" ${game.scene==='parking'?'':'disabled'}>前往二层骷髅（测试）</button><button data-dev="parking-boss" ${game.scene==='parking'?'':'disabled'}>前往Boss战区</button><button data-dev="parking-return" ${game.scene==='parking'?'':'disabled'}>返回地面</button></div></div>`;
   window.ParkingView={context,inventoryExtras,command,draw,surface,groundSight,drawMap,hud,hideCombatHUD,names,unlockAudio,developer,lampModel,effectModel,entrancePoint,drawEntranceIntro};

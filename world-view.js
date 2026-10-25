@@ -12,6 +12,8 @@
   }
   function warning(ctx,game,p,r,v,f={x:0,y:1},angle=360){ctx.save();sector(ctx,game,p,r,f,angle,v);ctx.fillStyle='#d898482b';ctx.strokeStyle='#eed17d';ctx.lineWidth=2;ctx.fill();ctx.stroke();ctx.restore();}
   function actor(ctx,game,p,type,v){
+    // The Boss animation owns its windup; draw the separate projectile on release.
+    if(p.boneType==='ordinary'&&p.mode==='throw'&&p.stage==='held')return true;
     const q=v.project(p.x,p.y),size=v.scale/27,dir=A.eightDirection(p.facing||game.player.facing);
     if(p.kind==='skeleton'){
       const a=p.action,t=a?game.seconds-a.started:0;let state='idle';

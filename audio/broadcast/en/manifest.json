@@ -1,0 +1,49 @@
+{
+  "war": {
+    "file": "en/war.mp3",
+    "speech": "In 2026, chemical warfare caused the release of a zombie virus.",
+    "voice": "en-US-GuyNeural",
+    "lastBoundary": 5.4710526,
+    "duration": 5.472,
+    "sampleRate": 24000
+  },
+  "famine": {
+    "file": "en/famine.mp3",
+    "speech": "The outbreak spread, bringing famine and a devastating decline in population.",
+    "voice": "en-US-GuyNeural",
+    "lastBoundary": 5.5105263,
+    "duration": 5.52,
+    "sampleRate": 24000
+  },
+  "depots": {
+    "file": "en/depots.mp3",
+    "speech": "To protect the remaining population, the government has built food depots, armories, and other emergency facilities.",
+    "voice": "en-US-GuyNeural",
+    "lastBoundary": 7.6947369,
+    "duration": 7.704,
+    "sampleRate": 24000
+  },
+  "stay-home": {
+    "file": "en/stay-home.mp3",
+    "speech": "All residents are urged to remain at home. Do not go outside.",
+    "voice": "en-US-GuyNeural",
+    "lastBoundary": 5.5657894,
+    "duration": 5.616,
+    "sampleRate": 24000
+  },
+  "resolve": {
+    "file": "en/resolve-andrew.mp3",
+    "speech": "Ugh... I have to do something.",
+    "voice": "en-US-AndrewNeural",
+    "duration": 1.968,
+    "sampleRate": 24000
+  },
+  "camp": {
+    "file": "en/camp.mp3",
+    "speech": "To all survivors: please make your way to the nearest survivor camp.",
+    "voice": "en-US-GuyNeural",
+    "lastBoundary": 4.6947369,
+    "duration": 4.704,
+    "sampleRate": 24000
+  }
+}

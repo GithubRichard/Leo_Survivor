@@ -16,6 +16,7 @@
   let lastTime=performance.now(),uiKey='',nearby=null,notifications=[];
   let playerMotion={moving:false,phase:0,facing:null};
   let parkingIntro=null;
+  let opening=null,openingPaused=false;
   let characterDraft=null;
   const characterModes=['traits','character-preview'];
   const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -198,6 +199,7 @@
     }});
     PV.surface(game,{ctx,project,plane,label,items,scale,intro:parkingIntro});
     WorldView.items(game,{ctx,project,label,scale,items});
+    BroadcastView.items(game,{ctx,project,scale,items});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
     drawMolotovAim();WorldView.aim(game,{ctx,project,scale});
     WorldView.weatherOverlay(game,{ctx,project,scale,width,height});
@@ -209,7 +211,12 @@
     Dev.draw(ctx,game,project,homes);
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
-  function showMenu(){playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('developer-badge').classList.add('hidden');$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function showMenu(){GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('developer-badge').classList.add('hidden');$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function beginOpening(){
+    mode='opening';openingPaused=false;keys.clear();touch.clear();PV.hideCombatHUD();GameSound.unlock();document.documentElement.classList.add('opening-active');$('opening-pause').textContent='暂停';
+    opening=new BroadcastView.OpeningSequence(()=>{opening=null;document.documentElement.classList.remove('opening-active');game.broadcast.introDone=true;enterGame();saveGame(false);});
+  }
+  function pauseOpening(){if(!opening)return;openingPaused=!openingPaused;$('opening-pause').textContent=openingPaused?'继续':'暂停';GameSound.setActive(!openingPaused&&focused&&!document.hidden);}
   function beginParkingIntro(){
     parkingIntro={time:0,camera:{x:game.player.x,y:game.player.y},origin:{x:game.player.x,y:game.player.y},failed:false};
     game.cancelAction();game.playerAttack=null;game.player.running=false;playerMotion={moving:false,phase:0,facing:null};placement=false;keys.clear();touch.clear();PV.hideCombatHUD();document.documentElement.classList.add('parking-intro-active');
@@ -240,7 +247,7 @@
     mode='play';placement=false;playerMotion={moving:false,phase:0,facing:null};keys.clear();touch.clear();uiKey='';overlayNotice='';notifications=[];lastTime=performance.now();
     $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective'])$(id).classList.remove('hidden');$('player-name').textContent=game.player.name;
   }
-  function resumeGame(test=false){if(!art.ready)return;try{const data=savedData(test?DEV_SAVE_KEY:SAVE_KEY);if(!data||data.result)return;game=Game.restore(data);if(test)Dev.enable(game);enterGame();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
+  function resumeGame(test=false){if(!art.ready)return;try{const data=savedData(test?DEV_SAVE_KEY:SAVE_KEY);if(!data||data.result)return;game=Game.restore(data);if(test)Dev.enable(game);enterGame();if(!game.broadcast.introDone)beginOpening();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
   document.querySelectorAll('.menu-option').forEach((el,i)=>el.addEventListener('pointerenter',()=>{if(mode==='menu'){menuChoice=i;updateMenu();}}));
   function start(developer=false){
     if(!art.ready)return;
@@ -258,11 +265,11 @@
     const draft=characterDraft;
     game=new Game({name:draft.name,startMode:draft.startMode,startMinutes:draft.startMode==='quick'?1260:300,traits:draft.traits});
     if(draft.developer)Dev.enable(game);
-    characterDraft=null;buildKind='trap';enterGame();
-    game.announce(touch.enabled?'进入屋内找家具，靠近后点交互拆除。点建造部署装置。':'进入屋内找家具，靠近按E拆除。按F开始部署装置。');
+    game.prepareOpening();characterDraft=null;buildKind='trap';enterGame();beginOpening();
+    game.announce(touch.enabled?'靠近家具后点交互拆除。点建造部署装置；靠近电视可收看广播。':'靠近家具按E拆除，按F部署装置；靠近电视按E收看广播。');
     overlayNotice='';inventoryPane='bag';contextTarget=null;game.announce('先搜索家中的补给箱；Tab里可以制作武器和建筑。E攻击朝向范围内的敌人。');saveGame(false);
   }
-  function openOverlay(next){mode=next;if(next==='result')PV.hideCombatHUD();overlayNotice='';placement=false;keys.clear();touch.clear();$('overlay').classList.remove('hidden');$('interaction').classList.add('hidden');uiKey='';renderOverlay();$('overlay-card').scrollTop=0;}
+  function openOverlay(next){if(next==='context'&&(contextTarget?.object?.kind==='storage_chest'||contextTarget?.type==='container'||contextTarget?.type==='parking'&&contextTarget.object.opened&&['cargo','toolbox','boss_chest','skeleton_chest'].includes(contextTarget.object.kind)))GameSound.openContainer();mode=next;if(next==='result')PV.hideCombatHUD();overlayNotice='';placement=false;keys.clear();touch.clear();$('overlay').classList.remove('hidden');$('interaction').classList.add('hidden');uiKey='';renderOverlay();$('overlay-card').scrollTop=0;}
   function closeOverlay(){mode='play';if(game.boneSkill.releasePending){game.boneSkill.releasePending=false;game.releaseBone();}keys.clear();touch.clear();$('overlay').classList.add('hidden');lastTime=performance.now();uiKey='';}
   function openDeveloper(){
     if(mode==='menu'){start(true);return;}
@@ -350,6 +357,7 @@
     else if(mode==='play'&&game.player.weapon==='molotov'){const aim=game.molotovAim();text=`E 投掷燃烧瓶 · ${aim.valid?'调整朝向，确认抛物线与落点后投掷':aim.reason} · Tab可切换装备`;}
     else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name} → 1${NAMES[object.material]}`:type==='container'?`E 查看${D.siteNames[object.kind]||'容器'}（已搜空，可拆除）`:type==='device'||type==='structure'?`E 管理${NAMES[object.kind]||'防线'}（维修 / 升级 / 使用）`:type==='site'?`E 搜索 / 采集${D.siteNames[object.kind]||'物资'}（${Number(game.actionDuration('search',object.time).toFixed(2))}秒）`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby&&['parking','lamp'].includes(nearby.type))text=`E ${PV.names[nearby.object.kind]||NAMES[nearby.object.kind]||'地下设施'} · 查看与操作`;
+    if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='television')text='E 收看电视';
     if(!text&&mode==='play')text=`E 攻击 · ${NAMES[game.player.weapon]||'徒手'} · 朝向前方敌人`;
     if(touch.enabled)text=text.replace(/E /g,'交互：').replace('E切换　F确认　Tab打开背包并取消','点切换装置 / 确认放置；点背包取消').replace('按F','点建造');
     $('interaction').textContent=text;$('interaction').classList.toggle('hidden',!text);
@@ -367,6 +375,7 @@
     keys.add(k);if(event.repeat)return;performAction(k);
   }
   function performAction(k){
+    if(opening){if(k==='escape')opening.finish();else if(k===' ')pauseOpening();return;}
     if(parkingIntro)return;
     PV.unlockAudio();
     if(characterModes.includes(mode)){
@@ -449,6 +458,8 @@
     overlayNotice=ok?'操作完成。':game.events.at(-1)||'条件不足或空间不够，未完成操作。';uiKey='';
   }
   $('start-game').addEventListener('click',()=>start());
+  $('opening-skip').addEventListener('click',()=>opening?.finish());
+  $('opening-pause').addEventListener('click',pauseOpening);
   $('continue-game').addEventListener('click',()=>resumeGame());
   $('start-developer').addEventListener('click',()=>start(true));
   $('continue-developer').addEventListener('click',()=>resumeGame(true));
@@ -488,6 +499,9 @@
   });
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
+    const soundActive=focused&&!document.hidden&&(opening?!openingPaused:mode==='play'&&!parkingIntro);
+    GameSound.setActive(soundActive);
+    if(opening&&soundActive)opening.update(dt);
     if(!parkingIntro&&mode==='play'&&game.scene==='surface'&&!game.result&&(game.parkingUnlockPending||game.parking?.introSeen===false))beginParkingIntro();
     if(parkingIntro&&focused&&!document.hidden)advanceParkingIntro(dt);
     if(mode==='play'&&!parkingIntro&&focused&&!document.hidden){
@@ -507,11 +521,13 @@
       playerMotion.moving=moving;
       if(game.result)openOverlay('result');
     }
-    touch.setContext(parkingIntro?'cinematic':mode,placement);
+    touch.setContext(parkingIntro||opening?'cinematic':mode,placement);
     nearby=mode==='play'&&!parkingIntro&&!placement?game.nearbyInteraction():null;
     if(game.autosaveRequested){game.autosaveRequested=false;saveGame(false);}
-    drawWorld();if(mode!=='menu'&&!characterModes.includes(mode))updateHUD();if(['inventory','map','dialog','result','pause','context','stats','developer',...characterModes].includes(mode))renderOverlay();
+    if(!opening)BroadcastView.updateTV(game,dt,soundActive&&mode==='play');
+    if(!opening||opening.stages[opening.index]?.kind==='handoff')drawWorld();if(!opening&&mode!=='menu'&&!characterModes.includes(mode))updateHUD();if(['inventory','map','dialog','result','pause','context','stats','developer',...characterModes].includes(mode))renderOverlay();
     if(parkingIntro)PV.drawEntranceIntro(game,parkingIntro,{ctx,project,width,height,scale});
+    if(opening)opening.draw(ctx,width,height);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
