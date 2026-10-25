@@ -2,6 +2,7 @@
 (function(root){
   const S=typeof module!=='undefined'&&module.exports?require('./simulation.js'):root.Survival;
   const D=typeof module!=='undefined'&&module.exports?require('./expansion-data.js'):root.ExpansionData;
+  const T=typeof module!=='undefined'&&module.exports?require('./character-traits.js'):root.CharacterTraits;
   const {dist,pointRect,segmentHits,screenDirection}=S,Base=S.Game;
   const copy=x=>JSON.parse(JSON.stringify(x)),limit=k=>D.weapons[k]?1:D.items[k]?.[1]||99;
   Object.entries(D.items).forEach(([k,v])=>S.NAMES[k]=v[0]);
@@ -74,9 +75,26 @@
       this.action=null;this.playerAttack=null;this.projectiles=[];this.zones=[];this.effects=[];this.helper=null;this.visitFailures=0;this.visitDay=null;
       this.history=[];this.stats={planned:0,spawned:0,arrived:0,kills:{},damage:{},lost:0,searches:0,food:[],resourceStart:{iron:6,wood:13}};
       this.pendingSpawn=[];this.waveDirections=[];this.warnedWaves=[];this.plan=nightPlan(1);this.nextWave=0;this.initVisit();this.pathBudget=2;this.autosaveRequested=false;
+      this.traits=T.normalize(options.traits);this.startMode=options.startMode==='quick'?'quick':'full';
+      this.player.hp=this.maxHP;this.player.stamina=this.maxStamina;
     }
-    get maxHP(){return 12+(this.mainBuff?.type==='health'?2:0);}
-    get maxStamina(){return 10+(this.mainBuff?.type==='stamina2'?2:this.mainBuff?.type==='stamina4'?4:0);}
+    get traitEffects(){if(this._traitSource!==this.traits){this._traitSource=this.traits;this._traitEffects=T.effects(this.traits);}return this._traitEffects||T.effects();}
+    get maxHP(){return 12+this.traitEffects.hp+(this.mainBuff?.type==='health'?2:0);}
+    get maxStamina(){return (this.player.hunger<=30?6:this.player.hunger<=60?8:10+(this.mainBuff?.type==='stamina2'?2:this.mainBuff?.type==='stamina4'?4:0))+this.traitEffects.stamina;}
+    get staminaRecoveryInterval(){return (this.player.hunger<=0?Infinity:this.player.hunger<=30?4:this.player.hunger<=60?3:this.mainBuff?.type==='recovery'?1.5:2)*this.traitEffects.recovery;}
+    get staminaRecoveryDelay(){return this.player.hunger<=0?Infinity:this.player.hunger<=30?4:this.player.hunger<=60?3:2;}
+    get runSpeed(){return 4*this.traitEffects.run;}
+    get personalSight(){return this.scene==='parking'?8*this.traitEffects.sight:this.minutes<1320?(this.traitEffects.myopia?18:Infinity):24*this.traitEffects.sight;}
+    get illuminatedSight(){return 16*this.traitEffects.sight;}
+    healPlayer(amount){this.player.hp=Math.min(this.maxHP,this.player.hp+amount*this.traitEffects.healing);}
+    meleeDamage(base){return Math.max(.1,base+(this.mainBuff?.type==='melee'?1:0)+this.traitEffects.melee);}
+    rangedAttackScale(kind){return ['simple_bow','hand_crossbow','shotgun'].includes(kind)?this.traitEffects.ranged:1;}
+    syncStaminaRecovery(){
+      this.player.stamina=Math.max(0,Math.min(this.player.stamina,this.maxStamina));
+      const interval=this.staminaRecoveryInterval,changed=this.recoveryInterval!==interval;this.recoveryInterval=interval;
+      if(!Number.isFinite(interval)||this.player.stamina>=this.maxStamina){this.nextRecoveryAt=Infinity;this.lastRecoveryAt=null;return;}
+      if(changed||!Number.isFinite(this.nextRecoveryAt)){this.lastRecoveryAt=null;this.nextRecoveryAt=this.seconds+this.staminaRecoveryDelay;}
+    }
     countIn(slots,k){return slots.reduce((n,s)=>n+(s?.kind===k?s.amount:0),0);}
     recordResource(key,values){if(!this.stats)return;const bucket=this.stats[key]||(this.stats[key]={});for(const [k,n] of Object.entries(values))bucket[k]=(bucket[k]||0)+n;}
     add(k,n=1){const ok=transaction(this.inventory,{}, {[k]:n});if(ok)this.recordResource('income',{[k]:n});return ok;}
@@ -141,8 +159,14 @@
     place(kind,p){const error=this.canPlace(kind,p);if(error){this.announce(error);return false;}return this.beginAction('build',3,{kind,p});}
     stationNear(kind){return this.devices.find(d=>d.kind===kind&&d.hp>0&&dist(d,this.player)<2&&this.clearLine(this.player,d,d));}
     find(id){const device=this.devices.find(d=>d.id===id);if(device)return device;const match=/^(home|site):(-?\d+),(-?\d+):\d+$/.exec(id);if(!match)return undefined;const h=this.homes.get(`${match[2]},${match[3]}`);return h&&(match[1]==='site'?h.sites:h.objects).find(o=>o.id===id);}
+    actionDuration(type,duration,data={}){
+      if(['build','dismantle','repair','upgrade'].includes(type)||type==='lamp'&&data.op==='repair')duration*=this.traitEffects.building;
+      else if(['search','parking_search'].includes(type))duration*=this.traitEffects.search;
+      return duration;
+    }
     beginAction(type,duration,data={}){
       if(this.action){this.announce('正在操作，请先取消。');return false;}
+      duration=this.actionDuration(type,duration,data);
       this.action={type,duration,elapsed:0,start:{x:this.player.x,y:this.player.y},...data};return true;
     }
     cancelAction(reason='操作已取消'){if(this.action){this.action=null;this.announce(reason);}}
@@ -184,24 +208,23 @@
       }else if(a.type==='eat')this.completeFood(a.kind);
       else if(a.type==='medkit'){
         if(this.player.hp>=this.maxHP){this.announce('血量已满，急救包已保留。');return;}
-        if(this.day>=8&&this.pay({medkit:1}))this.player.hp=Math.min(this.maxHP,this.player.hp+8);
+        if(this.day>=8&&this.pay({medkit:1}))this.healPlayer(8);
       }
     }
-    spendStamina(n){if(n<=0)return true;if(this.developer?.enabled&&this.developer.infiniteStamina){this.player.stamina=this.maxStamina;return true;}if(this.player.stamina+1e-8<n)return false;this.player.stamina=Math.max(0,this.player.stamina-n);this.lastSpent=this.seconds;this.lastRecoveryAt=null;this.nextRecoveryAt=this.seconds+2;return true;}
+    spendStamina(n){this.syncStaminaRecovery();if(n<=0)return true;if(this.developer?.enabled&&this.developer.infiniteStamina){this.player.stamina=this.maxStamina;return true;}if(this.player.stamina+1e-8<n)return false;this.player.stamina=Math.max(0,this.player.stamina-n);this.lastSpent=this.seconds;this.lastRecoveryAt=null;this.nextRecoveryAt=this.seconds+this.staminaRecoveryDelay;return true;}
     movePlayer(dt,input){
+      this.syncStaminaRecovery();
       let sx=(input.right?1:0)-(input.left?1:0)+(input.moveX||0),sy=(input.down?1:0)-(input.up?1:0)+(input.moveY||0);
       const length=Math.hypot(sx,sy),before={x:this.player.x,y:this.player.y};this.player.running=false;
       if(length&&this.action?.type!=='medkit'){
         const movement=screenDirection(sx,sy),n=Math.hypot(movement.x,movement.y);this.player.facing={x:movement.x/n,y:movement.y/n};
-        const running=input.run&&this.player.stamina>0,speed=(running?4:2)*Math.min(1,length),nx={x:this.player.x+movement.x*speed*dt,y:this.player.y};
+        const running=input.run&&this.player.stamina>0,speed=(this.movementSpeed?this.movementSpeed(running?this.runSpeed:2):(running?this.runSpeed:2))*Math.min(1,length),nx={x:this.player.x+movement.x*speed*dt,y:this.player.y};
         if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+movement.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
         this.player.running=Boolean(running&&dist(before,this.player)>1e-8);
       }
       if(this.player.running){this.spendStamina(Math.min(this.player.stamina,dt*(this.teaBuff?.until>this.seconds ? .8 : 1)));this.interruptBandage('奔跑');}
       else if(!this._skipRecovery){
-        const interval=this.player.hunger<20?3:this.mainBuff?.type==='recovery'?1.5:2;
-        if(this.recoveryInterval!==interval&&this.lastRecoveryAt!==null)this.nextRecoveryAt=this.lastRecoveryAt+interval;
-        this.recoveryInterval=interval;
+        const interval=this.staminaRecoveryInterval;
         while(this.seconds+1e-8>=this.nextRecoveryAt&&this.player.stamina<this.maxStamina){this.player.stamina=Math.min(this.maxStamina,this.player.stamina+1);this.lastRecoveryAt=this.nextRecoveryAt;this.nextRecoveryAt+=interval;}
         if(this.player.stamina>=this.maxStamina){this.nextRecoveryAt=Infinity;this.lastRecoveryAt=null;}
       }
@@ -249,25 +272,28 @@
       const f=D.foods[kind];if(this.seconds<(f.water?this.waterAt:this.foodAt)||!this.remove(kind,1))return;
       if(f.buff)this.mainBuff={type:f.buff,until:this.seconds+360};if(f.tea)this.teaBuff={until:this.seconds+360};
       if(f.regen)this.foodRegen={left:f.regen,next:this.seconds+30};
-      this.player.hp=Math.min(this.maxHP,this.player.hp+(f.heal||0));this.player.stamina=Math.min(this.maxStamina,this.player.stamina+(f.stamina||0));this.player.hunger=Math.min(100,this.player.hunger+f.hunger);
+      this.player.hunger=Math.min(100,this.player.hunger+f.hunger);if(this.player.hunger>0)this.starving=0;
+      this.healPlayer(f.heal||0);this.player.stamina=Math.min(this.maxStamina,this.player.stamina+(this.player.hunger>0?(f.stamina||0):0));
       this.foodAt=f.water?this.foodAt:this.seconds+20;this.waterAt=f.water?this.seconds+30:this.waterAt;this.stats.food.push(kind);this.announce(`${S.NAMES[kind]}已使用。`);
-      if(!Number.isFinite(this.nextRecoveryAt)&&this.player.stamina<this.maxStamina)this.nextRecoveryAt=this.seconds+2;
+      this.syncStaminaRecovery();
     }
     updateVitals(dt){
       for(const key of ['mainBuff','teaBuff'])if(this[key]?.until<=this.seconds)this[key]=null;
-      this.player.hp=Math.min(this.player.hp,this.maxHP);this.player.stamina=Math.min(this.player.stamina,this.maxStamina);this.player.hunger=Math.max(0,this.player.hunger-dt/.75/60*3);
-      if(!this.player.hunger){this.starving=(this.starving||0)+dt;if(this.starving>=60){this.starving-=60;this.damagePlayer(1,'hunger',true);}}else this.starving=0;
-      for(const [key,interval] of [['foodRegen',30],['bandage',2]]){const heal=this[key];if(heal&&this.seconds>=heal.next){this.player.hp=Math.min(this.maxHP,this.player.hp+1);heal.left--;heal.next+=interval;if(!heal.left)this[key]=null;}}
+      this.player.hp=Math.min(this.player.hp,this.maxHP);this.player.hunger=Math.max(0,this.player.hunger-dt/.75/60*3*this.traitEffects.metabolism);this.syncStaminaRecovery();
+      if(!this.player.hunger){this.starving=(this.starving||0)+dt;while(this.starving+1e-8>=12&&!this.result){this.starving-=12;this.damagePlayer(1,'hunger',true);}}else this.starving=0;
+      if(this.result)return;
+      for(const [key,interval] of [['foodRegen',30],['bandage',2]]){const heal=this[key];if(heal&&this.seconds>=heal.next){this.healPlayer(1);heal.left--;heal.next+=interval;if(!heal.left)this[key]=null;}}
     }
     attack(){
       if(this.player.weapon==='molotov')return this.throwMolotov();
       const w=D.weapons[this.player.weapon]||D.weapons.fists;if(this.action||this.playerAttack||this.seconds<this.attackAt)return false;
       const facing=this.player.facing,aim=Math.hypot(facing.x,facing.y)||1;
-      const targets=this.zombies.filter(z=>z.hp>0&&(!this.canSee||this.canSee(z))&&dist(z,this.player)<=w.range&&((z.x-this.player.x)*facing.x+(z.y-this.player.y)*facing.y)/Math.max(.001,dist(z,this.player))/aim>.35&&this.clearLine(this.player,z)).sort((a,b)=>dist(a,this.player)-dist(b,this.player));
+      const targets=this.zombies.filter(z=>z.hp>0&&z.faction!=='player'&&(!this.canSee||this.canSee(z))&&dist(z,this.player)<=w.range+(z.radius||0)&&((z.x-this.player.x)*facing.x+(z.y-this.player.y)*facing.y)/Math.max(.001,dist(z,this.player))/aim>.35&&this.clearLine(this.player,z)).sort((a,b)=>(dist(a,this.player)-(a.radius||0))-(dist(b,this.player)-(b.radius||0)));
       if(!targets.length){this.announce('朝向范围内没有敌人。');return false;}
       if(this.player.stamina<w.stamina||w.ammo&&!this.count(w.ammo)){this.announce(w.ammo&&!this.count(w.ammo)?'弹药不足。':'体力不足。');return false;}
-      if(w.ammo)this.remove(w.ammo,1);this.spendStamina(w.stamina);this.interruptBandage('攻击');this.attackAt=this.seconds+w.interval;
-      const damage=w.damage+(!w.ammo&&this.mainBuff?.type==='melee'?1:0),duration=D.attackAnimations[this.player.weapon];
+      const attackScale=this.rangedAttackScale(this.player.weapon);
+      if(w.ammo)this.remove(w.ammo,1);this.spendStamina(w.stamina);this.interruptBandage('攻击');this.attackAt=this.seconds+w.interval*attackScale;
+      const damage=w.ammo?w.damage:this.meleeDamage(w.damage),duration=D.attackAnimations[this.player.weapon]*attackScale;
       if(!duration){this.damageZombie(targets[0],this.directDamage?this.directDamage(damage):damage,'weapon');this.effects.push({kind:'melee_arc',x:targets[0].x,y:targets[0].y,until:this.seconds+.25});return true;}
       this.playerAttack={weapon:this.player.weapon,kind:w.ammo?'ranged':'melee',facing:{x:facing.x/aim,y:facing.y/aim},targetId:targets[0].id,damage,startedAt:this.seconds,releaseAt:this.seconds+duration/3,endsAt:this.seconds+duration,released:false};return true;
     }
@@ -284,7 +310,7 @@
             for(let n=0;n<(w.pellets||1);n++){const angle=Math.atan2(a.facing.y,a.facing.x)+(w.pellets?(n-1.5)*.11:0);this.projectiles.push({kind:w.ammo==='shotgun_shell'?'shot_pellet':w.ammo,x:this.player.x,y:this.player.y,vx:Math.cos(angle)*18,vy:Math.sin(angle)*18,range:w.range,damage:a.damage,owner:'player'});}
           }else {
             const target=this.zombies.find(z=>z.id===a.targetId),distance=target?dist(target,this.player):Infinity;
-            if(target&&target.hp>0&&distance<=w.range&&((target.x-this.player.x)*a.facing.x+(target.y-this.player.y)*a.facing.y)/Math.max(.001,distance)>.35&&this.clearLine(this.player,target)){
+            if(target&&target.hp>0&&distance<=w.range+(target.radius||0)&&((target.x-this.player.x)*a.facing.x+(target.y-this.player.y)*a.facing.y)/Math.max(.001,distance)>.35&&this.clearLine(this.player,target)){
               this.damageZombie(target,this.directDamage?this.directDamage(a.damage):a.damage,'weapon');this.effects.push({kind:a.weapon==='wood_spear'?'thrust_line':'melee_arc',x:target.x,y:target.y,until:this.seconds+.25});
             }
           }
@@ -318,7 +344,7 @@
     }
     igniteMolotov(p){
       this.zones.push({x:p.x,y:p.y,kind:'fire_pool',source:'molotov',radius:1.5,until:this.seconds+6,id:`fire:${this.seconds}`});
-      for(const z of this.zombies)if(z.hp>0&&dist(z,p)<=1.5&&this.clearLine(p,z)){this.damageZombie(z,this.directDamage?this.directDamage(1):1,'molotov');z.burningUntil=this.seconds+6;z.burnNext=this.seconds+1;z.burnSource='molotov';}
+      for(const z of this.zombies)if(z.hp>0&&z.faction!=='player'&&dist(z,p)<=1.5&&this.clearLine(p,z)){this.damageZombie(z,this.directDamage?this.directDamage(1):1,'molotov');z.burningUntil=this.seconds+6;z.burnNext=this.seconds+1;z.burnSource='molotov';}
     }
     startProduction(o,kind){
       if(o.hp<=0||dist(o,this.player)>2)return false;let cost,time,fuel=false;
@@ -352,7 +378,7 @@
       if(this.reward){for(const [kind,amount] of Object.entries(this.reward))this.drops.push({kind,amount,x:0,y:2});this.reward=null;}
       if(this.day>=2&&!this.visitDay.arrived)this.visitFailures++;this.day++;this.minutes-=1440;this.zombies=[];this.pendingSpawn=[];this.playerAttack=null;this.projectiles=[];this.zones=[];this.nextWave=0;this.plan=nightPlan(this.day);this.waveDirections=[];this.warnedWaves=[];
       this.stats={planned:0,spawned:0,arrived:0,kills:{},damage:{},lost:0,searches:0,food:[],resourceStart:this.resources()};
-      for(const d of this.devices)if(d.hp>0&&d.crop)d.crop.dawns++;
+      // Crop growth is integrated continuously by the weather system.
       this.feedHelper();this.initVisit();this.autosaveRequested=true;this.announce(`第${this.day}天05:00，剩余丧尸已清除，准备下一晚。${this.day===8||this.day===15?'尸潮奖励留在院子里。':''}`);
       const unlock={3:'疾跑者出现。可制作铁斧和简易弓。',4:'菜箱开放。',5:'厚皮者出现。锯齿捕兽夹、加强巨弩、晾晒架和燃烧瓶开放。',7:'尸潮夜，可制作手弩并扩容背包。',8:'酸液者出现，急救包开放。',10:'拆墙者出现，连射巨弩和土豆肉派开放。',12:'尖啸者出现，散弹枪开放。',14:'第二次尸潮，准备备用防线与料理。'}[this.day];if(unlock)this.announce(unlock);
     }
@@ -415,20 +441,20 @@
     beginFrame(){this._frameManaged=true;this._pathFrameBudget=256;this._pathFrameDeadline=null;}
     endFrame(){this._frameManaged=false;}
     updateDevices(){
-      const ordered=this.zombies.filter(z=>z.hp>0).sort((a,b)=>a.id-b.id);
+      const ordered=this.zombies.filter(z=>z.hp>0&&z.faction!=='player').sort((a,b)=>a.id-b.id);
       for(const z of ordered)z.slowUntil=0;
       for(const d of this.devices){if(d.hp<=0)continue;
         if(d.kind==='trap'){
           const combat=D.combatStats(d.kind,d.level);
-          if(this.seconds<d.readyAt)continue;const z=ordered.find(z=>z.hp>0&&dist(z,d)<.6);if(z){this.damageZombie(z,combat.damage);d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.35;if(z.hp>0)z.rootUntil=Math.max(z.rootUntil,this.seconds+(z.kind==='brute'?.5:1));}
+          if(this.seconds<d.readyAt)continue;const z=ordered.find(z=>z.hp>0&&!z.boneType&&dist(z,d)<.6);if(z){this.damageZombie(z,combat.damage);d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.35;if(z.hp>0)z.rootUntil=Math.max(z.rootUntil,this.seconds+(z.kind==='brute'?.5:1));}
         }else if(d.kind==='ballista'){
           const combat=D.combatStats(d.kind,d.level),valid=z=>z.hp>0&&dist(z,d)<=combat.radius&&this.clearLine(d,z,d);
           const candidates=ordered.filter(valid),visibleIds=new Set(candidates.map(z=>String(z.id)));
           d.entered=d.entered||{};for(const id of Object.keys(d.entered))if(!visibleIds.has(id))delete d.entered[id];for(const z of candidates)if(d.entered[z.id]===undefined)d.entered[z.id]=this.seconds;
           let z=candidates.find(z=>z.id===d.targetId);if(!z){for(const candidate of candidates)if(!z||d.entered[candidate.id]<d.entered[z.id]||d.entered[candidate.id]===d.entered[z.id]&&candidate.id<z.id)z=candidate;d.targetId=z?.id;}
-          if(z&&this.seconds>=d.readyAt){this.damageZombie(z,combat.damage);d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.15;d.shot={x:z.x,y:z.y};}
+          if(z&&this.seconds>=d.readyAt){const victim=this.firstBoneBetween?.(d,z)||z;this.damageZombie(victim,combat.damage,'device');d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.15;d.shot={x:victim.x,y:victim.y};}
         }else if(d.kind==='spike_floor'){
-          const affected=ordered.filter(z=>z.hp>0&&dist(z,d)<.7).slice(0,3);for(const z of affected){z.slowUntil=Math.max(z.slowUntil||0,this.seconds+.08);if(this.seconds>=d.readyAt&&this.seconds>=(z.spikeNext||0)){this.damageZombie(z,1);z.spikeNext=this.seconds+2;}}
+          const affected=ordered.filter(z=>z.hp>0&&!z.boneType&&dist(z,d)<.7).slice(0,3);for(const z of affected){z.slowUntil=Math.max(z.slowUntil||0,this.seconds+.08);if(this.seconds>=d.readyAt&&this.seconds>=(z.spikeNext||0)){this.damageZombie(z,1);z.spikeNext=this.seconds+2;}}
         }
       }
     }
@@ -469,7 +495,7 @@
         if(this.seconds>=z.repathAt&&this.pathBudget>0&&this.requestPath(z,target)){this.pathBudget--;z.repathAt=this.seconds+3+z.id%7*.15;}
         while(z.path.length&&dist(z,z.path[0])<.15)z.path.shift();
         const waypoint=z.path[0]||target,distance=dist(z,waypoint);if(!distance)continue;
-        const speed=def.speed*(z.boostUntil>this.seconds?1.2:1)*(z.slowUntil>this.seconds ? .7 : 1),step=Math.min(distance,speed*dt),next={x:z.x+(waypoint.x-z.x)/distance*step,y:z.y+(waypoint.y-z.y)/distance*step};
+        const speed=def.speed*(z.boostUntil>this.seconds?1.2:1)*(z.slowUntil>this.seconds ? .7 : 1),step=Math.min(distance,(this.movementSpeed?this.movementSpeed(speed,z):speed)*dt),next={x:z.x+(waypoint.x-z.x)/distance*step,y:z.y+(waypoint.y-z.y)/distance*step};
         z.facing={x:waypoint.x-z.x,y:waypoint.y-z.y};const blockers=this.obstacles(z,next,.24).filter(o=>o.hp>0);
         if(!blockers.length){z.x=next.x;z.y=next.y;}
         else {const priority=o=>o.type==='fence'||['wood_fence','iron_fence'].includes(o.kind)?0:o.type==='door'?1:o.type==='wall'||o.kind==='brick_wall'?2:3;
@@ -487,11 +513,11 @@
         }
         const from={x:shot.x,y:shot.y},length=Math.min(shot.range,Math.hypot(shot.vx,shot.vy)*dt),speed=Math.hypot(shot.vx,shot.vy),to={x:from.x+shot.vx/speed*length,y:from.y+shot.vy/speed*length};
         const hits=this.obstacles(from,to,0).map(o=>({object:o,distance:dist(from,o),type:'building'}));
-        const targets=shot.owner==='enemy'?[this.player]:this.zombies.filter(z=>z.hp>0);for(const o of targets)if(segmentHits(from,to,{x:o.x,y:o.y,w:.45,h:.45},.05))hits.push({object:o,distance:dist(from,o),type:shot.owner==='enemy'?'player':'zombie'});
+        const targets=shot.owner==='enemy'?[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)]:this.zombies.filter(z=>z.hp>0&&z.faction!=='player');for(const o of targets){const t=o.boneType&&S.boneCircleHit?S.boneCircleHit(from,to,o,(o.radius||.2)+.05):null;if(t!==null?Number.isFinite(t):segmentHits(from,to,{x:o.x,y:o.y,w:o.w||.45,h:o.h||.45},.05))hits.push({object:o,distance:dist(from,o),type:o===this.player?'player':'zombie',t});}
         // Sort by first intersection along the segment, rather than object centers.
-        for(const hit of hits){let lo=0,hi=1;for(let i=0;i<12;i++){const t=(lo+hi)/2,p={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t},o=hit.object,r=hit.type==='building'?o:{x:o.x,y:o.y,w:.45,h:.45};if(segmentHits(from,p,r,0))hi=t;else lo=t;}hit.t=hi;}
+        for(const hit of hits){if(Number.isFinite(hit.t))continue;let lo=0,hi=1;for(let i=0;i<12;i++){const t=(lo+hi)/2,p={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t},o=hit.object,r=hit.type==='building'?o:{x:o.x,y:o.y,w:o.w||.45,h:o.h||.45};if(segmentHits(from,p,r,0))hi=t;else lo=t;}hit.t=hi;}
         hits.sort((a,b)=>a.t-b.t);const hit=hits[0];shot.x=to.x;shot.y=to.y;shot.range-=length;
-        if(hit){shot.x=from.x+(to.x-from.x)*hit.t;shot.y=from.y+(to.y-from.y)*hit.t;shot.dead=true;if(hit.type==='zombie')this.damageZombie(hit.object,this.directDamage?this.directDamage(shot.damage):shot.damage,'weapon');else if(shot.owner==='enemy'){if(hit.type==='player')this.damagePlayer(shot.damage??2,shot.source||'spitter');else this.damageBuilding(hit.object,(this.ParkingLampKind?.(hit.object.kind)?shot.lampDamage:null)??shot.buildingDamage??1);}}
+        if(hit){shot.x=from.x+(to.x-from.x)*hit.t;shot.y=from.y+(to.y-from.y)*hit.t;shot.dead=true;if(hit.type==='zombie')this.damageZombie(hit.object,shot.owner==='enemy'?shot.damage:(this.directDamage?this.directDamage(shot.damage):shot.damage),shot.owner==='enemy'?(shot.source||'enemy'):'weapon');else if(shot.owner==='enemy'){if(hit.type==='player')this.damagePlayer(shot.damage??2,shot.source||'spitter');else this.damageBuilding(hit.object,(this.ParkingLampKind?.(hit.object.kind)?shot.lampDamage:null)??shot.buildingDamage??1);}}
         if(shot.range<=.001)shot.dead=true;
         if(shot.dead&&shot.kind==='stone_projectile')this.parkingVisual?.('stone_impact',shot,.35,22);
         if(shot.dead&&shot.kind==='acid_projectile')this.zones.push({kind:'acid_pool',x:shot.x,y:shot.y,radius:1,until:this.seconds+3});
@@ -501,7 +527,7 @@
     updateZones(dt){
       this.zones=this.zones.filter(z=>z.until>this.seconds);
       for(const [kind,amount] of [['acid_pool',1],['fire_pool',.5]]){const inside=this.zones.some(z=>z.kind===kind&&dist(z,this.player)<=z.radius&&this.clearLine(z,this.player));const key=kind==='acid_pool'?'acidTime':'fireTime';if(!inside)this[key]=0;else{this[key]=(this[key]||0)+dt;if(this[key]>=1){this[key]-=1;this.damagePlayer(amount,kind,true);}}}
-      for(const z of this.zombies)if(z.hp>0){
+      for(const z of this.zombies)if(z.hp>0&&z.faction!=='player'){
         const pool=this.zones.find(p=>p.kind==='fire_pool'&&dist(z,p)<=p.radius&&this.clearLine(p,z));
         if(pool&&!z.burningUntil){z.burningUntil=pool.until;z.burnNext=this.seconds+1;z.burnSource=pool.source||'molotov';}
         if(z.burningUntil&&z.burnNext<=z.burningUntil+1e-8&&this.seconds+1e-8>=z.burnNext){this.damageZombie(z,.5,z.burnSource||'molotov');z.burnNext+=1;}
@@ -513,11 +539,12 @@
         objects:h.objects.filter(o=>o.hp!==o.maxHP||o.level||o.open).map(o=>({id:o.id,hp:o.hp,maxHP:o.maxHP,level:o.level||0,open:!!o.open,invested:o.invested})),
         sites:h.sites.filter(s=>s.searched||s.blocking&&s.hp!==s.maxHP).map(s=>({id:s.id,searched:s.searched,hp:Number.isFinite(s.hp)?s.hp:null}))
       })).filter(h=>h.objects.length||h.sites.length);
-      return copy({version:1,developerUsed:!!this.developerUsed,day:this.day,seconds:this.seconds,minutes:this.minutes,player:this.player,playerAttack:this.playerAttack,inventory:this.inventory,drops:this.drops,homes:homeData,devices:this.devices.map(({target,...d})=>d),zombies:this.zombies,visitors:this.visitors,projectiles:this.projectiles,zones:this.zones,effects:this.effects,nextWave:this.nextWave,plan:this.plan,pendingSpawn:this.pendingSpawn,waveDirections:this.waveDirections,warnedWaves:this.warnedWaves,spawned:this.spawned,kills:this.kills,deviceId:this.deviceId,visitFailures:this.visitFailures,visitDay:this.visitDay,helper:this.helper,mainBuff:this.mainBuff,teaBuff:this.teaBuff,foodRegen:this.foodRegen,bandage:this.bandage,nextRecoveryAt:Number.isFinite(this.nextRecoveryAt)?this.nextRecoveryAt:null,lastSpent:Number.isFinite(this.lastSpent)?this.lastSpent:null,lastRecoveryAt:this.lastRecoveryAt,recoveryInterval:this.recoveryInterval,attackAt:this.attackAt,foodAt:this.foodAt,waterAt:this.waterAt,throwAt:this.throwAt,starving:this.starving||0,acidTime:this.acidTime||0,fireTime:this.fireTime||0,history:this.history,stats:this.stats,result:this.result,deathReason:this.deathReason||null});
+      return copy({version:1,survivalRulesVersion:2,traits:this.traits,startMode:this.startMode,developerUsed:!!this.developerUsed,day:this.day,seconds:this.seconds,minutes:this.minutes,player:this.player,playerAttack:this.playerAttack,inventory:this.inventory,drops:this.drops,homes:homeData,devices:this.devices.map(({target,...d})=>d),zombies:this.zombies,visitors:this.visitors,projectiles:this.projectiles,zones:this.zones,effects:this.effects,nextWave:this.nextWave,plan:this.plan,pendingSpawn:this.pendingSpawn,waveDirections:this.waveDirections,warnedWaves:this.warnedWaves,spawned:this.spawned,kills:this.kills,deviceId:this.deviceId,visitFailures:this.visitFailures,visitDay:this.visitDay,helper:this.helper,mainBuff:this.mainBuff,teaBuff:this.teaBuff,foodRegen:this.foodRegen,bandage:this.bandage,nextRecoveryAt:Number.isFinite(this.nextRecoveryAt)?this.nextRecoveryAt:null,lastSpent:Number.isFinite(this.lastSpent)?this.lastSpent:null,lastRecoveryAt:this.lastRecoveryAt,recoveryInterval:this.recoveryInterval,attackAt:this.attackAt,foodAt:this.foodAt,waterAt:this.waterAt,throwAt:this.throwAt,starving:this.starving||0,acidTime:this.acidTime||0,fireTime:this.fireTime||0,history:this.history,stats:this.stats,result:this.result,deathReason:this.deathReason||null});
     }
     static restore(data){
       if(!data||data.version!==1||!Array.isArray(data.inventory)||!data.player||!Number.isFinite(data.day))throw new Error('存档格式不兼容');
       const game=new SurvivalGame();for(const [key,value] of Object.entries(data))if(!['version','homes','drops'].includes(key))game[key]=copy(value);
+      game.traits=T.normalize(data.traits);game.startMode=['quick','full'].includes(data.startMode)?data.startMode:'legacy';game.player.hp=Math.min(game.player.hp,game.maxHP);
       game.drops=Array.isArray(data.drops)?copy(data.drops):[];
       game.homes=new Map();for(const saved of data.homes){const h=game.getHome(saved.cx,saved.cy);
         if(saved.format==='delta'){for(const state of saved.objects){const o=h.objects.find(o=>o.id===state.id);if(o)Object.assign(o,state);}for(const state of saved.sites){const s=h.sites.find(s=>s.id===state.id);if(s)Object.assign(s,state,{hp:state.hp===null?Infinity:state.hp});}}
@@ -525,7 +552,10 @@
         h.furniture=h.objects.filter(o=>o.type==='furniture');h.doors=h.objects.filter(o=>o.type==='door');
       }
       for(const z of game.zombies)if(!z.path?.length)z.repathAt=Math.min(z.repathAt??0,game.seconds);
-      game.nextRecoveryAt=data.nextRecoveryAt===null?Infinity:data.nextRecoveryAt;game.lastSpent=data.lastSpent===null?-Infinity:data.lastSpent;game.action=null;game.events=[];game.selectedSlot=0;game.pathBudget=2;game.autosaveRequested=false;game.announce('存档已恢复。');return game;
+      game.nextRecoveryAt=data.nextRecoveryAt===null?Infinity:data.nextRecoveryAt;game.lastSpent=data.lastSpent===null?-Infinity:data.lastSpent;
+      game.recoveryInterval=Number.isFinite(data.recoveryInterval)?data.recoveryInterval:Infinity;
+      game.starving=data.survivalRulesVersion===2?Math.max(0,Math.min(12,game.starving||0)):0;game.syncStaminaRecovery();
+      game.action=null;game.events=[];game.selectedSlot=0;game.pathBudget=2;game.autosaveRequested=false;game.announce('存档已恢复。');return game;
     }
     step(dt,input={}){
       if(this.result||dt<=0)return;this.seconds+=dt;this.pathBudget=2;this.updateDoors();this.movePlayer(dt,input);this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;

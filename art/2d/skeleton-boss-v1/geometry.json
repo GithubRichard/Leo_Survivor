@@ -1,0 +1,35 @@
+{
+  "coordinateSystem": "world plane; project in engine using current eight-direction compensation",
+  "shapes": {
+    "lightning_warning": {
+      "shape": "circle",
+      "radiusMeters": 1.1
+    },
+    "tornado_contact": {
+      "shape": "circle",
+      "radiusMeters": 1.2
+    },
+    "sweep": {
+      "shape": "front-semicircle",
+      "radiusMeters": 2.6,
+      "angleDegrees": 180
+    },
+    "ordinary_bone_flight": {
+      "shape": "circle",
+      "radiusMeters": 0.2
+    },
+    "ordinary_bone_ground": {
+      "shape": "circle",
+      "radiusMeters": 0.35
+    },
+    "resurrection_bone": {
+      "shape": "circle",
+      "radiusMeters": 0.6
+    },
+    "player_large_bone": {
+      "shape": "circle",
+      "radiusMeters": 1
+    }
+  },
+  "note": "PNG silhouettes/halos are not hit boxes; clip warning and damage by real obstacles. All numbers/bars/timers rendered at runtime."
+}

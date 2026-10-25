@@ -59,23 +59,28 @@
       solid('parking:store-front-left',12.5,57,3,.35,'wall');solid('parking:store-front-right',21,57,6,.35,'wall');
       solid('parking:gate',16,57,4,.35,'fuse_gate');
       for(const y of [18,28,38,52])for(const x of [-9,9])solid(`parking:column:${x},${y}`,x,y,.8,.8,'column');
-      const kinds=[...Array(16).fill('civilian'),...Array(4).fill('repair'),...Array(2).fill('supply'),...Array(2).fill('security')];
       const positions=[];for(const y of [12,22,32,48])for(const x of [-19,-12,-5,4,12,19])positions.push({x,y});
       // Supply #21 and security #23 are the only cars in the locked enclosure.
       const order=[...Array.from({length:20},(_,i)=>i),20,22,21,23];
       for(let i=0;i<24;i++){
-        const vehicle=kinds[i],p={...positions[order[i]]},id=`parking:car:${i}`;if(i===21)p.x=14.5;if(i===23)p.x=20.5;
-        const loot=vehicle==='civilian'?{iron:2,scrap:1}:vehicle==='repair'?{iron:3,scrap:2,parts:1,wire:1}:vehicle==='supply'?{canned_food:3,clean_water:3,cloth:2,battery:1}:{iron:2,battery:1,wire:1};
-        if(vehicle==='civilian'){const r=this.random();loot[r<.4?'cloth':r<.7?'canned_food':'clean_water']=1;}
-        if(vehicle==='security'){const bolts=this.random()<.5;loot[bolts?'bolt':'shotgun_shell']=bolts?6:4;}
-        if(i===19)loot.fuse=1;
-        const car={...p,id,type:'parking_solid',kind:'car',vehicle,w:2.4,h:4.2,hp:1,indestructible:true};layer.cars.push(car);layer.objects.push(car);
-        layer.points.push({id:id+':cargo',type:'parking',kind:'cargo',carId:id,x:p.x-1.7,y:p.y,hp:1,opened:false,loot,time:4});
-        if([0,3,6,9,12,15,17,19].includes(i))layer.points.push({id:id+':tank',type:'parking',kind:'tank',carId:id,x:p.x+1.7,y:p.y,hp:1,opened:false,loot:{fuel_oil:2},time:6});
+        const p={...positions[order[i]]};if(i===21)p.x=14.5;if(i===23)p.x=20.5;
+        this.addParkingCar(layer,i,p,'parking',i===19);
       }
       layer.points.push({id:'parking:exit',type:'parking',kind:'exit',...P.exit,hp:1},{id:'parking:gate-control',type:'parking',kind:'gate_control',x:16,y:58.4,hp:1},{id:'parking:next',type:'parking',kind:'next_floor',x:-16,y:57,hp:1});
       this.parking.layer=layer;
       this.normalizeParkingCargo();
+    }
+    addParkingCar(layer,i,p,prefix,withFuse=false){
+      const id=`${prefix}:car:${i}`;if(layer.objects.some(o=>o.id===id))return false;
+      const vehicle=i<16?'civilian':i<20?'repair':i<22?'supply':'security';
+      const loot=vehicle==='civilian'?{iron:2,scrap:1}:vehicle==='repair'?{iron:3,scrap:2,parts:1,wire:1}:vehicle==='supply'?{canned_food:3,clean_water:3,cloth:2,battery:1}:{iron:2,battery:1,wire:1};
+      if(vehicle==='civilian'){const r=this.random();loot[r<.4?'cloth':r<.7?'canned_food':'clean_water']=1;}
+      if(vehicle==='security'){const bolts=this.random()<.5;loot[bolts?'bolt':'shotgun_shell']=bolts?6:4;}
+      if(withFuse)loot.fuse=1;
+      const car={...p,id,type:'parking_solid',kind:'car',vehicle,w:2.4,h:4.2,hp:1,indestructible:true};layer.cars.push(car);layer.objects.push(car);
+      layer.points.push({id:id+':cargo',type:'parking',kind:'cargo',carId:id,x:p.x,y:p.y,w:car.w,h:car.h,hp:1,opened:false,loot,time:4});
+      if([0,3,6,9,12,15,17,19].includes(i))layer.points.push({id:id+':tank',type:'parking',kind:'tank',carId:id,x:p.x+1.7,y:p.y,hp:1,opened:false,loot:{fuel_oil:2},time:6});
+      layer.carRevision=(layer.carRevision||0)+1;return true;
     }
     normalizeParkingCargo(){
       const layer=this.parking?.layer;if(!layer)return;
@@ -221,7 +226,7 @@
     movePlayer(dt,input){
       if(!this.skill?.active&&this.weaknessUntil<=this.seconds)return super.movePlayer(dt,input);
       const sx=(input.right?1:0)-(input.left?1:0)+(input.moveX||0),sy=(input.down?1:0)-(input.up?1:0)+(input.moveY||0),length=Math.hypot(sx,sy),f=screenDirection(sx,sy);
-      const run=!this.skill.active&&input.run&&this.player.stamina>0,base=this.skill.active?3.4:run?4:2,speed=Math.max(.1,base-(this.weaknessUntil>this.seconds?.7:0)),before={x:this.player.x,y:this.player.y};
+      const run=!this.skill.active&&input.run&&this.player.stamina>0,base=this.skill.active?3.4:run?this.runSpeed:2,speed=this.movementSpeed?this.movementSpeed(Math.max(.5,base-(this.weaknessUntil>this.seconds?.7:0))):Math.max(.5,base-(this.weaknessUntil>this.seconds?.7:0)),before={x:this.player.x,y:this.player.y};
       // Original recovery code still runs; running skips recovery in the override hook.
       this._skipRecovery=!!run;super.movePlayer(dt,{});this._skipRecovery=false;
       if(length&&this.action?.type!=='medkit'){
@@ -233,7 +238,7 @@
     }
     updateVitals(dt){
       super.updateVitals(dt);
-      if(this.skill.active){const used=Math.min(dt,Math.max(0,this.skill.until-(this.seconds-dt)));this.player.hunger=Math.max(0,this.player.hunger-1.5*used);if(this.seconds>=this.skill.until||!this.player.hunger||this.result)this.endStealth();}
+      if(this.skill.active){const used=Math.min(dt,Math.max(0,this.skill.until-(this.seconds-dt)));this.player.hunger=Math.max(0,this.player.hunger-1.5*used);this.syncStaminaRecovery();if(this.seconds>=this.skill.until||!this.player.hunger||this.result)this.endStealth();}
     }
     damagePlayer(n,source,ground){const hit=super.damagePlayer(n,source,ground);if(hit)this.endStealth('hurt');return hit;}
     attack(){if(this.skill?.active)this.endStealth();const ok=super.attack();if(ok&&this.scene==='parking'&&this.playerAttack?.weapon==='shotgun')this._gunSound={x:this.player.x,y:this.player.y,until:this.seconds+1};return ok;}
@@ -264,7 +269,7 @@
       if(this.scene==='parking'){
         const p=this.parking;p.elapsed=this.seconds;
         if(this.seconds>=(this._exploreNext||0)){this._exploreNext=this.seconds+.5;const known=new Set(p.explored);
-          for(let x=Math.floor(this.player.x/2)*2-16;x<=this.player.x+16;x+=2)for(let y=Math.floor(this.player.y/2)*2-16;y<=this.player.y+16;y+=2)if(this.canSee({x,y}))known.add(`${x},${y}`);p.explored=[...known];}
+          const sight=Math.ceil(this.illuminatedSight/2)*2;for(let x=Math.floor(this.player.x/2)*2-sight;x<=this.player.x+sight;x+=2)for(let y=Math.floor(this.player.y/2)*2-sight;y<=this.player.y+sight;y+=2)if(this.canSee({x,y}))known.add(`${x},${y}`);p.explored=[...known];}
       }
     }
   }

@@ -1,0 +1,2130 @@
+{
+  "schema": 1,
+  "tool": null,
+  "source": null,
+  "expectedPNGs": 15,
+  "expectedFrames": 30,
+  "userCorrections": null,
+  "rectFormat": "source x,y,width,height; PNG pixels unchanged",
+  "anchorNote": "Per-frame centers/pivots are suggestions. Use one constant body scale per direction calibrated to idle/ready/standing; never resize actor from each pose bounding box.",
+  "assets": [
+    {
+      "id": "weather_sunny",
+      "label": "晴天",
+      "category": "天气图标",
+      "file": "png/weather_sunny.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "icon",
+          "label": "晴天",
+          "action": "icon",
+          "frame": 0,
+          "description": "simple angular sun with six short rays, no scenery"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparentPixels": 1456159,
+      "opaquePixels": 110914,
+      "softPixels": 4099,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1254
+      ],
+      "cutsY": [
+        0,
+        1254
+      ],
+      "sha256": "9916ed15f1480edc8488d661105fbfa87e45a4b88a7f1b14d2c0c3964d00a9cf",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "weather_sunny__icon"
+    },
+    {
+      "id": "weather_overcast",
+      "label": "阴天",
+      "category": "天气图标",
+      "file": "png/weather_overcast.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "icon",
+          "label": "阴天",
+          "action": "icon",
+          "frame": 0,
+          "description": "two broad plain matte dark gray cloud lobes, NO sun and NO rain"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparentPixels": 1306452,
+      "opaquePixels": 262317,
+      "softPixels": 3273,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1254
+      ],
+      "cutsY": [
+        0,
+        1254
+      ],
+      "sha256": "5bd4f2a355c5559df8e02e9cf5876d399909ab94d1d6db69bd3c95494073ff36",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "weather_overcast__icon"
+    },
+    {
+      "id": "weather_rain",
+      "label": "雨天",
+      "category": "天气图标",
+      "file": "png/weather_rain.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "icon",
+          "label": "雨天",
+          "action": "icon",
+          "frame": 0,
+          "description": "single cloud with three large rain drops, NO lightning"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparentPixels": 1316031,
+      "opaquePixels": 250948,
+      "softPixels": 4757,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1254
+      ],
+      "cutsY": [
+        0,
+        1254
+      ],
+      "sha256": "b96d881597ab9a35f7cf0e595a3ce4065ab33aae5cb7cfd98ace24a29a453e2f",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "weather_rain__icon"
+    },
+    {
+      "id": "weather_fog",
+      "label": "大雾",
+      "category": "天气图标",
+      "file": "png/weather_fog.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "icon",
+          "label": "大雾",
+          "action": "icon",
+          "frame": 0,
+          "description": "three thick low horizontal wavy mist bands with one small cloud, NO eye or circle"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparentPixels": 1286612,
+      "opaquePixels": 274202,
+      "softPixels": 9139,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1254
+      ],
+      "cutsY": [
+        0,
+        1254
+      ],
+      "sha256": "2dbe9d94d50cb7407c8b1b5eaa8814f4cfd3ba3e0c94538e002bbc16243a4642",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "weather_fog__icon"
+    },
+    {
+      "id": "weather_thunderstorm",
+      "label": "雷暴雨",
+      "category": "天气图标",
+      "file": "png/weather_thunderstorm.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "icon",
+          "label": "雷暴雨",
+          "action": "icon",
+          "frame": 0,
+          "description": "cloud, TWO rain drops and ONE clear jagged lightning bolt"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1254,
+        1254
+      ],
+      "transparentPixels": 1296776,
+      "opaquePixels": 269368,
+      "softPixels": 5269,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1254
+      ],
+      "cutsY": [
+        0,
+        1254
+      ],
+      "sha256": "ea4661d42c111d8e3125536fbd5d7ad8b96bf3a00ef8b95d12bae38dfc5e75cb",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "weather_thunderstorm__icon"
+    },
+    {
+      "id": "weather_tornado",
+      "label": "龙卷风",
+      "category": "天气图标",
+      "file": "png/weather_tornado.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "icon",
+          "label": "龙卷风",
+          "action": "icon",
+          "frame": 0,
+          "description": "short clear twisting funnel with three sweeping faceted ribbons, no cloud or lightning"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1304,
+        1206
+      ],
+      "transparentPixels": 1359108,
+      "opaquePixels": 207597,
+      "softPixels": 4551,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1304
+      ],
+      "cutsY": [
+        0,
+        1206
+      ],
+      "sha256": "20c2e5632792f1ae195387e663c366e8636f230e428e67d3fcead465c26267df",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "weather_tornado__icon"
+    },
+    {
+      "id": "rain_streaks",
+      "label": "雨丝纹理",
+      "category": "天气特效",
+      "file": "png/rain_streaks.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "sparse cluster of six thin diagonal gray rain streaks, transparent between streaks",
+          "action": "loop",
+          "frame": 0,
+          "description": "sparse cluster of six thin diagonal gray rain streaks, transparent between streaks"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1374,
+        1145
+      ],
+      "transparentPixels": 1557385,
+      "opaquePixels": 9423,
+      "softPixels": 5224,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1374
+      ],
+      "cutsY": [
+        0,
+        1145
+      ],
+      "sha256": "c0e0a01a2f26c622949f802dae23d1e96fed826101cd714314375346dfec2bb9",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "rain_streaks__f0"
+    },
+    {
+      "id": "rain_splash",
+      "label": "落地水花",
+      "category": "天气特效",
+      "file": "png/rain_splash.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "tiny flat ground droplet impact",
+          "action": "loop",
+          "frame": 0,
+          "description": "tiny flat ground droplet impact"
+        },
+        {
+          "id": "f1",
+          "label": "two small splash prongs and broken ring",
+          "action": "loop",
+          "frame": 1,
+          "description": "two small splash prongs and broken ring"
+        },
+        {
+          "id": "f2",
+          "label": "few separated water flecks fading",
+          "action": "loop",
+          "frame": 2,
+          "description": "few separated water flecks fading"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1531477,
+      "opaquePixels": 34124,
+      "softPixels": 5289,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "0dfca01f8f685a24ce64a5cbe5dc472c95a3e69d008aae9c39aa3622df20088c",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "rain_splash__f0"
+    },
+    {
+      "id": "fog_patch",
+      "label": "柔和雾片",
+      "category": "天气特效",
+      "file": "png/fog_patch.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "one irregular low-opacity low-contrast gray-olive wispy fog patch with feathered edges and transparent holes",
+          "action": "loop",
+          "frame": 0,
+          "description": "one irregular low-opacity low-contrast gray-olive wispy fog patch with feathered edges and transparent holes"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 1135094,
+      "opaquePixels": 103014,
+      "softPixels": 311011,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1536
+      ],
+      "cutsY": [
+        0,
+        1024
+      ],
+      "sha256": "974e16c7ba5d100295f5ee146b77461d7ad3e2ea02cd86e9f9de5fea89820ef6",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "fog_patch__f0"
+    },
+    {
+      "id": "lightning_warning",
+      "label": "雷击落点预警材质",
+      "category": "天气特效",
+      "file": "png/lightning_warning.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "three separated tiny ground electric ticks marking a clear empty center",
+          "action": "loop",
+          "frame": 0,
+          "description": "three separated tiny ground electric ticks marking a clear empty center"
+        },
+        {
+          "id": "f1",
+          "label": "same ticks slightly brighter local warning",
+          "action": "loop",
+          "frame": 1,
+          "description": "same ticks slightly brighter local warning"
+        },
+        {
+          "id": "f2",
+          "label": "same small ticks charged but compact",
+          "action": "loop",
+          "frame": 2,
+          "description": "same small ticks charged but compact"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1524927,
+      "opaquePixels": 37423,
+      "softPixels": 7620,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "78250646da3bf61e2d53eee2eab9d89b68701d127a205ff12bc45f6985896a9c",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "lightning_warning__f0"
+    },
+    {
+      "id": "lightning_bolt",
+      "label": "局部落雷",
+      "category": "天气特效",
+      "file": "png/lightning_bolt.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "thin descending jagged electric bolt",
+          "action": "loop",
+          "frame": 0,
+          "description": "thin descending jagged electric bolt"
+        },
+        {
+          "id": "f1",
+          "label": "one local branching bolt reaches tiny ground contact",
+          "action": "loop",
+          "frame": 1,
+          "description": "one local branching bolt reaches tiny ground contact"
+        },
+        {
+          "id": "f2",
+          "label": "bolt thins into separated short zigzags",
+          "action": "loop",
+          "frame": 2,
+          "description": "bolt thins into separated short zigzags"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1503227,
+      "opaquePixels": 52660,
+      "softPixels": 12473,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "9e63b00bd8a7dcc62e6c18a0e8758467e3201e714e579a07a35b6c78fe7ea1c1",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "lightning_bolt__f0"
+    },
+    {
+      "id": "lightning_sparks",
+      "label": "地面电火花",
+      "category": "天气特效",
+      "file": "png/lightning_sparks-v2.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "small flat electric star at contact",
+          "action": "loop",
+          "frame": 0,
+          "description": "small flat electric star at contact"
+        },
+        {
+          "id": "f1",
+          "label": "several short separated ground arcs",
+          "action": "loop",
+          "frame": 1,
+          "description": "several short separated ground arcs"
+        },
+        {
+          "id": "f2",
+          "label": "few sparse shrinking ticks",
+          "action": "loop",
+          "frame": 2,
+          "description": "few sparse shrinking ticks"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1552157,
+      "opaquePixels": 14675,
+      "softPixels": 4433,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "be1cf81be8c173831f9c083420c7a63a4e6b5bbf4deac3bcd20b8e3ea1d706d1",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "lightning_sparks__f0"
+    },
+    {
+      "id": "tornado_warning",
+      "label": "风柱生成预警",
+      "category": "天气特效",
+      "file": "png/tornado_warning.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "low flat three-piece spiral ground swirl",
+          "action": "loop",
+          "frame": 0,
+          "description": "low flat three-piece spiral ground swirl"
+        },
+        {
+          "id": "f1",
+          "label": "ground swirl grows slightly",
+          "action": "loop",
+          "frame": 1,
+          "description": "ground swirl grows slightly"
+        },
+        {
+          "id": "f2",
+          "label": "ground swirl tightens toward center",
+          "action": "loop",
+          "frame": 2,
+          "description": "ground swirl tightens toward center"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1415677,
+      "opaquePixels": 139568,
+      "softPixels": 13194,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "39f30b4df16bb52ecaa27684f9e79c5d051fde7655cca94a95bbaf76df36b42c",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "tornado_warning__f0"
+    },
+    {
+      "id": "tornado_loop",
+      "label": "成形风柱循环",
+      "category": "天气特效",
+      "file": "png/tornado_loop.png",
+      "grid": [
+        2,
+        2
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "standing narrow funnel rotating ribbons phaseA",
+          "action": "loop",
+          "frame": 0,
+          "description": "standing narrow funnel rotating ribbons phaseA"
+        },
+        {
+          "id": "f1",
+          "label": "same size upright funnel rotating phaseB",
+          "action": "loop",
+          "frame": 1,
+          "description": "same size upright funnel rotating phaseB"
+        },
+        {
+          "id": "f2",
+          "label": "same size funnel rotating phaseC",
+          "action": "loop",
+          "frame": 2,
+          "description": "same size funnel rotating phaseC"
+        },
+        {
+          "id": "f3",
+          "label": "same size funnel rotating phaseD",
+          "action": "loop",
+          "frame": 3,
+          "description": "same size funnel rotating phaseD"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 1339874,
+      "opaquePixels": 219515,
+      "softPixels": 10817,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        768,
+        1536
+      ],
+      "cutsY": [
+        0,
+        512,
+        1024
+      ],
+      "sha256": "3dc6430d9dd7c04a6642f8eb3b3c265b6a9ae3ece4a7f78c8d9df7510f2a8fb8",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "tornado_loop__f0"
+    },
+    {
+      "id": "tornado_dissipate",
+      "label": "风柱消散",
+      "category": "天气特效",
+      "file": "png/tornado_dissipate.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        {
+          "id": "f0",
+          "label": "upright funnel starts thinning",
+          "action": "loop",
+          "frame": 0,
+          "description": "upright funnel starts thinning"
+        },
+        {
+          "id": "f1",
+          "label": "separated fading spiral ribbons",
+          "action": "loop",
+          "frame": 1,
+          "description": "separated fading spiral ribbons"
+        },
+        {
+          "id": "f2",
+          "label": "few small wisps only",
+          "action": "loop",
+          "frame": 2,
+          "description": "few small wisps only"
+        }
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1432005,
+      "opaquePixels": 123503,
+      "softPixels": 13138,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "d1db866f721f62aa1dea49aaf938b230caa79a93fe67b785dfde9043f6ac46e1",
+      "sourceVerified": true,
+      "bodyScaleReferenceFrame": "tornado_dissipate__f0"
+    }
+  ],
+  "frames": [
+    {
+      "id": "weather_sunny__icon",
+      "asset": "weather_sunny",
+      "file": "png/weather_sunny.png",
+      "label": "晴天·晴天",
+      "category": "天气图标",
+      "state": "icon",
+      "action": "icon",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "visibleBounds": [
+        336,
+        317,
+        918,
+        936
+      ],
+      "opaquePixels": 110914,
+      "center": [
+        626.44,
+        619.8
+      ],
+      "suggestedFootPivot": [
+        627,
+        936
+      ]
+    },
+    {
+      "id": "weather_overcast__icon",
+      "asset": "weather_overcast",
+      "file": "png/weather_overcast.png",
+      "label": "阴天·阴天",
+      "category": "天气图标",
+      "state": "icon",
+      "action": "icon",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "visibleBounds": [
+        176,
+        398,
+        1080,
+        879
+      ],
+      "opaquePixels": 262317,
+      "center": [
+        655.96,
+        644.13
+      ],
+      "suggestedFootPivot": [
+        628,
+        879
+      ]
+    },
+    {
+      "id": "weather_rain__icon",
+      "asset": "weather_rain",
+      "file": "png/weather_rain.png",
+      "label": "雨天·雨天",
+      "category": "天气图标",
+      "state": "icon",
+      "action": "icon",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "visibleBounds": [
+        261,
+        297,
+        1010,
+        997
+      ],
+      "opaquePixels": 250948,
+      "center": [
+        642.52,
+        557.79
+      ],
+      "suggestedFootPivot": [
+        635.5,
+        997
+      ]
+    },
+    {
+      "id": "weather_fog__icon",
+      "asset": "weather_fog",
+      "file": "png/weather_fog.png",
+      "label": "大雾·大雾",
+      "category": "天气图标",
+      "state": "icon",
+      "action": "icon",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "visibleBounds": [
+        156,
+        380,
+        1116,
+        959
+      ],
+      "opaquePixels": 274202,
+      "center": [
+        646.56,
+        636.68
+      ],
+      "suggestedFootPivot": [
+        636,
+        959
+      ]
+    },
+    {
+      "id": "weather_thunderstorm__icon",
+      "asset": "weather_thunderstorm",
+      "file": "png/weather_thunderstorm.png",
+      "label": "雷暴雨·雷暴雨",
+      "category": "天气图标",
+      "state": "icon",
+      "action": "icon",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "visibleBounds": [
+        242,
+        286,
+        1025,
+        1000
+      ],
+      "opaquePixels": 269368,
+      "center": [
+        637,
+        549.36
+      ],
+      "suggestedFootPivot": [
+        633.5,
+        1000
+      ]
+    },
+    {
+      "id": "weather_tornado__icon",
+      "asset": "weather_tornado",
+      "file": "png/weather_tornado.png",
+      "label": "龙卷风·龙卷风",
+      "category": "天气图标",
+      "state": "icon",
+      "action": "icon",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1304,
+        1206
+      ],
+      "size": [
+        1304,
+        1206
+      ],
+      "visibleBounds": [
+        340,
+        307,
+        989,
+        972
+      ],
+      "opaquePixels": 207597,
+      "center": [
+        666.69,
+        518.26
+      ],
+      "suggestedFootPivot": [
+        664.5,
+        972
+      ]
+    },
+    {
+      "id": "rain_streaks__f0",
+      "asset": "rain_streaks",
+      "file": "png/rain_streaks.png",
+      "label": "雨丝纹理·sparse cluster of six thin diagonal gray rain streaks, transparent between streaks",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1374,
+        1145
+      ],
+      "size": [
+        1374,
+        1145
+      ],
+      "visibleBounds": [
+        301,
+        254,
+        1196,
+        927
+      ],
+      "opaquePixels": 9423,
+      "center": [
+        712.14,
+        483.86
+      ],
+      "suggestedFootPivot": [
+        748.5,
+        927
+      ]
+    },
+    {
+      "id": "rain_splash__f0",
+      "asset": "rain_splash",
+      "file": "png/rain_splash.png",
+      "label": "落地水花·tiny flat ground droplet impact",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        195,
+        402,
+        530,
+        524
+      ],
+      "opaquePixels": 8312,
+      "center": [
+        365.63,
+        432.98
+      ],
+      "suggestedFootPivot": [
+        362.5,
+        524
+      ]
+    },
+    {
+      "id": "rain_splash__f1",
+      "asset": "rain_splash",
+      "file": "png/rain_splash.png",
+      "label": "落地水花·two small splash prongs and broken ring",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        179,
+        329,
+        542,
+        534
+      ],
+      "opaquePixels": 16400,
+      "center": [
+        358.16,
+        424.96
+      ],
+      "suggestedFootPivot": [
+        360.5,
+        534
+      ]
+    },
+    {
+      "id": "rain_splash__f2",
+      "asset": "rain_splash",
+      "file": "png/rain_splash.png",
+      "label": "落地水花·few separated water flecks fading",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        156,
+        322,
+        492,
+        534
+      ],
+      "opaquePixels": 9412,
+      "center": [
+        311.56,
+        406.61
+      ],
+      "suggestedFootPivot": [
+        324,
+        534
+      ]
+    },
+    {
+      "id": "fog_patch__f0",
+      "asset": "fog_patch",
+      "file": "png/fog_patch.png",
+      "label": "柔和雾片·one irregular low-opacity low-contrast gray-olive wispy fog patch with feathered edges and transparent holes",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "size": [
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        253,
+        127,
+        1264,
+        904
+      ],
+      "opaquePixels": 103014,
+      "center": [
+        888.01,
+        510.87
+      ],
+      "suggestedFootPivot": [
+        758.5,
+        904
+      ]
+    },
+    {
+      "id": "lightning_warning__f0",
+      "asset": "lightning_warning",
+      "file": "png/lightning_warning.png",
+      "label": "雷击落点预警材质·three separated tiny ground electric ticks marking a clear empty center",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        202,
+        202,
+        557,
+        483
+      ],
+      "opaquePixels": 9047,
+      "center": [
+        377.07,
+        377.07
+      ],
+      "suggestedFootPivot": [
+        379.5,
+        483
+      ]
+    },
+    {
+      "id": "lightning_warning__f1",
+      "asset": "lightning_warning",
+      "file": "png/lightning_warning.png",
+      "label": "雷击落点预警材质·same ticks slightly brighter local warning",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        168,
+        192,
+        565,
+        508
+      ],
+      "opaquePixels": 13278,
+      "center": [
+        359.66,
+        371.69
+      ],
+      "suggestedFootPivot": [
+        366.5,
+        508
+      ]
+    },
+    {
+      "id": "lightning_warning__f2",
+      "asset": "lightning_warning",
+      "file": "png/lightning_warning.png",
+      "label": "雷击落点预警材质·same small ticks charged but compact",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        173,
+        188,
+        558,
+        507
+      ],
+      "opaquePixels": 15098,
+      "center": [
+        360.96,
+        371.21
+      ],
+      "suggestedFootPivot": [
+        365.5,
+        507
+      ]
+    },
+    {
+      "id": "lightning_bolt__f0",
+      "asset": "lightning_bolt",
+      "file": "png/lightning_bolt.png",
+      "label": "局部落雷·thin descending jagged electric bolt",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        338,
+        42,
+        465,
+        654
+      ],
+      "opaquePixels": 12612,
+      "center": [
+        406.9,
+        302.67
+      ],
+      "suggestedFootPivot": [
+        401.5,
+        654
+      ]
+    },
+    {
+      "id": "lightning_bolt__f1",
+      "asset": "lightning_bolt",
+      "file": "png/lightning_bolt.png",
+      "label": "局部落雷·one local branching bolt reaches tiny ground contact",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        192,
+        35,
+        605,
+        674
+      ],
+      "opaquePixels": 30571,
+      "center": [
+        380.47,
+        313.61
+      ],
+      "suggestedFootPivot": [
+        398.5,
+        674
+      ]
+    },
+    {
+      "id": "lightning_bolt__f2",
+      "asset": "lightning_bolt",
+      "file": "png/lightning_bolt.png",
+      "label": "局部落雷·bolt thins into separated short zigzags",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        295,
+        72,
+        477,
+        675
+      ],
+      "opaquePixels": 9477,
+      "center": [
+        375.97,
+        300.45
+      ],
+      "suggestedFootPivot": [
+        386,
+        675
+      ]
+    },
+    {
+      "id": "lightning_sparks__f0",
+      "asset": "lightning_sparks",
+      "file": "png/lightning_sparks-v2.png",
+      "label": "地面电火花·small flat electric star at contact",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        212,
+        190,
+        520,
+        507
+      ],
+      "opaquePixels": 7043,
+      "center": [
+        351.4,
+        374.92
+      ],
+      "suggestedFootPivot": [
+        366,
+        507
+      ]
+    },
+    {
+      "id": "lightning_sparks__f1",
+      "asset": "lightning_sparks",
+      "file": "png/lightning_sparks-v2.png",
+      "label": "地面电火花·several short separated ground arcs",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        187,
+        195,
+        545,
+        532
+      ],
+      "opaquePixels": 6124,
+      "center": [
+        369.32,
+        327.97
+      ],
+      "suggestedFootPivot": [
+        366,
+        532
+      ]
+    },
+    {
+      "id": "lightning_sparks__f2",
+      "asset": "lightning_sparks",
+      "file": "png/lightning_sparks-v2.png",
+      "label": "地面电火花·few sparse shrinking ticks",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        238,
+        224,
+        526,
+        456
+      ],
+      "opaquePixels": 1508,
+      "center": [
+        380.09,
+        379.22
+      ],
+      "suggestedFootPivot": [
+        382,
+        456
+      ]
+    },
+    {
+      "id": "tornado_warning__f0",
+      "asset": "tornado_warning",
+      "file": "png/tornado_warning.png",
+      "label": "风柱生成预警·low flat three-piece spiral ground swirl",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        154,
+        236,
+        600,
+        554
+      ],
+      "opaquePixels": 42238,
+      "center": [
+        378.09,
+        374.99
+      ],
+      "suggestedFootPivot": [
+        377,
+        554
+      ]
+    },
+    {
+      "id": "tornado_warning__f1",
+      "asset": "tornado_warning",
+      "file": "png/tornado_warning.png",
+      "label": "风柱生成预警·ground swirl grows slightly",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        111,
+        200,
+        616,
+        573
+      ],
+      "opaquePixels": 55377,
+      "center": [
+        359.29,
+        370.98
+      ],
+      "suggestedFootPivot": [
+        363.5,
+        573
+      ]
+    },
+    {
+      "id": "tornado_warning__f2",
+      "asset": "tornado_warning",
+      "file": "png/tornado_warning.png",
+      "label": "风柱生成预警·ground swirl tightens toward center",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        163,
+        228,
+        536,
+        564
+      ],
+      "opaquePixels": 41953,
+      "center": [
+        346.99,
+        381.79
+      ],
+      "suggestedFootPivot": [
+        349.5,
+        564
+      ]
+    },
+    {
+      "id": "tornado_loop__f0",
+      "asset": "tornado_loop",
+      "file": "png/tornado_loop.png",
+      "label": "成形风柱循环·standing narrow funnel rotating ribbons phaseA",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        768,
+        512
+      ],
+      "size": [
+        768,
+        512
+      ],
+      "visibleBounds": [
+        260,
+        86,
+        590,
+        465
+      ],
+      "opaquePixels": 55647,
+      "center": [
+        419.31,
+        196.46
+      ],
+      "suggestedFootPivot": [
+        425,
+        465
+      ]
+    },
+    {
+      "id": "tornado_loop__f1",
+      "asset": "tornado_loop",
+      "file": "png/tornado_loop.png",
+      "label": "成形风柱循环·same size upright funnel rotating phaseB",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        768,
+        0,
+        768,
+        512
+      ],
+      "size": [
+        768,
+        512
+      ],
+      "visibleBounds": [
+        195,
+        92,
+        510,
+        465
+      ],
+      "opaquePixels": 52600,
+      "center": [
+        349.96,
+        198.51
+      ],
+      "suggestedFootPivot": [
+        352.5,
+        465
+      ]
+    },
+    {
+      "id": "tornado_loop__f2",
+      "asset": "tornado_loop",
+      "file": "png/tornado_loop.png",
+      "label": "成形风柱循环·same size funnel rotating phaseC",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        0,
+        512,
+        768,
+        512
+      ],
+      "size": [
+        768,
+        512
+      ],
+      "visibleBounds": [
+        257,
+        71,
+        589,
+        450
+      ],
+      "opaquePixels": 55769,
+      "center": [
+        431.64,
+        196.46
+      ],
+      "suggestedFootPivot": [
+        423,
+        450
+      ]
+    },
+    {
+      "id": "tornado_loop__f3",
+      "asset": "tornado_loop",
+      "file": "png/tornado_loop.png",
+      "label": "成形风柱循环·same size funnel rotating phaseD",
+      "category": "天气特效",
+      "state": "f3",
+      "action": "loop",
+      "frame": 3,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 4,
+      "rect": [
+        768,
+        512,
+        768,
+        512
+      ],
+      "size": [
+        768,
+        512
+      ],
+      "visibleBounds": [
+        194,
+        71,
+        511,
+        450
+      ],
+      "opaquePixels": 55499,
+      "center": [
+        352.94,
+        193.65
+      ],
+      "suggestedFootPivot": [
+        352.5,
+        450
+      ]
+    },
+    {
+      "id": "tornado_dissipate__f0",
+      "asset": "tornado_dissipate",
+      "file": "png/tornado_dissipate.png",
+      "label": "风柱消散·upright funnel starts thinning",
+      "category": "天气特效",
+      "state": "f0",
+      "action": "loop",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        197,
+        171,
+        550,
+        623
+      ],
+      "opaquePixels": 73789,
+      "center": [
+        373.22,
+        302.03
+      ],
+      "suggestedFootPivot": [
+        373.5,
+        623
+      ]
+    },
+    {
+      "id": "tornado_dissipate__f1",
+      "asset": "tornado_dissipate",
+      "file": "png/tornado_dissipate.png",
+      "label": "风柱消散·separated fading spiral ribbons",
+      "category": "天气特效",
+      "state": "f1",
+      "action": "loop",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        182,
+        163,
+        554,
+        623
+      ],
+      "opaquePixels": 39714,
+      "center": [
+        363.58,
+        312.93
+      ],
+      "suggestedFootPivot": [
+        368,
+        623
+      ]
+    },
+    {
+      "id": "tornado_dissipate__f2",
+      "asset": "tornado_dissipate",
+      "file": "png/tornado_dissipate.png",
+      "label": "风柱消散·few small wisps only",
+      "category": "天气特效",
+      "state": "f2",
+      "action": "loop",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        272,
+        205,
+        480,
+        619
+      ],
+      "opaquePixels": 10000,
+      "center": [
+        380.49,
+        351.2
+      ],
+      "suggestedFootPivot": [
+        376,
+        619
+      ]
+    }
+  ],
+  "reuse": [
+    {
+      "id": "planter_empty",
+      "original": "../expansion-v1/planter_empty.png",
+      "file": "../skeleton-boss-v1/reuse/planter_empty.png",
+      "sha256": "8e859746e274451ce7785abc80eebf78bf2f8bf493219fc2960f2a7c0b04edfd",
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "planter_potato_seedling",
+      "original": "../expansion-v1/planter_potato_seedling.png",
+      "file": "../skeleton-boss-v1/reuse/planter_potato_seedling.png",
+      "sha256": "9d1c0cc58e45a72981987ff7c6d86aa586637d030e4e325367bb43e940a8d616",
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "planter_potato_mature",
+      "original": "../expansion-v1/planter_potato_mature.png",
+      "file": "../skeleton-boss-v1/reuse/planter_potato_mature.png",
+      "sha256": "d5025bd091eb3c798d7a90b9d2df2e06cd7b621e3fd2b7a2d79aaecd7bcc9384",
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "planter_vegetable_seedling",
+      "original": "../expansion-v1/planter_vegetable_seedling.png",
+      "file": "../skeleton-boss-v1/reuse/planter_vegetable_seedling.png",
+      "sha256": "b9931b28410c1b04ce512914914d5f5512dad424017d243390e734f362415859",
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "planter_vegetable_mature",
+      "original": "../expansion-v1/planter_vegetable_mature.png",
+      "file": "../skeleton-boss-v1/reuse/planter_vegetable_mature.png",
+      "sha256": "a192bf1cb26358aabddd139fcd2cd21d7b0f05681ecdc91ad41bd02ec1cc9863",
+      "grid": [
+        1,
+        1
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "label": "六天气图标",
+      "note": "sunny/overcast/rain/fog/thunderstorm/tornado；不在夜晚强制变白昼"
+    },
+    {
+      "label": "雨与雾",
+      "note": "rain_streaks/rain_splash/fog_patch；按室外区域裁切，雾片低透明叠加，不盖人物/UI"
+    },
+    {
+      "label": "落雷",
+      "note": "lightning_warning/bolt/sparks；1.2秒预警、半径1.1米由程序画准确圆形"
+    },
+    {
+      "label": "风柱",
+      "note": "tornado_warning/loop/dissipate；3秒生成预警，接触半径1.2米，不绘制玩家被卷起"
+    },
+    {
+      "label": "骷髅八向",
+      "note": "8张各24状态，完整/缺骨行走、普攻、拆骨投掷、半圆横扫、空挥、受击、解体、接回"
+    },
+    {
+      "label": "竖立重组八向",
+      "note": "8张各4状态，从单根竖立大骨向上重组；3秒预警，不是平躺尸体起床"
+    },
+    {
+      "label": "普通战斗骨",
+      "note": "ordinary_bone 12状态，4血；持握/飞行/竖立落地/裂损/无伤回收/碎裂"
+    },
+    {
+      "label": "死亡复活遗骨",
+      "note": "resurrection_bone 6状态，20血单根竖立，裂损、抖动、碎裂；保留72有效游戏小时"
+    },
+    {
+      "label": "玩家大型骨",
+      "note": "player_large_bone 8状态，20血半径1米；空中旋转、裂损、碎裂，绝不留下地面陷阱"
+    },
+    {
+      "label": "玩家投骨八向与技能",
+      "note": "8张各6状态 + bone_throw_skill；空手准备、蓄力、空手释放、收招、取消"
+    },
+    {
+      "label": "横扫与接回反馈",
+      "note": "sweep_arc只有前方半圆；bone_reconnect_fx拼接反馈；伤害和回血以逻辑事件为准"
+    },
+    {
+      "label": "宝箱与作物复用",
+      "note": "reuse/中6张旧PNG，宝箱4格切片在reuse.json；宝箱与遗骨独立"
+    },
+    {
+      "label": "最新离层修订",
+      "note": "活Boss恢复26血并清全部战斗骨；死亡遗骨原状保留；物品、领取进度和技能保留"
+    }
+  ],
+  "notes": [
+    "三种骨头分开，普通4血/复活20血/玩家20血；数值不烘焙PNG",
+    "重组从单根竖立大骨开始，不是横卧尸体起身",
+    "范围、伤害、血条、计时、光照遮挡由程序计算",
+    "没有修改游戏逻辑，也未开启游戏自动测试"
+  ],
+  "exitRevision": {
+    "livingBossResetHP": 26,
+    "clearAllCombatBones": true,
+    "clearPlayerProjectileInLeavingLayer": true,
+    "deadBossStaysDead": true,
+    "deathRemnantKeepPositionHPAndRemainingTime": true,
+    "keepItemsLootClaimsSkills": true,
+    "onlySuccessfulExitTriggers": true,
+    "notPauseOrSaveLoad": true
+  }
+}

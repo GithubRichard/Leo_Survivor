@@ -6,6 +6,7 @@
   const parking=window.PARKING_ART,parkingCache=new Map(),parkingThumbs=new Map();let parkingRevision=0;
   Object.assign(entries,armed?.atlases||{});
   Object.assign(entries,parking?.atlases||{});
+  Object.assign(entries,window.WORLD_ART?.atlases||{});
   for(const [name,meta] of Object.entries(parking?.masks||{}))entries['parking_mask_'+name]=meta;
   for(const frames of Object.values(animation?.frames||{}))for(const frame of frames)entries[frame.key]=frame;
   function keepWeaponAtlas(key){
@@ -266,5 +267,16 @@
   // Rear-wall sorting is independent from front-wall fading and door layering.
   const houseBack=(ctx,home,project)=>house(ctx,home,project,false,false);
   const houseFront=(ctx,home,project,inside)=>house(ctx,home,project,inside,true);
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,house,houseBack,houseFront,roof,ground,door,direction};
+  function worldSprite(ctx,asset,state,x,y,height,options={}){
+    const data=window.WORLD_ART,id=data?.assets[asset]?.states[state],meta=data?.frames[id];if(!meta||!available(meta.atlas))return false;
+    const img=images[meta.atlas],factor=img.width/entries[meta.atlas].size[0],r=meta.rect,scale=height/meta.bodyHeight;
+    ctx.save();ctx.translate(x,y);ctx.globalAlpha*=options.alpha??1;if(options.rotate)ctx.rotate(options.rotate);
+    ctx.drawImage(img,r[0]*factor,r[1]*factor,r[2]*factor,r[3]*factor,-meta.pivot[0]*scale,-meta.pivot[1]*scale,r[2]*scale,r[3]*scale);ctx.restore();return true;
+  }
+  function worldIcon(asset,state='icon',size=26){
+    const d=window.WORLD_ART,id=d?.assets[asset]?.states[state],m=d?.frames[id];if(!m)return '';
+    const entry=entries[m.atlas],b=m.bounds,r=m.rect,w=b[2]-b[0],h=b[3]-b[1],scale=(size-2)/Math.max(w,h);
+    return `<span class="parking-atlas-icon" style="width:${size}px;height:${size}px"><img src="${entry.src}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${(size-w*scale)/2-(r[0]+b[0])*scale}px;top:${(size-h*scale)/2-(r[1]+b[1])*scale}px"></span>`;
+  }
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,house,houseBack,houseFront,roof,ground,door,direction};
 })();

@@ -1,0 +1,770 @@
+﻿{
+    "schemaVersion":  1,
+    "sourceDocument":  "开局天赋与疾病规则.md",
+    "sourceVersion":  "v1",
+    "style":  "暗灰、暗黄，极简几何2D、透明PNG",
+    "expectedIcons":  20,
+    "assets":  [
+                   {
+                       "id":  "talent_robust_constitution",
+                       "gameId":  "robust_constitution",
+                       "code":  "T01",
+                       "type":  "talent",
+                       "name":  "健壮",
+                       "file":  "png/talent_robust_constitution.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             270,
+                                             201,
+                                             1048,
+                                             1,
+                                             1020,
+                                             1
+                                         ],
+                       "effect":  "体力上限+2；恢复间隔×0.8；首次恢复等待仍2秒",
+                       "effects":  {
+                                       "maxStaminaAdd":  2,
+                                       "staminaRecoveryIntervalMultiplier":  0.8,
+                                       "initialRecoveryWaitUnchanged":  true
+                                   },
+                       "exclusiveCode":  "D01",
+                       "sha256":  "ac981ae351efb7d6b832588d1a9aef71b47cddbf50e46d248e9f481db2796e06",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_swift_runner",
+                       "gameId":  "swift_runner",
+                       "code":  "T02",
+                       "type":  "talent",
+                       "name":  "迅捷",
+                       "file":  "png/talent_swift_runner.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             158,
+                                             195,
+                                             1149,
+                                             1,
+                                             1051,
+                                             1
+                                         ],
+                       "effect":  "奔跑速度×1.1；步行和消耗不变",
+                       "effects":  {
+                                       "runSpeedMultiplier":  1.1,
+                                       "walkSpeedUnchanged":  true
+                                   },
+                       "exclusiveCode":  "D02",
+                       "sha256":  "39f3b918c7a44ecabd564f13ba124fda249a1dad6ba43d42b2f82091176d2158",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_vitality",
+                       "gameId":  "vitality",
+                       "code":  "T03",
+                       "type":  "talent",
+                       "name":  "生机",
+                       "file":  "png/talent_vitality.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             235,
+                                             218,
+                                             1062,
+                                             1,
+                                             1065,
+                                             1
+                                         ],
+                       "effect":  "生命上限+3；按最终上限满血开局",
+                       "effects":  {
+                                       "maxHealthAdd":  3
+                                   },
+                       "exclusiveCode":  "D03",
+                       "sha256":  "b7d9a92ad41b3a134f3c20e51f7f48d93067e7fbbb5e6e560b89382bea0984ae",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_keen_sight",
+                       "gameId":  "keen_sight",
+                       "code":  "T04",
+                       "type":  "talent",
+                       "name":  "明察",
+                       "file":  "png/talent_keen_sight.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             100,
+                                             385,
+                                             1154,
+                                             1,
+                                             867,
+                                             1
+                                         ],
+                       "effect":  "有限个人视距、受照最远可见距离×1.2；普通地面白天不限视距",
+                       "effects":  {
+                                       "finiteVisionMultiplier":  1.2,
+                                       "litVisibilityMultiplier":  1.2,
+                                       "daylightUnlimitedUnchanged":  true,
+                                       "physicalLightingUnchanged":  true
+                                   },
+                       "exclusiveCode":  "D04",
+                       "sha256":  "050ad5846c6bfa47545f026b3a87c3251544658df5f5169bd3cd28a727969418",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_efficient_metabolism",
+                       "gameId":  "efficient_metabolism",
+                       "code":  "T05",
+                       "type":  "talent",
+                       "name":  "节能代谢",
+                       "file":  "png/talent_efficient_metabolism.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             213,
+                                             177,
+                                             1056,
+                                             1,
+                                             1074,
+                                             1
+                                         ],
+                       "effect":  "自然饱食消耗×0.8；技能额外消耗不变",
+                       "effects":  {
+                                       "naturalHungerDrainMultiplier":  0.8,
+                                       "skillHungerDrainUnchanged":  true
+                                   },
+                       "exclusiveCode":  "D05",
+                       "sha256":  "8d124a823a1ffd6c11f3bdee3c3b83d652ac1d4d32d0e720ea071b0a7ffad8e6",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_dexterous_builder",
+                       "gameId":  "dexterous_builder",
+                       "code":  "T06",
+                       "type":  "talent",
+                       "name":  "巧手",
+                       "file":  "png/talent_dexterous_builder.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             255,
+                                             124,
+                                             1108,
+                                             1,
+                                             1143,
+                                             1
+                                         ],
+                       "effect":  "建造、主动拆除、维修、装置改造耗时×0.8",
+                       "effects":  {
+                                       "buildingActionDurationMultiplier":  0.8
+                                   },
+                       "exclusiveCode":  "D06",
+                       "sha256":  "c2da494807e37731ca6527aacf37b4d66c0dc6210742b50f5ec8a0c4a7147bb1",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_resource_scout",
+                       "gameId":  "resource_scout",
+                       "code":  "T07",
+                       "type":  "talent",
+                       "name":  "搜寻好手",
+                       "file":  "png/talent_resource_scout.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             219,
+                                             180,
+                                             1116,
+                                             1,
+                                             1089,
+                                             1
+                                         ],
+                       "effect":  "搜索容器、采集、抽油耗时×0.8",
+                       "effects":  {
+                                       "searchGatherFuelDurationMultiplier":  0.8
+                                   },
+                       "exclusiveCode":  "D07",
+                       "sha256":  "468451f0cf2ee23621613d7337c04b5faf283ba5264fde02018937f6daecb421",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_heavy_strike",
+                       "gameId":  "heavy_strike",
+                       "code":  "T08",
+                       "type":  "talent",
+                       "name":  "强击",
+                       "file":  "png/talent_heavy_strike.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             112,
+                                             208,
+                                             1154,
+                                             1,
+                                             1000,
+                                             1
+                                         ],
+                       "effect":  "主动近战直接命中伤害+0.5",
+                       "effects":  {
+                                       "directMeleeDamageAdd":  0.5
+                                   },
+                       "exclusiveCode":  "D08",
+                       "sha256":  "10c5d40f4eab17143fc9b1e718b61c503e7c62914264c7dc2784d58d655ac077",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_steady_aim",
+                       "gameId":  "steady_aim",
+                       "code":  "T09",
+                       "type":  "talent",
+                       "name":  "稳手",
+                       "file":  "png/talent_steady_aim.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             353,
+                                             169,
+                                             896,
+                                             1,
+                                             1091,
+                                             1
+                                         ],
+                       "effect":  "简易弓、手弩、散弹枪攻击周期×0.9",
+                       "effects":  {
+                                       "bowCrossbowShotgunCycleMultiplier":  0.9
+                                   },
+                       "exclusiveCode":  "D09",
+                       "sha256":  "722d41ab8ecdf58738b1051db3a1514f5a9b5426ad6993ea01a790059823497a",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "talent_healing_affinity",
+                       "gameId":  "healing_affinity",
+                       "code":  "T10",
+                       "type":  "talent",
+                       "name":  "康复",
+                       "file":  "png/talent_healing_affinity.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             247,
+                                             304,
+                                             1117,
+                                             1,
+                                             995,
+                                             1
+                                         ],
+                       "effect":  "生命恢复量×1.2；次数和持续时间不变",
+                       "effects":  {
+                                       "healthHealingMultiplier":  1.2,
+                                       "ticksAndDurationUnchanged":  true
+                                   },
+                       "exclusiveCode":  "D10",
+                       "sha256":  "2b3a5cbe2bd5cc2b0209ffe9502941bc4495101d1a0274d7c8a2dc8995d7c7be",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_frail_constitution",
+                       "gameId":  "frail_constitution",
+                       "code":  "D01",
+                       "type":  "disease",
+                       "name":  "虚弱",
+                       "file":  "png/disease_frail_constitution.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             345,
+                                             197,
+                                             1003,
+                                             1,
+                                             1049,
+                                             1
+                                         ],
+                       "effect":  "体力上限-2；恢复速度不变",
+                       "effects":  {
+                                       "maxStaminaAdd":  -2,
+                                       "staminaRecoveryUnchanged":  true
+                                   },
+                       "exclusiveCode":  "T01",
+                       "sha256":  "7291e4381bf4a2cbce7a8836ede19d340a331d29f04f3791dbfedcb323bec566",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_leg_ailment",
+                       "gameId":  "leg_ailment",
+                       "code":  "D02",
+                       "type":  "disease",
+                       "name":  "腿疾",
+                       "file":  "png/disease_leg_ailment.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             314,
+                                             210,
+                                             1046,
+                                             1,
+                                             1000,
+                                             1
+                                         ],
+                       "effect":  "奔跑速度×0.9；步行不变",
+                       "effects":  {
+                                       "runSpeedMultiplier":  0.9,
+                                       "walkSpeedUnchanged":  true
+                                   },
+                       "exclusiveCode":  "T02",
+                       "sha256":  "ba3edf46e291a79c79aefa3b743d08d59903c371f168f01ca483fea6b0aff6de",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_anemia",
+                       "gameId":  "anemia",
+                       "code":  "D03",
+                       "type":  "disease",
+                       "name":  "贫血",
+                       "file":  "png/disease_anemia.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             252,
+                                             292,
+                                             1059,
+                                             1,
+                                             972,
+                                             1
+                                         ],
+                       "effect":  "生命上限-3",
+                       "effects":  {
+                                       "maxHealthAdd":  -3
+                                   },
+                       "exclusiveCode":  "T03",
+                       "sha256":  "89895475d294bf819e8c55b474c7eac18847968f9eab20203e1dfdb49366f28b",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_myopia",
+                       "gameId":  "myopia",
+                       "code":  "D04",
+                       "type":  "disease",
+                       "name":  "近视",
+                       "file":  "png/disease_myopia.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             159,
+                                             405,
+                                             1095,
+                                             1,
+                                             851,
+                                             1
+                                         ],
+                       "effect":  "有限个人视距、受照最远可见距离×0.75；地面白天18米",
+                       "effects":  {
+                                       "finiteVisionMultiplier":  0.75,
+                                       "litVisibilityMultiplier":  0.75,
+                                       "surfaceDaylightMeters":  18,
+                                       "physicalLightingUnchanged":  true,
+                                       "uiBlur":  false
+                                   },
+                       "exclusiveCode":  "T04",
+                       "sha256":  "2372e79d3b0287368442397f682ebf3b774efbda02b930b186dd57bcd994132c",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_hunger_prone",
+                       "gameId":  "hunger_prone",
+                       "code":  "D05",
+                       "type":  "disease",
+                       "name":  "易饥症",
+                       "file":  "png/disease_hunger_prone.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             316,
+                                             157,
+                                             937,
+                                             1,
+                                             1084,
+                                             1
+                                         ],
+                       "effect":  "自然饱食消耗×1.25；技能额外消耗不变",
+                       "effects":  {
+                                       "naturalHungerDrainMultiplier":  1.25,
+                                       "skillHungerDrainUnchanged":  true
+                                   },
+                       "exclusiveCode":  "T05",
+                       "sha256":  "9d8e249ef34f3fcf733bc5950065c684ae5a96146ccc6eca9ab34541e61346d3",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_stiff_joints",
+                       "gameId":  "stiff_joints",
+                       "code":  "D06",
+                       "type":  "disease",
+                       "name":  "关节僵硬",
+                       "file":  "png/disease_stiff_joints.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             216,
+                                             154,
+                                             1105,
+                                             1,
+                                             1106,
+                                             1
+                                         ],
+                       "effect":  "建造、主动拆除、维修、装置改造耗时×1.25",
+                       "effects":  {
+                                       "buildingActionDurationMultiplier":  1.25
+                                   },
+                       "exclusiveCode":  "T06",
+                       "sha256":  "ae1c24e3ff9ffd077708231f1246bf3519c88a41d2b1470c2409070e6f03c9fa",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_migraine",
+                       "gameId":  "migraine",
+                       "code":  "D07",
+                       "type":  "disease",
+                       "name":  "偏头痛",
+                       "file":  "png/disease_migraine.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             317,
+                                             231,
+                                             940,
+                                             1,
+                                             1045,
+                                             1
+                                         ],
+                       "effect":  "搜索容器、采集、抽油耗时×1.25；无随机发作和闪屏",
+                       "effects":  {
+                                       "searchGatherFuelDurationMultiplier":  1.25,
+                                       "randomAttacks":  false
+                                   },
+                       "exclusiveCode":  "T07",
+                       "sha256":  "ed4cf2c91937e5556e07b6434754706b3e97f8401ded651b609a51e5519daa1c",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_muscle_weakness",
+                       "gameId":  "muscle_weakness",
+                       "code":  "D08",
+                       "type":  "disease",
+                       "name":  "肌无力",
+                       "file":  "png/disease_muscle_weakness.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             317,
+                                             214,
+                                             936,
+                                             1,
+                                             1045,
+                                             1
+                                         ],
+                       "effect":  "主动近战直接命中伤害-0.5；最低0.1",
+                       "effects":  {
+                                       "directMeleeDamageAdd":  -0.5,
+                                       "minDirectMeleeDamage":  0.1
+                                   },
+                       "exclusiveCode":  "T08",
+                       "sha256":  "c97131e67565c62e6ac78862de29967612a3240c1714e5354145eba555a32938",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_hand_tremor",
+                       "gameId":  "hand_tremor",
+                       "code":  "D09",
+                       "type":  "disease",
+                       "name":  "手颤",
+                       "file":  "png/disease_hand_tremor.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             268,
+                                             311,
+                                             1043,
+                                             1,
+                                             970,
+                                             1
+                                         ],
+                       "effect":  "简易弓、手弩、散弹枪攻击周期×1.15",
+                       "effects":  {
+                                       "bowCrossbowShotgunCycleMultiplier":  1.15,
+                                       "screenShake":  false
+                                   },
+                       "exclusiveCode":  "T09",
+                       "sha256":  "c0bd3778847311ea0c5f32d134076b36acef95dc6e1081d657e6d626e4e3fb53",
+                       "sourceVerified":  true
+                   },
+                   {
+                       "id":  "disease_slow_recovery",
+                       "gameId":  "slow_recovery",
+                       "code":  "D10",
+                       "type":  "disease",
+                       "name":  "恢复迟缓",
+                       "file":  "png/disease_slow_recovery.png",
+                       "size":  [
+                                    1254,
+                                    1254
+                                ],
+                       "rect":  [
+                                    0,
+                                    0,
+                                    1254,
+                                    1254
+                                ],
+                       "visibleBounds":  [
+                                             270,
+                                             307,
+                                             1013,
+                                             1,
+                                             955,
+                                             1
+                                         ],
+                       "effect":  "生命恢复量×0.8；次数和持续时间不变",
+                       "effects":  {
+                                       "healthHealingMultiplier":  0.8,
+                                       "ticksAndDurationUnchanged":  true
+                                   },
+                       "exclusiveCode":  "T10",
+                       "sha256":  "4e6b1c27382a50f750c82aab6884a9e2b80b993545676310e86db87d675c8a3e",
+                       "sourceVerified":  true
+                   }
+               ],
+    "selectionRules":  {
+                           "maxTalents":  2,
+                           "maxDiseases":  2,
+                           "allowedCounts":  [
+                                                 [
+                                                     0,
+                                                     0
+                                                 ],
+                                                 [
+                                                     1,
+                                                     1
+                                                 ],
+                                                 [
+                                                     2,
+                                                     2
+                                                 ]
+                                             ],
+                           "unique":  true,
+                           "conflictScope":  "entire selection, not slot pairs",
+                           "oppositePairs":  [
+                                                 [
+                                                     "T01",
+                                                     "D01"
+                                                 ],
+                                                 [
+                                                     "T02",
+                                                     "D02"
+                                                 ],
+                                                 [
+                                                     "T03",
+                                                     "D03"
+                                                 ],
+                                                 [
+                                                     "T04",
+                                                     "D04"
+                                                 ],
+                                                 [
+                                                     "T05",
+                                                     "D05"
+                                                 ],
+                                                 [
+                                                     "T06",
+                                                     "D06"
+                                                 ],
+                                                 [
+                                                     "T07",
+                                                     "D07"
+                                                 ],
+                                                 [
+                                                     "T08",
+                                                     "D08"
+                                                 ],
+                                                 [
+                                                     "T09",
+                                                     "D09"
+                                                 ],
+                                                 [
+                                                     "T10",
+                                                     "D10"
+                                                 ]
+                                             ],
+                           "defaultEmpty":  true,
+                           "allowTemporaryUnequalCounts":  true,
+                           "noAutoReplace":  true,
+                           "oldSaveDefault":  {
+                                                  "talents":  [
+
+                                                              ],
+                                                  "diseases":  [
+
+                                                               ]
+                                              }
+                       },
+    "notes":  [
+                  "数值由界面文本显示，不烘焙进PNG。",
+                  "疾病虚弱的gameId为frail_constitution，与Boss临时roar_weakness区分。",
+                  "近视卡片必须显示地面白天18米；图标不模糊界面。",
+                  "程序当前正在调整饱食分档；效果定义与旧示例基准分离，请以最新用户规则为准。",
+                  "美术预览只检查图标与卡片状态，不实现游戏天赋选择代码。"
+              ],
+    "displayHint":  "Display PNG with contain; optional crop rectangle visibleBounds is metadata only; do not scale by gameplay attribute",
+    "sourceSnapshot":  "source-documents/寮€灞€澶╄祴涓庣柧鐥呰鍒?md"
+}

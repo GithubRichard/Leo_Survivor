@@ -1,0 +1,1461 @@
+{
+  "format": "frame-id-sequences",
+  "clips": [
+    {
+      "id": "weather_sunny__icon",
+      "asset": "weather_sunny",
+      "action": "icon",
+      "loop": false,
+      "frames": [
+        "weather_sunny__icon"
+      ]
+    },
+    {
+      "id": "weather_overcast__icon",
+      "asset": "weather_overcast",
+      "action": "icon",
+      "loop": false,
+      "frames": [
+        "weather_overcast__icon"
+      ]
+    },
+    {
+      "id": "weather_rain__icon",
+      "asset": "weather_rain",
+      "action": "icon",
+      "loop": false,
+      "frames": [
+        "weather_rain__icon"
+      ]
+    },
+    {
+      "id": "weather_fog__icon",
+      "asset": "weather_fog",
+      "action": "icon",
+      "loop": false,
+      "frames": [
+        "weather_fog__icon"
+      ]
+    },
+    {
+      "id": "weather_thunderstorm__icon",
+      "asset": "weather_thunderstorm",
+      "action": "icon",
+      "loop": false,
+      "frames": [
+        "weather_thunderstorm__icon"
+      ]
+    },
+    {
+      "id": "weather_tornado__icon",
+      "asset": "weather_tornado",
+      "action": "icon",
+      "loop": false,
+      "frames": [
+        "weather_tornado__icon"
+      ]
+    },
+    {
+      "id": "rain_streaks__loop",
+      "asset": "rain_streaks",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "rain_streaks__f0"
+      ]
+    },
+    {
+      "id": "rain_splash__loop",
+      "asset": "rain_splash",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "rain_splash__f0",
+        "rain_splash__f1",
+        "rain_splash__f2"
+      ]
+    },
+    {
+      "id": "fog_patch__loop",
+      "asset": "fog_patch",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "fog_patch__f0"
+      ]
+    },
+    {
+      "id": "lightning_warning__loop",
+      "asset": "lightning_warning",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "lightning_warning__f0",
+        "lightning_warning__f1",
+        "lightning_warning__f2"
+      ]
+    },
+    {
+      "id": "lightning_bolt__loop",
+      "asset": "lightning_bolt",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "lightning_bolt__f0",
+        "lightning_bolt__f1",
+        "lightning_bolt__f2"
+      ]
+    },
+    {
+      "id": "lightning_sparks__loop",
+      "asset": "lightning_sparks",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "lightning_sparks__f0",
+        "lightning_sparks__f1",
+        "lightning_sparks__f2"
+      ]
+    },
+    {
+      "id": "tornado_warning__loop",
+      "asset": "tornado_warning",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "tornado_warning__f0",
+        "tornado_warning__f1",
+        "tornado_warning__f2"
+      ]
+    },
+    {
+      "id": "tornado_loop__loop",
+      "asset": "tornado_loop",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "tornado_loop__f0",
+        "tornado_loop__f1",
+        "tornado_loop__f2",
+        "tornado_loop__f3"
+      ]
+    },
+    {
+      "id": "tornado_dissipate__loop",
+      "asset": "tornado_dissipate",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "tornado_dissipate__f0",
+        "tornado_dissipate__f1",
+        "tornado_dissipate__f2"
+      ]
+    },
+    {
+      "id": "skeleton_south__idle",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_south__idle"
+      ]
+    },
+    {
+      "id": "skeleton_south__walk",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_south__walk_a",
+        "skeleton_south__walk_mid",
+        "skeleton_south__walk_b",
+        "skeleton_south__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_south__melee",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_south__melee_windup",
+        "skeleton_south__melee_hit",
+        "skeleton_south__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_south__throw",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_south__detach",
+        "skeleton_south__throw_charge",
+        "skeleton_south__throw_release",
+        "skeleton_south__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_south__sweep",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_south__sweep_detach",
+        "skeleton_south__sweep_charge",
+        "skeleton_south__sweep_hit",
+        "skeleton_south__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_south__empty_swing",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_south__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_south__hurt",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_south__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_south__death",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_south__death_start",
+        "skeleton_south__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_south__reconnect",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_south__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_south__missing_idle",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_south__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_south__missing_walk",
+      "asset": "skeleton_south",
+      "direction": "south",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_south__missing_walk_a",
+        "skeleton_south__missing_walk_mid",
+        "skeleton_south__missing_walk_b",
+        "skeleton_south__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_south__reform",
+      "asset": "skeleton_reform_south",
+      "direction": "south",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_south__upright_warning",
+        "skeleton_reform_south__bones_rising",
+        "skeleton_reform_south__body_forming",
+        "skeleton_reform_south__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_south__skill_throw",
+      "asset": "player_bone_throw_south",
+      "direction": "south",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_south__ready",
+        "player_bone_throw_south__charge_start",
+        "player_bone_throw_south__charge_hold",
+        "player_bone_throw_south__release",
+        "player_bone_throw_south__recover",
+        "player_bone_throw_south__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__idle",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_southeast__idle"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__walk",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_southeast__walk_a",
+        "skeleton_southeast__walk_mid",
+        "skeleton_southeast__walk_b",
+        "skeleton_southeast__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__melee",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__melee_windup",
+        "skeleton_southeast__melee_hit",
+        "skeleton_southeast__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__throw",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__detach",
+        "skeleton_southeast__throw_charge",
+        "skeleton_southeast__throw_release",
+        "skeleton_southeast__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__sweep",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__sweep_detach",
+        "skeleton_southeast__sweep_charge",
+        "skeleton_southeast__sweep_hit",
+        "skeleton_southeast__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__empty_swing",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__hurt",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__death",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__death_start",
+        "skeleton_southeast__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__reconnect",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_southeast__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__missing_idle",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_southeast__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_southeast__missing_walk",
+      "asset": "skeleton_southeast",
+      "direction": "southeast",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_southeast__missing_walk_a",
+        "skeleton_southeast__missing_walk_mid",
+        "skeleton_southeast__missing_walk_b",
+        "skeleton_southeast__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_southeast__reform",
+      "asset": "skeleton_reform_southeast",
+      "direction": "southeast",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_southeast__upright_warning",
+        "skeleton_reform_southeast__bones_rising",
+        "skeleton_reform_southeast__body_forming",
+        "skeleton_reform_southeast__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_southeast__skill_throw",
+      "asset": "player_bone_throw_southeast",
+      "direction": "southeast",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_southeast__ready",
+        "player_bone_throw_southeast__charge_start",
+        "player_bone_throw_southeast__charge_hold",
+        "player_bone_throw_southeast__release",
+        "player_bone_throw_southeast__recover",
+        "player_bone_throw_southeast__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_east__idle",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_east__idle"
+      ]
+    },
+    {
+      "id": "skeleton_east__walk",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_east__walk_a",
+        "skeleton_east__walk_mid",
+        "skeleton_east__walk_b",
+        "skeleton_east__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_east__melee",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_east__melee_windup",
+        "skeleton_east__melee_hit",
+        "skeleton_east__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_east__throw",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_east__detach",
+        "skeleton_east__throw_charge",
+        "skeleton_east__throw_release",
+        "skeleton_east__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_east__sweep",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_east__sweep_detach",
+        "skeleton_east__sweep_charge",
+        "skeleton_east__sweep_hit",
+        "skeleton_east__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_east__empty_swing",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_east__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_east__hurt",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_east__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_east__death",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_east__death_start",
+        "skeleton_east__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_east__reconnect",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_east__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_east__missing_idle",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_east__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_east__missing_walk",
+      "asset": "skeleton_east",
+      "direction": "east",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_east__missing_walk_a",
+        "skeleton_east__missing_walk_mid",
+        "skeleton_east__missing_walk_b",
+        "skeleton_east__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_east__reform",
+      "asset": "skeleton_reform_east",
+      "direction": "east",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_east__upright_warning",
+        "skeleton_reform_east__bones_rising",
+        "skeleton_reform_east__body_forming",
+        "skeleton_reform_east__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_east__skill_throw",
+      "asset": "player_bone_throw_east",
+      "direction": "east",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_east__ready",
+        "player_bone_throw_east__charge_start",
+        "player_bone_throw_east__charge_hold",
+        "player_bone_throw_east__release",
+        "player_bone_throw_east__recover",
+        "player_bone_throw_east__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__idle",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_northeast__idle"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__walk",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_northeast__walk_a",
+        "skeleton_northeast__walk_mid",
+        "skeleton_northeast__walk_b",
+        "skeleton_northeast__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__melee",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__melee_windup",
+        "skeleton_northeast__melee_hit",
+        "skeleton_northeast__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__throw",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__detach",
+        "skeleton_northeast__throw_charge",
+        "skeleton_northeast__throw_release",
+        "skeleton_northeast__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__sweep",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__sweep_detach",
+        "skeleton_northeast__sweep_charge",
+        "skeleton_northeast__sweep_hit",
+        "skeleton_northeast__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__empty_swing",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__hurt",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__death",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__death_start",
+        "skeleton_northeast__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__reconnect",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_northeast__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__missing_idle",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_northeast__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_northeast__missing_walk",
+      "asset": "skeleton_northeast",
+      "direction": "northeast",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_northeast__missing_walk_a",
+        "skeleton_northeast__missing_walk_mid",
+        "skeleton_northeast__missing_walk_b",
+        "skeleton_northeast__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_northeast__reform",
+      "asset": "skeleton_reform_northeast",
+      "direction": "northeast",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_northeast__upright_warning",
+        "skeleton_reform_northeast__bones_rising",
+        "skeleton_reform_northeast__body_forming",
+        "skeleton_reform_northeast__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_northeast__skill_throw",
+      "asset": "player_bone_throw_northeast",
+      "direction": "northeast",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_northeast__ready",
+        "player_bone_throw_northeast__charge_start",
+        "player_bone_throw_northeast__charge_hold",
+        "player_bone_throw_northeast__release",
+        "player_bone_throw_northeast__recover",
+        "player_bone_throw_northeast__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_north__idle",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_north__idle"
+      ]
+    },
+    {
+      "id": "skeleton_north__walk",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_north__walk_a",
+        "skeleton_north__walk_mid",
+        "skeleton_north__walk_b",
+        "skeleton_north__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_north__melee",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_north__melee_windup",
+        "skeleton_north__melee_hit",
+        "skeleton_north__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_north__throw",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_north__detach",
+        "skeleton_north__throw_charge",
+        "skeleton_north__throw_release",
+        "skeleton_north__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_north__sweep",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_north__sweep_detach",
+        "skeleton_north__sweep_charge",
+        "skeleton_north__sweep_hit",
+        "skeleton_north__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_north__empty_swing",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_north__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_north__hurt",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_north__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_north__death",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_north__death_start",
+        "skeleton_north__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_north__reconnect",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_north__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_north__missing_idle",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_north__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_north__missing_walk",
+      "asset": "skeleton_north",
+      "direction": "north",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_north__missing_walk_a",
+        "skeleton_north__missing_walk_mid",
+        "skeleton_north__missing_walk_b",
+        "skeleton_north__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_north__reform",
+      "asset": "skeleton_reform_north",
+      "direction": "north",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_north__upright_warning",
+        "skeleton_reform_north__bones_rising",
+        "skeleton_reform_north__body_forming",
+        "skeleton_reform_north__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_north__skill_throw",
+      "asset": "player_bone_throw_north",
+      "direction": "north",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_north__ready",
+        "player_bone_throw_north__charge_start",
+        "player_bone_throw_north__charge_hold",
+        "player_bone_throw_north__release",
+        "player_bone_throw_north__recover",
+        "player_bone_throw_north__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__idle",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_northwest__idle"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__walk",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_northwest__walk_a",
+        "skeleton_northwest__walk_mid",
+        "skeleton_northwest__walk_b",
+        "skeleton_northwest__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__melee",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__melee_windup",
+        "skeleton_northwest__melee_hit",
+        "skeleton_northwest__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__throw",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__detach",
+        "skeleton_northwest__throw_charge",
+        "skeleton_northwest__throw_release",
+        "skeleton_northwest__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__sweep",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__sweep_detach",
+        "skeleton_northwest__sweep_charge",
+        "skeleton_northwest__sweep_hit",
+        "skeleton_northwest__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__empty_swing",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__hurt",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__death",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__death_start",
+        "skeleton_northwest__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__reconnect",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_northwest__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__missing_idle",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_northwest__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_northwest__missing_walk",
+      "asset": "skeleton_northwest",
+      "direction": "northwest",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_northwest__missing_walk_a",
+        "skeleton_northwest__missing_walk_mid",
+        "skeleton_northwest__missing_walk_b",
+        "skeleton_northwest__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_northwest__reform",
+      "asset": "skeleton_reform_northwest",
+      "direction": "northwest",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_northwest__upright_warning",
+        "skeleton_reform_northwest__bones_rising",
+        "skeleton_reform_northwest__body_forming",
+        "skeleton_reform_northwest__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_northwest__skill_throw",
+      "asset": "player_bone_throw_northwest",
+      "direction": "northwest",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_northwest__ready",
+        "player_bone_throw_northwest__charge_start",
+        "player_bone_throw_northwest__charge_hold",
+        "player_bone_throw_northwest__release",
+        "player_bone_throw_northwest__recover",
+        "player_bone_throw_northwest__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_west__idle",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_west__idle"
+      ]
+    },
+    {
+      "id": "skeleton_west__walk",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_west__walk_a",
+        "skeleton_west__walk_mid",
+        "skeleton_west__walk_b",
+        "skeleton_west__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_west__melee",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_west__melee_windup",
+        "skeleton_west__melee_hit",
+        "skeleton_west__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_west__throw",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_west__detach",
+        "skeleton_west__throw_charge",
+        "skeleton_west__throw_release",
+        "skeleton_west__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_west__sweep",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_west__sweep_detach",
+        "skeleton_west__sweep_charge",
+        "skeleton_west__sweep_hit",
+        "skeleton_west__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_west__empty_swing",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_west__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_west__hurt",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_west__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_west__death",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_west__death_start",
+        "skeleton_west__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_west__reconnect",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_west__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_west__missing_idle",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_west__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_west__missing_walk",
+      "asset": "skeleton_west",
+      "direction": "west",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_west__missing_walk_a",
+        "skeleton_west__missing_walk_mid",
+        "skeleton_west__missing_walk_b",
+        "skeleton_west__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_west__reform",
+      "asset": "skeleton_reform_west",
+      "direction": "west",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_west__upright_warning",
+        "skeleton_reform_west__bones_rising",
+        "skeleton_reform_west__body_forming",
+        "skeleton_reform_west__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_west__skill_throw",
+      "asset": "player_bone_throw_west",
+      "direction": "west",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_west__ready",
+        "player_bone_throw_west__charge_start",
+        "player_bone_throw_west__charge_hold",
+        "player_bone_throw_west__release",
+        "player_bone_throw_west__recover",
+        "player_bone_throw_west__cancel"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__idle",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "idle",
+      "loop": true,
+      "frames": [
+        "skeleton_southwest__idle"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__walk",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "walk",
+      "loop": true,
+      "frames": [
+        "skeleton_southwest__walk_a",
+        "skeleton_southwest__walk_mid",
+        "skeleton_southwest__walk_b",
+        "skeleton_southwest__walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__melee",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "melee",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__melee_windup",
+        "skeleton_southwest__melee_hit",
+        "skeleton_southwest__melee_recover"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__throw",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "throw",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__detach",
+        "skeleton_southwest__throw_charge",
+        "skeleton_southwest__throw_release",
+        "skeleton_southwest__throw_recover"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__sweep",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "sweep",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__sweep_detach",
+        "skeleton_southwest__sweep_charge",
+        "skeleton_southwest__sweep_hit",
+        "skeleton_southwest__sweep_recover"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__empty_swing",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "empty_swing",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__empty_swing"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__hurt",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "hurt",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__hurt"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__death",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "death",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__death_start",
+        "skeleton_southwest__death_end"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__reconnect",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "reconnect",
+      "loop": false,
+      "frames": [
+        "skeleton_southwest__reconnect"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__missing_idle",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "missing_idle",
+      "loop": true,
+      "frames": [
+        "skeleton_southwest__missing_idle"
+      ]
+    },
+    {
+      "id": "skeleton_southwest__missing_walk",
+      "asset": "skeleton_southwest",
+      "direction": "southwest",
+      "action": "missing_walk",
+      "loop": true,
+      "frames": [
+        "skeleton_southwest__missing_walk_a",
+        "skeleton_southwest__missing_walk_mid",
+        "skeleton_southwest__missing_walk_b",
+        "skeleton_southwest__missing_walk_mid"
+      ]
+    },
+    {
+      "id": "skeleton_reform_southwest__reform",
+      "asset": "skeleton_reform_southwest",
+      "direction": "southwest",
+      "action": "reform",
+      "loop": false,
+      "frames": [
+        "skeleton_reform_southwest__upright_warning",
+        "skeleton_reform_southwest__bones_rising",
+        "skeleton_reform_southwest__body_forming",
+        "skeleton_reform_southwest__standing"
+      ]
+    },
+    {
+      "id": "player_bone_throw_southwest__skill_throw",
+      "asset": "player_bone_throw_southwest",
+      "direction": "southwest",
+      "action": "skill_throw",
+      "loop": false,
+      "frames": [
+        "player_bone_throw_southwest__ready",
+        "player_bone_throw_southwest__charge_start",
+        "player_bone_throw_southwest__charge_hold",
+        "player_bone_throw_southwest__release",
+        "player_bone_throw_southwest__recover",
+        "player_bone_throw_southwest__cancel"
+      ]
+    },
+    {
+      "id": "ordinary_bone__loop",
+      "asset": "ordinary_bone",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "ordinary_bone__f0",
+        "ordinary_bone__f1",
+        "ordinary_bone__f2",
+        "ordinary_bone__f3",
+        "ordinary_bone__f4",
+        "ordinary_bone__f5",
+        "ordinary_bone__f6",
+        "ordinary_bone__f7",
+        "ordinary_bone__f8",
+        "ordinary_bone__f9",
+        "ordinary_bone__f10",
+        "ordinary_bone__f11"
+      ]
+    },
+    {
+      "id": "resurrection_bone__loop",
+      "asset": "resurrection_bone",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "resurrection_bone__f0",
+        "resurrection_bone__f1",
+        "resurrection_bone__f2",
+        "resurrection_bone__f3",
+        "resurrection_bone__f4",
+        "resurrection_bone__f5"
+      ]
+    },
+    {
+      "id": "player_large_bone__loop",
+      "asset": "player_large_bone",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "player_large_bone__f0",
+        "player_large_bone__f1",
+        "player_large_bone__f2",
+        "player_large_bone__f3",
+        "player_large_bone__f4",
+        "player_large_bone__f5",
+        "player_large_bone__f6",
+        "player_large_bone__f7"
+      ]
+    },
+    {
+      "id": "bone_throw_skill__loop",
+      "asset": "bone_throw_skill",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "bone_throw_skill__f0"
+      ]
+    },
+    {
+      "id": "sweep_arc__loop",
+      "asset": "sweep_arc",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "sweep_arc__f0",
+        "sweep_arc__f1",
+        "sweep_arc__f2"
+      ]
+    },
+    {
+      "id": "bone_reconnect_fx__loop",
+      "asset": "bone_reconnect_fx",
+      "action": "loop",
+      "loop": true,
+      "frames": [
+        "bone_reconnect_fx__f0",
+        "bone_reconnect_fx__f1",
+        "bone_reconnect_fx__f2"
+      ]
+    }
+  ],
+  "note": "Preview FPS is cosmetic, never defines attack timings, HP costs, damage, recovery, recall, cooldown or revival clocks."
+}

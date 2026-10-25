@@ -19,7 +19,7 @@
       button('lamp-toggle',o.active?'熄灭':'点亮',attr,!o.active&&o.energy<=0)+
       (d.fuel?button('lamp-refuel',`装入1${S.NAMES[d.fuel]}`,attr,o.energy>0||!game.count(d.fuel)):'')+
       (carried?button('lamp-drop','放到地面',attr)+(d.throwable?button('lamp-throw',iconTag('throw_light_icon')+'投向前方6米（准备0.5秒）',attr,!o.active||o.energy<=0):''):'')+
-      (!carried&&o.hp<o.maxHP&&o.kind!=='torch'?button('repair','维修1秒 · 1铁恢复6血'):'')+
+      (!carried&&o.hp<o.maxHP&&o.kind!=='torch'?button('repair',`维修${Number(game.actionDuration('repair',1).toFixed(2))}秒 · 1铁恢复6血`):'')+
       (!carried&&d.fixed?button('dismantle','拆除灯体（已装能源会丢失）'):'');
   };
   function context(game,target){
@@ -34,7 +34,7 @@
       else if(o.kind==='gate_control'){description=game.parking.layer.gateOpen?'配电门已永久打开。':'消耗1份保险丝，2秒打开；保险丝在门外远端维修车。';commands=button('parking-interact','安装保险丝并开门','',game.parking.layer.gateOpen||!game.count('fuse'));}
       else{
         const cargo=o.carId&&game.parking.layer.cars.find(c=>c.id===o.carId);if(cargo)title=`${{civilian:'民用车',repair:'维修车',supply:'补给车',security:'保安车'}[cargo.vehicle]} · ${title}`;
-        description=o.opened?'已搜索，剩余物资保留在此处，离开或读档不补货。':o.kind==='boss_chest'?'打开2秒：获得潜伏技能并解锁下一层；背包满也能完成解锁。':`搜索${o.time||2}秒，移动或受伤中断；不会额外触发刷怪。`;
+        description=o.opened?'已搜索，剩余物资保留在此处，离开或读档不补货。':o.kind==='boss_chest'?'打开2秒：获得潜伏技能并解锁下一层；背包满也能完成解锁。':`搜索${Number(game.actionDuration('parking_search',o.time||2).toFixed(2))}秒，移动或受伤中断；不会额外触发刷怪。`;
         if(!o.opened)commands=button('parking-interact',o.kind==='boss_chest'?'开启Boss宝箱':'搜索');
         else for(const [kind,n] of Object.entries(o.loot||{}))if(n>0)commands+=button('parking-take',`领取${S.NAMES[kind]} × ${n}`,`data-kind="${kind}"`);
         if(o.opened&&!Object.values(o.loot||{}).some(n=>n>0))description='物资已领完，不会重复补货。';
@@ -45,7 +45,8 @@
   function inventoryExtras(game){
     const o=game.inventory[game.selectedSlot];let html='';
     if(o&&P.lamps[o.kind]){game.newLamp(o);const d=P.lamps[o.kind];html=`<section class="parking-lamp-controls"><h3>${esc(d.name)} · ${o.active?'点亮':'熄灭'} · ${Math.ceil(o.energy)}秒</h3><p>${d.angle?`前方${d.angle}°扇形`:'360°圆形'}，距离${d.radius}米。${d.hand?'占一只手，只能搭配徒手、木棍、铁斧。':'不占手。'}${d.fuel?'灯体不赠送能源，每次只装入一份。':'燃尽消失，拿放不会恢复寿命。'}</p>${lampButtons(game,o)}</section>`;}
-    if(game.skill.unlocked)html+=`<p>潜伏：启动2体力，最多7秒，移速3.4；黑暗中隐身，不能奔跑，每秒额外消耗1.5饱食。结束后冷却20秒。Q或触屏技能按钮使用。</p>`;
+    if(game.skill.unlocked)html+=`<p>潜伏：启动2体力，最多7秒，基准移速3.4（室外应用天气）；黑暗中隐身，不能奔跑，每秒额外消耗1.5饱食。结束后冷却20秒。Q或触屏技能按钮使用。</p>`;
+    if(game.boneSkill?.unlocked)html+=`<p>投掷：按住R或独立触屏按钮蓄力，松开发出。0—2秒射程5—10米，半径1米；20血弹体每目标4伤，可贯穿。成功发出才耗1血并进入15秒冷却，未释放可按Esc免费取消。离开二层清除该层未结束的大骨，消耗不返还。</p>`;
     return html;
   }
   function command(game,name,button,o){
@@ -54,12 +55,12 @@
     if(name==='parking-take')return {handled:true,ok:game.takeParkingLoot(o,button.dataset.kind),leave:false};
     return {handled:false};
   }
-  function rayPolygon(game,origin,radius,angle=360,facing={x:0,y:1}){
+  function rayPolygon(game,origin,radius,angle=360,facing={x:0,y:1},vision=true){
     const result=[],start=Math.atan2(facing.y,facing.x)-angle*Math.PI/360,count=Math.max(32,Math.ceil(angle/3));
     if(angle<360)result.push({...origin});
     for(let i=0;i<=count;i++){
       const a=start+i/count*angle*Math.PI/180,end={x:origin.x+Math.cos(a)*radius,y:origin.y+Math.sin(a)*radius};
-      const blockers=game.obstacles(origin,end,0).filter(o=>o!==origin.lamp);let lo=0,hi=1;
+      const blockers=(vision?game.visionObstacles(origin,end):game.obstacles(origin,end,0)).filter(o=>o!==origin.lamp);let lo=0,hi=1;
       if(blockers.length){for(let n=0;n<10;n++){const t=(lo+hi)/2,p={x:origin.x+(end.x-origin.x)*t,y:origin.y+(end.y-origin.y)*t};if(blockers.some(o=>S.segmentHits(origin,p,o,0)))hi=t;else lo=t;}}
       result.push({x:origin.x+(end.x-origin.x)*(blockers.length?lo:1),y:origin.y+(end.y-origin.y)*(blockers.length?lo:1)});
     }return result;
@@ -74,25 +75,31 @@
     const asset={civilian:'civilian_car',repair:'maintenance_van',supply:'supply_van',security:'security_car'}[car.vehicle],searched=layer.points.some(p=>p.carId===car.id&&p.kind==='cargo'&&p.opened),q=v.project(car.x,car.y);
     return A.parkingSprite(ctx,asset,`south_${searched?'searched':'unsearched'}`,q.x,q.y,88*v.scale/27);
   }
+  function bayPaint(ctx,car,project){
+    // Flat paint has neither a glow texture nor a solid object casting sight rays.
+    const strip=(x,y,w,h)=>{path(ctx,[{x:x-w/2,y:y-h/2},{x:x+w/2,y:y-h/2},{x:x+w/2,y:y+h/2},{x:x-w/2,y:y+h/2}],project);ctx.fill();};
+    ctx.save();ctx.shadowBlur=0;ctx.shadowColor='transparent';ctx.fillStyle='#b3a14f';
+    strip(car.x-1.9,car.y,.14,5.6);strip(car.x+1.9,car.y,.14,5.6);strip(car.x,car.y+2.8,3.94,.14);ctx.restore();
+  }
   function floor(game,v){
     const {ctx,project,scale}=v,layer=game.parking.layer;
     const signature=`${scale}:${A.parkingRevision}`;
-    if(!floorCache||floorCache.layer!==layer||floorCache.scale!==scale||!floorCache.ready&&floorCache.signature!==signature){
+    if(!floorCache||floorCache.layer!==layer||floorCache.scale!==scale||floorCache.carRevision!==layer.carRevision||!floorCache.ready&&floorCache.signature!==signature){
       const canvas=floorCache?.canvas||document.createElement('canvas');canvas.width=Math.ceil(108*scale+2);canvas.height=Math.ceil(54*scale+2);
       const c=canvas.getContext('2d'),p=(x,y)=>({x:(x-y+84)*scale+1,y:(x+y+24)*scale/2+1});
       for(let y=2;y<60;y+=4)for(let x=-22;x<24;x+=4)groundModel(c,'concrete_floor',x,y,4,4,p);
       for(const car of layer.cars){
-        groundModel(c,'parking_bay_lines',car.x,car.y,3.8,5.6,p,[[.443,.125],[.901,.653],[.561,.899],[.107,.356]]);
+        bayPaint(c,car,p);
         const q=p(car.x,car.y-2.45);A.parkingSprite(c,'wheel_stop','default',q.x,q.y,9*scale/27);
       }
       for(const y of [7,18,29,40,51])groundModel(c,'parking_direction_arrow',0,y,1.3,2.1,p,[[.5,.12],[.94,.5],[.5,.9],[.1,.5]]);
-      const ready=['concrete_floor','parking_bay_lines','parking_direction_arrow','wheel_stop'].every(id=>A.available('parking_atlas_'+id));
-      floorCache={canvas,layer,signature,scale,ready};
+      const ready=['concrete_floor','parking_direction_arrow','wheel_stop'].every(id=>A.available('parking_atlas_'+id));
+      floorCache={canvas,layer,signature,scale,ready,carRevision:layer.carRevision};
     }
     const q=project(0,0);ctx.drawImage(floorCache.canvas,q.x-84*scale-1,q.y-12*scale-1);
   }
   function wallModel(o,v,game){
-    const {ctx,project,box}=v;ctx.save();if(/^parking:(left|right|front|back)$/.test(o.id)&&S.pointRect(game.player,o)<2.4)ctx.globalAlpha*=.28;box(o,2.1,'#777a6e','#424a47','#58605b');
+    const {ctx,project,box}=v;ctx.save();if(/^(?:second:)?parking:(left|right|front|back)$/.test(o.id)&&S.pointRect(game.player,o)<2.4)ctx.globalAlpha*=.28;box(o,2.1,'#777a6e','#424a47','#58605b');
     const id=window.PARKING_ART?.assets.concrete_wall?.states.south,m=window.PARKING_ART?.frames[id];if(!m){ctx.restore();return;}
     const [l,t,r,b]=m.bounds,[,,w,h]=m.rect,point=(x,y)=>[(l+(r-l)*x)/w,(t+(b-t)*y)/h];
     const source=[point(.13,.7),point(.85,.7),point(.85,.1),point(.14,.1)];
@@ -108,15 +115,15 @@
   }
   let fogCanvas=null,sightCanvas=null,softCanvas=null,carCanvas=null,visibility=null;
   function fog(game,v){
-    const {ctx,project,width,height,scale}=v,lights=game.lightSources().filter(l=>S.dist(l,game.player)<=P.lightSight+l.radius);
+    const {ctx,project,width,height,scale}=v,lights=game.lightSources().filter(l=>S.dist(l,game.player)<=game.illuminatedSight+l.radius);
     if(!fogCanvas){fogCanvas=document.createElement('canvas');sightCanvas=document.createElement('canvas');softCanvas=document.createElement('canvas');carCanvas=document.createElement('canvas');}
     let resized=false;for(const canvas of [fogCanvas,sightCanvas,softCanvas,carCanvas])if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;resized=true;}
-    const signature=`${Math.floor(game.seconds*8)}:${Math.round(game.player.x*2)},${Math.round(game.player.y*2)}:${game._navigationRevision}:${scale}:${lights.map(l=>`${l.lamp?.lampId||'exit'}:${l.angle?Math.round(Math.atan2(l.facing.y,l.facing.x)*16):0}`).join('|')}`;
+    const signature=`${game.scene}:${game.parking?.floor||1}:${game.personalSight}:${game.illuminatedSight}:${Math.floor(game.seconds*8)}:${Math.round(game.player.x*2)},${Math.round(game.player.y*2)}:${game._navigationRevision}:${scale}:${lights.map(l=>`${l.lamp?.lampId||'exit'}:${l.angle?Math.round(Math.atan2(l.facing.y,l.facing.x)*16):0}`).join('|')}`;
     const f=fogCanvas.getContext('2d');
     if(resized||visibility?.game!==game||visibility.signature!==signature){
-      visibility={game,signature,origin:{x:game.player.x,y:game.player.y},cars:game.parking.layer.objects.filter(car=>car.kind==='car'&&game.canSeeCar(car))};
-      const m=sightCanvas.getContext('2d');m.clearRect(0,0,width,height);m.fillStyle='#fff';path(m,rayPolygon(game,game.player,P.baseSight),project);m.fill();
-      m.save();path(m,rayPolygon(game,game.player,P.lightSight),project);m.clip();for(const l of lights){path(m,rayPolygon(game,l,l.radius,l.angle||360,l.facing),project);m.fill();}m.restore();
+      visibility={game,signature,origin:{x:game.player.x,y:game.player.y},cars:game.scene==='parking'?game.parking.layer.objects.filter(car=>car.kind==='car'&&game.canSeeCar(car)):[]};
+      const m=sightCanvas.getContext('2d');m.clearRect(0,0,width,height);m.fillStyle='#fff';path(m,rayPolygon(game,game.player,game.personalSight),project);m.fill();
+      m.save();path(m,rayPolygon(game,game.player,game.illuminatedSight),project);m.clip();for(const l of lights){path(m,rayPolygon(game,l,l.radius,l.angle||360,l.facing),project);m.fill();}m.restore();
       const s=softCanvas.getContext('2d');s.clearRect(0,0,width,height);s.filter='blur(12px)';s.drawImage(sightCanvas,0,0);s.filter='none';
       f.globalCompositeOperation='source-over';f.clearRect(0,0,width,height);f.drawImage(softCanvas,0,0);f.globalCompositeOperation='destination-in';
       for(let i=0;i<3;i++)f.drawImage(softCanvas,0,0);f.drawImage(sightCanvas,0,0);f.globalCompositeOperation='source-over';
@@ -125,7 +132,7 @@
       // Reuse the temporary sight canvas for this bounded reveal stencil.
       m.clearRect(0,0,width,height);m.drawImage(softCanvas,0,0);
       const centre=project(game.player.x,game.player.y);m.save();m.translate(centre.x,centre.y);m.scale(scale*Math.SQRT2,scale/Math.SQRT2);
-      const edge=m.createRadialGradient(0,0,P.baseSight-.6,0,0,P.baseSight);edge.addColorStop(0,'#fff');edge.addColorStop(1,'#fff0');m.fillStyle=edge;m.beginPath();m.arc(0,0,P.baseSight,0,Math.PI*2);m.fill();m.restore();
+      const edge=m.createRadialGradient(0,0,game.personalSight-.6,0,0,game.personalSight);edge.addColorStop(0,'#fff');edge.addColorStop(1,'#fff0');m.fillStyle=edge;m.beginPath();m.arc(0,0,game.personalSight,0,Math.PI*2);m.fill();m.restore();
     }
     f.globalCompositeOperation='source-over';f.clearRect(0,0,width,height);f.fillStyle='#030608';f.fillRect(0,0,width,height);
     const old=project(visibility.origin.x,visibility.origin.y),q=project(game.player.x,game.player.y);f.globalCompositeOperation='destination-out';f.drawImage(softCanvas,old.x-width/2,old.y-height*.56);
@@ -174,10 +181,11 @@
     ctx.globalAlpha=black;ctx.fillStyle='#000';ctx.fillRect(0,0,width,height);ctx.restore();
   }
   function groundSight(game,v){
-    if(game.minutes<1320)return;
+    if(game.weatherKind?.()==='fog'&&game.outdoors(game.player)){fog(game,v);return;}
+    if(!Number.isFinite(game.personalSight))return;
     const {ctx,project,width,height,scale}=v,q=project(game.player.x,game.player.y);
     // Ground reference R=24m; parking uses R/3=8m in the same world metric.
-    ctx.save();ctx.translate(q.x,q.y);ctx.scale(scale*Math.SQRT2,scale/Math.SQRT2);const shade=ctx.createRadialGradient(0,0,P.groundSight-1.5,0,0,P.groundSight);shade.addColorStop(0,'#03060800');shade.addColorStop(1,'#030608');ctx.fillStyle=shade;ctx.fillRect(-width/scale-100,-height/scale-100,width/scale*2+200,height/scale*2+200);ctx.restore();
+    ctx.save();ctx.translate(q.x,q.y);ctx.scale(scale*Math.SQRT2,scale/Math.SQRT2);const shade=ctx.createRadialGradient(0,0,game.personalSight-1.5,0,0,game.personalSight);shade.addColorStop(0,'#03060800');shade.addColorStop(1,'#030608');ctx.fillStyle=shade;ctx.fillRect(-width/scale-100,-height/scale-100,width/scale*2+200,height/scale*2+200);ctx.restore();
   }
   function draw(game,v){
     const {ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,placement,buildKind,nearby,mode}=v,layer=game.parking.layer;
@@ -206,12 +214,12 @@
     const emergency=project(P.exit.x,P.exit.y);items.push({depth:P.exit.x+P.exit.y-.01,draw:()=>A.parkingSprite(ctx,'emergency_light','default',emergency.x+24,emergency.y-43,16*v.scale/27)});
     for(const p of [...layer.points,...(layer.chest?[layer.chest]:[])])if(p.kind!=='cargo'&&game.canSee(p))items.push({depth:p.x+p.y+.03,draw:()=>{
       const q=project(p.x,p.y);let modeled=false;
-      if(p.kind==='boss_chest')modeled=A.parkingSprite(ctx,'boss_chest',game.action?.type==='parking_open'?'opening':!p.opened?'closed':Object.values(p.loot).some(n=>n>0)?'open_loot':'open_empty',q.x,q.y,32);
+      if(p.kind==='boss_chest'||p.kind==='skeleton_chest')modeled=A.parkingSprite(ctx,'boss_chest',game.action?.type==='parking_open'?'opening':!p.opened?'closed':Object.values(p.loot).some(n=>n>0)?'open_loot':'open_empty',q.x,q.y,32);
       if(p.kind==='exit')modeled=A.parkingSprite(ctx,'underground_exit','default',q.x,q.y,58);
       if(p.kind==='next_floor')modeled=A.parkingSprite(ctx,'next_floor_entrance',layer.nextUnlocked?'unlocked':'locked',q.x,q.y,55);
       if(p.kind==='cargo'||p.kind==='tank')modeled=A.parkingSprite(ctx,p.kind==='cargo'?'cargo_marker':'fuel_marker',p.opened?(p.kind==='cargo'?'searched':'drained'):'available',q.x,q.y,16);
       if(!modeled)plane(p.x,p.y,p.kind==='exit'?2:.55,p.kind==='exit'?2:.55,p.opened?'#4e5c4c':p.kind==='boss_chest'?'#b2914d':'#849b83','#c2b67a');
-      if(['exit','next_floor','gate_control','boss_chest'].includes(p.kind))label(names[p.kind],q.x,q.y-16,'#d8c786',11);
+      if(['exit','next_floor','gate_control','boss_chest','skeleton_chest'].includes(p.kind))label(p.kind==='skeleton_chest'?'骷髅宝箱':p.kind==='exit'&&game.secondFloor?'返回首层':names[p.kind],q.x,q.y-16,'#d8c786',11);
       else if(p.opened)label(Object.values(p.loot||{}).some(n=>n>0)?'有剩余':'已搜空',q.x,q.y-6,'#aca98c',9);
     }});
     for(const d of game.devices)if(d.hp>0&&game.canSee(d))items.push({depth:d.x+d.y,draw:()=>{
@@ -230,7 +238,7 @@
         if(z.phase==='cowering'){ctx.strokeStyle='#c28758';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(q.x,q.y,23,10,0,0,Math.PI*2);ctx.stroke();}
       }
       if(z.kind==='lurker'&&z.state==='charging'){
-        ctx.save();path(ctx,rayPolygon(game,z,2),project);ctx.clip();
+        ctx.save();path(ctx,rayPolygon(game,z,2,360,{x:0,y:1},false),project);ctx.clip();
         if(!A.parkingMask(ctx,'roar_telegraph',z,2,project)){const q=project(z.x,z.y);ctx.strokeStyle='#ed9b68';ctx.beginPath();ctx.ellipse(q.x,q.y,2*v.scale*Math.SQRT2,2*v.scale/Math.SQRT2,0,0,Math.PI*2);ctx.stroke();}ctx.restore();
       }
       if(z.windup&&z.kind==='lamp_smasher'){const q=project(z.x,z.y);label('投石准备',q.x,q.y-54,'#d8b877',11);}
@@ -250,9 +258,10 @@
     for(const fx of game.effects)if(['parking_lamp_fx','parking_art_fx','boss_roar'].includes(fx.kind)&&game.canSee(fx))items.push({depth:fx.x+fx.y+.01,draw:()=>{
       const q=project(fx.x,fx.y);if(fx.kind!=='boss_roar'){effectModel(ctx,fx,game.seconds,q,v.scale);return;}
       ctx.save();ctx.globalAlpha=Math.min(1,(fx.until-game.seconds)/.3);ctx.strokeStyle='#dda56e';ctx.lineWidth=2;
-      const r=2*Math.max(.01,1-(fx.until-game.seconds)/.6);path(ctx,rayPolygon(game,fx,2),project);ctx.clip();if(!A.parkingMask(ctx,'roar_wave',fx,r,project)){ctx.beginPath();ctx.ellipse(q.x,q.y,r*v.scale*Math.SQRT2,r*v.scale/Math.SQRT2,0,0,Math.PI*2);ctx.stroke();}ctx.restore();
+      const r=2*Math.max(.01,1-(fx.until-game.seconds)/.6);path(ctx,rayPolygon(game,fx,2,360,{x:0,y:1},false),project);ctx.clip();if(!A.parkingMask(ctx,'roar_wave',fx,r,project)){ctx.beginPath();ctx.ellipse(q.x,q.y,r*v.scale*Math.SQRT2,r*v.scale/Math.SQRT2,0,0,Math.PI*2);ctx.stroke();}ctx.restore();
     }});
     for(const zone of game.zones)if(game.canSee(zone)){const q=project(zone.x,zone.y);A.sprite(ctx,zone.kind,q.x,q.y,zone.radius*v.scale,{width:zone.radius*v.scale*2,anchorY:.5});}
+    WorldView.items(game,{...v,items});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
     // Draw only visual tints; gameplay lighting is evaluated by the rule module.
     ctx.save();ctx.fillStyle='#e5cd7f';for(const l of game.lightSources()){
@@ -260,7 +269,7 @@
       const mask=l.angle===70?'flashlight_70':l.angle===90?'headlamp_90':'light_circle';
       if(!A.parkingMask(ctx,mask,l,l.radius,project,l.angle?l.facing:undefined)){ctx.globalAlpha=.12;path(ctx,rayPolygon(game,l,l.radius,l.angle||360,l.facing),project);ctx.fill();}ctx.restore();
     }ctx.restore();
-    drawMolotovAim();
+    drawMolotovAim();WorldView.aim(game,v);
     if(placement){const p=game.placementPoint(),error=game.canPlace(buildKind,p);plane(p.x,p.y,1,1,error?'#ad5b5666':'#ceb56755',error?'#d1917b':'#e5d99b');drawDevice({...p,kind:buildKind,readyAt:0},true);}
     if(nearby&&mode==='play'){const q=project(nearby.object.x,nearby.object.y);label('E / 交互',q.x,q.y-25,'#ebd290',12);}
     fog(game,v);
@@ -277,7 +286,7 @@
   let lastCue=0,audio=null;
   function unlockAudio(){try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();}catch{}}
   function hideCombatHUD(){
-    const bar=document.getElementById('boss-status');bar.classList.add('hidden');bar.replaceChildren();bar._parkingHtml=null;document.getElementById('parking-skill').classList.add('hidden');
+    document.getElementById('bone-skill')?.classList.add('hidden');const bar=document.getElementById('boss-status');bar.classList.add('hidden');bar.replaceChildren();bar._parkingHtml=null;document.getElementById('parking-skill').classList.add('hidden');
   }
   function hud(game,mode='play'){
     const alive=!game.result&&game.player.hp>0;
@@ -285,7 +294,7 @@
     const skillState=!game.skill.unlocked?'locked':game.skill.active?(game.hidden?'active_dark':'active_lit'):game.seconds<game.skill.cooldown?'cooldown':game.player.hunger<=0?'hunger_warning':game.player.stamina<2?'no_stamina':'ready';
     const icon=game.skill.unlocked&&A.parkingIcon('stealth_skill',skillState),skillHtml=(icon||'')+`<span>${skillText}</span>`;if(skill._parkingHtml!==skillHtml){skill._parkingHtml=skillHtml;skill.innerHTML=skillHtml;}
     const boss=alive&&!['menu','result'].includes(mode)&&game.scene==='parking'&&game.zombies.find(z=>z.kind==='lurker'&&z.hp>0&&z.noticed),bar=document.getElementById('boss-status');bar.classList.toggle('hidden',!boss);
-    if(!boss&&bar._parkingHtml){bar.replaceChildren();bar._parkingHtml=null;}
+    if(!boss&&bar._parkingHtml&&!game.secondFloor){bar.replaceChildren();bar._parkingHtml=null;}
     if(boss){
       const portrait=A.parkingIcon('boss_portrait'),badge=boss.state==='burrowed'?'burrow_immunity_icon':boss.state==='stunned'?'stun_icon':boss.phase==='cowering'?'boss_phase_icon':null,badgeImage=badge&&A.parkingIcon(badge);
       const text=`潜伏者 ${boss.hp.toFixed(1)} / 25 · ${boss.phase==='cowering'?'畏缩阶段':'常规阶段'} · ${{burrowed:'潜伏免疫（燃烧瓶除外）',stunned:'眩晕，可攻击',charging:'蓄力怒吼，可攻击',exposed:'显形，可攻击'}[boss.state]}`;
@@ -294,7 +303,7 @@
     }
     if(game.scene==='parking'){
       document.getElementById('day-label').textContent='地下停车场 · 首层';document.getElementById('clock').textContent=`${Math.floor(game.seconds/60)}:${String(Math.floor(game.seconds%60)).padStart(2,'0')}`;
-      document.getElementById('phase').textContent=`常规刷新 ${Math.max(0,Math.ceil(game.parking.nextBatch*60-game.seconds))}秒 · 存活${game.zombies.length}`;
+      document.getElementById('phase').textContent=`常规刷新 ${Math.max(0,Math.ceil(game.parking.nextBatch*60-game.seconds))}秒 · 存活${game.zombies.filter(z=>!z.boneType).length}`;
       document.getElementById('wave-warning').classList.add('hidden');document.getElementById('objective').innerHTML='<b>照明与撤退</b><br>灯光驱赶近战怪，暗处弹体仍能射入。入口可随时返回。';
     }
     if(game.weaknessUntil>game.seconds)document.getElementById('buffs').textContent+=` · 虚弱 ${Math.ceil(game.weaknessUntil-game.seconds)}秒（伤害/移速-0.7）`;
@@ -302,6 +311,6 @@
     if(game.skill.active)document.getElementById('buffs').textContent+=` · 潜伏 ${Math.ceil(game.skill.until-game.seconds)}秒（${game.hidden?'已隐身':'有光，未隐身'}）`;
     if(game.audioCueSerial!==lastCue){lastCue=game.audioCueSerial;if(audio?.state==='running'){const o=audio.createOscillator(),gain=audio.createGain();o.connect(gain);gain.connect(audio.destination);o.frequency.value=330;gain.gain.setValueAtTime(.035,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.18);o.start();o.stop(audio.currentTime+.18);}}
   }
-  const developer=game=>`<div class="dev-section"><h3>停车场模型接入</h3><p>已索引${window.PARKING_ART?.coverage.availableAtlases||0}/${window.PARKING_ART?.coverage.plannedAtlases||115}张图集、${window.PARKING_ART?.coverage.availableFrames||0}帧；包含两阶段与八方向动作。以下操作仅影响测试存档。</p><div class="dev-row"><button data-dev="parking">前往地下首层（第15天）</button><button data-dev="parking-boss" ${game.scene==='parking'?'':'disabled'}>前往Boss战区</button><button data-dev="parking-return" ${game.scene==='parking'?'':'disabled'}>返回地面</button></div></div>`;
+  const developer=game=>`<div class="dev-section"><h3>停车场模型接入</h3><p>已索引${window.PARKING_ART?.coverage.availableAtlases||0}/${window.PARKING_ART?.coverage.plannedAtlases||115}张图集、${window.PARKING_ART?.coverage.availableFrames||0}帧；包含两阶段与八方向动作。以下操作仅影响测试存档。</p><div class="dev-row"><button data-dev="parking">前往地下首层（第15天）</button><button data-dev="skeleton-floor" ${game.scene==='parking'?'':'disabled'}>前往二层骷髅（测试）</button><button data-dev="parking-boss" ${game.scene==='parking'?'':'disabled'}>前往Boss战区</button><button data-dev="parking-return" ${game.scene==='parking'?'':'disabled'}>返回地面</button></div></div>`;
   window.ParkingView={context,inventoryExtras,command,draw,surface,groundSight,drawMap,hud,hideCombatHUD,names,unlockAudio,developer,lampModel,effectModel,entrancePoint,drawEntranceIntro};
 })();

@@ -1,0 +1,157 @@
+{
+  "boss": {
+    "melee": {
+      "frames": [
+        "melee_windup",
+        "melee_hit",
+        "melee_recover"
+      ],
+      "releaseAtMs": 300,
+      "recoveryMs": 500,
+      "damageEventFrame": "melee_hit",
+      "lockFacingAtStart": true
+    },
+    "throw": {
+      "frames": [
+        "detach",
+        "throw_charge",
+        "throw_release",
+        "throw_recover"
+      ],
+      "detachEventFrame": "detach",
+      "detachAtMs": 0,
+      "hpCost": 1,
+      "requiresHPGreaterThan": 1,
+      "releaseAtMs": 2000,
+      "releaseEventFrame": "throw_release",
+      "releaseHandsEmpty": true,
+      "projectile": "ordinary_bone",
+      "projectileHP": 4,
+      "targetLocksAtRelease": true,
+      "healOnlyOnPhysicalReconnect": true
+    },
+    "sweep": {
+      "frames": [
+        "sweep_detach",
+        "sweep_charge",
+        "sweep_hit",
+        "sweep_recover"
+      ],
+      "detachEventFrame": "sweep_detach",
+      "hpCost": 1,
+      "releaseAtMs": 1500,
+      "releaseEventFrame": "sweep_hit",
+      "radiusMeters": 2.6,
+      "angleDegrees": 180,
+      "recoveryMs": 700,
+      "weaponHP": 4,
+      "weaponDestroyed": {
+        "clip": "empty_swing",
+        "recoverMs": 700,
+        "damage": false,
+        "costRefund": false
+      }
+    },
+    "death": {
+      "start": "death_start",
+      "end": "death_end",
+      "commitAt": "Boss HP reaches zero; before release/reconnect/revival callback",
+      "cancelAllOrdinaryBones": true,
+      "spawnSeparate": [
+        "boss_chest",
+        "resurrection_bone"
+      ]
+    },
+    "reconnect": {
+      "frame": "reconnect",
+      "event": "Only on actual surviving returning bone reaching living Boss",
+      "heal": 1,
+      "maxHP": 26
+    },
+    "reform": {
+      "frames": [
+        "upright_warning",
+        "bones_rising",
+        "body_forming",
+        "standing"
+      ],
+      "telegraphMs": 3000,
+      "startsFromSingleUprightBone": true,
+      "attackDuringReform": false
+    }
+  },
+  "player": {
+    "frames": [
+      "ready",
+      "charge_start",
+      "charge_hold",
+      "release",
+      "recover",
+      "cancel"
+    ],
+    "holdFrame": "charge_hold",
+    "chargeRangeSeconds": [
+      0,
+      2
+    ],
+    "rangeMeters": [
+      5,
+      10
+    ],
+    "canHoldAtCap": true,
+    "releaseFrame": "release",
+    "releaseHandsEmpty": true,
+    "successfulReleaseHPcost": 1,
+    "requiresHPGreaterThan": 1,
+    "recoveryMs": 400,
+    "cooldownFromReleaseMs": 15000,
+    "cancelBeforeReleaseCostsNothing": true,
+    "projectile": "player_large_bone",
+    "projectileHP": 20,
+    "projectileRadiusMeters": 1,
+    "damagePerTarget": 4,
+    "eachTargetAtMostOnce": true,
+    "leavesGroundTrap": false,
+    "heldChargeBoneIsVisualOnlyUntilRelease": true
+  },
+  "boneKinds": {
+    "ordinary": {
+      "asset": "ordinary_bone",
+      "hp": 4,
+      "flightRadiusMeters": 0.2,
+      "groundRadiusMeters": 0.35,
+      "landedState": "f4",
+      "upright": true,
+      "recallDelayAfterLandingMs": 10000,
+      "recallFlightHarmless": true
+    },
+    "resurrection": {
+      "asset": "resurrection_bone",
+      "hp": 20,
+      "groundRadiusMeters": 0.6,
+      "upright": true,
+      "singleBone": true,
+      "contactDamage": 0,
+      "reviveAfterActiveGameHours": 72,
+      "damageDoesNotResetClock": true,
+      "destroyStopsRevivalPermanently": true
+    },
+    "player": {
+      "asset": "player_large_bone",
+      "hp": 20,
+      "flightRadiusMeters": 1,
+      "shattersOnHitObstacleOrRangeEnd": true,
+      "groundTrap": false
+    }
+  },
+  "exitRevision": {
+    "livingBossResetHP": 26,
+    "clearAllCombatBones": true,
+    "clearPlayerProjectileInLeavingLayer": true,
+    "deadBossStaysDead": true,
+    "deathRemnantKeepPositionHPAndRemainingTime": true,
+    "keepItemsLootClaimsSkills": true,
+    "onlySuccessfulExitTriggers": true,
+    "notPauseOrSaveLoad": true
+  }
+}

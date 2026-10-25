@@ -1,7 +1,7 @@
 /* One object per lamp: moving, storage and throwing preserve its energy and identity. */
 (function(root){
   'use strict';const common=typeof module!=='undefined'&&module.exports;
-  const S=common?require('./parking.js'):root.Survival,{dist}=S,P=S.Parking,Base=S.ParkingBase;
+  const S=common?require('./parking.js'):root.Survival,{dist}=S,P=S.Parking,D=S.Expansion,Base=S.ParkingBase;
   Object.assign(S.Game.prototype,{
     newLamp(s){
       if(!P.lamps[s.kind]||s.lampId)return s;const d=P.lamps[s.kind];
@@ -84,25 +84,31 @@
       for(const s of this.inventory)if(s?.lampId&&s.active&&s.energy>0&&[this.heldLightId,this.headLightId].includes(s.lampId))out.push({...this.player,...P.lamps[s.kind],facing,lamp:s});
       for(const s of this.devices)if(P.lamps[s.kind]&&s.hp>0&&s.active&&s.energy>0)out.push({...s,...P.lamps[s.kind],facing:s.facing||{x:0,y:1},lamp:s});return out;
     },
+    blocksVision(o){
+      if(P.lamps[o.kind]||D.builds[o.kind]?.ground)return false;
+      return ['wall','fence','door'].includes(o.type)||['wall','car','column','fuse_gate','brick_wall','wood_fence','iron_fence'].includes(o.kind);
+    },
+    visionObstacles(a,b,ignore=null){return this.obstacles(a,b,0).filter(o=>o!==ignore&&this.blocksVision(o));},
+    clearVision(a,b,ignore=null){return a.x===b.x&&a.y===b.y||!this.visionObstacles(a,b,ignore).length;},
     litBy(p,l,ignore=null){
       const distance=dist(p,l);if(distance>l.radius+1e-8)return false;
       if(l.angle&&distance>.001){const f=l.facing,n=Math.hypot(f.x,f.y)||1;if(((p.x-l.x)*f.x+(p.y-l.y)*f.y)/distance/n<Math.cos(l.angle*Math.PI/360)-1e-8)return false;}
       // A lamp's own stand is not an opaque wall.
-      return !this.obstacles(l,p,0).some(o=>o!==l.lamp&&o!==p&&o!==ignore);
+      return !this.visionObstacles(l,p,ignore).some(o=>o!==l.lamp&&o!==p);
     },
     isLit(p,sources){return (sources||this._lights||this.lightSources()).some(l=>this.litBy(p,l));},
     isDark(p){return !(this.scene!=='parking'&&this.minutes<1320)&&!this.isLit(p);},
     canSee(p){
-      if(this.scene!=='parking')return this.minutes<1320||dist(this.player,p)<=P.groundSight;
-      return (dist(this.player,p)<=P.baseSight||dist(this.player,p)<=P.lightSight&&this.isLit(p))&&this.clearLine(this.player,p,p);
+      if(this.scene!=='parking')return dist(this.player,p)<=this.personalSight;
+      return (dist(this.player,p)<=this.personalSight||dist(this.player,p)<=this.illuminatedSight&&this.isLit(p))&&this.clearVision(this.player,p,p);
     },
     canSeeCar(car){
       const clamp=(value,min,max)=>Math.max(min,Math.min(max,value)),left=car.x-car.w/2,right=car.x+car.w/2,top=car.y-car.h/2,bottom=car.y+car.h/2;
       const probes=[{x:clamp(this.player.x,left,right),y:clamp(this.player.y,top,bottom)}];
       for(const x of [left,car.x,right])for(const y of [top,car.y,bottom])probes.push({x,y});
       const lights=this._lights||this.lightSources();
-      const centreDistance=dist(this.player,car);if(centreDistance>P.lightSight||centreDistance>P.baseSight&&!lights.some(l=>this.litBy(car,l,car)))return false;
-      return probes.some(p=>{const distance=dist(this.player,p);return distance<=P.lightSight&&this.clearLine(this.player,p,car)&&(distance<=P.baseSight||lights.some(l=>this.litBy(p,l,car)));});
+      const centreDistance=dist(this.player,car);if(centreDistance>this.illuminatedSight||centreDistance>this.personalSight&&!lights.some(l=>this.litBy(car,l,car)))return false;
+      return probes.some(p=>{const distance=dist(this.player,p);return distance<=this.illuminatedSight&&this.clearVision(this.player,p,car)&&(distance<=this.personalSight||lights.some(l=>this.litBy(p,l,car)));});
     },
     parkingCue(text){this.announce(text);this.audioCueSerial=(this.audioCueSerial||0)+1;},
     lightExtinguished(s){

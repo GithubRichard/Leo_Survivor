@@ -9,6 +9,8 @@
 - [主角持武器动作](player-armed-v1/preview.html)：7种武器×8向，站立、奔跑、攻击共392帧，56张透明图集。
 - [停车场、Boss、照明与潜伏技能](parking-boss-v1/preview.html)：115张新透明PNG、803帧，含玩家照明开/关八向站立、奔跑与投灯动作；[接入说明](parking-boss-v1/程序接入说明.md)。
 - [扩展素材全集](expansion-v1/preview.html)：146项新增素材，可按类别和名称搜索。
+- [天赋与疾病图标](talent-disease-v1/preview.html)：10项天赋、10项疾病，20张独立透明PNG，附互斥与数值语义索引。
+- [天气与骷髅Boss](skeleton-boss-v1/preview.html)：45张新透明PNG、335帧，含六天气、骷髅与玩家投骨八向动作、三类骨头及6张复用素材；[接入说明](skeleton-boss-v1/程序接入说明.md)。
 - [扩展美术设计](扩展美术设计.md)：扩展方案与模型、状态、轮廓、图标的对应设计。
 - [基础美术规范](美术规范.md)：基础清单与导入约定。
 
