@@ -278,5 +278,14 @@
     const entry=entries[m.atlas],b=m.bounds,r=m.rect,w=b[2]-b[0],h=b[3]-b[1],scale=(size-2)/Math.max(w,h);
     return `<span class="parking-atlas-icon" style="width:${size}px;height:${size}px"><img src="${entry.src}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${(size-w*scale)/2-(r[0]+b[0])*scale}px;top:${(size-h*scale)/2-(r[1]+b[1])*scale}px"></span>`;
   }
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,house,houseBack,houseFront,roof,ground,door,direction};
+  function worldFrameSurface(ctx,asset,state,source,dest){
+    const d=window.WORLD_ART,m=d?.frames[d.assets[asset]?.states[state]];if(!m||!available(m.atlas))return false;
+    const img=images[m.atlas],ratio=img.width/entries[m.atlas].size[0],r=m.rect;
+    for(const indices of source.length===3?[[0,1,2]]:[[0,1,2],[0,2,3]]){
+      const src=indices.map(i=>({x:source[i][0],y:source[i][1]})),to=indices.map(i=>dest[i]),transform=affine(src,to);ctx.save();
+      if(source.length!==3){ctx.beginPath();to.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.clip();}
+      ctx.transform(transform.a,transform.b,transform.c,transform.d,transform.e,transform.f);ctx.drawImage(img,r[0]*ratio,r[1]*ratio,r[2]*ratio,r[3]*ratio,0,0,r[2],r[3]);ctx.restore();
+    }return true;
+  }
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,worldFrameSurface,house,houseBack,houseFront,roof,ground,door,direction};
 })();

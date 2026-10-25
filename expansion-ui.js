@@ -27,6 +27,7 @@
     return `<div class="eyebrow">暂停中 · ${game.inventory.length}格背包</div><h2>物资与准备</h2><div class="exp-tabs">${tabs}</div>${content}${pane==='bag'?window.ParkingView?.inventoryExtras(game)||'':''}<div class="overlay-actions">${extraActions}<button data-key="tab">返回游戏</button></div><div class="keyboard-hint key-hint">WASD选择格子 · E使用 · F部署选中的建筑 · Tab返回</div>`;
   }
   function context(game,target){
+    const camp=window.CampView?.context(game,target);if(camp)return camp;
     const world=target&&window.WorldView?.context(game,target);if(world)return world;
     const parking=target&&window.ParkingView?.context(game,target);if(parking)return parking;
     if(!target)return '';const o=target.object;let commands='',description='';

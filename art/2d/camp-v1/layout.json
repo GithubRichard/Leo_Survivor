@@ -1,0 +1,173 @@
+{
+  "units": "world meters; x east, z south",
+  "bounds": {
+    "x": -11,
+    "z": -9,
+    "width": 22,
+    "depth": 18
+  },
+  "exampleOnly": true,
+  "entryCorridor": {
+    "x": -1.5,
+    "z": -9,
+    "width": 3,
+    "depth": 18
+  },
+  "crossCorridor": {
+    "x": -11,
+    "z": -1.5,
+    "width": 22,
+    "depth": 3
+  },
+  "exits": [
+    {
+      "id": "north",
+      "x": 0,
+      "z": -9,
+      "width": 3,
+      "lockedAtNight": false
+    },
+    {
+      "id": "south",
+      "x": 0,
+      "z": 9,
+      "width": 3,
+      "lockedAtNight": false
+    }
+  ],
+  "nodes": [
+    {
+      "id": "clinic",
+      "label": "医务室",
+      "asset": "building_clinic",
+      "x": -8,
+      "z": -5.6,
+      "width": 4,
+      "depth": 4,
+      "privateBackground": false
+    },
+    {
+      "id": "workshop",
+      "label": "器材棚",
+      "asset": "building_workshop",
+      "x": -3.8,
+      "z": -5.6,
+      "width": 4,
+      "depth": 4,
+      "privateBackground": false
+    },
+    {
+      "id": "canteen",
+      "label": "食堂",
+      "asset": "building_canteen",
+      "x": 3.8,
+      "z": -5.6,
+      "width": 4,
+      "depth": 4,
+      "privateBackground": false
+    },
+    {
+      "id": "dormitory",
+      "label": "私人寝室",
+      "asset": "building_dormitory",
+      "x": 8,
+      "z": -5.6,
+      "width": 4,
+      "depth": 4,
+      "privateBackground": true
+    },
+    {
+      "id": "warehouse",
+      "label": "私人仓库",
+      "asset": "building_warehouse",
+      "x": 8,
+      "z": 5.8,
+      "width": 4,
+      "depth": 4,
+      "privateBackground": true
+    },
+    {
+      "id": "medical",
+      "label": "药品摊",
+      "asset": "stall_medical",
+      "x": -8,
+      "z": -2.3,
+      "width": 3,
+      "depth": 1.4,
+      "privateBackground": false
+    },
+    {
+      "id": "equipment",
+      "label": "器材摊",
+      "asset": "stall_equipment",
+      "x": -3.8,
+      "z": -2.3,
+      "width": 3,
+      "depth": 1.4,
+      "privateBackground": false
+    },
+    {
+      "id": "food",
+      "label": "食品摊",
+      "asset": "stall_food",
+      "x": 3.8,
+      "z": -2.3,
+      "width": 3,
+      "depth": 1.4,
+      "privateBackground": false
+    },
+    {
+      "id": "weapon",
+      "label": "武器摊",
+      "asset": "stall_weapon",
+      "x": 8,
+      "z": -2.3,
+      "width": 3,
+      "depth": 1.4,
+      "privateBackground": false
+    },
+    {
+      "id": "planting",
+      "label": "种植摊",
+      "asset": "stall_planting",
+      "x": -5,
+      "z": 3,
+      "width": 3,
+      "depth": 1.4,
+      "privateBackground": false
+    },
+    {
+      "id": "notice",
+      "label": "公告板",
+      "asset": "camp_notice_board",
+      "x": -8,
+      "z": 5.5,
+      "width": 2.5,
+      "depth": 1,
+      "privateBackground": false
+    },
+    {
+      "id": "cart",
+      "label": "流动商停车位",
+      "asset": "traveler_cart",
+      "x": 3.8,
+      "z": 5.6,
+      "width": 3.3,
+      "depth": 2.2,
+      "privateBackground": false
+    },
+    {
+      "id": "sign",
+      "label": "入口牌",
+      "asset": "camp_entrance_sign",
+      "x": -2.5,
+      "z": 8,
+      "width": 1.2,
+      "depth": 0.5,
+      "privateBackground": false
+    }
+  ],
+  "placementRule": "Shortest distance from entire camp footprint to INITIAL territory outer boundary100–170m, not center/current player. Keep existing road5m, old buildings/items and parking entrance intact. Seeded unique reachable location persisted.",
+  "weather": "Outdoor area uses normal weather, only explicit interior regions exempt",
+  "noSafeZone": true
+}

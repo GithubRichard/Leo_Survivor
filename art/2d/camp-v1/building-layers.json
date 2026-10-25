@@ -1,0 +1,134 @@
+{
+  "buildings": [
+    {
+      "asset": "building_clinic",
+      "layers": {
+        "floor": "building_clinic__floor",
+        "back": "building_clinic__back_walls",
+        "front": "building_clinic__front_walls",
+        "roof": "building_clinic__roof",
+        "doorClosed": "building_clinic__door_closed",
+        "doorOpen": "building_clinic__door_open"
+      },
+      "indoorRegion": "world footprint configured by engine, unrelated to roof alpha",
+      "drawOrder": [
+        "floor",
+        "back",
+        "interior fixtures and feet-sorted actors",
+        "front",
+        "roof"
+      ],
+      "hideOnActorInside": [
+        "roof",
+        "occluding front wall"
+      ],
+      "privateBackground": false,
+      "anchorCalibrationRequired": true
+    },
+    {
+      "asset": "building_workshop",
+      "layers": {
+        "floor": "building_workshop__floor",
+        "back": "building_workshop__back_walls",
+        "front": "building_workshop__front_walls",
+        "roof": "building_workshop__roof",
+        "doorClosed": "building_workshop__door_closed",
+        "doorOpen": "building_workshop__door_open"
+      },
+      "indoorRegion": "world footprint configured by engine, unrelated to roof alpha",
+      "drawOrder": [
+        "floor",
+        "back",
+        "interior fixtures and feet-sorted actors",
+        "front",
+        "roof"
+      ],
+      "hideOnActorInside": [
+        "roof",
+        "occluding front wall"
+      ],
+      "privateBackground": false,
+      "anchorCalibrationRequired": true
+    },
+    {
+      "asset": "building_canteen",
+      "layers": {
+        "floor": "building_canteen__floor",
+        "back": "building_canteen__back_walls",
+        "front": "building_canteen__front_walls",
+        "roof": "building_canteen__roof",
+        "doorClosed": "building_canteen__door_closed",
+        "doorOpen": "building_canteen__door_open"
+      },
+      "indoorRegion": "world footprint configured by engine, unrelated to roof alpha",
+      "drawOrder": [
+        "floor",
+        "back",
+        "interior fixtures and feet-sorted actors",
+        "front",
+        "roof"
+      ],
+      "hideOnActorInside": [
+        "roof",
+        "occluding front wall"
+      ],
+      "privateBackground": false,
+      "anchorCalibrationRequired": true
+    },
+    {
+      "asset": "building_dormitory",
+      "layers": {
+        "floor": "building_dormitory__floor",
+        "back": "building_dormitory__back_walls",
+        "front": "building_dormitory__front_walls",
+        "roof": "building_dormitory__roof",
+        "doorClosed": "building_dormitory__door_closed",
+        "doorOpen": "building_dormitory__door_open"
+      },
+      "indoorRegion": "world footprint configured by engine, unrelated to roof alpha",
+      "drawOrder": [
+        "floor",
+        "back",
+        "interior fixtures and feet-sorted actors",
+        "front",
+        "roof"
+      ],
+      "hideOnActorInside": [
+        "roof",
+        "occluding front wall"
+      ],
+      "privateBackground": true,
+      "anchorCalibrationRequired": true
+    },
+    {
+      "asset": "building_warehouse",
+      "layers": {
+        "floor": "building_warehouse__floor",
+        "back": "building_warehouse__back_walls",
+        "front": "building_warehouse__front_walls",
+        "roof": "building_warehouse__roof",
+        "doorClosed": "building_warehouse__door_closed",
+        "doorOpen": "building_warehouse__door_open"
+      },
+      "indoorRegion": "world footprint configured by engine, unrelated to roof alpha",
+      "drawOrder": [
+        "floor",
+        "back",
+        "interior fixtures and feet-sorted actors",
+        "front",
+        "roof"
+      ],
+      "hideOnActorInside": [
+        "roof",
+        "occluding front wall"
+      ],
+      "privateBackground": true,
+      "anchorCalibrationRequired": true
+    }
+  ],
+  "stalls": {
+    "canopy": "If awning hides actor, fade corresponding upper sprite area or foreground layer, keep counter visible",
+    "closed": "concealed goods are not destroyed stock; UI uses persisted logical batches"
+  },
+  "note": "Independent native parts need world footprint/hinge registration in engine; do not assume source cell centers are common anchors."
+}

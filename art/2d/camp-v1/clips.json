@@ -1,0 +1,1146 @@
+{
+  "clips": [
+    {
+      "id": "npc_C00_south",
+      "npcId": "C00",
+      "direction": "south",
+      "idle": [
+        "npc_C00__south_idle"
+      ],
+      "walk": [
+        "npc_C00__south_walk_a",
+        "npc_C00__south_walk_mid",
+        "npc_C00__south_walk_b",
+        "npc_C00__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_southeast",
+      "npcId": "C00",
+      "direction": "southeast",
+      "idle": [
+        "npc_C00__southeast_idle"
+      ],
+      "walk": [
+        "npc_C00__southeast_walk_a",
+        "npc_C00__southeast_walk_mid",
+        "npc_C00__southeast_walk_b",
+        "npc_C00__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_east",
+      "npcId": "C00",
+      "direction": "east",
+      "idle": [
+        "npc_C00__east_idle"
+      ],
+      "walk": [
+        "npc_C00__east_walk_a",
+        "npc_C00__east_walk_mid",
+        "npc_C00__east_walk_b",
+        "npc_C00__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_northeast",
+      "npcId": "C00",
+      "direction": "northeast",
+      "idle": [
+        "npc_C00__northeast_idle"
+      ],
+      "walk": [
+        "npc_C00__northeast_walk_a",
+        "npc_C00__northeast_walk_mid",
+        "npc_C00__northeast_walk_b",
+        "npc_C00__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_north",
+      "npcId": "C00",
+      "direction": "north",
+      "idle": [
+        "npc_C00__north_idle"
+      ],
+      "walk": [
+        "npc_C00__north_walk_a",
+        "npc_C00__north_walk_mid",
+        "npc_C00__north_walk_b",
+        "npc_C00__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_northwest",
+      "npcId": "C00",
+      "direction": "northwest",
+      "idle": [
+        "npc_C00__northwest_idle"
+      ],
+      "walk": [
+        "npc_C00__northwest_walk_a",
+        "npc_C00__northwest_walk_mid",
+        "npc_C00__northwest_walk_b",
+        "npc_C00__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_west",
+      "npcId": "C00",
+      "direction": "west",
+      "idle": [
+        "npc_C00__west_idle"
+      ],
+      "walk": [
+        "npc_C00__west_walk_a",
+        "npc_C00__west_walk_mid",
+        "npc_C00__west_walk_b",
+        "npc_C00__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C00_southwest",
+      "npcId": "C00",
+      "direction": "southwest",
+      "idle": [
+        "npc_C00__southwest_idle"
+      ],
+      "walk": [
+        "npc_C00__southwest_walk_a",
+        "npc_C00__southwest_walk_mid",
+        "npc_C00__southwest_walk_b",
+        "npc_C00__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C00__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C00__southwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_south",
+      "npcId": "C01",
+      "direction": "south",
+      "idle": [
+        "npc_C01__south_idle"
+      ],
+      "walk": [
+        "npc_C01__south_walk_a",
+        "npc_C01__south_walk_mid",
+        "npc_C01__south_walk_b",
+        "npc_C01__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_southeast",
+      "npcId": "C01",
+      "direction": "southeast",
+      "idle": [
+        "npc_C01__southeast_idle"
+      ],
+      "walk": [
+        "npc_C01__southeast_walk_a",
+        "npc_C01__southeast_walk_mid",
+        "npc_C01__southeast_walk_b",
+        "npc_C01__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_east",
+      "npcId": "C01",
+      "direction": "east",
+      "idle": [
+        "npc_C01__east_idle"
+      ],
+      "walk": [
+        "npc_C01__east_walk_a",
+        "npc_C01__east_walk_mid",
+        "npc_C01__east_walk_b",
+        "npc_C01__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_northeast",
+      "npcId": "C01",
+      "direction": "northeast",
+      "idle": [
+        "npc_C01__northeast_idle"
+      ],
+      "walk": [
+        "npc_C01__northeast_walk_a",
+        "npc_C01__northeast_walk_mid",
+        "npc_C01__northeast_walk_b",
+        "npc_C01__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_north",
+      "npcId": "C01",
+      "direction": "north",
+      "idle": [
+        "npc_C01__north_idle"
+      ],
+      "walk": [
+        "npc_C01__north_walk_a",
+        "npc_C01__north_walk_mid",
+        "npc_C01__north_walk_b",
+        "npc_C01__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_northwest",
+      "npcId": "C01",
+      "direction": "northwest",
+      "idle": [
+        "npc_C01__northwest_idle"
+      ],
+      "walk": [
+        "npc_C01__northwest_walk_a",
+        "npc_C01__northwest_walk_mid",
+        "npc_C01__northwest_walk_b",
+        "npc_C01__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_west",
+      "npcId": "C01",
+      "direction": "west",
+      "idle": [
+        "npc_C01__west_idle"
+      ],
+      "walk": [
+        "npc_C01__west_walk_a",
+        "npc_C01__west_walk_mid",
+        "npc_C01__west_walk_b",
+        "npc_C01__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C01_southwest",
+      "npcId": "C01",
+      "direction": "southwest",
+      "idle": [
+        "npc_C01__southwest_idle"
+      ],
+      "walk": [
+        "npc_C01__southwest_walk_a",
+        "npc_C01__southwest_walk_mid",
+        "npc_C01__southwest_walk_b",
+        "npc_C01__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C01__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C01__southwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_south",
+      "npcId": "C02",
+      "direction": "south",
+      "idle": [
+        "npc_C02__south_idle"
+      ],
+      "walk": [
+        "npc_C02__south_walk_a",
+        "npc_C02__south_walk_mid",
+        "npc_C02__south_walk_b",
+        "npc_C02__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_southeast",
+      "npcId": "C02",
+      "direction": "southeast",
+      "idle": [
+        "npc_C02__southeast_idle"
+      ],
+      "walk": [
+        "npc_C02__southeast_walk_a",
+        "npc_C02__southeast_walk_mid",
+        "npc_C02__southeast_walk_b",
+        "npc_C02__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_east",
+      "npcId": "C02",
+      "direction": "east",
+      "idle": [
+        "npc_C02__east_idle"
+      ],
+      "walk": [
+        "npc_C02__east_walk_a",
+        "npc_C02__east_walk_mid",
+        "npc_C02__east_walk_b",
+        "npc_C02__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_northeast",
+      "npcId": "C02",
+      "direction": "northeast",
+      "idle": [
+        "npc_C02__northeast_idle"
+      ],
+      "walk": [
+        "npc_C02__northeast_walk_a",
+        "npc_C02__northeast_walk_mid",
+        "npc_C02__northeast_walk_b",
+        "npc_C02__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_north",
+      "npcId": "C02",
+      "direction": "north",
+      "idle": [
+        "npc_C02__north_idle"
+      ],
+      "walk": [
+        "npc_C02__north_walk_a",
+        "npc_C02__north_walk_mid",
+        "npc_C02__north_walk_b",
+        "npc_C02__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_northwest",
+      "npcId": "C02",
+      "direction": "northwest",
+      "idle": [
+        "npc_C02__northwest_idle"
+      ],
+      "walk": [
+        "npc_C02__northwest_walk_a",
+        "npc_C02__northwest_walk_mid",
+        "npc_C02__northwest_walk_b",
+        "npc_C02__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_west",
+      "npcId": "C02",
+      "direction": "west",
+      "idle": [
+        "npc_C02__west_idle"
+      ],
+      "walk": [
+        "npc_C02__west_walk_a",
+        "npc_C02__west_walk_mid",
+        "npc_C02__west_walk_b",
+        "npc_C02__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C02_southwest",
+      "npcId": "C02",
+      "direction": "southwest",
+      "idle": [
+        "npc_C02__southwest_idle"
+      ],
+      "walk": [
+        "npc_C02__southwest_walk_a",
+        "npc_C02__southwest_walk_mid",
+        "npc_C02__southwest_walk_b",
+        "npc_C02__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C02__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C02__southwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_south",
+      "npcId": "C03",
+      "direction": "south",
+      "idle": [
+        "npc_C03__south_idle"
+      ],
+      "walk": [
+        "npc_C03__south_walk_a",
+        "npc_C03__south_walk_mid",
+        "npc_C03__south_walk_b",
+        "npc_C03__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_southeast",
+      "npcId": "C03",
+      "direction": "southeast",
+      "idle": [
+        "npc_C03__southeast_idle"
+      ],
+      "walk": [
+        "npc_C03__southeast_walk_a",
+        "npc_C03__southeast_walk_mid",
+        "npc_C03__southeast_walk_b",
+        "npc_C03__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_east",
+      "npcId": "C03",
+      "direction": "east",
+      "idle": [
+        "npc_C03__east_idle"
+      ],
+      "walk": [
+        "npc_C03__east_walk_a",
+        "npc_C03__east_walk_mid",
+        "npc_C03__east_walk_b",
+        "npc_C03__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_northeast",
+      "npcId": "C03",
+      "direction": "northeast",
+      "idle": [
+        "npc_C03__northeast_idle"
+      ],
+      "walk": [
+        "npc_C03__northeast_walk_a",
+        "npc_C03__northeast_walk_mid",
+        "npc_C03__northeast_walk_b",
+        "npc_C03__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_north",
+      "npcId": "C03",
+      "direction": "north",
+      "idle": [
+        "npc_C03__north_idle"
+      ],
+      "walk": [
+        "npc_C03__north_walk_a",
+        "npc_C03__north_walk_mid",
+        "npc_C03__north_walk_b",
+        "npc_C03__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_northwest",
+      "npcId": "C03",
+      "direction": "northwest",
+      "idle": [
+        "npc_C03__northwest_idle"
+      ],
+      "walk": [
+        "npc_C03__northwest_walk_a",
+        "npc_C03__northwest_walk_mid",
+        "npc_C03__northwest_walk_b",
+        "npc_C03__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_west",
+      "npcId": "C03",
+      "direction": "west",
+      "idle": [
+        "npc_C03__west_idle"
+      ],
+      "walk": [
+        "npc_C03__west_walk_a",
+        "npc_C03__west_walk_mid",
+        "npc_C03__west_walk_b",
+        "npc_C03__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C03_southwest",
+      "npcId": "C03",
+      "direction": "southwest",
+      "idle": [
+        "npc_C03__southwest_idle"
+      ],
+      "walk": [
+        "npc_C03__southwest_walk_a",
+        "npc_C03__southwest_walk_mid",
+        "npc_C03__southwest_walk_b",
+        "npc_C03__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C03__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C03__southwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_south",
+      "npcId": "C04",
+      "direction": "south",
+      "idle": [
+        "npc_C04__south_idle"
+      ],
+      "walk": [
+        "npc_C04__south_walk_a",
+        "npc_C04__south_walk_mid",
+        "npc_C04__south_walk_b",
+        "npc_C04__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_southeast",
+      "npcId": "C04",
+      "direction": "southeast",
+      "idle": [
+        "npc_C04__southeast_idle"
+      ],
+      "walk": [
+        "npc_C04__southeast_walk_a",
+        "npc_C04__southeast_walk_mid",
+        "npc_C04__southeast_walk_b",
+        "npc_C04__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_east",
+      "npcId": "C04",
+      "direction": "east",
+      "idle": [
+        "npc_C04__east_idle"
+      ],
+      "walk": [
+        "npc_C04__east_walk_a",
+        "npc_C04__east_walk_mid",
+        "npc_C04__east_walk_b",
+        "npc_C04__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_northeast",
+      "npcId": "C04",
+      "direction": "northeast",
+      "idle": [
+        "npc_C04__northeast_idle"
+      ],
+      "walk": [
+        "npc_C04__northeast_walk_a",
+        "npc_C04__northeast_walk_mid",
+        "npc_C04__northeast_walk_b",
+        "npc_C04__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_north",
+      "npcId": "C04",
+      "direction": "north",
+      "idle": [
+        "npc_C04__north_idle"
+      ],
+      "walk": [
+        "npc_C04__north_walk_a",
+        "npc_C04__north_walk_mid",
+        "npc_C04__north_walk_b",
+        "npc_C04__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_northwest",
+      "npcId": "C04",
+      "direction": "northwest",
+      "idle": [
+        "npc_C04__northwest_idle"
+      ],
+      "walk": [
+        "npc_C04__northwest_walk_a",
+        "npc_C04__northwest_walk_mid",
+        "npc_C04__northwest_walk_b",
+        "npc_C04__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_west",
+      "npcId": "C04",
+      "direction": "west",
+      "idle": [
+        "npc_C04__west_idle"
+      ],
+      "walk": [
+        "npc_C04__west_walk_a",
+        "npc_C04__west_walk_mid",
+        "npc_C04__west_walk_b",
+        "npc_C04__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C04_southwest",
+      "npcId": "C04",
+      "direction": "southwest",
+      "idle": [
+        "npc_C04__southwest_idle"
+      ],
+      "walk": [
+        "npc_C04__southwest_walk_a",
+        "npc_C04__southwest_walk_mid",
+        "npc_C04__southwest_walk_b",
+        "npc_C04__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C04__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C04__southwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_south",
+      "npcId": "C05",
+      "direction": "south",
+      "idle": [
+        "npc_C05__south_idle"
+      ],
+      "walk": [
+        "npc_C05__south_walk_a",
+        "npc_C05__south_walk_mid",
+        "npc_C05__south_walk_b",
+        "npc_C05__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_southeast",
+      "npcId": "C05",
+      "direction": "southeast",
+      "idle": [
+        "npc_C05__southeast_idle"
+      ],
+      "walk": [
+        "npc_C05__southeast_walk_a",
+        "npc_C05__southeast_walk_mid",
+        "npc_C05__southeast_walk_b",
+        "npc_C05__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_east",
+      "npcId": "C05",
+      "direction": "east",
+      "idle": [
+        "npc_C05__east_idle"
+      ],
+      "walk": [
+        "npc_C05__east_walk_a",
+        "npc_C05__east_walk_mid",
+        "npc_C05__east_walk_b",
+        "npc_C05__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_northeast",
+      "npcId": "C05",
+      "direction": "northeast",
+      "idle": [
+        "npc_C05__northeast_idle"
+      ],
+      "walk": [
+        "npc_C05__northeast_walk_a",
+        "npc_C05__northeast_walk_mid",
+        "npc_C05__northeast_walk_b",
+        "npc_C05__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_north",
+      "npcId": "C05",
+      "direction": "north",
+      "idle": [
+        "npc_C05__north_idle"
+      ],
+      "walk": [
+        "npc_C05__north_walk_a",
+        "npc_C05__north_walk_mid",
+        "npc_C05__north_walk_b",
+        "npc_C05__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_northwest",
+      "npcId": "C05",
+      "direction": "northwest",
+      "idle": [
+        "npc_C05__northwest_idle"
+      ],
+      "walk": [
+        "npc_C05__northwest_walk_a",
+        "npc_C05__northwest_walk_mid",
+        "npc_C05__northwest_walk_b",
+        "npc_C05__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_west",
+      "npcId": "C05",
+      "direction": "west",
+      "idle": [
+        "npc_C05__west_idle"
+      ],
+      "walk": [
+        "npc_C05__west_walk_a",
+        "npc_C05__west_walk_mid",
+        "npc_C05__west_walk_b",
+        "npc_C05__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C05_southwest",
+      "npcId": "C05",
+      "direction": "southwest",
+      "idle": [
+        "npc_C05__southwest_idle"
+      ],
+      "walk": [
+        "npc_C05__southwest_walk_a",
+        "npc_C05__southwest_walk_mid",
+        "npc_C05__southwest_walk_b",
+        "npc_C05__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C05__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C05__southwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_south",
+      "npcId": "C06",
+      "direction": "south",
+      "idle": [
+        "npc_C06__south_idle"
+      ],
+      "walk": [
+        "npc_C06__south_walk_a",
+        "npc_C06__south_walk_mid",
+        "npc_C06__south_walk_b",
+        "npc_C06__south_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__south_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__south_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_southeast",
+      "npcId": "C06",
+      "direction": "southeast",
+      "idle": [
+        "npc_C06__southeast_idle"
+      ],
+      "walk": [
+        "npc_C06__southeast_walk_a",
+        "npc_C06__southeast_walk_mid",
+        "npc_C06__southeast_walk_b",
+        "npc_C06__southeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__southeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__southeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_east",
+      "npcId": "C06",
+      "direction": "east",
+      "idle": [
+        "npc_C06__east_idle"
+      ],
+      "walk": [
+        "npc_C06__east_walk_a",
+        "npc_C06__east_walk_mid",
+        "npc_C06__east_walk_b",
+        "npc_C06__east_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__east_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__east_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_northeast",
+      "npcId": "C06",
+      "direction": "northeast",
+      "idle": [
+        "npc_C06__northeast_idle"
+      ],
+      "walk": [
+        "npc_C06__northeast_walk_a",
+        "npc_C06__northeast_walk_mid",
+        "npc_C06__northeast_walk_b",
+        "npc_C06__northeast_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__northeast_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__northeast_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_north",
+      "npcId": "C06",
+      "direction": "north",
+      "idle": [
+        "npc_C06__north_idle"
+      ],
+      "walk": [
+        "npc_C06__north_walk_a",
+        "npc_C06__north_walk_mid",
+        "npc_C06__north_walk_b",
+        "npc_C06__north_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__north_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__north_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_northwest",
+      "npcId": "C06",
+      "direction": "northwest",
+      "idle": [
+        "npc_C06__northwest_idle"
+      ],
+      "walk": [
+        "npc_C06__northwest_walk_a",
+        "npc_C06__northwest_walk_mid",
+        "npc_C06__northwest_walk_b",
+        "npc_C06__northwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__northwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__northwest_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_west",
+      "npcId": "C06",
+      "direction": "west",
+      "idle": [
+        "npc_C06__west_idle"
+      ],
+      "walk": [
+        "npc_C06__west_walk_a",
+        "npc_C06__west_walk_mid",
+        "npc_C06__west_walk_b",
+        "npc_C06__west_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__west_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__west_idle",
+      "worldHeightMeters": 1.7
+    },
+    {
+      "id": "npc_C06_southwest",
+      "npcId": "C06",
+      "direction": "southwest",
+      "idle": [
+        "npc_C06__southwest_idle"
+      ],
+      "walk": [
+        "npc_C06__southwest_walk_a",
+        "npc_C06__southwest_walk_mid",
+        "npc_C06__southwest_walk_b",
+        "npc_C06__southwest_walk_mid"
+      ],
+      "interact": [
+        "npc_C06__southwest_interact"
+      ],
+      "suggestedWalkFrameMs": 140,
+      "fixedScaleReference": "npc_C06__southwest_idle",
+      "worldHeightMeters": 1.7
+    }
+  ],
+  "service": {
+    "doctorFrames": [
+      "doctor_treatment__f0",
+      "doctor_treatment__f1",
+      "doctor_treatment__f2"
+    ],
+    "durationMs": 6000,
+    "holdMiddle": true,
+    "healOnlyOnSuccessfulCommit": true
+  },
+  "trade": {
+    "durationMs": 2000,
+    "inventoryCommit": "after revalidation at completed interaction",
+    "cancelOn": [
+      "movement",
+      "damage",
+      "out-of-range",
+      "closed shop"
+    ],
+    "noEarlyStockOrItemCommit": true
+  },
+  "note": "Animation duration never changes opening hours, stock or game clock. NPCs have no combat, recruitment or drop animation."
+}

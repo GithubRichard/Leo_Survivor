@@ -402,7 +402,7 @@
       let best=start,bestH=dist(start,goal),expanded=0;const def=D.enemies[z.kind];
       while(heap.length&&expanded++<1800){yield;const cur=heap.pop(),k=key(cur);if(cur.g!==cost.get(k))continue;const h=dist(cur,goal);if(h<bestH){best=cur;bestH=h;}if(h<.5){best=cur;break;}
         for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)if(dx||dy){const next={x:cur.x+dx,y:cur.y+dy};if(Math.abs(next.x-start.x)>100||Math.abs(next.y-start.y)>100)continue;
-          const blockers=this.obstacles(cur,next,.24),crossing=blockers.reduce((n,o)=>n+Math.ceil(o.hp/def.building)*def.interval*def.speed,0),g=cur.g+Math.hypot(dx,dy)+crossing,nk=key(next);
+          const blockers=this.obstacles(cur,next,.24),crossing=blockers.reduce((n,o)=>o.type==='camp_solid'&&o.kind==='door'?n:o.indestructible?Infinity:n+Math.ceil(o.hp/def.building)*def.interval*def.speed,0),g=cur.g+Math.hypot(dx,dy)+crossing,nk=key(next);
           if(g<(cost.get(nk)??Infinity)){cost.set(nk,g);parents.set(nk,k);nodes.set(nk,next);heap.push({...next,g,f:g+dist(next,goal)});}
         }
       }

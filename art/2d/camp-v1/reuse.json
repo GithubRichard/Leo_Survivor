@@ -1,0 +1,738 @@
+{
+  "assets": [
+    {
+      "id": "wood_spear",
+      "original": "../expansion-v1/wood_spear.png",
+      "file": "reuse/wood_spear.png",
+      "sha256": "a029d4922a9153040bcd8463d2d3db53300cb6fb7f43013dba290892ade7ae65",
+      "frames": []
+    },
+    {
+      "id": "iron_axe",
+      "original": "../expansion-v1/iron_axe.png",
+      "file": "reuse/iron_axe.png",
+      "sha256": "1afd8532f16eeda12e9718868478432e0f2d83ae2bd9838c5d35a28ace7f8fe5",
+      "frames": []
+    },
+    {
+      "id": "simple_bow",
+      "original": "../expansion-v1/simple_bow.png",
+      "file": "reuse/simple_bow.png",
+      "sha256": "3144c427b91873d82bc5ec7a15b1820cdfa3b6ecfaa6d7d3c5bed5d0cdd47337",
+      "frames": []
+    },
+    {
+      "id": "hand_crossbow",
+      "original": "../expansion-v1/hand_crossbow.png",
+      "file": "reuse/hand_crossbow.png",
+      "sha256": "56245957afaa5d8870b7d8b26839bf95334fb45ebda8bdefef206e32ef2934fe",
+      "frames": []
+    },
+    {
+      "id": "shotgun",
+      "original": "../expansion-v1/shotgun.png",
+      "file": "reuse/shotgun.png",
+      "sha256": "d6bf81891de41513de64b4f85ae66fa87587291a261d40e4a16f15b07de23e15",
+      "frames": []
+    },
+    {
+      "id": "arrow",
+      "original": "../expansion-v1/arrow.png",
+      "file": "reuse/arrow.png",
+      "sha256": "00e994e1893fb5c146d9a3d87f08e8dc021bbfc7ef19d0dc63a4a8289ee8557f",
+      "frames": []
+    },
+    {
+      "id": "bolt",
+      "original": "../expansion-v1/bolt.png",
+      "file": "reuse/bolt.png",
+      "sha256": "5851dfbee4ce3bd1ab65ab857fb0c4ec48fc23ebd683fe4c508b2dd090afe701",
+      "frames": []
+    },
+    {
+      "id": "shotgun_shell",
+      "original": "../expansion-v1/shotgun_shell.png",
+      "file": "reuse/shotgun_shell.png",
+      "sha256": "9fe7866ddaac15e4f2549450a956593d30eaff31c65bc0ac99b75ec01873a411",
+      "frames": []
+    },
+    {
+      "id": "bandage",
+      "original": "../expansion-v1/bandage.png",
+      "file": "reuse/bandage.png",
+      "sha256": "51fb174aee23a6758d2f35160dfd483fb256d866f72cbb29c00ca71d2b866e5e",
+      "frames": []
+    },
+    {
+      "id": "medkit",
+      "original": "../expansion-v1/medkit.png",
+      "file": "reuse/medkit.png",
+      "sha256": "bc2731c085df5adf903c5e40083296aee2815237a9eecb42837d220c1897ef26",
+      "frames": []
+    },
+    {
+      "id": "molotov",
+      "original": "../expansion-v1/molotov.png",
+      "file": "reuse/molotov.png",
+      "sha256": "9ebacbadafa7f06400dbc47aa2862c9c85b18e6c62845fc6270a99c3e0c23d31",
+      "frames": []
+    },
+    {
+      "id": "stone",
+      "original": "../expansion-v1/stone.png",
+      "file": "reuse/stone.png",
+      "sha256": "bd2112603c2211e9de4c3ddde88b1ff49693f8d5a00c185a2d273433c95cba97",
+      "frames": []
+    },
+    {
+      "id": "cloth",
+      "original": "../expansion-v1/cloth.png",
+      "file": "reuse/cloth.png",
+      "sha256": "5f5a388d093319c8176f28191401e3afa6db389dc893c5bb6d68d9b604852287",
+      "frames": []
+    },
+    {
+      "id": "scrap",
+      "original": "../expansion-v1/scrap.png",
+      "file": "reuse/scrap.png",
+      "sha256": "f95f4df1866382da4325854ff3b252b04a78f7c3199ef42073e6a186d654273a",
+      "frames": []
+    },
+    {
+      "id": "parts",
+      "original": "../expansion-v1/parts.png",
+      "file": "reuse/parts.png",
+      "sha256": "32748a27ef1a3e1b6c9ac854dc23cf3c529a56c7ad807d966453719ce14e20b1",
+      "frames": []
+    },
+    {
+      "id": "herb",
+      "original": "../expansion-v1/herb.png",
+      "file": "reuse/herb.png",
+      "sha256": "bba87abaa38bcaab70f889c9b3d8776dabe6de655fe66c2b93f2f42634dd6296",
+      "frames": []
+    },
+    {
+      "id": "alcohol",
+      "original": "../expansion-v1/alcohol.png",
+      "file": "reuse/alcohol.png",
+      "sha256": "d2e34175b332541e421cdc92ee8fa68b51ae34e25b0166115566c3e6a0fd3f9a",
+      "frames": []
+    },
+    {
+      "id": "gunpowder",
+      "original": "../expansion-v1/gunpowder.png",
+      "file": "reuse/gunpowder.png",
+      "sha256": "d76d6ea8c223039ff4aae83137087670fabe493d971fd1e6f3c649e623e6331d",
+      "frames": []
+    },
+    {
+      "id": "raw_water",
+      "original": "../expansion-v1/raw_water.png",
+      "file": "reuse/raw_water.png",
+      "sha256": "12214c642200aac1ff64eb40aaecf6321c299a3e48a078b2d9ab22dc6b190f11",
+      "frames": []
+    },
+    {
+      "id": "clean_water",
+      "original": "../expansion-v1/clean_water.png",
+      "file": "reuse/clean_water.png",
+      "sha256": "7726eb99ac9b2d6e5f784137c4e6899a839b03a652b748fbec4e2f24fa9dfb80",
+      "frames": []
+    },
+    {
+      "id": "potato",
+      "original": "../expansion-v1/potato.png",
+      "file": "reuse/potato.png",
+      "sha256": "839cc7aaec516e376ab071bc83889ade277fb4d042f5fd46f08ed55d58be21f3",
+      "frames": []
+    },
+    {
+      "id": "vegetable",
+      "original": "../expansion-v1/vegetable.png",
+      "file": "reuse/vegetable.png",
+      "sha256": "3407cf06a68128235c3c1d3be11008516b0cfd21daaa2b6d764dc2e752384525",
+      "frames": []
+    },
+    {
+      "id": "raw_meat",
+      "original": "../expansion-v1/raw_meat.png",
+      "file": "reuse/raw_meat.png",
+      "sha256": "a71d3b36685730712cec222fd608df96fe25678f632b41ac62fce0d21e04135a",
+      "frames": []
+    },
+    {
+      "id": "grain",
+      "original": "../expansion-v1/grain.png",
+      "file": "reuse/grain.png",
+      "sha256": "2547b52fd40524fdc7c577a616b5bbf96287e2b23a2f1406099756d3e3e7743f",
+      "frames": []
+    },
+    {
+      "id": "canned_food",
+      "original": "../expansion-v1/canned_food.png",
+      "file": "reuse/canned_food.png",
+      "sha256": "f8b99451003cf91921041737e8dbae4f8ea8a571fdac772c669f386466031a0f",
+      "frames": []
+    },
+    {
+      "id": "baked_potato",
+      "original": "../expansion-v1/baked_potato.png",
+      "file": "reuse/baked_potato.png",
+      "sha256": "9bcf32fbcf8357e4e71fba7b70ec4a3e51ead4c2a8e757908a534a5cc6ddbd54",
+      "frames": []
+    },
+    {
+      "id": "grain_porridge",
+      "original": "../expansion-v1/grain_porridge.png",
+      "file": "reuse/grain_porridge.png",
+      "sha256": "e0bdd6e80fe3d86925ee360572e45456549934253cc53e889d03ff03b3ff3bee",
+      "frames": []
+    },
+    {
+      "id": "meat_vegetable_stew",
+      "original": "../expansion-v1/meat_vegetable_stew.png",
+      "file": "reuse/meat_vegetable_stew.png",
+      "sha256": "2810487b916098365aff312f3f044e00220c7295266e4f8b93ff4ed55474f066",
+      "frames": []
+    },
+    {
+      "id": "potato_meat_pie",
+      "original": "../expansion-v1/potato_meat_pie.png",
+      "file": "reuse/potato_meat_pie.png",
+      "sha256": "e13723b5cd63f1813e55e1d847d35d0db7110a184c7b3ec5297fd323bca0d41f",
+      "frames": []
+    },
+    {
+      "id": "jerky",
+      "original": "../expansion-v1/jerky.png",
+      "file": "reuse/jerky.png",
+      "sha256": "f2231cd37bf788e8907ece9fb924098624e996802e95aaeeaf419d1aa52ddc96",
+      "frames": []
+    },
+    {
+      "id": "iron",
+      "original": "../sprites-v2/iron.png",
+      "file": "reuse/iron.png",
+      "sha256": "5d9279475251b24357596eaf178c4feda634afed8beb36fa3249fb582951b9d5",
+      "frames": []
+    },
+    {
+      "id": "wood",
+      "original": "../sprites-v1/wood.png",
+      "file": "reuse/wood.png",
+      "sha256": "421d7d272ad7343d585504e1ede6af9784a4b60f8ef6ce067521ac27d4b295a4",
+      "frames": []
+    },
+    {
+      "id": "car_fuel",
+      "original": "../parking-boss-v1/png/car_fuel.png",
+      "file": "reuse/car_fuel.png",
+      "sha256": "7288506c9ca96c067d1ede54ce27b05af9f38f4782545fa3e43ed88ea00975a7",
+      "frames": [
+        {
+          "id": "car_fuel__default",
+          "asset": "car_fuel",
+          "file": "reuse/car_fuel.png",
+          "label": "汽车燃油 · 默认",
+          "category": "车辆与资源",
+          "state": "default",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 1,
+          "rect": [
+            0,
+            0,
+            1272,
+            1237
+          ],
+          "size": [
+            1272,
+            1237
+          ],
+          "visibleBounds": [
+            200,
+            103,
+            1105,
+            1124
+          ],
+          "opaquePixels": 739097,
+          "center": [
+            637.52,
+            530.56
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battery",
+      "original": "../parking-boss-v1/png/battery.png",
+      "file": "reuse/battery.png",
+      "sha256": "6a46b18e771fcba0a831d7ac0aec29b9743a7b727015ac59eda5cce5ed289c14",
+      "frames": [
+        {
+          "id": "battery__default",
+          "asset": "battery",
+          "file": "reuse/battery.png",
+          "label": "电池 · 默认",
+          "category": "车辆与资源",
+          "state": "default",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 1,
+          "rect": [
+            0,
+            0,
+            1295,
+            1214
+          ],
+          "size": [
+            1295,
+            1214
+          ],
+          "visibleBounds": [
+            362,
+            71,
+            935,
+            1149
+          ],
+          "opaquePixels": 563950,
+          "center": [
+            647.25,
+            516.12
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wire",
+      "original": "../parking-boss-v1/png/wire.png",
+      "file": "reuse/wire.png",
+      "sha256": "0b274c7ec0289125ceb5e2195141a98c5ca221dfccc273608b78b251be899cba",
+      "frames": [
+        {
+          "id": "wire__default",
+          "asset": "wire",
+          "file": "reuse/wire.png",
+          "label": "电线 · 默认",
+          "category": "车辆与资源",
+          "state": "default",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 1,
+          "rect": [
+            0,
+            0,
+            1536,
+            1024
+          ],
+          "size": [
+            1536,
+            1024
+          ],
+          "visibleBounds": [
+            227,
+            119,
+            1311,
+            911
+          ],
+          "opaquePixels": 513451,
+          "center": [
+            775.68,
+            440.05
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fuel_lantern",
+      "original": "../parking-boss-v1/png/fuel_lantern.png",
+      "file": "reuse/fuel_lantern.png",
+      "sha256": "47937c58b7dc8046f421f25137d1f1514b400cf00de926beecfaa3db47c380f6",
+      "frames": [
+        {
+          "id": "fuel_lantern__off",
+          "asset": "fuel_lantern",
+          "file": "reuse/fuel_lantern.png",
+          "label": "燃油提灯状态 · 空油或关闭",
+          "category": "照明工具",
+          "state": "off",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 1,
+          "rect": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "size": [
+            512,
+            512
+          ],
+          "visibleBounds": [
+            165,
+            32,
+            420,
+            481
+          ],
+          "opaquePixels": 77754,
+          "center": [
+            292.68,
+            232.5
+          ]
+        },
+        {
+          "id": "fuel_lantern__on",
+          "asset": "fuel_lantern",
+          "file": "reuse/fuel_lantern.png",
+          "label": "燃油提灯状态 · 手持点燃",
+          "category": "照明工具",
+          "state": "on",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 2,
+          "rect": [
+            512,
+            0,
+            512,
+            512
+          ],
+          "size": [
+            512,
+            512
+          ],
+          "visibleBounds": [
+            127,
+            32,
+            382,
+            481
+          ],
+          "opaquePixels": 77715,
+          "center": [
+            255.1,
+            233.31
+          ]
+        },
+        {
+          "id": "fuel_lantern__ground_on",
+          "asset": "fuel_lantern",
+          "file": "reuse/fuel_lantern.png",
+          "label": "燃油提灯状态 · 落地点燃",
+          "category": "照明工具",
+          "state": "ground_on",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 3,
+          "rect": [
+            1024,
+            0,
+            512,
+            512
+          ],
+          "size": [
+            512,
+            512
+          ],
+          "visibleBounds": [
+            103,
+            32,
+            359,
+            481
+          ],
+          "opaquePixels": 77758,
+          "center": [
+            231.85,
+            233.22
+          ]
+        },
+        {
+          "id": "fuel_lantern__ground_damaged",
+          "asset": "fuel_lantern",
+          "file": "reuse/fuel_lantern.png",
+          "label": "燃油提灯状态 · 落地受损仍亮",
+          "category": "照明工具",
+          "state": "ground_damaged",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 4,
+          "rect": [
+            0,
+            512,
+            512,
+            512
+          ],
+          "size": [
+            512,
+            512
+          ],
+          "visibleBounds": [
+            146,
+            30,
+            421,
+            475
+          ],
+          "opaquePixels": 79925,
+          "center": [
+            288.76,
+            231.48
+          ]
+        },
+        {
+          "id": "fuel_lantern__flight",
+          "asset": "fuel_lantern",
+          "file": "reuse/fuel_lantern.png",
+          "label": "燃油提灯状态 · 投掷飞行",
+          "category": "照明工具",
+          "state": "flight",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 5,
+          "rect": [
+            512,
+            512,
+            512,
+            512
+          ],
+          "size": [
+            512,
+            512
+          ],
+          "visibleBounds": [
+            97,
+            32,
+            410,
+            447
+          ],
+          "opaquePixels": 74194,
+          "center": [
+            266.35,
+            226.27
+          ]
+        },
+        {
+          "id": "fuel_lantern__broken",
+          "asset": "fuel_lantern",
+          "file": "reuse/fuel_lantern.png",
+          "label": "燃油提灯状态 · 损毁熄灭",
+          "category": "照明工具",
+          "state": "broken",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 6,
+          "rect": [
+            1024,
+            512,
+            512,
+            512
+          ],
+          "size": [
+            512,
+            512
+          ],
+          "visibleBounds": [
+            52,
+            41,
+            441,
+            472
+          ],
+          "opaquePixels": 81482,
+          "center": [
+            244.04,
+            230.05
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headlamp",
+      "original": "../parking-boss-v1/png/headlamp.png",
+      "file": "reuse/headlamp.png",
+      "sha256": "74242c4e569bd08b3e9ff478f3def2414493d10aac9f9726bba7fcc1fc37ff6d",
+      "frames": [
+        {
+          "id": "headlamp__off",
+          "asset": "headlamp",
+          "file": "reuse/headlamp.png",
+          "label": "头灯状态 · 关闭",
+          "category": "照明工具",
+          "state": "off",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 1,
+          "rect": [
+            0,
+            0,
+            1024,
+            768
+          ],
+          "size": [
+            1024,
+            768
+          ],
+          "visibleBounds": [
+            70,
+            208,
+            956,
+            603
+          ],
+          "opaquePixels": 196606,
+          "center": [
+            530.01,
+            356.01
+          ]
+        },
+        {
+          "id": "headlamp__on",
+          "asset": "headlamp",
+          "file": "reuse/headlamp.png",
+          "label": "头灯状态 · 开启",
+          "category": "照明工具",
+          "state": "on",
+          "action": null,
+          "frame": null,
+          "entity": null,
+          "direction": null,
+          "phase": null,
+          "cell": 2,
+          "rect": [
+            1024,
+            0,
+            1024,
+            768
+          ],
+          "size": [
+            1024,
+            768
+          ],
+          "visibleBounds": [
+            70,
+            208,
+            955,
+            603
+          ],
+          "opaquePixels": 196777,
+          "center": [
+            529.94,
+            355.89
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workbench",
+      "original": "../expansion-v1/workbench.png",
+      "file": "reuse/workbench.png",
+      "sha256": "86c1fbb496719c5259b7c913ca314b2f47def18966f18206737397104f7376c2",
+      "frames": []
+    },
+    {
+      "id": "stove",
+      "original": "../expansion-v1/stove.png",
+      "file": "reuse/stove.png",
+      "sha256": "875a61d65dcdf6e26fbfa3fd188a22eae259ffd27e753a52008e9187bae74c76",
+      "frames": []
+    },
+    {
+      "id": "grill",
+      "original": "../expansion-v1/grill.png",
+      "file": "reuse/grill.png",
+      "sha256": "a19ac48ffa9fd9e62a7a0e2ec357e9699919cd03fa3228575aa43f9b9ed785d5",
+      "frames": []
+    },
+    {
+      "id": "planter_empty",
+      "original": "../expansion-v1/planter_empty.png",
+      "file": "reuse/planter_empty.png",
+      "sha256": "8e859746e274451ce7785abc80eebf78bf2f8bf493219fc2960f2a7c0b04edfd",
+      "frames": []
+    },
+    {
+      "id": "planter_potato_seedling",
+      "original": "../expansion-v1/planter_potato_seedling.png",
+      "file": "reuse/planter_potato_seedling.png",
+      "sha256": "9d1c0cc58e45a72981987ff7c6d86aa586637d030e4e325367bb43e940a8d616",
+      "frames": []
+    },
+    {
+      "id": "planter_potato_mature",
+      "original": "../expansion-v1/planter_potato_mature.png",
+      "file": "reuse/planter_potato_mature.png",
+      "sha256": "d5025bd091eb3c798d7a90b9d2df2e06cd7b621e3fd2b7a2d79aaecd7bcc9384",
+      "frames": []
+    },
+    {
+      "id": "planter_vegetable_seedling",
+      "original": "../expansion-v1/planter_vegetable_seedling.png",
+      "file": "reuse/planter_vegetable_seedling.png",
+      "sha256": "b9931b28410c1b04ce512914914d5f5512dad424017d243390e734f362415859",
+      "frames": []
+    },
+    {
+      "id": "planter_vegetable_mature",
+      "original": "../expansion-v1/planter_vegetable_mature.png",
+      "file": "reuse/planter_vegetable_mature.png",
+      "sha256": "a192bf1cb26358aabddd139fcd2cd21d7b0f05681ecdc91ad41bd02ec1cc9863",
+      "frames": []
+    },
+    {
+      "id": "wood_table",
+      "original": "../sprites-v1/wood_table.png",
+      "file": "reuse/wood_table.png",
+      "sha256": "334f78ba7e2d5db95549fb676b72d7babfca67dc0ef8b2eb3fc401e71fbce86e",
+      "frames": []
+    },
+    {
+      "id": "wood_chair",
+      "original": "../sprites-v1/wood_chair.png",
+      "file": "reuse/wood_chair.png",
+      "sha256": "33fb28ae30906c1815bad36174460a30b383fcdc0a24daec71e2bed63623b3b1",
+      "frames": []
+    },
+    {
+      "id": "wood_cabinet",
+      "original": "../sprites-v1/wood_cabinet.png",
+      "file": "reuse/wood_cabinet.png",
+      "sha256": "1ae8fb1ce6f0e0036ed938981ce3614574128356992697d049e1fbf6076e8996",
+      "frames": []
+    },
+    {
+      "id": "metal_cabinet",
+      "original": "../sprites-v1/metal_cabinet.png",
+      "file": "reuse/metal_cabinet.png",
+      "sha256": "8198d2c75e2ec645db7f4b37c0c7849099932c07f28f390e51808403e4453eee",
+      "frames": []
+    }
+  ],
+  "note": "Stocked display props are decorative, not searchable entities. Reused lantern/headlamp shop icons must use OFF frame; empty units carry no energy. car_fuel is the existing fuel-can item, not a vehicle."
+}

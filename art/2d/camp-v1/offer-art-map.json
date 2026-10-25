@@ -1,0 +1,175 @@
+{
+  "offers": {
+    "W01": {
+      "art": "wood_spear",
+      "kind": "item"
+    },
+    "W02": {
+      "art": "iron_axe",
+      "kind": "item"
+    },
+    "W03": {
+      "art": "simple_bow",
+      "kind": "item"
+    },
+    "W04": {
+      "art": "hand_crossbow",
+      "kind": "item"
+    },
+    "W05": {
+      "art": "shotgun",
+      "kind": "item"
+    },
+    "W06": {
+      "art": "arrow",
+      "kind": "item"
+    },
+    "W07": {
+      "art": "bolt",
+      "kind": "item"
+    },
+    "W08": {
+      "art": "shotgun_shell",
+      "kind": "item"
+    },
+    "W09": {
+      "art": "molotov",
+      "kind": "item"
+    },
+    "F01": {
+      "art": "canned_food",
+      "kind": "item"
+    },
+    "F02": {
+      "art": "baked_potato",
+      "kind": "item"
+    },
+    "F03": {
+      "art": "grain_porridge",
+      "kind": "item"
+    },
+    "F04": {
+      "art": "meat_vegetable_stew",
+      "kind": "item"
+    },
+    "F05": {
+      "art": "potato_meat_pie",
+      "kind": "item"
+    },
+    "F06": {
+      "art": "clean_water",
+      "kind": "item"
+    },
+    "F07": {
+      "art": "jerky",
+      "kind": "item"
+    },
+    "M01": {
+      "art": "bandage",
+      "kind": "item"
+    },
+    "M02": {
+      "art": "medkit",
+      "kind": "item"
+    },
+    "M03": {
+      "art": "herb",
+      "kind": "item"
+    },
+    "M04": {
+      "art": "camp_treatment_icon",
+      "kind": "service"
+    },
+    "E01": {
+      "art": "parts",
+      "kind": "item"
+    },
+    "E02": {
+      "art": "cloth",
+      "kind": "item"
+    },
+    "E03": {
+      "art": "wire",
+      "kind": "item"
+    },
+    "E04": {
+      "art": "car_fuel",
+      "kind": "item"
+    },
+    "E05": {
+      "art": "battery",
+      "kind": "item"
+    },
+    "E06": {
+      "art": "fuel_lantern",
+      "kind": "item",
+      "state": "off",
+      "energyIncluded": false
+    },
+    "E07": {
+      "art": "headlamp",
+      "kind": "item",
+      "state": "off",
+      "energyIncluded": false
+    },
+    "A01": {
+      "art": "potato",
+      "kind": "item"
+    },
+    "A02": {
+      "art": "vegetable",
+      "kind": "item"
+    },
+    "A03": {
+      "art": "grain",
+      "kind": "item"
+    },
+    "A04": {
+      "art": "raw_meat",
+      "kind": "item"
+    },
+    "A05": {
+      "art": "raw_water",
+      "kind": "item"
+    },
+    "R01": {
+      "art": "car_fuel",
+      "kind": "item"
+    },
+    "R02": {
+      "art": "battery",
+      "kind": "item"
+    },
+    "R03": {
+      "art": "gunpowder",
+      "kind": "item"
+    },
+    "R04": {
+      "art": "canned_food",
+      "kind": "item"
+    }
+  },
+  "commissions": {
+    "K01": {
+      "art": "camp_board_icon"
+    },
+    "K02": {
+      "art": "camp_board_icon"
+    },
+    "K03": {
+      "art": "camp_board_icon"
+    },
+    "K04": {
+      "art": "camp_board_icon"
+    },
+    "K05": {
+      "art": "camp_board_icon"
+    },
+    "K06": {
+      "art": "camp_board_icon"
+    }
+  },
+  "pricesAndStock": "Read latest root design document and game data; no numeric prices baked into icons",
+  "permanentOffers": 32,
+  "visitorOffers": 4
+}
