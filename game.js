@@ -17,7 +17,7 @@
   let playerMotion={moving:false,phase:0,facing:null};
   let parkingIntro=null;
   let opening=null,openingPaused=false;
-  let characterDraft=null;
+  let characterDraft=null,difficultyChoice='normal';
   const characterModes=['traits','character-preview'];
   const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function resize(){width=innerWidth;height=innerHeight;scale=touch?.enabled?Math.min(27,Math.max(19,width/18)):27;const ratio=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
@@ -35,8 +35,12 @@
   function label(text,x,y,color='#d6d0b8',size=12){ctx.font=`${size}px "Microsoft YaHei",sans-serif`;ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#172016';ctx.strokeText(text,x,y);ctx.fillStyle=color;ctx.fillText(text,x,y);}
   function actor(p,type){
     if(p.kind==='lurker'&&p.state==='burrowed')return;
+    ctx.save();
+    if(type!=='player'&&game.scene==='surface'&&game.weatherKind()==='fog'&&game.outdoors(game.player)){const limit=game.isLit(p)?game.illuminatedSight:game.personalSight;ctx.globalAlpha*=Math.max(0,Math.min(1,(limit-dist(p,game.player))/(limit*.35)));}
+    try{
     const q=project(p.x,p.y),hero=type==='player',visitor=type==='visitor';
     if(WorldView.actor(ctx,game,p,type,{project,label,scale}))return;
+    if(ArmoryView.actor(ctx,game,p,type,{project,label,scale}))return;
     ctx.save();if(hero&&game.hidden)ctx.globalAlpha*=.4;
     ctx.fillStyle='#10180e66';ctx.beginPath();ctx.ellipse(q.x,q.y,10,5,0,0,Math.PI*2);ctx.fill();
     if(hero){ctx.strokeStyle='#cab57099';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(q.x,q.y,14,7,0,0,Math.PI*2);ctx.stroke();}
@@ -59,6 +63,7 @@
     }
     if(hero&&!armed&&!lampThrow&&!parkingPlayer?.ownsArms&&weapon!=='fists'&&!(attack?.kind==='throw'&&attack.released)){const hand=parkingPlayer?.weaponOffset||[9,-16];art.sprite(ctx,weapon,q.x+hand[0],q.y+hand[1],21,{width:28,flip:facing.x-facing.y<0});}
     if(hero){
+      ArmoryView.aura(ctx,game,q,scale);
       label(game.player.name,q.x,q.y-48,'#e4d599');
       for(const [id,head] of [[game.action?.type==='lamp_throw'?game.action.lampId:game.heldLightId,false],[game.headLightId,true]]){const l=game.lampById(id);if(!l||head&&parkingPlayer?.includesHead||!head&&(parkingPlayer?.includesHand||lampRelease))continue;
         const lantern=l.kind==='oil_lantern',asset=lantern?'fuel_lantern':l.kind;
@@ -73,6 +78,7 @@
     if(p.boostUntil>game.seconds)art.sprite(ctx,'speed_buff',q.x+15,q.y-35,18);
     if(!hero&&!visitor&&p.hp<p.maxHP){ctx.fillStyle='#292519';ctx.fillRect(q.x-10,q.y-47,20,3);ctx.fillStyle='#b8775d';ctx.fillRect(q.x-10,q.y-47,20*p.hp/p.maxHP,3);}
     ctx.restore();
+    }finally{ctx.restore();}
   }
   function drawMolotovAim(){
     if(mode!=='play'||placement||game.playerAttack||game.player.weapon!=='molotov'||!game.count('molotov'))return;
@@ -100,10 +106,11 @@
       if(d.jobs?.length&&['grill','stove'].includes(d.kind))art.sprite(ctx,'stove_fire',q.x,q.y-12,20,{width:26});
       ctx.restore();return;
     }
-    const asset=d.kind==='trap'?(d.level?(d.readyAt>game.seconds?'serrated_trap_hit':'serrated_trap_open'):(d.readyAt>game.seconds?'bear_trap_hit':'bear_trap')):d.level===2?'ballista_repeating':d.level===1?'ballista_strong':'ballista';
+    const trapClosed=d.kind==='trap'&&d.readyAt>game.seconds&&(Number.isFinite(d.triggeredAt)||Number.isFinite(d.flashUntil));
+    const asset=d.kind==='trap'?(d.level?(trapClosed?'serrated_trap_hit':'serrated_trap_open'):(trapClosed?'bear_trap_hit':'bear_trap')):d.level===2?'ballista_repeating':d.level===1?'ballista_strong':'ballista';
     const drawn=art.sprite(ctx,asset,q.x,q.y+8,d.kind==='trap'?32:42,{width:d.kind==='trap'?50:52});
     if(d.kind==='trap'&&!drawn){
-      plane(d.x,d.y,.8,.8,'#606657','#969b83');ctx.strokeStyle=d.readyAt>game.seconds?'#55594d':'#c5c6a8';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(q.x,q.y-4,12,6,0,0,Math.PI*2);ctx.stroke();
+      plane(d.x,d.y,.8,.8,'#606657','#969b83');ctx.strokeStyle=trapClosed?'#55594d':'#c5c6a8';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(q.x,q.y-4,12,6,0,0,Math.PI*2);ctx.stroke();
       for(let i=-2;i<=2;i++){ctx.beginPath();ctx.moveTo(q.x+i*4,q.y-9);ctx.lineTo(q.x+i*4+2,q.y-4);ctx.stroke();}
     }else if(d.kind!=='trap'){
       if(!drawn){
@@ -125,6 +132,7 @@
     polygon([a,b,q,p],'#755146','#3a342b');polygon([p,q,c,d],'#946052','#3a342b');polygon([a,p,d],'#65483b','#3a342b');
   }
   function drawWorld(){
+    if(game.scene==='armory'){ArmoryView.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});return;}
     if(game.scene==='parking'){PV.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});return;}
     ctx.clearRect(0,0,width,height);ctx.fillStyle='#4d5740';ctx.fillRect(0,0,width,height);
     const homes=game.nearbyHomes(parkingIntro?.camera||game.player,45).filter(h=>{const p=project(h.x,h.y);return Math.abs(p.x-width/2)<width/2+480&&Math.abs(p.y-height/2)<height/2+380;});
@@ -147,16 +155,17 @@
       if(home.kind!=='house'){const title=project(home.x,home.y+1);label(home.title,title.x,title.y,'#d4bd7d',13);}
       const p=project(home.x+9,home.y+9);ctx.fillStyle='#626d4880';ctx.beginPath();ctx.ellipse(p.x,p.y,18,7,0,0,Math.PI*2);ctx.fill();
     }
+    ArmoryView.ground(game,{ctx,project,plane,scale});
     const items=[];
     const indoor=homes.find(h=>game.player.indoorHome===`${h.cx},${h.cy}`);
     const roomOf=o=>homes.find(h=>Math.abs(o.x-h.x)<5&&o.y>h.y-6&&o.y<h.y);
     // Rear and front walls use independent anchors, including the rear indoor corners.
-    const actorDepth=o=>CampView.depth(game,o,Layers.actor(o,homes));
+    const actorDepth=o=>ArmoryView.depth(game,o,CampView.depth(game,o,Layers.actor(o,homes)));
     const visibleOutside=(o,draw)=>{if(!indoor||roomOf(o)===indoor){draw();return;}ctx.save();ctx.beginPath();ctx.rect(-2000,-2000,width+4000,height+4000);const corners=[project(indoor.x-5,indoor.y-6),project(indoor.x+5,indoor.y-6),project(indoor.x+5,indoor.y),project(indoor.x-5,indoor.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.clip('evenodd');draw();ctx.restore();};
     for(const home of homes){
       const inside=game.player.indoorHome===`${home.cx},${home.cy}`;
       items.push({depth:Layers.rear(home),draw:()=>art.houseBack(ctx,home,project)});
-      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
+      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({layer:o.type==='wall'&&!rearWall?-1:0,depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?(o.open&&o===home.doors[0]?-1.6:.04):0),draw:()=>{
         if(o.type==='wall'){if(!art.available('house_base'))box(o,1.8,'#b9b7a4','#777d6b','#969b88');if(o.hp<o.maxHP){const q=project(o.x,o.y,1);art.sprite(ctx,'damage_stone',q.x,q.y,20,{width:24});}}
         else if(o.type==='furniture'){
           const file={'铁柜':'metal_cabinet','铁架':'metal_shelf','木桌':'wood_table','木椅':'wood_chair','木柜':'wood_cabinet'}[o.name],p=project(o.x,o.y);
@@ -172,7 +181,7 @@
           else box(o,o.y===home.y?1.6:.8,'#a59059','#625539','#88764a');
         }
       }});}
-      items.push({depth:Layers.front(home),draw:()=>art.houseFront(ctx,home,project,inside)});
+      items.push({layer:-1,depth:Layers.front(home),draw:()=>art.houseFront(ctx,home,project,inside)});
       if(!inside&&!(game.developer?.enabled&&game.developer.hideRoofs)&&home.objects.some(o=>o.type==='wall'&&o.hp>0))items.push({depth:home.x+home.y+.02,draw:()=>roof(home)});
       for(const site of home.sites){
         if(site.hp<=0)continue;
@@ -189,19 +198,24 @@
     }
     for(const z of game.zombies)if(z.hp>0&&inView(z)&&game.canSee(z))items.push({depth:actorDepth(z),draw:()=>visibleOutside(z,()=>actor(z,'zombie'))});
     for(const v of game.visitors)if(inView(v)&&game.canSee(v))items.push({depth:actorDepth(v),draw:()=>visibleOutside(v,()=>actor(v,'visitor'))});
-    for(const d of game.drops)if(inView(d))items.push({depth:CampView.depth(game,d,roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>{const p=project(d.x,d.y);if(!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');})});
+    for(const d of game.drops)if(inView(d))items.push({depth:CampView.depth(game,d,roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>{const p=project(d.x,d.y);if(!ArmoryView.item(ctx,d.kind,{x:p.x,y:p.y+5},20)&&!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');})});
     items.push({depth:actorDepth(game.player),draw:()=>actor(game.player,'player')});
-    for(const zone of game.zones){const q=project(zone.x,zone.y);art.sprite(ctx,zone.kind,q.x,q.y,zone.radius*scale*Math.SQRT2,{width:zone.radius*scale*2*Math.SQRT2,anchorY:.5});}
-    for(const effect of game.effects){const q=project(effect.x,effect.y);if(!PV.effectModel(ctx,effect,game.seconds,q,scale))art.sprite(ctx,effect.kind,q.x,q.y,effect.radius?effect.radius*scale:25,{width:effect.radius?effect.radius*scale*2:35,anchorY:.5});}
+    for(const zone of game.zones)if(inView(zone))items.push({depth:zone.x+zone.y+.06,draw:()=>art.drawZone(ctx,zone,project,scale,game.seconds)});
+    for(const effect of game.effects)items.push({depth:effect.x+effect.y+.3,draw:()=>{const q=project(effect.x,effect.y);if(!ArmoryView.effect(ctx,effect,game.seconds,q,scale)&&!PV.effectModel(ctx,effect,game.seconds,q,scale))art.sprite(ctx,effect.kind,q.x,q.y,effect.radius?effect.radius*scale:25,{width:effect.radius?effect.radius*scale*2:35,anchorY:.5});}});
     for(const shot of game.projectiles)if(inView(shot))items.push({depth:shot.x+shot.y+.3,draw:()=>{const bottle=shot.kind==='molotov_projectile',lamp=shot.kind==='lamp_flight',q=project(shot.x,shot.y,bottle||lamp?shot.z:.6);
+      if(ArmoryView.projectile(ctx,shot,q,scale))return;
       if(lamp&&art.parkingSprite(ctx,shot.lamp.kind==='oil_lantern'?'fuel_lantern':shot.lamp.kind,shot.lamp.active&&shot.lamp.energy>0?'flight':'off',q.x,q.y,shot.lamp.kind==='torch'?25:20))return;
       art.sprite(ctx,bottle?'molotov':shot.kind,q.x,q.y,bottle?20:14,{width:20,anchorY:.5});
     }});
     PV.surface(game,{ctx,project,plane,label,items,scale,intro:parkingIntro});
-    WorldView.items(game,{ctx,project,label,scale,items});
+    WorldView.items(game,{ctx,project,label,scale,items});AEDView.items(game,{ctx,project,label,scale,items});
     BroadcastView.items(game,{ctx,project,scale,items});
     CampView.items(game,{ctx,project,plane,scale,label,items});
-    items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
+    ArmoryView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
+    WestGateView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
+    if(game.armory){const e=game.armory.entrance;items.push({depth:e.x+e.y,draw:()=>{const q=project(e.x,e.y);art.worldSprite(ctx,'armory_armory_entry_sign','f0',q.x,q.y,60*scale/27);label('军备库',q.x,q.y+18);}});}
+    items.sort((a,b)=>(a.layer||0)-(b.layer||0)||a.depth-b.depth);for(const item of items)item.draw();
+    ArmoryView.warnings(game,{ctx,project,scale});
     drawMolotovAim();WorldView.aim(game,{ctx,project,scale});
     WorldView.weatherOverlay(game,{ctx,project,scale,width,height});
     if(placement){const p=game.placementPoint(),error=game.canPlace(buildKind,p);plane(p.x,p.y,1,1,error?'#ad5b5666':'#ceb56755',error?'#d1917b':'#e5d99b');drawDevice({...p,kind:buildKind,readyAt:0},true);}
@@ -212,7 +226,7 @@
     Dev.draw(ctx,game,project,homes);
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
-  function showMenu(){GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('developer-badge').classList.add('hidden');$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function showMenu(){$('gun-fire').classList.add('hidden');$('firepower-skill').classList.add('hidden');$('sweeper-hud').classList.add('hidden');game.stopAutomaticFire();GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('developer-badge').classList.add('hidden');$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
   function beginOpening(){
     mode='opening';openingPaused=false;keys.clear();touch.clear();PV.hideCombatHUD();GameSound.unlock();document.documentElement.classList.add('opening-active');$('opening-pause').textContent='暂停';
     opening=new BroadcastView.OpeningSequence(()=>{opening=null;document.documentElement.classList.remove('opening-active');game.broadcast.introDone=true;enterGame();saveGame(false);});
@@ -237,6 +251,10 @@
     game.parkingUnlockPending=false;parkingIntro=null;document.documentElement.classList.remove('parking-intro-active');keys.clear();touch.clear();lastTime=performance.now();game.autosaveRequested=true;
     if(game._parkingDevEnter&&game.parking){game._parkingDevEnter=false;Object.assign(game.player,{x:game.parking.entrance.x,y:game.parking.entrance.y});game.switchScene();}
   }
+  const duration=s=>`${Math.floor(s/60)}分${s%60?`${s%60}秒`:''}`;
+  function chooseDifficulty(id){difficultyChoice=DifficultyRules.id(id);document.querySelectorAll('[data-difficulty]').forEach(b=>{const selected=b.dataset.difficulty===difficultyChoice;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',selected);});const p=DifficultyRules.profile(difficultyChoice);document.querySelector('[data-mode="0"] span').textContent=`05:00开局 · 白天${duration(17*p.dayHour)}，夜晚${duration(7*p.nightHour)}`;document.querySelector('[data-mode="1"] span').textContent=`21:00开局 · ${p.dayHour}秒准备，然后进入完整夜晚`;}
+  $('difficulty-options').innerHTML=Object.entries(DifficultyRules.profiles).map(([id,p])=>`<button type="button" data-difficulty="${id}" class="difficulty-card" aria-pressed="false"><strong>${p.name}</strong><span>天赋≤${p.talents} · ${p.diseaseMin?'疾病至少3项':id==='easy'?'前2天赋免疾病':'每项天赋承担1疾病'} · 疾病不限${p.diseasePower>1?'，负面×1.5':''}</span><span>昼 ${duration(17*p.dayHour)} / 夜 ${duration(7*p.nightHour)}</span><small>${p.restock?`每${p.restock}日补货`:'普通容器不补货'} · ${p.residents}日补怪${p.repair?' · 3日修复':''}</small></button>`).join('');
+  document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>chooseDifficulty(b.dataset.difficulty)));chooseDifficulty('normal');
   function updateMenu(){document.querySelectorAll('.menu-option').forEach((el,i)=>el.classList.toggle('selected',i===menuChoice));}
   function savedData(key=SAVE_KEY){try{const value=JSON.parse(localStorage.getItem(key)||'null');return value?.version===1?value:null;}catch{return null;}}
   function saveGame(announce=true){
@@ -253,18 +271,18 @@
   function start(developer=false){
     if(!art.ready)return;
     const name=$('name-input').value||'幸存者';$('name-input').blur();
-    characterDraft={name:name.trim().slice(0,12)||'幸存者',startMode:menuChoice===1?'quick':'full',developer,traits:characterDraft?.traits||CharacterTraits.empty()};
+    characterDraft={name:name.trim().slice(0,12)||'幸存者',startMode:menuChoice===1?'quick':'full',developer,difficulty:difficultyChoice,traits:characterDraft?.traits||CharacterTraits.empty()};
     $('menu').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');PV.hideCombatHUD();openOverlay('traits');
   }
   function characterCommand(command){
     if(!characterDraft||!characterModes.includes(mode))return;
     if(command==='back'){if(mode==='character-preview')openOverlay('traits');else showMenu();return;}
-    if(command==='clear'){characterDraft.traits=CharacterTraits.empty();openOverlay('character-preview');return;}
-    const error=CharacterTraits.validate(characterDraft.traits);if(error){overlayNotice=error;uiKey='';return;}
+    if(command==='clear'){characterDraft.traits=CharacterTraits.empty();openOverlay('traits');return;}
+    const error=CharacterTraits.validate(characterDraft.traits,characterDraft.difficulty);if(error){overlayNotice=error;uiKey='';return;}
     if(command==='preview'){openOverlay('character-preview');return;}
     if(command!=='confirm')return;
     const draft=characterDraft;
-    game=new Game({name:draft.name,startMode:draft.startMode,startMinutes:draft.startMode==='quick'?1260:300,traits:draft.traits});
+    game=new Game({difficulty:draft.difficulty,name:draft.name,startMode:draft.startMode,startMinutes:draft.startMode==='quick'?1260:300,traits:draft.traits});
     if(draft.developer)Dev.enable(game);
     game.prepareOpening();characterDraft=null;buildKind='trap';enterGame();beginOpening();
     game.announce(touch.enabled?'靠近家具后点交互拆除。点建造部署装置；靠近电视可收看广播。':'靠近家具按E拆除，按F部署装置；靠近电视按E收看广播。');
@@ -292,6 +310,7 @@
     }
     else if(action==='skeleton-floor'){Dev.enable(game);if(game.scene==='parking'){if(!game.secondFloor){game.parking.layer.nextUnlocked=true;game.changeFloor(2);}Object.assign(game.player,{x:0,y:40});}else ok=false;}
     else if(action==='camp'){Dev.enable(game);if(game.scene==='parking')game.switchScene();if(game.day<14)Dev.jump(game,14);game.unlockCamp();if(game.camp?.position){Object.assign(game.player,game.camp.entries[1]);game.cancelAction();game.updateIndoorHome();}else{game.announce('营地正在分帧寻找合法位置，地图标记出现后可再次使用开发定位。');closeOverlay();return;}}
+    else if(action==='armory'){Dev.enable(game);if(game.scene==='parking')game.switchScene();if(game.scene==='armory')game.switchArmory();if(game.day<ArmoryData.provisional.unlockDay)Dev.jump(game,ArmoryData.provisional.unlockDay);game.ensureArmory();if(game.armory){Object.assign(game.player,game.armory.entrance);game.cancelAction();game.updateIndoorHome();}else{game.announce('军备库入口正在分帧选址，标记出现后可再次定位。');closeOverlay();return;}}
     else if(action==='parking-boss'){Dev.enable(game);if(game.scene==='parking'){game.cancelAction();Object.assign(game.player,{x:0,y:44});}else ok=false;}
     else if(action==='parking-return'){Dev.enable(game);if(game.scene==='parking'){game.cancelAction();game.switchScene();}else ok=false;}
     else if(action==='teleport')ok=Dev.teleport(game,button.dataset.position);
@@ -319,7 +338,7 @@
     else if(mode==='context'){const o=contextTarget?.object;key+=o?.id+JSON.stringify(game.inventory)+JSON.stringify({hp:o?.hp,level:o?.level,energy:o?.energy,active:o?.active,opened:o?.opened,loot:o?.loot,gate:game.parking?.layer?.gateOpen,selection:contextTarget?.campOffer,batches:contextTarget?.campBatches,camp:contextTarget?.type==='camp'&&[game.camp.stock,game.camp.completed,game.camp.reputation,game.camp.effectiveReputation]})+art.parkingRevision;html=UI.context(game,contextTarget);}
     else if(mode==='stats'){html=statsOverlay();}
     else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><p>点继续游戏，回到你的领地。</p><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button><button data-command="developer">开发者模式（F2）</button></div>';}
-    else if(mode==='developer'){key+=JSON.stringify(Dev.state(game))+game.scene;html=Dev.panel(game)+PV.developer(game)+'<div class="dev-section"><h3>幸存者营地</h3><button data-dev="camp">第14天营地 / 定位入口（开发测试）</button></div>';}
+    else if(mode==='developer'){key+=JSON.stringify(Dev.state(game))+game.scene;html=Dev.panel(game)+PV.developer(game)+'<div class="dev-section"><h3>幸存者营地 / 军备库</h3><button data-dev="armory">军备库入口 / 第17天（开发测试）</button><button data-dev="camp">第14天营地 / 定位入口（开发测试）</button></div>';}
     else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：民居 · 食/修/药/保：商店 · 灰点：石头 · 蓝点：水 · 绿点：药草</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="overlay-actions"><button data-key="m">返回游戏</button></div>';}
     else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<button data-dialog="${i}" class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</button>`).join('')}<div class="key-hint keyboard-hint">W / S 选择　·　E 确认</div>`;}
     else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第${game.day}晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':'下次可以先搜补给箱、做武器和料理、修补受损的防线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
@@ -327,8 +346,9 @@
     if(key!==uiKey){$('overlay-card').innerHTML=html;uiKey=key;}
     if(mode==='context')$('overlay-card').querySelectorAll('[data-command]:not([disabled])').forEach((b,i)=>b.classList.toggle('selected',i===contextChoice));
     if(mode==='map'){
-      if(game.scene==='parking'){PV.drawMap(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='地下首层 · 已探索区域';$('overlay-card').querySelector('p').textContent='靠近车身直接搜索车辆；油滴标记油箱。红点只显示当前可见敌人。';}
-      else {drawMap();if(game.parking){const c=$('map-canvas'),m=c.getContext('2d'),e=game.parking.entrance,x=275+(e.x-game.player.x)*.65,y=175+(e.y-game.player.y)*.65;if(!art.parkingSprite(m,'parking_marker','default',x,y,17)){m.fillStyle='#e2c971';m.font='bold 16px sans-serif';m.fillText('P',x,y);}}CampView.map(game,$('map-canvas'));}
+      if(game.scene==='armory'){ArmoryView.map(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='军备库 · 200×150米';$('overlay-card').querySelector('p').textContent='南侧主入口自由通行；西门需拾取钥匙卡后刷卡，军备驻守按7天周期补充。';}
+      else if(game.scene==='parking'){PV.drawMap(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='地下首层 · 已探索区域';$('overlay-card').querySelector('p').textContent='靠近车身直接搜索车辆；油滴标记油箱。红点只显示当前可见敌人。';}
+      else {drawMap();if(game.parking){const c=$('map-canvas'),m=c.getContext('2d'),e=game.parking.entrance,x=275+(e.x-game.player.x)*.65,y=175+(e.y-game.player.y)*.65;if(!art.parkingSprite(m,'parking_marker','default',x,y,17)){m.fillStyle='#e2c971';m.font='bold 16px sans-serif';m.fillText('P',x,y);}}CampView.map(game,$('map-canvas'));ArmoryView.map(game,$('map-canvas'));}
     }
   }
   function drawMap(){const c=$('map-canvas');if(!c)return;const m=c.getContext('2d'),s=.65,cx=275,cy=175;const p=o=>({x:cx+(o.x-game.player.x)*s,y:cy+(o.y-game.player.y)*s});m.fillStyle='#1e281e';m.fillRect(0,0,550,350);for(const h of game.nearbyHomes(game.player,300)){const q=p(h);m.fillStyle=h.own?'#b7a05b':h.kind==='house'?'#63705b':'#81aabc';m.fillRect(q.x-3.25,q.y-3.9,6.5,3.9);m.strokeStyle=h.own?'#cfbd7c':'#485c43';m.strokeRect(q.x-3.25,q.y,6.5,2.6);if(h.kind!=='house'){m.fillStyle='#dfd8b7';m.font='10px sans-serif';m.fillText(({food_shop:'食',repair_shop:'修',pharmacy:'药',security_room:'保'})[h.kind],q.x+5,q.y);}for(const site of h.sites)if(['stone_pile','water_point','herb_bed'].includes(site.kind)&&(!site.searched||site.repeat)){const a=p(site);m.fillStyle=site.kind==='water_point'?'#82bfd7':site.kind==='herb_bed'?'#90bb67':'#91958e';m.fillRect(a.x,a.y,3,3);}}for(const z of game.zombies)if(game.canSee(z)){const q=p(z);m.fillStyle='#d18673';m.beginPath();m.arc(q.x,q.y,3,0,Math.PI*2);m.fill();}m.fillStyle='#f0da91';m.beginPath();m.arc(cx,cy,5,0,Math.PI*2);m.fill();}
@@ -340,16 +360,16 @@
     $('stamina-label').textContent=`${game.player.stamina.toFixed(1)} / ${game.maxStamina}`;$('stamina-fill').style.width=`${game.player.stamina/game.maxStamina*100}%`;
     $('hunger-label').textContent=`${Math.round(game.player.hunger)} / 100`;$('hunger-fill').style.width=`${game.player.hunger}%`;
     $('stamina-label').title=game.player.hunger<=0?'饱食度为0：停止恢复体力':`每${game.staminaRecoveryInterval}秒恢复1点体力`;
-    $('day-label').textContent=`第${game.day}天 · ${game.day%7===0?'尸潮夜':'生存'}`;
+    $('day-label').textContent=`第${game.day}天 · ${game.difficultyRules.name} · ${game.day%7===0?'尸潮夜':'生存'}`;
     $('buffs').textContent=[game.mainBuff?`${{health:'血量上限+2',stamina2:'体力上限+2',stamina4:'体力上限+4',melee:'近战+1',recovery:'恢复加快',armor:'减伤'}[game.mainBuff.type]} ${Math.ceil(game.mainBuff.until-game.seconds)}秒`:'',game.teaBuff?'茶：奔跑节省体力':'',`装备：${NAMES[game.player.weapon]||'徒手'}`].filter(Boolean).join(' · ');
-    if(game.player.hunger<=60)$('buffs').textContent+=game.player.hunger<=0?' · 饥饿：不回体，每12秒失去1血':` · 饱食偏低：体力上限${game.maxStamina}，每${game.staminaRecoveryInterval}秒回1`;
+    if(game.player.hunger<=60)$('buffs').textContent+=game.player.hunger<=0?' · 饥饿：不回体，每12秒失去1血':` · 饱食偏低：体力上限${Number(game.maxStamina.toFixed(1))}，每${Number(game.staminaRecoveryInterval.toFixed(1))}秒回1`;
     if(game.player.hunger<=60&&['stamina2','stamina4','recovery'].includes(game.mainBuff?.type))$('buffs').textContent+='（料理体力增益暂不生效）';
     const action=game.action;document.documentElement.classList.toggle('working',!!action);$('action-progress').classList.toggle('hidden',!action);
-    if(action){const names={camp_exchange:action.offer==='M04'?'现场包扎':action.offer==='intro'?'营地介绍':'交换物资',floor_travel:'楼层切换',skeleton_open:'开启骷髅宝箱',build:'建造',craft:'制作',search:'收集',dismantle:'拆除',repair:'维修',upgrade:'改造',eat:'食用',medkit:'急救',...Survival.parkingActionNames};$('action-progress').innerHTML=`${names[action.type]} · 剩余${Math.max(0,action.duration-action.elapsed).toFixed(1)}秒<div class="bar"><i style="width:${action.elapsed/action.duration*100}%"></i></div><button data-command="cancel">取消操作</button>`;}
+    if(action){const names={west_gate:action.operation==='west_keycard'?'拾取钥匙卡':'西门刷卡',armory_action:'军备库操作',camp_exchange:action.offer==='M04'?'现场包扎':action.offer==='intro'?'营地介绍':'交换物资',floor_travel:'楼层切换',skeleton_open:'开启骷髅宝箱',build:'建造',craft:'制作',search:'收集',dismantle:'拆除',repair:'维修',upgrade:'改造',eat:'食用',medkit:'急救',...Survival.parkingActionNames};$('action-progress').innerHTML=`${names[action.type]} · 剩余${Math.max(0,action.duration-action.elapsed).toFixed(1)}秒<div class="bar"><i style="width:${action.elapsed/action.duration*100}%"></i></div><button data-command="cancel">取消操作</button>`;}
     const wave=game.warnedWaves[game.nextWave]&&game.nextWave<6,dir=game.waveDirections[game.nextWave];$('wave-warning').classList.toggle('hidden',!wave);$('wave-warning').innerHTML=wave?`${UI.thumb('wave_arrow')}下一批：${['东','南','西','北'][dir]}侧 · 第${game.nextWave+1}/6批`:'';
     $('resources').textContent=`铁 ${game.count('iron')}　木头 ${game.count('wood')}　击败 ${game.kills}`;
     const t=Math.floor(game.minutes)%1440;$('clock').textContent=`${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
-    const night=game.minutes>=1320&&game.minutes<1740;$('phase').textContent=night?`夜间 · ${game.zombies.length}只丧尸在附近`:game.result?'天明':'白天 · 探索与部署';
+    const night=game.minutes>=1320&&game.minutes<1740,raiders=game.zombies.filter(z=>z.hp>0&&game.isNightRaider(z)).length;$('phase').textContent=night?`夜间 · 夜袭存活${raiders}只${game.pendingSpawn.length?` · 待生成${game.pendingSpawn.length}只`:''}`:game.result?'天明':'白天 · 探索与部署';
     $('objective').innerHTML=night?'<b>活到05:00</b><br>丧尸受阻会攻击护栏。可以移动、奔跑和继续部署。':(touch.enabled?'<b>22:00前做好准备</b><br>收集材料，布置防御。普通门自动开关。':'<b>22:00前做好准备</b><br>进屋搜补给；Tab制作武器和设备。E攻击/交互。普通门自动开关。');
     let text='';
     if(!focused&&mode==='play')text='游戏已暂停，回到此窗口继续。';
@@ -357,10 +377,12 @@
     else if(mode==='play'&&game.action)text='正在操作，移动或受伤会中断；可点取消操作。';
     else if(mode==='play'&&game.playerAttack)text=`${NAMES[game.playerAttack.weapon]} · ${game.playerAttack.kind==='throw'?'投掷':'攻击'}动作中`;
     else if(mode==='play'&&game.player.weapon==='molotov'){const aim=game.molotovAim();text=`E 投掷燃烧瓶 · ${aim.valid?'调整朝向，确认抛物线与落点后投掷':aim.reason} · Tab可切换装备`;}
-    else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name} → 1${NAMES[object.material]}`:type==='container'?`E 查看${D.siteNames[object.kind]||'容器'}（已搜空，可拆除）`:type==='device'||type==='structure'?`E 管理${NAMES[object.kind]||'防线'}（维修 / 升级 / 使用）`:type==='site'?`E 搜索 / 采集${D.siteNames[object.kind]||'物资'}（${Number(game.actionDuration('search',object.time).toFixed(2))}秒）`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
+    else if(mode==='play'&&nearby){const {type,object}=nearby;text=type==='furniture'?`E 拆除${object.name}${object.resourceDisabled?'（无可回收材料）':` → 1${NAMES[object.material]}`}`:type==='container'?`E 查看${D.siteNames[object.kind]||'容器'}（已搜空，可拆除）`:type==='device'||type==='structure'?`E 管理${NAMES[object.kind]||'防线'}（维修 / 升级 / 使用）`:type==='site'?`E 搜索 / 采集${D.siteNames[object.kind]||'物资'}（${Number(game.actionDuration('search',object.time).toFixed(2))}秒）`:type==='drop'?`E 拾取${object.amount}份${NAMES[object.kind]}`:'E 与来访幸存者交谈';}
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby&&['parking','lamp'].includes(nearby.type))text=`E ${PV.names[nearby.object.kind]||NAMES[nearby.object.kind]||'地下设施'} · 查看与操作`;
+    if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='bone_remnant')text=`E 查看复活遗骨 · 摧毁延后${game.difficultyRules.shatterDays}天复活`;
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='television')text='E 收看电视';
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='camp')text=`E 与${nearby.object.name||'营地'}互动 · ${nearby.object.role||'公告与指引'}`;
+    if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='armory')text=nearby.object.kind==='west_keycard'?'E 拾取西部大门钥匙卡（2秒）':nearby.object.kind==='west_gate_reader'?(game.armory.westGate.owned?'E 西门刷卡（1秒）':'西门已锁定 · 击败扫荡者后拾取钥匙卡'):'E 查看军备库物资';
     if(!text&&mode==='play')text=`E 攻击 · ${NAMES[game.player.weapon]||'徒手'} · 朝向前方敌人`;
     if(touch.enabled)text=text.replace(/E /g,'交互：').replace('E切换　F确认　Tab打开背包并取消','点切换装置 / 确认放置；点背包取消').replace('按F','点建造');
     $('interaction').textContent=text;$('interaction').classList.toggle('hidden',!text);
@@ -369,6 +391,7 @@
     const next=notifications.map(n=>`<div>${escapeText(n.text)}</div>`).join('');if($('messages').innerHTML!==next)$('messages').innerHTML=next;
     PV.hud(game,mode);WorldView.hud(game,mode);
     CampView.hud(game,mode);
+    ArmoryView.hud(game,mode);AEDView.hud(game,mode);
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+Math.ceil(game.inventory.length/5))%Math.ceil(game.inventory.length/5))*5+(col+dx+5)%5;}
   function handleKey(event){
@@ -391,7 +414,7 @@
     if(k==='f2'){if(mode==='developer')closeOverlay();else openDeveloper();return;}
     if(k==='escape'){if(mode==='play'&&game.boneSkill.charging){game.cancelBoneCharge();return;}if(mode==='play')openOverlay('pause');else if(['pause','inventory','map','context','stats','developer'].includes(mode))closeOverlay();return;}
     if(mode==='developer')return;
-    if(mode==='menu'){if(k==='w'||k==='s'){menuChoice=1-menuChoice;updateMenu();}if(k==='e')start();return;}
+    if(mode==='menu'){if(k==='a'||k==='d'||k==='arrowleft'||k==='arrowright'){const ids=Object.keys(DifficultyRules.profiles),i=ids.indexOf(difficultyChoice);chooseDifficulty(ids[(i+(k==='a'||k==='arrowleft'?-1:1)+ids.length)%ids.length]);return;}if(k==='w'||k==='s'){menuChoice=1-menuChoice;updateMenu();}if(k==='e')start();return;}
     if(mode==='result'){if(k==='e'){game=new Game();showMenu();}return;}
     if(mode==='context'){const buttons=[...$('overlay-card').querySelectorAll('[data-command]:not([disabled])')];if(k==='w'||k==='s'){contextChoice=(contextChoice+(k==='w'?-1:1)+buttons.length)%Math.max(1,buttons.length);buttons[contextChoice]?.focus();}if(k==='e')buttons[contextChoice]?.click();return;}
     if(mode==='dialog'){
@@ -416,20 +439,24 @@
     }
     if(k==='r'){game.startBoneCharge();return;}
     if(k==='q'){game.toggleStealth();return;}
+    if(k==='t'){game.activateFirepower();return;}
+    if(k===' '){game.attack();return;}
     if(k==='g'){game.drop();return;}
     if(k==='f'){if(!placement)placement=true;else if(game.place(buildKind,game.placementPoint()))placement=false;return;}
     if(k==='e'){
       if(placement){const kinds=Object.keys(D.builds).filter(k=>game.day>=D.builds[k].day);buildKind=kinds[(kinds.indexOf(buildKind)+1)%kinds.length];return;}
       if(game.action){game.cancelAction();return;}
       if(game.playerAttack)return;
+      if(ArmoryData.hotWeapons.has(game.player.weapon)){const target=game.nearbyInteraction();if(target){if(target.type==='television'||target.type==='drop'){game.interact(target);return;}contextTarget=target;contextChoice=0;openOverlay('context');return;}}
       if(game.player.weapon==='molotov'){game.attack();return;}
       if(game.attack())return;
       const target=game.nearbyInteraction();
-      if(target&&['visitor','helper','device','structure','container','parking','lamp','bone_remnant','camp'].includes(target.type)){contextTarget=target;contextChoice=0;openOverlay('context');}
+      if(target&&['visitor','helper','device','structure','container','parking','lamp','bone_remnant','camp','armory'].includes(target.type)){contextTarget=target;contextChoice=0;openOverlay('context');}
       else if(target)game.interact(target);
     }
   }
   function handleCommand(button){
+    if(button.dataset.command==='armory-interact'){if(game.interact(contextTarget))closeOverlay();return;}
     const command=button.dataset.command,kind=button.dataset.kind,o=contextTarget?.object;let ok=false,leave=false;
     const camp=CampView.command(game,command,button,contextTarget);if(camp.handled){if(camp.ok&&camp.leave)closeOverlay();else{overlayNotice=camp.ok?'':game.events.at(-1)||'操作未完成。';contextChoice=0;uiKey='';}return;}
     const parking=PV.command(game,command,button,o);
@@ -466,6 +493,9 @@
   $('opening-skip').addEventListener('click',()=>opening?.finish());
   $('opening-pause').addEventListener('click',pauseOpening);
   $('camp-map').addEventListener('click',()=>{if(mode==='play')performAction('m');});
+  $('firepower-skill').addEventListener('click',()=>{if(mode==='play')game.activateFirepower();});
+  $('gun-fire').addEventListener('pointerdown',event=>{if(mode!=='play'||parkingIntro||opening)return;event.preventDefault();touch.input.fireHeld=true;game.attack();event.currentTarget.setPointerCapture(event.pointerId);});
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])$('gun-fire').addEventListener(event,()=>{touch.input.fireHeld=false;game.stopAutomaticFire();});
   $('continue-game').addEventListener('click',()=>resumeGame());
   $('start-developer').addEventListener('click',()=>start(true));
   $('continue-developer').addEventListener('click',()=>resumeGame(true));
@@ -483,7 +513,7 @@
   $('overlay-card').addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button)return;
     if(characterModes.includes(mode)){
-      if(button.dataset.trait){const id=button.dataset.trait;overlayNotice=CharacterUI.toggle(characterDraft.traits,id);uiKey='';renderOverlay();$('overlay-card').querySelector(`[data-trait="${id}"]`)?.focus({preventScroll:true});}
+      if(button.dataset.trait){const id=button.dataset.trait;overlayNotice=CharacterUI.toggle(characterDraft.traits,id,characterDraft.difficulty);uiKey='';renderOverlay();$('overlay-card').querySelector(`[data-trait="${id}"]`)?.focus({preventScroll:true});}
       else if(button.dataset.character)characterCommand(button.dataset.character);return;
     }
     if(button.dataset.dev){developerCommand(button);}
@@ -512,7 +542,7 @@
     if(parkingIntro&&focused&&!document.hidden)advanceParkingIntro(dt);
     if(mode==='play'&&!parkingIntro&&focused&&!document.hidden){
       const before={x:game.player.x,y:game.player.y};
-      const input={up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY};
+      const input={up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY,fireHeld:keys.has('e')||keys.has(' ')||touch.input.fireHeld};
       const debug=Dev.state(game),speed=debug.enabled?debug.speed:1;
       game.beginFrame();
       for(let tick=0;tick<speed&&!game.result&&!game.parkingUnlockPending;tick++)game.step(dt,input);

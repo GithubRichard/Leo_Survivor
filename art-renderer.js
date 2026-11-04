@@ -159,11 +159,9 @@
   }
   function parkingIcon(asset,state='default',size=24){
     const id=parkingFrameId(asset,state),m=parking?.frames[id];if(!m)return null;
-    const cacheKey=id+':'+size;if(parkingThumbs.has(cacheKey))return parkingThumbs.get(cacheKey);
-    const b=m.bounds,r=m.rect,entry=entries[m.atlas],w=b[2]-b[0],h=b[3]-b[1],scale=(size-2)/Math.max(w,h);
-    const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const cacheKey=id+':'+JSON.stringify(size);if(parkingThumbs.has(cacheKey))return parkingThumbs.get(cacheKey);
     // CSS crops the chosen frame. No synchronous GPU readback or PNG encoding in a frame.
-    const html=`<span class="parking-atlas-icon" style="width:${size}px;height:${size}px"><img src="${escape(entry.src)}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${(size-w*scale)/2-(r[0]+b[0])*scale}px;top:${(size-h*scale)/2-(r[1]+b[1])*scale}px"></span>`;
+    const html=iconFromFrame(entries[m.atlas],m.rect,m.bounds,size);
     parkingThumbs.set(cacheKey,html);return html;
   }
   function prepareWeapon(weapon,facing){
@@ -256,7 +254,8 @@
     // 开关状态使用同一门框三点标定；只改变门扇姿态，不改变尺寸。
     if(room){
       const source=o.level?(o.open?[{x:520,y:875},{x:982,y:1149},{x:520,y:70}]:[{x:388,y:894},{x:848,y:1158},{x:388,y:64}]):o.open?[{x:398,y:897},{x:854,y:1158},{x:398,y:66}]:[{x:390,y:895},{x:850,y:1154},{x:390,y:66}];
-      return fullAffine(ctx,key,source,[project(o.x-.82,o.y),project(o.x+.82,o.y),project(o.x-.82,o.y,2.0)]);
+      const hinge={x:o.x-.82,y:o.y},tip=o.open?{x:hinge.x,y:hinge.y-1.64}:{x:o.x+.82,y:o.y};
+      return fullAffine(ctx,key,source,[project(hinge.x,hinge.y),project(tip.x,tip.y),project(hinge.x,hinge.y,2.0)]);
     }
     // 两根门柱的脚点与院墙缺口两端重合，门顶沿用院墙高度。
     const source=o.level&&o.open?[{x:604,y:728},{x:1285,y:1003},{x:604,y:11}]:[{x:428,y:708},{x:1125,y:997},{x:428,y:25}];
@@ -275,8 +274,18 @@
   }
   function worldIcon(asset,state='icon',size=26){
     const d=window.WORLD_ART,id=d?.assets[asset]?.states[state],m=d?.frames[id];if(!m)return '';
-    const entry=entries[m.atlas],b=m.bounds,r=m.rect,w=b[2]-b[0],h=b[3]-b[1],scale=(size-2)/Math.max(w,h);
-    return `<span class="parking-atlas-icon" style="width:${size}px;height:${size}px"><img src="${entry.src}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${(size-w*scale)/2-(r[0]+b[0])*scale}px;top:${(size-h*scale)/2-(r[1]+b[1])*scale}px"></span>`;
+    return iconFromFrame(entries[m.atlas],m.rect,m.bounds,size);
+  }
+  function iconFromFrame(entry,r,b,size){
+    if(!entry)return '';const width=typeof size==='number'?size:size.width,height=typeof size==='number'?size:size.height,w=b[2]-b[0],h=b[3]-b[1];
+    if(w<=0||h<=0)return '';const scale=Math.min((width-2)/w,(height-2)/h),src=String(entry.src).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return `<span class="parking-atlas-icon" style="width:${width}px;height:${height}px"><span class="atlas-icon-crop" style="position:absolute;overflow:hidden;width:${w*scale}px;height:${h*scale}px;left:${(width-w*scale)/2}px;top:${(height-h*scale)/2}px"><img src="${src}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${-(r[0]+b[0])*scale}px;top:${-(r[1]+b[1])*scale}px"></span></span>`;
+  }
+  function itemIcon(kind,fallback=kind,size={width:72,height:48}){
+    if(kind==='emergency_aed')return worldIcon('aed_emergency_aed_inventory','intact',size);
+    const military=window.ArmoryView?.icon(kind,size);if(military)return military;
+    const alias=parking?.aliases[kind];if(alias)return parkingIcon(...alias,size);
+    const entry=entries[fallback];return entry?iconFromFrame(entry,[0,0,...entry.size],entry.crop,size):'';
   }
   function worldFrameSurface(ctx,asset,state,source,dest){
     const d=window.WORLD_ART,m=d?.frames[d.assets[asset]?.states[state]];if(!m||!available(m.atlas))return false;
@@ -287,5 +296,12 @@
       ctx.transform(transform.a,transform.b,transform.c,transform.d,transform.e,transform.f);ctx.drawImage(img,r[0]*ratio,r[1]*ratio,r[2]*ratio,r[3]*ratio,0,0,r[2],r[3]);ctx.restore();
     }return true;
   }
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,worldFrameSurface,house,houseBack,houseFront,roof,ground,door,direction};
+  function drawZone(ctx,zone,project,scale,seconds){
+    const q=project(zone.x,zone.y),r=zone.radius*scale;
+    if(sprite(ctx,zone.kind,q.x,q.y,r*Math.SQRT2,{width:r*2*Math.SQRT2,anchorY:.5})||zone.kind!=='fire_pool')return;
+    // Keep an active fire visible while its lazy texture is loading.
+    ctx.save();ctx.fillStyle='#c44e1c99';ctx.beginPath();ctx.ellipse(q.x,q.y,r*Math.SQRT2,r/Math.SQRT2,0,0,Math.PI*2);ctx.fill();
+    for(let i=0;i<7;i++){const a=i*2.4,x=q.x+Math.cos(a)*r*.75,y=q.y+Math.sin(a)*r*.35,h=r*(.3+.15*Math.sin(seconds*8+i));ctx.fillStyle=i%2?'#ffc45bd9':'#ed792bd9';ctx.beginPath();ctx.moveTo(x-r*.12,y);ctx.lineTo(x,y-h);ctx.lineTo(x+r*.12,y);ctx.closePath();ctx.fill();}ctx.restore();
+  }
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,itemIcon,drawZone,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,worldFrameSurface,house,houseBack,houseFront,roof,ground,door,direction};
 })();

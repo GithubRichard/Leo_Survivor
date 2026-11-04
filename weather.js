@@ -7,6 +7,7 @@
     weatherRandom(){const w=this.weather;w.seed=(Math.imul(w.seed,1664525)+1013904223)>>>0;return w.seed/4294967296;}
     makeWeather(first=false){const w={seed:Math.floor(this.random()*4294967296)>>>0,day:this.day,schedule:[],index:0,elapsed:0,serial:0,hazards:[],flash:[],notified:-1,nextStrike:0,nextTornado:0};const old=this.weather;this.weather=w;w.schedule=this.weatherSchedule(first?'sunny':null,first,null);let hour=((this.minutes-300+1440)%1440)/60;while(w.index<w.schedule.length-1&&hour>=w.schedule[w.index].hours){hour-=w.schedule[w.index++].hours;}w.elapsed=hour*45;w.nextStrike=8+this.weatherRandom()*6;w.nextTornado=15+this.weatherRandom()*10;this.weather=old;return w;}
     weatherSchedule(previous,first,old,attempt=0){
+      if(this.difficulty!=='normal')return this.difficultyWeatherSchedule(previous,first);
       const rand=()=>this.weatherRandom(),count=4+Math.floor(rand()*5),schedule=[];let hours=24,bad=false,last=previous;
       for(let i=0;i<count;i++){
         const left=count-i-1,min=Math.max(2,hours-left*7),max=Math.min(7,hours-left*2),duration=first&&i===0?3:min+Math.floor(rand()*(max-min+1));
@@ -15,6 +16,26 @@
         schedule.push({kind,hours:duration});hours-=duration;last=kind;if(['thunderstorm','tornado'].includes(kind))bad=true;
       }
       if(old&&JSON.stringify(schedule)===JSON.stringify(old)){if(attempt<4)return this.weatherSchedule(previous,false,old,attempt+1);schedule[0].kind=['sunny','overcast','rain','fog'].find(k=>k!==schedule[0].kind&&k!==previous&&k!==schedule[1]?.kind);}return schedule;
+    }
+    difficultyWeatherSchedule(previous,first){
+      const p=this.difficultyRules,kinds=Object.keys(TYPES),bad=k=>!['sunny','overcast'].includes(k),hazard=k=>['thunderstorm','tornado'].includes(k),memo=new Map();
+      const options=(slots,hours,last,used,opening)=>{
+        const out=[];for(const k of kinds){if(opening?k!=='sunny':k===last)continue;if(hazard(k)&&used>=p.hazards)continue;
+          const [min,max]=opening?[3,3]:bad(k)?p.badHours:[2,7];
+          for(let n=min;n<=max;n++){if(n>hours)break;if(feasible(slots-1,hours-n,k,used+(hazard(k)?1:0),false))out.push({kind:k,hours:n});}
+        }return out;
+      };
+      const feasible=(slots,hours,last,used,opening)=>{
+        if(!slots)return hours===0;if(hours<slots*2||hours>slots*10)return false;
+        const key=[slots,hours,last,used,opening].join(':');if(memo.has(key))return memo.get(key);memo.set(key,false);
+        const ok=options(slots,hours,last,used,opening).length>0;memo.set(key,ok);return ok;
+      };
+      const counts=[4,5,6,7,8].filter(n=>feasible(n,24,previous,0,first));
+      let slots=counts[Math.floor(this.weatherRandom()*counts.length)],hours=24,last=previous,used=0;const schedule=[];
+      while(slots){const list=options(slots,hours,last,used,first&&schedule.length===0),available=kinds.filter(k=>list.some(o=>o.kind===k));let roll=this.weatherRandom()*available.reduce((n,k)=>n+p.weather[kinds.indexOf(k)],0),kind=available.at(-1);
+        for(const k of available){roll-=p.weather[kinds.indexOf(k)];if(roll<0){kind=k;break;}}
+        const durations=list.filter(o=>o.kind===kind),o=durations[Math.floor(this.weatherRandom()*durations.length)];schedule.push(o);hours-=o.hours;last=o.kind;used+=hazard(last)?1:0;slots--;
+      }return schedule;
     }
     weatherType(){return TYPES[this.weather?.schedule[this.weather.index]?.kind]||TYPES.sunny;}
     weatherKind(){return this.weather?.schedule[this.weather.index]?.kind||'sunny';}
@@ -27,7 +48,7 @@
       if(!this.outdoors(p))return true;const e=this.parking?.entrance;if(!e)return false;
       return S.pointRect(p,e.axis==='x'?{x:e.x-3,y:e.y,w:6.8,h:5.8}:{x:e.x,y:e.y-3,w:5.8,h:6.8})<.5;
     }
-    movementSpeed(base,p=this.player){let speed=base;if(this.outdoors(p))speed*=this.weatherType().speed;if(p===this.player&&this.boneSkill?.charging)speed*=.5;return Math.max(.5,speed);}
+    movementSpeed(base,p=this.player){let speed=p!==this.player&&p.kind&&!p.boneType?this.enemySpeed(p.kind,base):base;if(this.outdoors(p))speed*=this.weatherType().speed;if(p===this.player&&this.boneSkill?.charging)speed*=.5;return Math.max(.5,speed);}
     get personalSight(){const original=super.personalSight;return this.scene==='surface'&&this.outdoors(this.player)&&this.weatherKind()==='fog'?Math.min(original/this.traitEffects.sight,10)*this.traitEffects.sight:original;}
     get illuminatedSight(){return this.scene==='surface'&&this.outdoors(this.player)&&this.weatherKind()==='fog'?14*this.traitEffects.sight:super.illuminatedSight;}
     canSee(p){if(this.scene==='surface'&&this.weatherKind()==='fog'&&this.outdoors(this.player)){const d=S.dist(p,this.player);return (d<=this.personalSight||d<=this.illuminatedSight&&this.isLit(p))&&this.clearVision(this.player,p,p);}return super.canSee(p)&&(this.scene!=='surface'||this.weatherKind()!=='fog'||this.outdoors(this.player)||this.clearVision(this.player,p,p));}
@@ -38,7 +59,7 @@
     advanceWeather(dt){
       if(this.scene!=='surface')return;const w=this.weather;
       if(w.day!==this.day){const old=w.schedule;w.schedule=w.nextSchedule||this.weatherSchedule(old.at(-1).kind,false,old);w.nextSchedule=null;w.day=this.day;w.index=0;w.elapsed=Math.max(0,(this.minutes-300)*.75);w.notified=-1;this.resetWeatherHazards();}
-      w.elapsed+=dt;
+      w.elapsed+=this.clockMinutes(dt)*.75;
       while(w.elapsed>=w.schedule[w.index].hours*45){if(w.index===w.schedule.length-1)break;w.elapsed-=w.schedule[w.index].hours*45;w.index++;this.resetWeatherHazards();this.announce(`天气转为${this.weatherType().name}。`);}
       const remaining=w.schedule[w.index].hours*45-w.elapsed;if(remaining<=22.5&&w.index===w.schedule.length-1&&!w.nextSchedule)w.nextSchedule=this.weatherSchedule(w.schedule.at(-1).kind,false,w.schedule);
       const next=w.schedule[w.index+1]||w.nextSchedule?.[0];if(remaining<=22.5&&next&&w.notified!==w.index){w.notified=w.index;this.announce(`30游戏分钟后：${TYPES[next.kind].name}${['thunderstorm','tornado'].includes(next.kind)?'，请留意地面预警并进屋避险':''}。`);}
@@ -68,7 +89,7 @@
       }
       w.hazards=w.hazards.filter(h=>!h.dead);for(const f of w.flash)f.life-=dt;w.flash=w.flash.filter(f=>f.life>0);
     }
-    updateProduction(dt){super.updateProduction(dt);for(const o of this.devices)if(o.hp>0&&o.crop){const c=o.crop;if(!Number.isFinite(c.growth))c.growth=Math.min(48,(c.dawns||0)*24);c.growth=Math.min(48,c.growth+dt/45*(this.outdoors(o)?this.weatherType().growth:1));}}
+    updateProduction(dt){super.updateProduction(dt);if(this.scene==='parking')return;for(const o of this.devices)if(o.hp>0&&o.crop){const c=o.crop;if(!Number.isFinite(c.growth))c.growth=Math.min(48,(c.dawns||0)*24);c.growth=Math.min(48,c.growth+this.clockMinutes(dt)/60*(this.outdoors(o)?this.weatherType().growth:1));}}
     plant(o,kind){const ok=super.plant(o,kind);if(ok)o.crop={kind,growth:0};return ok;}
     harvest(o){if(!o.crop||(o.crop.growth??(o.crop.dawns||0)*24)<48)return false;if(this.pay({}, {[o.crop.kind]:3})){o.crop=null;return true;}return false;}
     advanceClock(dt){this.advanceWeather(dt);super.advanceClock(dt);}

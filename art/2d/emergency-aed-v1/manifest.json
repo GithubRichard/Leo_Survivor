@@ -1,0 +1,651 @@
+{
+  "schema": 2,
+  "gutterStrategy": "zero-alpha vertical gutters and per-column horizontal gutters; use frame.rect as authoritative",
+  "tool": "built-in image_gen",
+  "source": [
+    "source-documents/应急AED急救箱规则.md",
+    "source-documents/AED美术与程序交接说明.md"
+  ],
+  "expectedPNGs": 6,
+  "expectedFrames": 8,
+  "userCorrections": [
+    "盒盖改为红色",
+    "损坏就是消失，没有单独的状态"
+  ],
+  "rectFormat": "source x,y,width,height; PNG pixels unchanged",
+  "anchorNote": "Pixels relative to frame.rect origin; alpha>=10 visibleBounds are exclusive right/bottom. Suggested art anchors, not collision.",
+  "assets": [
+    {
+      "id": "emergency_aed_inventory",
+      "label": "AED背包图标（红盖）",
+      "category": "inventory",
+      "file": "png/emergency_aed_inventory.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        "intact"
+      ],
+      "rules": "一次性消耗；无损坏态",
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 1042405,
+      "opaquePixels": 527227,
+      "softPixels": 2898,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1536
+      ],
+      "cutsY": [
+        0,
+        1024
+      ],
+      "sha256": "37b3595089a24add14d5d68ba456758bf66487d7448db4ca48a0ffce14365a17",
+      "sourceVerified": true
+    },
+    {
+      "id": "emergency_aed_ground",
+      "label": "AED落地拾取",
+      "category": "pickup",
+      "file": "png/emergency_aed_ground.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        "intact"
+      ],
+      "rules": "一次性消耗；无损坏态",
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 1024690,
+      "opaquePixels": 544695,
+      "softPixels": 3077,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1536
+      ],
+      "cutsY": [
+        0,
+        1024
+      ],
+      "sha256": "b91bfebab15e99e43d95c9830352c12953faa20819913d4b004ae18b9f349344",
+      "sourceVerified": true
+    },
+    {
+      "id": "blueprint_emergency_aed",
+      "label": "AED蓝图",
+      "category": "knowledge",
+      "file": "png/blueprint_emergency_aed.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        "knowledge"
+      ],
+      "rules": "一次性消耗；无损坏态",
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 969731,
+      "opaquePixels": 599722,
+      "softPixels": 3153,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1536
+      ],
+      "cutsY": [
+        0,
+        1024
+      ],
+      "sha256": "4721f41aec48d9ddca981dd63e0a266f3ac97998fd29b9756c4103d8d4974f22",
+      "sourceVerified": true
+    },
+    {
+      "id": "aed_rescue_pulse",
+      "label": "救命脉冲",
+      "category": "effect",
+      "file": "png/aed_rescue_pulse.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        "start",
+        "expand",
+        "fade"
+      ],
+      "rules": "一次性消耗；无损坏态",
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1526869,
+      "opaquePixels": 10788,
+      "softPixels": 28854,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "2a7c84b0df85bf12ed9f41a87f8173402e7a689e8b816d05f19b011d4157ac48",
+      "sourceVerified": true
+    },
+    {
+      "id": "aed_protection",
+      "label": "AED保护",
+      "category": "hud",
+      "file": "png/aed_protection.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        "active"
+      ],
+      "rules": "一次性消耗；无损坏态",
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "size": [
+        1271,
+        1238
+      ],
+      "transparentPixels": 876788,
+      "opaquePixels": 691600,
+      "softPixels": 4003,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1271
+      ],
+      "cutsY": [
+        0,
+        1238
+      ],
+      "sha256": "f72efe07f8c4876101104782843ccec50485fa50feb89c06df0fdb9950242eec",
+      "sourceVerified": true
+    },
+    {
+      "id": "aed_sprint_penalty",
+      "label": "奔跑体力增耗",
+      "category": "hud",
+      "file": "png/aed_sprint_penalty.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        "active"
+      ],
+      "rules": "一次性消耗；无损坏态",
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 1099298,
+      "opaquePixels": 466053,
+      "softPixels": 5982,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1536
+      ],
+      "cutsY": [
+        0,
+        1024
+      ],
+      "sha256": "efa0550acebd0f053cbbe7167b329475b8475d17560ed29c8d9dee05e09d1065",
+      "sourceVerified": true
+    }
+  ],
+  "frames": [
+    {
+      "id": "emergency_aed_inventory__intact",
+      "asset": "emergency_aed_inventory",
+      "file": "png/emergency_aed_inventory.png",
+      "label": "AED背包图标（红盖）·intact",
+      "category": "inventory",
+      "state": "intact",
+      "action": "static",
+      "frame": 0,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "size": [
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        265,
+        129,
+        1271,
+        910
+      ],
+      "opaquePixels": 527227,
+      "center": [
+        761.31,
+        454.9
+      ],
+      "anchor": [
+        768,
+        519.5
+      ],
+      "anchorKind": "ui_center"
+    },
+    {
+      "id": "emergency_aed_ground__intact",
+      "asset": "emergency_aed_ground",
+      "file": "png/emergency_aed_ground.png",
+      "label": "AED落地拾取·intact",
+      "category": "pickup",
+      "state": "intact",
+      "action": "static",
+      "frame": 0,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "size": [
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        264,
+        119,
+        1273,
+        939
+      ],
+      "opaquePixels": 544695,
+      "center": [
+        758.23,
+        456.04
+      ],
+      "anchor": [
+        768,
+        820
+      ],
+      "anchorKind": "suggested_ground_center"
+    },
+    {
+      "id": "blueprint_emergency_aed__knowledge",
+      "asset": "blueprint_emergency_aed",
+      "file": "png/blueprint_emergency_aed.png",
+      "label": "AED蓝图·knowledge",
+      "category": "knowledge",
+      "state": "knowledge",
+      "action": "static",
+      "frame": 0,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "size": [
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        205,
+        39,
+        1332,
+        975
+      ],
+      "opaquePixels": 599722,
+      "center": [
+        777.27,
+        447.45
+      ],
+      "anchor": [
+        768.5,
+        507
+      ],
+      "anchorKind": "ui_center"
+    },
+    {
+      "id": "aed_rescue_pulse__start",
+      "asset": "aed_rescue_pulse",
+      "file": "png/aed_rescue_pulse.png",
+      "label": "救命脉冲·start",
+      "category": "effect",
+      "state": "start",
+      "action": "pulse",
+      "frame": 0,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        252,
+        278,
+        517,
+        443
+      ],
+      "opaquePixels": 3660,
+      "center": [
+        383.16,
+        359.98
+      ],
+      "anchor": [
+        384,
+        360
+      ],
+      "anchorKind": "pulse_center"
+    },
+    {
+      "id": "aed_rescue_pulse__expand",
+      "asset": "aed_rescue_pulse",
+      "file": "png/aed_rescue_pulse.png",
+      "label": "救命脉冲·expand",
+      "category": "effect",
+      "state": "expand",
+      "action": "pulse",
+      "frame": 1,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        166,
+        227,
+        558,
+        476
+      ],
+      "opaquePixels": 7128,
+      "center": [
+        361.33,
+        350.05
+      ],
+      "anchor": [
+        362,
+        352
+      ],
+      "anchorKind": "pulse_center"
+    },
+    {
+      "id": "aed_rescue_pulse__fade",
+      "asset": "aed_rescue_pulse",
+      "file": "png/aed_rescue_pulse.png",
+      "label": "救命脉冲·fade",
+      "category": "effect",
+      "state": "fade",
+      "action": "pulse",
+      "frame": 2,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        132,
+        194,
+        555,
+        506
+      ],
+      "opaquePixels": 0,
+      "center": [
+        362,
+        289.6
+      ],
+      "fadeVisiblePixels": 15568,
+      "fadeMaxAlpha": 179,
+      "anchor": [
+        344,
+        350
+      ],
+      "anchorKind": "pulse_center"
+    },
+    {
+      "id": "aed_protection__active",
+      "asset": "aed_protection",
+      "file": "png/aed_protection.png",
+      "label": "AED保护·active",
+      "category": "hud",
+      "state": "active",
+      "action": "static",
+      "frame": 0,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1271,
+        1238
+      ],
+      "size": [
+        1271,
+        1238
+      ],
+      "visibleBounds": [
+        187,
+        62,
+        1085,
+        1130
+      ],
+      "opaquePixels": 691600,
+      "center": [
+        635.45,
+        525.89
+      ],
+      "anchor": [
+        636,
+        596
+      ],
+      "anchorKind": "ui_center"
+    },
+    {
+      "id": "aed_sprint_penalty__active",
+      "asset": "aed_sprint_penalty",
+      "file": "png/aed_sprint_penalty.png",
+      "label": "奔跑体力增耗·active",
+      "category": "hud",
+      "state": "active",
+      "action": "static",
+      "frame": 0,
+      "entity": "emergency_aed",
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "size": [
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        266,
+        137,
+        1293,
+        887
+      ],
+      "opaquePixels": 466053,
+      "center": [
+        754.39,
+        453.41
+      ],
+      "anchor": [
+        779.5,
+        512
+      ],
+      "anchorKind": "ui_center"
+    }
+  ],
+  "reuse": {
+    "assets": [
+      {
+        "id": "medkit",
+        "file": "reuse/medkit-reference.png",
+        "referenceOnly": true,
+        "original": "../expansion-v1/medkit.png",
+        "sha256": "bc2731c085df5adf903c5e40083296aee2815237a9eecb42837d220c1897ef26"
+      },
+      {
+        "file": "reuse/player-reference.png",
+        "frame": {
+          "id": "player_pistol_south__idle",
+          "asset": "player_pistol_south",
+          "file": "png/player_pistol_south-style-only.png",
+          "label": "玩家手枪·南·持械站立",
+          "category": "玩家动作",
+          "state": "idle",
+          "action": "idle",
+          "frame": 0,
+          "entity": "player",
+          "direction": "south",
+          "phase": null,
+          "cell": 1,
+          "rect": [
+            0,
+            0,
+            441,
+            396
+          ],
+          "size": [
+            441,
+            396
+          ],
+          "visibleBounds": [
+            148,
+            36,
+            321,
+            380
+          ],
+          "opaquePixels": 33587,
+          "center": [
+            233.71,
+            167.82
+          ],
+          "weapon": "pistol"
+        },
+        "referenceOnly": true,
+        "original": "../thermal-geometric-v2/png/player_pistol_south-style-only.png",
+        "sha256": "bca33cfa74da96502f08adabad47079378719772bd1af759950b45d34fcc12cb",
+        "id": "player"
+      }
+    ]
+  },
+  "coverage": {
+    "inventory": 1,
+    "pickup": 1,
+    "knowledge": 1,
+    "rescuePulseFrames": 3,
+    "protectionIcon": 1,
+    "sprintPenaltyIcon": 1,
+    "brokenState": 0
+  },
+  "colorOverride": "Latest human correction: red lid; charcoal body preserved. Original yellow generation is unselected."
+}

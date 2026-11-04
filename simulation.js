@@ -34,6 +34,7 @@
   }
   class Game {
     constructor(options = {}) {
+      this.difficulty=(typeof module!=='undefined'&&module.exports?require('./difficulty-data.js'):root.DifficultyRules).id(options.difficulty);
       this.random = options.random || Math.random;
       this.player = { x:0, y:2, hp:RULES.hp, stamina:RULES.stamina, name:options.name || '幸存者', facing:{x:0,y:1}, running:false, hurtUntil:0, indoorHome:null };
       this.minutes = options.startMinutes ?? 300;

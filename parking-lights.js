@@ -13,7 +13,7 @@
     isCarried(s){return this.inventory.includes(s);},
     equip(kind){
       const hand=this.lampById(this.heldLightId);
-      if(hand&&!['fists','wood_club','iron_axe'].includes(kind)){this.announce('单手灯占一只手，请先放下灯，或改用头灯。');return false;}
+      if(hand&&!['fists','wood_club','iron_axe','pistol'].includes(kind)){this.announce('单手灯占一只手，请先放下灯，或改用头灯。');return false;}
       return Base.prototype.equip.call(this,kind);
     },
     use(kind){
@@ -23,7 +23,7 @@
     lampAction(op,id){
       const s=this.lampById(id),d=s&&P.lamps[s.kind];if(!d||s.hp<=0)return false;
       const carried=this.isCarried(s);
-      if(op==='equip'&&(d.fixed||!carried||d.hand&&!['fists','wood_club','iron_axe'].includes(this.player.weapon))){this.announce('单手灯只能搭配徒手、木棍、铁斧；头灯不占手。');return false;}
+      if(op==='equip'&&(d.fixed||!carried||d.hand&&!['fists','wood_club','iron_axe','pistol'].includes(this.player.weapon))){this.announce('单手灯可搭配徒手、木棍、铁斧或手枪；头灯不占手。');return false;}
       if(['drop','throw'].includes(op)&&(!carried||d.fixed))return false;
       if(op==='throw'&&(!d.throwable||!s.active||s.energy<=0||this.seconds<this.lampThrowAt)){this.announce('只能投掷已点亮的火把或提灯，投掷间隔1秒。');return false;}
       if(op==='toggle'&&(this.seconds-(s.lastToggle??-1e9)<1||!s.active&&s.energy<=0)){this.announce(s.energy<=0?'请先装入一份对应能源。':'开关灯至少间隔1秒。');return false;}
@@ -47,7 +47,7 @@
       const s=this.lampById(a.lampId),d=s&&P.lamps[s.kind];if(!d||s.hp<=0)return;const carried=this.isCarried(s);
       if(a.op==='repair'){if(s.kind!=='torch'&&s.hp<s.maxHP&&this.pay({iron:1}))s.hp=Math.min(s.maxHP,s.hp+6);return;}
       if(a.op==='equip'){
-        if(!carried||d.fixed||d.hand&&!['fists','wood_club','iron_axe'].includes(this.player.weapon))return;
+        if(!carried||d.fixed||d.hand&&!['fists','wood_club','iron_axe','pistol'].includes(this.player.weapon))return;
         const field=d.hand?'heldLightId':'headLightId',old=this.lampById(this[field]);
         if(old&&old!==s)old.active=false;this[field]=s.lampId;this.announce(`${d.name}已装备，请在背包中点亮。`);
       }else if(a.op==='toggle'){

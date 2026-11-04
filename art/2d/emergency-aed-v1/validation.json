@@ -1,0 +1,22 @@
+﻿{
+    "expectedPNGs":  6,
+    "generatedPNGs":  6,
+    "expectedFrames":  8,
+    "indexedFrames":  8,
+    "missing":  [
+
+                ],
+    "invalidAlphaOrEmpty":  [
+
+                            ],
+    "nativeSourceMismatch":  [
+
+                             ],
+    "unexpectedContentInEmptyCells":  [
+
+                                      ],
+    "gridGutterWarnings":  [
+
+                           ],
+    "checkedAt":  "2026-11-01T15:17:35.2134272Z"
+}

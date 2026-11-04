@@ -38,6 +38,7 @@
         if(!o.opened)commands=button('parking-interact',o.kind==='boss_chest'?'开启Boss宝箱':'搜索');
         else for(const [kind,n] of Object.entries(o.loot||{}))if(n>0)commands+=button('parking-take',`领取${S.NAMES[kind]} × ${n}`,`data-kind="${kind}"`);
         if(o.opened&&!Object.values(o.loot||{}).some(n=>n>0))description='物资已领完，不会重复补货。';
+        if(o.opened&&o.kind==='boss_chest'&&!game.skill.unlocked)commands+=button('parking-skill','补领潜伏技能');
       }
     }
     return `<div class="eyebrow">暂停中 · E交互</div><h2>${esc(title)}</h2><p>${esc(description)}</p><div class="context-actions">${commands}</div><div class="overlay-actions"><button data-key="escape">返回游戏</button></div>`;
@@ -50,6 +51,7 @@
     return html;
   }
   function command(game,name,button,o){
+    if(name==='parking-skill')return {handled:true,ok:game.claimParkingSkill(o),leave:false};
     if(name.startsWith('lamp-'))return {handled:true,ok:game.lampAction(name.slice(5),button.dataset.lamp),leave:true};
     if(name==='parking-interact')return {handled:true,ok:game.parkingInteract(o),leave:!o.opened};
     if(name==='parking-take')return {handled:true,ok:game.takeParkingLoot(o,button.dataset.kind),leave:false};
@@ -109,6 +111,7 @@
     ctx.restore();
   }
   function effectModel(ctx,fx,seconds,q,scale=27){
+    if(window.ArmoryView?.effect(ctx,fx,seconds,q,scale))return true;
     if(fx.kind==='parking_lamp_fx')return A.parkingSprite(ctx,fx.asset,fx.state,q.x,q.y,(fx.asset==='torch'?36:28)*scale/27,{alpha:Math.min(1,(fx.until-seconds)/.2)});
     if(fx.kind!=='parking_art_fx')return false;
     return A.parkingSequence(ctx,fx.asset,seconds-fx.startedAt,fx.duration,q.x,q.y,(fx.height||40)*scale/27,{alpha:Math.min(1,(fx.until-seconds)/.15)});
@@ -181,6 +184,7 @@
     ctx.globalAlpha=black;ctx.fillStyle='#000';ctx.fillRect(0,0,width,height);ctx.restore();
   }
   function groundSight(game,v){
+    if(game.scene!=='parking')return;
     if(game.weatherKind?.()==='fog'&&game.outdoors(game.player)){fog(game,v);return;}
     if(!Number.isFinite(game.personalSight))return;
     const {ctx,project,width,height,scale}=v,q=project(game.player.x,game.player.y);
@@ -245,9 +249,9 @@
       if(z.summonWarned){const q=project(z.x,z.y);A.parkingSequence(ctx,'lurker_summon',game.seconds-(z.summonNext-1),1,q.x,q.y,32);}
       if(z.burrowWarning!=null){const q=project(z.x,z.y);A.parkingSequence(ctx,'lurker_burrow',game.seconds-z.burrowWarning,.6,q.x,q.y,30);}
     }});
-    for(const d of game.drops)if(game.canSee(d))items.push({depth:d.x+d.y,draw:()=>{const q=project(d.x,d.y),alias=window.PARKING_ART?.aliases[d.kind];if(!(alias&&A.parkingSprite(ctx,...alias,q.x,q.y,20))&&!A.sprite(ctx,d.kind,q.x,q.y,20))plane(d.x,d.y,.3,.3,'#b9ae76');}});
+    for(const d of game.drops)if(game.canSee(d))items.push({depth:d.x+d.y,draw:()=>{const q=project(d.x,d.y),alias=window.PARKING_ART?.aliases[d.kind];if(!window.ArmoryView?.item(ctx,d.kind,q,20)&&!(alias&&A.parkingSprite(ctx,...alias,q.x,q.y,20))&&!A.sprite(ctx,d.kind,q.x,q.y,20))plane(d.x,d.y,.3,.3,'#b9ae76');}});
     items.push({depth:game.player.x+game.player.y,draw:()=>actor(game.player,'player')});
-    for(const p of game.projectiles)if(game.canSee(p))items.push({depth:p.x+p.y+.2,draw:()=>{const q=project(p.x,p.y,p.z||.6),lamp=p.kind==='lamp_flight';
+    for(const p of game.projectiles)if(game.canSee(p))items.push({depth:p.x+p.y+.2,draw:()=>{const q=project(p.x,p.y,p.z||.6),lamp=p.kind==='lamp_flight';if(window.ArmoryView?.projectile(ctx,p,q,v.scale))return;
       const modeled=lamp?A.parkingSprite(ctx,p.lamp.kind==='oil_lantern'?'fuel_lantern':p.lamp.kind,p.lamp.active&&p.lamp.energy>0?'flight':'off',q.x,q.y,p.lamp.kind==='torch'?25:20):p.kind==='stone_projectile'&&A.parkingSprite(ctx,'thrown_stone','default',q.x,q.y,10);
       if(!modeled&&!A.sprite(ctx,lamp?p.lamp.kind:p.kind==='molotov_projectile'?'molotov':p.kind,q.x,q.y,18)){ctx.fillStyle='#d6bc77';ctx.beginPath();ctx.arc(q.x,q.y,4,0,Math.PI*2);ctx.fill();}
     }});
@@ -260,8 +264,8 @@
       ctx.save();ctx.globalAlpha=Math.min(1,(fx.until-game.seconds)/.3);ctx.strokeStyle='#dda56e';ctx.lineWidth=2;
       const r=2*Math.max(.01,1-(fx.until-game.seconds)/.6);path(ctx,rayPolygon(game,fx,2,360,{x:0,y:1},false),project);ctx.clip();if(!A.parkingMask(ctx,'roar_wave',fx,r,project)){ctx.beginPath();ctx.ellipse(q.x,q.y,r*v.scale*Math.SQRT2,r*v.scale/Math.SQRT2,0,0,Math.PI*2);ctx.stroke();}ctx.restore();
     }});
-    for(const zone of game.zones)if(game.canSee(zone)){const q=project(zone.x,zone.y);A.sprite(ctx,zone.kind,q.x,q.y,zone.radius*v.scale,{width:zone.radius*v.scale*2,anchorY:.5});}
-    WorldView.items(game,{...v,items});
+    for(const zone of game.zones)if(game.canSee(zone))items.push({depth:zone.x+zone.y+.06,draw:()=>A.drawZone(ctx,zone,project,v.scale,game.seconds)});
+    WorldView.items(game,{...v,items});window.AEDView?.items(game,{...v,items});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
     // Draw only visual tints; gameplay lighting is evaluated by the rule module.
     ctx.save();ctx.fillStyle='#e5cd7f';for(const l of game.lightSources()){

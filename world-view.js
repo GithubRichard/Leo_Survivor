@@ -29,7 +29,7 @@
       const elevation=p.stage==='held'?24*size:p.stage==='flight'||p.stage==='return'?12*size:0;
       if(remnant&&game.skeleton?.reform>0)A.worldSprite(ctx,'skeleton_reform_'+dir,['upright_warning','bones_rising','body_forming','standing'][Math.min(3,Math.floor((3-game.skeleton.reform)/.75))],q.x,q.y,64*size);
       else if(!A.worldSprite(ctx,asset,state,q.x,q.y-elevation,(ordinary?25:50)*size)){ctx.strokeStyle='#d1c5a6';ctx.lineWidth=ordinary?4:8;ctx.beginPath();ctx.moveTo(q.x,q.y-elevation);ctx.lineTo(q.x,q.y-elevation-(ordinary?22:46)*size);ctx.stroke();}
-      if(remnant)v.label(`复活遗骨 ${Number(p.hp.toFixed(1))}/20 · ${(p.remaining/45).toFixed(1)}游戏小时`,q.x,q.y-56*size,'#e1c783',10);
+      if(remnant)v.label(`复活遗骨 ${Number(p.hp.toFixed(1))}/20 · ${game.revivalHours(p.remaining).toFixed(1)}游戏小时`,q.x,q.y-56*size,'#e1c783',10);
       else if(p.hp<p.maxHP)v.label(`${p.hp.toFixed(1)}/${p.maxHP}`,q.x,q.y-(ordinary?30:55)*size,'#d5bb84',9);return true;
     }
     const skill=type==='player'&&game.boneSkill;if(!skill||!skill.charging&&!(skill.visualUntil>game.seconds))return false;
@@ -48,6 +48,8 @@
       for(const f of game.weather.flash)items.push({depth:f.x+f.y,draw:()=>{const q=project(f.x,f.y);if(f.type==='tornado_end'){A.worldSprite(ctx,'tornado_dissipate','f'+Math.min(2,Math.floor((.45-f.life)*7)),q.x,q.y,100*v.scale/27);return;}const state='f'+Math.min(2,Math.floor((.35-f.life)*9));A.worldSprite(ctx,'lightning_bolt',state,q.x,q.y,115*v.scale/27);A.worldSprite(ctx,'lightning_sparks',state,q.x,q.y,32*v.scale/27);}});
     }
     const boss=game.secondFloor&&game.zombies.find(z=>z.kind==='skeleton'&&z.hp>0);
+    const remnant=game.secondFloor&&game.skeleton?.remnant;
+    if(remnant?.destroyed&&game.skeleton.reform>0&&game.canSee(remnant))items.push({depth:remnant.x+remnant.y,draw:()=>{const q=project(remnant.x,remnant.y),dir=A.eightDirection({x:0,y:-1}),stage=['upright_warning','bones_rising','body_forming','standing'][Math.min(3,Math.max(0,Math.floor((3-game.skeleton.reform)/.75)))];A.worldSprite(ctx,'skeleton_reform_'+dir,stage,q.x,q.y,64*v.scale/27);}});
     if(boss?.action&&!boss.action.released&&game.canSee(boss)){const a=boss.action;if(a.type==='sweep'||a.type==='melee')items.push({depth:boss.x+boss.y-.2,draw:()=>warning(ctx,game,boss,a.type==='sweep'?2.6:1.3,v,a.facing,180)});}
     if(boss?.action?.type==='sweep'&&boss.action.released&&game.canSee(boss)){const a=boss.action;items.push({depth:boss.x+boss.y+.1,draw:()=>{ctx.save();sector(ctx,game,boss,2.6,a.facing,180,v);ctx.clip();const q=project(boss.x,boss.y),angle=Math.atan2((a.facing.x+a.facing.y)*.5,a.facing.x-a.facing.y);A.worldSprite(ctx,'sweep_arc','f'+Math.min(2,Math.floor((game.seconds-a.releaseAt)*8)),q.x,q.y,75*v.scale/27,{rotate:angle});ctx.restore();}});}
     for(const f of game.effects)if(f.kind==='skeleton_fx'&&game.canSee(f))items.push({depth:f.x+f.y,draw:()=>{const q=project(f.x,f.y);if(f.state==='reconnect')A.worldSprite(ctx,'bone_reconnect_fx','f'+Math.min(2,Math.floor((game.seconds-f.startedAt)*7)),q.x,q.y,35);else if(f.state==='death')A.worldSprite(ctx,'skeleton_'+A.eightDirection(f.facing||{x:0,y:1}),game.seconds-f.startedAt<.2?'death_start':'death_end',q.x,q.y,64);else if(f.boneType==='remnant')A.worldSprite(ctx,'resurrection_bone','f5',q.x,q.y,50);else if(f.boneType==='player')A.worldSprite(ctx,'player_large_bone','f'+(6+Math.min(1,Math.floor((game.seconds-f.startedAt)*5))),q.x,q.y,50);else A.worldSprite(ctx,'ordinary_bone','f'+(9+Math.min(2,Math.floor((game.seconds-f.startedAt)*7))),q.x,q.y,25);}});
@@ -55,29 +57,33 @@
   function weatherOverlay(game,v){
     if(game.scene!=='surface'||!game.outdoors(game.player))return;const {ctx,width,height,project}=v,kind=game.weatherKind();
     if(!['rain','thunderstorm','fog','overcast'].includes(kind))return;
+    if(kind==='fog'){
+      const p=project(game.player.x,game.player.y),radius=Math.max(1,game.personalSight)*(v.scale||27)*Math.SQRT2;
+      ctx.save();ctx.translate(p.x,p.y-18);ctx.scale(1,.5);
+      const mist=ctx.createRadialGradient(0,0,radius*.25,0,0,radius*1.8);mist.addColorStop(0,'rgba(184,193,187,0)');mist.addColorStop(.25,'rgba(184,193,187,.04)');mist.addColorStop(.55,'rgba(184,193,187,.25)');mist.addColorStop(1,'rgba(184,193,187,.66)');ctx.fillStyle=mist;ctx.fillRect(-width*2,-height*4,width*4,height*8);ctx.restore();return;
+    }
     ctx.save();ctx.beginPath();ctx.rect(0,0,width,height);
     for(const h of game.nearbyHomes(game.player,40)){const corners=[project(h.x-5,h.y-6),project(h.x+5,h.y-6),project(h.x+5,h.y),project(h.x-5,h.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();}
     const p=project(game.player.x,game.player.y);ctx.moveTo(p.x+27,p.y-25);ctx.ellipse(p.x,p.y-25,27,43,0,0,Math.PI*2);ctx.clip('evenodd');
     const count=Math.min(48,Math.max(12,Math.floor(width*height/35000)));
     if(kind==='rain'||kind==='thunderstorm'){ctx.strokeStyle='#bac6b94a';ctx.lineWidth=1;for(let i=0;i<count;i++){const x=(i*127.3-game.seconds*70+width*100)%width,y=(i*73.7+game.seconds*430)%height;if(i%6===0)A.worldSprite(ctx,'rain_streaks','f0',x,y,36,{alpha:.15});else{ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-7,y+17);ctx.stroke();}}const q=project(game.player.x+2,game.player.y+1);A.worldSprite(ctx,'rain_splash','f'+Math.floor(game.seconds*8)%3,q.x,q.y,8,{alpha:.4});}
-    else if(kind==='fog'){ctx.fillStyle='#b1b6a50c';ctx.fillRect(0,0,width,height);for(let i=0;i<3;i++)A.worldSprite(ctx,'fog_patch','f0',(i*427+game.seconds*7)%(width+300)-100,height*(.3+i*.22),100,{alpha:.08});}
     else{ctx.fillStyle='#101a1b10';ctx.fillRect(0,0,width,height);}ctx.restore();
   }
   function aim(game,v){if(!game.boneSkill.charging)return;const f=game.player.facing,n=Math.hypot(f.x,f.y)||1,r=5+2.5*Math.min(2,game.seconds-game.boneSkill.startedAt),p={x:game.player.x+f.x/n*r,y:game.player.y+f.y/n*r};warning(v.ctx,game,p,1,v);const a=v.project(game.player.x,game.player.y),b=v.project(p.x,p.y);v.ctx.save();v.ctx.setLineDash([5,5]);v.ctx.strokeStyle='#e0c57a';v.ctx.beginPath();v.ctx.moveTo(a.x,a.y);v.ctx.lineTo(b.x,b.y);v.ctx.stroke();v.ctx.restore();}
   function context(game,target){
     const o=target?.object;if(!o)return null;
-    if(target.type==='bone_remnant')return `<h2>复活遗骨</h2><p>${o.hp.toFixed(1)} / 20血 · 距离重组${(o.remaining/45).toFixed(1)}游戏小时。可用武器攻击摧毁，永久阻止骷髅复活；不是可拾取物品。暂停不推进倒计时。</p><button data-key="escape">返回战斗</button>`;
-    if(o.kind==='skeleton_chest')return `<h2>骷髅第${o.cycle+1}轮宝箱</h2><p>${o.opened?'剩余物资保留，不会重领。':o.cycle===0?'打开2秒，解锁投掷技能；背包满仍可解锁。':'打开2秒，仅发本轮物资，不重置技能冷却。'}</p>${o.opened?Object.entries(o.loot).filter(([,n])=>n>0).map(([k,n])=>`<button data-command="parking-take" data-kind="${k}">${esc(S.NAMES[k])} × ${n}</button>`).join(''):'<button data-command="parking-interact">开启宝箱</button>'}<button data-key="escape">返回游戏</button>`;
+    if(target.type==='bone_remnant')return `<h2>复活遗骨</h2><p>${o.hp.toFixed(1)} / 20血 · 距离重组${game.revivalHours(o.remaining).toFixed(1)}游戏小时。可用武器攻击摧毁，在剩余时间上追加${game.difficultyRules.shatterDays}天复活等待；同一轮仅能摧毁一次，不是可拾取物品。暂停不推进倒计时。</p><button data-key="escape">返回战斗</button>`;
+    if(o.kind==='skeleton_chest')return `<h2>骷髅第${o.cycle+1}轮宝箱</h2><p>${o.opened?'剩余物资保留，不会重领。':!game.boneSkill.unlocked?'打开2秒，解锁投掷技能；背包满仍可解锁。':'打开2秒，仅发本轮物资，不重置技能冷却。'}</p>${o.opened?Object.entries(o.loot).filter(([,n])=>n>0).map(([k,n])=>`<button data-command="parking-take" data-kind="${k}">${esc(S.NAMES[k])} × ${n}</button>`).join(''):'<button data-command="parking-interact">开启宝箱</button>'}${o.opened&&!game.boneSkill.unlocked?'<button data-command="parking-skill">补领投掷技能</button>':''}<button data-key="escape">返回游戏</button>`;
     if(o.kind==='next_floor'||o.kind==='exit'&&game.secondFloor)return `<h2>${o.kind==='exit'?'返回地下首层':'进入地下二层'}</h2><p>交互2秒切换，移动或受伤中断。成功离开二层会将活骷髅恢复26血并清除战斗骨；死亡遗骨、物品和领取记录保留。</p><button data-command="parking-interact" ${o.kind==='next_floor'&&!game.parking.layer.nextUnlocked?'disabled':''}>${o.kind==='exit'?'返回首层':'进入二层'}</button><button data-key="escape">返回游戏</button>`;return null;
   }
   function hud(game,mode){
     const alive=!game.result&&game.player.hp>0,button=document.getElementById('bone-skill'),s=game.boneSkill;button.classList.toggle('hidden',!alive||mode!=='play'||!s.unlocked);
     const text=s.charging?'松开发出 · 取消：Esc':game.seconds<s.cooldown?`投掷 ${Math.ceil(s.cooldown-game.seconds)}秒`:game.player.hp<=1?'投掷需大于1血':'投掷 R · 按住蓄力';if(button._text!==text){button._text=text;button.innerHTML=A.worldIcon('bone_throw_skill','f0')+`<span>${text}</span>`;}
-    const status=document.getElementById('weather-status');status.title='室外移动×'+game.weatherType().speed+'，室外作物生长×'+game.weatherType().growth+'；室内与地下免天气影响';const weatherText=game.scene==='parking'?'地面天气暂停':`${S.Weather[game.weatherKind()].name} · 剩余${Math.max(0,Math.ceil((game.weather.schedule[game.weather.index].hours*45-game.weather.elapsed)/.75))}游戏分钟${game.outdoors(game.player)?'':' · 室内豁免'}`;if(status._text!==weatherText){status._text=weatherText;status.innerHTML=(game.scene==='surface'?A.worldIcon('weather_'+game.weatherKind()):'')+esc(weatherText);}
-    if(!game.secondFloor)return;document.getElementById('day-label').textContent='地下停车场 · 二层';document.getElementById('objective').innerHTML='<b>骷髅与可摧毁骨头</b><br>离层活Boss重置26血；死亡遗骨保留，72游戏小时后复活。';
+    const status=document.getElementById('weather-status');status.title='室外移动×'+game.weatherType().speed+'，室外作物生长×'+game.weatherType().growth+'；室内与地下免天气影响';const weatherText=game.scene==='armory'?'军备库 · 阴天 · 地面时间暂停':game.scene==='parking'?'地面天气暂停':`${S.Weather[game.weatherKind()].name} · 剩余${Math.max(0,Math.ceil((game.weather.schedule[game.weather.index].hours*45-game.weather.elapsed)/.75))}游戏分钟${game.outdoors(game.player)?'':' · 室内豁免'}`;if(status._text!==weatherText){status._text=weatherText;status.innerHTML=(game.scene==='surface'?A.worldIcon('weather_'+game.weatherKind()):'')+esc(weatherText);}
+    if(!game.secondFloor)return;document.getElementById('day-label').textContent='地下停车场 · 二层';document.getElementById('objective').innerHTML=`<b>骷髅与可摧毁骨头</b><br>遗骨等待${game.difficultyRules.reviveDays}天，摧毁追加${game.difficultyRules.shatterDays}天；离层与暂停规则保留。`;
     const boss=game.zombies.find(z=>z.kind==='skeleton'&&z.hp>0&&z.noticed),r=game.skeleton?.remnant,bar=document.getElementById('boss-status');
     if(!alive||['menu','result'].includes(mode)||!boss&&!r){bar.classList.add('hidden');return;}bar.classList.remove('hidden');
-    const textBar=boss?`骷髅 ${boss.hp.toFixed(1)} / 26 · ${boss.action?{melee:'骨爪',throw:'投骨',sweep:'横扫',empty:'空挥'}[boss.action.type]:'待战'} · 离层恢复26血`:`复活遗骨 ${r.hp.toFixed(1)} / 20 · ${(r.remaining/45).toFixed(1)}游戏小时 · 摧毁可阻止复活`;
+    const textBar=boss?`骷髅 ${boss.hp.toFixed(1)} / 26 · ${boss.action?{melee:'骨爪',throw:'投骨',sweep:'横扫',empty:'空挥'}[boss.action.type]:'待战'} · 离层恢复26血`:`${r.destroyed?'遗骨已摧毁':`复活遗骨 ${r.hp.toFixed(1)} / 20`} · ${game.revivalHours(r.remaining).toFixed(1)}游戏小时后重组${r.destroyed?'':` · 摧毁追加${game.difficultyRules.shatterDays}天`}`;
     const html=`<div>${textBar}</div><div class="parking-boss-health"><i style="width:${(boss?boss.hp/26:r.hp/20)*100}%"></i></div>`;if(bar._parkingHtml!==html){bar._parkingHtml=html;bar.innerHTML=html;}
   }
   window.WorldView={actor,items,weatherOverlay,aim,context,hud};

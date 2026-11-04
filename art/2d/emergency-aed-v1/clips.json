@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "visualOnly": true,
+  "rescuePulse": {
+    "frames": [
+      "aed_rescue_pulse__start",
+      "aed_rescue_pulse__expand",
+      "aed_rescue_pulse__fade"
+    ],
+    "durationsMs": [
+      80,
+      110,
+      130
+    ],
+    "loop": false,
+    "registration": "Draw full frame using per-frame pulse_center anchors and one shared pixel scale; do not stretch each visibleBounds to same width."
+  },
+  "aedProtection": {
+    "frame": "aed_protection__active",
+    "durationSeconds": 1,
+    "clock": "effective real seconds",
+    "authoritative": false
+  },
+  "sprintPenalty": {
+    "frame": "aed_sprint_penalty__active",
+    "durationSeconds": 3,
+    "sprintCostMultiplier": 1.5,
+    "clock": "effective real seconds",
+    "authoritative": false
+  },
+  "bothWindowsStartTogether": true
+}

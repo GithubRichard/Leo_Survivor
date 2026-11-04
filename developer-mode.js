@@ -13,13 +13,14 @@
   }
   function clear(game){if(game.scene==='parking'){const boss=game.zombies.find(z=>['lurker','skeleton'].includes(z.kind)&&z.hp>0);if(boss)game.damageZombie(boss,boss.hp,'molotov');}game.zombies=game.zombies.filter(z=>z.boneType==='remnant');game.pendingSpawn=[];game.playerAttack=null;game.projectiles=[];game.zones=[];game.effects=[];for(const d of game.devices){d.target=null;delete d.targetId;d.entered={};}}
   function resetNight(game){
-    clear(game);game.action=null;game.nextWave=0;game.plan=S.nightPlan(game.day);game.waveDirections=[];game.warnedWaves=[];
+    clear(game);game.action=null;game.nextWave=0;game.plan=S.nightPlan(game.day,game.difficulty);game.waveDirections=[];game.warnedWaves=[];
     game.stats={planned:0,spawned:0,arrived:0,kills:{},damage:{},lost:0,searches:0,food:[],resourceStart:game.resources()};
   }
   function jump(game,day,night=false){
     if(!Number.isInteger(day)||day<1||day>365)return false;
+    if(game.scene==='armory')game.switchArmory();
     if(game.scene==='parking')game.switchScene();
-    enable(game);game.day=day;resetNight(game);game.minutes=night?1320:300;if(game.makeWeather)game.weather=game.makeWeather(false);game.visitors=game.visitors.filter(v=>v.recruited);game.initVisit();
+    enable(game);game.day=day;if(game.difficultyWorld){game.difficultyWorld.restockCycle=game.difficultyRules.restock?Math.floor((day-1)/game.difficultyRules.restock):0;game.difficultyWorld.repairCycle=game.difficultyRules.repair?Math.floor((day-1)/game.difficultyRules.repair):0;}game.residentRefreshCycle=Math.floor((day-1)/game.difficultyRules.residents);resetNight(game);game.minutes=night?1320:300;if(game.makeWeather)game.weather=game.makeWeather(false);game.visitors=game.visitors.filter(v=>v.recruited);game.initVisit();
     if(night)game.advanceClock(0);game.announce(`开发测试：第${day}天${night?'22:00':'05:00'}，已重置当晚批次，不结算跳过日期的奖励。`);return true;
   }
   const positions={rear_left:{x:-4.5,y:-5.5},rear_right:{x:4.5,y:-5.5},front_left:{x:-4.5,y:-.5},front_right:{x:4.5,y:-.5},yard:{x:0,y:2},outside_front:{x:-4,y:.6},outside_back:{x:0,y:-6.7},outside_right:{x:5.7,y:-3},outside_left:{x:-5.7,y:-3}};
@@ -39,7 +40,7 @@
       let p=null;
       for(let a=0;a<64;a++){const angle=(a+n*7)*Math.PI/16,r=6+Math.floor(a/32)*2,c={x:game.player.x+Math.cos(angle)*r,y:game.player.y+Math.sin(angle)*r};if(!game.obstacles(c,c,.3).length&&!game.zombies.some(z=>S.dist(z,c)<.6)){p=c;break;}}
       if(!p)break;
-      game.zombies.push({...p,kind,hp:def.hp,maxHP:def.hp,id:game.spawned++,nextAttack:game.seconds+1,path:[],repathAt:0,rootUntil:0,boostUntil:0,screamAt:game.seconds+2,rangedAt:game.seconds+1});game.stats.spawned++;placed++;
+      game.zombies.push({...p,kind,hp:game.enemyHP(kind,def.hp),maxHP:game.enemyHP(kind,def.hp),id:game.spawned++,nextAttack:game.seconds+1,path:[],repathAt:0,rootUntil:0,boostUntil:0,screamAt:game.seconds+2,rangedAt:game.seconds+1});game.stats.spawned++;placed++;
     }
     game.announce(`开发测试：已在6—8米外生成${placed}/${count}只${def.name}。`);return placed===count;
   }

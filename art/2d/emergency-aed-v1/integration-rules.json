@@ -1,0 +1,34 @@
+{
+  "itemId": "emergency_aed",
+  "blueprintId": "blueprint_emergency_aed",
+  "stackMax": 1,
+  "bagOnly": true,
+  "consumeExactly": 1,
+  "postTriggerHP": 1,
+  "postTriggerHPIsAssignment": true,
+  "vanishesAfterUse": true,
+  "damagedItemId": null,
+  "protectionSeconds": 1,
+  "sprintPenaltySeconds": 3,
+  "sprintCostMultiplier": 1.5,
+  "teaSprintCost": 1.2,
+  "refreshNotStack": true,
+  "simultaneousWindows": true,
+  "craft": {
+    "alcohol": 2,
+    "medkit": 1,
+    "clean_water": 1,
+    "bandage": 2,
+    "herb": 1
+  },
+  "blueprintIndependentChance": {
+    "armoryCrate": 0.0025,
+    "pharmacyCrate": 0.0075,
+    "civilianCargo": 0.001,
+    "bossRewardContainer": 0.01
+  },
+  "source": "source-documents/应急AED急救箱规则.md",
+  "gameCodeModified": false,
+  "gameplayTested": false,
+  "published": false
+}

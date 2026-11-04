@@ -64,7 +64,7 @@
       this.shiftPersonalClock(next.state.seconds-this.seconds);Object.assign(this,next.state);for(const k of floorKeys)p[k]=next[k];p.floor=target;
       Object.assign(this.player,arrival);this.player.indoorHome=null;this.player.running=false;
       this._nav=null;this._parkingCollision=null;this._lights=null;this._flowCache=new Map();this._pathJobs=new Map();this._pathQueue=[];this._exploreNext=0;this._gunSound=null;this.navigationChanged();this._sceneJustChanged=true;this.autosaveRequested=true;
-      this.linkRemnant();if(target===2)this.announce('地下二层：骷髅26血；离层活Boss回血、战斗骨清空。死亡遗骨可摧毁以永久阻止复活。');return true;
+      this.linkRemnant();if(target===2)this.announce('地下二层：骷髅26血；离层活Boss回血、战斗骨清空。死亡遗骨可摧毁以延后复活。');return true;
     }
     floorArrival(floor,p,transit){for(let i=0;i<129;i++){const r=i?Math.ceil(i/8)*.5:0,a=i*Math.PI/4,q={x:p.x+Math.cos(a)*r,y:p.y+Math.sin(a)*r};if(Math.abs(q.x)>=23.5||q.y<=.6||q.y>=59.4)continue;const blocked=[...floor.layer.objects,...floor.state.devices].some(o=>o.hp>0&&!(o.kind==='fuse_gate'&&floor.layer.gateOpen)&&!(o.type==='device'&&!this.blocking(o))&&segmentHits(q,q,o,.25));if(!blocked&&(transit||!floor.state.zombies.some(z=>z.hp>0&&!z.boneType&&dist(q,z)<.7)))return q;}return null;}
     switchScene(){this.cancelBoneCharge();if(this.secondFloor&&!this.changeFloor(1,true))return;super.switchScene();if(this.scene==='parking')this.parking.floor=1;}
@@ -81,9 +81,9 @@
       const o=this.find(a.target);if(!o||dist(a.start,this.player)>.025||dist(o,this.player)>2||!this.clearLine(this.player,o,o)){this.cancelAction('移动或遮挡中断了操作。');return;}
       a.elapsed+=dt;if(a.elapsed+1e-8<a.duration)return;this.action=null;
       if(a.type==='floor_travel'){this.changeFloor(a.toFloor);return;}
-      if(!o.opened){o.opened=true;if(o.cycle===0&&!this.boneSkill.unlocked){this.boneSkill.unlocked=true;this.announce('获得投掷技能：按住R蓄力，松开发出；每次成功发出耗1血，冷却15秒。');}this.autosaveRequested=true;}this.takeParkingLoot(o);
+      if(!o.opened){o.opened=true;if(!this.boneSkill.unlocked){this.boneSkill.unlocked=true;this.announce('获得投掷技能：按住R蓄力，松开发出；每次成功发出耗1血，冷却15秒。');}this.autosaveRequested=true;}this.takeParkingLoot(o);
     }
-    nearbyInteraction(){let current;const layer=this.secondFloor&&this.parking.layer;if(layer){const points=layer.points;try{layer.points=points.filter(o=>o.kind!=='skeleton_chest'||!o.opened||Object.values(o.loot).some(n=>n>0));current=super.nearbyInteraction();}finally{layer.points=points;}}else current=super.nearbyInteraction();const r=this.secondFloor&&this.skeleton?.remnant;if(r?.hp>0&&dist(r,this.player)<1.8&&this.canSee(r)&&(!current||dist(r,this.player)<current.distance))return {type:'bone_remnant',object:r,distance:dist(r,this.player)};return current;}
+    nearbyInteraction(){let current;const layer=this.secondFloor&&this.parking.layer;if(layer){const points=layer.points;try{layer.points=points.filter(o=>o.kind!=='skeleton_chest'||!o.opened||!this.boneSkill.unlocked||Object.values(o.loot).some(n=>n>0));current=super.nearbyInteraction();}finally{layer.points=points;}}else current=super.nearbyInteraction();const r=this.secondFloor&&this.skeleton?.remnant;if(r?.hp>0&&dist(r,this.player)<1.8&&this.canSee(r)&&(!current||dist(r,this.player)<current.distance))return {type:'bone_remnant',object:r,distance:dist(r,this.player)};return current;}
     canPlace(kind,p){const bone=this.zombies.find(z=>z.boneType&&z.hp>0&&dist(z,p)<(z.radius||.35)+.5);return bone?'骨头占地无法建造':super.canPlace(kind,p);}
     beginAction(type,duration,data={}){if(this.boneSkill?.charging)this.cancelBoneCharge();return super.beginAction(type,duration,data);}
     startBoneCharge(){
@@ -112,7 +112,7 @@
     damageZombie(z,n,source='normal'){
       if(z.hp<=0)return;
       if(z.boneType){z.hp=Math.max(0,z.hp-n);if(z.hp>0)return;z.stage='shattered';this.boneEffect(z,'shatter');
-        if(z.boneType==='remnant'){this.skeleton.permanent=true;this.skeleton.remnant=null;this.skeleton.reform=0;this.announce('复活遗骨已摧毁：骷髅永久终结，宝箱与已获技能保留。');this.autosaveRequested=true;}
+        if(z.boneType==='remnant'){const extra=this.difficultyRules.shatterDays*DifficultyRules.daySeconds(this.difficulty);z.destroyed=true;z.remaining=Math.max(0,z.remaining||0)+extra;this.skeleton.permanent=false;this.skeleton.remnant=z;this.skeleton.reform=0;this.skeleton.reformStarted=false;this.announce(`复活遗骨已摧毁：在剩余时间上追加${this.difficultyRules.shatterDays}天，倒计时继续；本轮不能重复延后。`);this.autosaveRequested=true;}
         const boss=this.zombies.find(b=>b.kind==='skeleton'&&b.hp>0);if(boss?.action?.boneId===z.id)this.cancelSkeletonAction(boss,true);return;
       }
       const alive=z.hp>0;super.damageZombie(z,n,source);if(z.kind==='skeleton'){z.hurtUntil=this.seconds+.2;if(alive&&z.hp<=0)this.killSkeleton(z);}
@@ -142,7 +142,7 @@
         if(!a.released&&this.seconds+1e-8>=a.releaseAt){a.released=true;
           const target=a.target==='player'?this.player:this.find(a.target);
           if(a.type==='melee'||a.type==='sweep'){
-            const radius=a.type==='sweep'?2.6:1.3,victims=[target,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)];for(const victim of victims)if((a.type!=='sweep'||b)&&victim?.hp>0&&!(victim===this.player&&this.hidden)&&!this.isLit(victim)&&(victim.type?pointRect(boss,victim):dist(boss,victim))<=radius&&front(boss,victim,a.facing)&&this.clearLine(boss,victim,victim)){if(victim===this.player)this.damagePlayer(3,'skeleton');else this.damageBuilding(victim,3);}
+            const radius=a.type==='sweep'?2.6:1.3,victims=[target,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)];for(const victim of victims)if((a.type!=='sweep'||b)&&victim?.hp>0&&!(victim===this.player&&this.hidden)&&!this.isLit(victim)&&(victim.type?pointRect(boss,victim):dist(boss,victim))<=radius&&front(boss,victim,a.facing)&&this.clearLine(boss,victim,victim)){if(victim===this.player)this.damagePlayer(3,'skeleton');else this.damageBuilding(victim,this.enemyDamage(3,'skeleton'));}
           }else if(a.type==='throw'&&b&&a.aim){Object.assign(b,{stage:'flight',facing:facing(boss,a.aim),range:Math.min(12,dist(boss,a.aim))});boss.throwAt=this.seconds+6;}
         }
         if(this.seconds>=a.until){if(a.type==='sweep'){if(b)b.hp=0;boss.sweepAt=this.seconds+10;}boss.action=null;}return;
@@ -161,14 +161,15 @@
       const id=`${s.id}:reward:${s.cycle}`,layer=this.parking.layer;layer.bossDead=true;
       const chestSpot=this.rewardSpot({x:boss.x-1.5,y:boss.y}),remnantSpot=this.rewardSpot({x:boss.x+1.5,y:boss.y},[chestSpot]);
       if(!s.rewards.includes(id)){s.rewards.push(id);const loot=s.cycle===0?{iron:8,wood:4,scrap:6,cloth:2,fuel_oil:4,battery:2,wire:2,parts:2,medkit:1}:{iron:3,scrap:2,fuel_oil:1};layer.points.push({...chestSpot,id,kind:'skeleton_chest',type:'parking',hp:1,indestructible:true,opened:false,loot,cycle:s.cycle});}
-      s.remnant={...remnantSpot,id:`${s.id}:remnant:${s.cycle}`,kind:'combat_bone',boneType:'remnant',faction:'enemy',hp:20,maxHP:20,radius:.6,w:1.2,h:1.2,remaining:3240,stage:'standing'};s.reform=0;s.reformStarted=false;this.zombies.push(s.remnant);this.boneEffect(boss,'death');this.autosaveRequested=true;this.parkingCue('骷髅倒下：宝箱与竖立复活遗骨分别出现。摧毁遗骨可永久阻止复活。');
+      s.remnant={...remnantSpot,id:`${s.id}:remnant:${s.cycle}`,kind:'combat_bone',boneType:'remnant',faction:'enemy',hp:20,maxHP:20,radius:.6,w:1.2,h:1.2,remaining:this.difficultyRules.reviveDays*DifficultyRules.daySeconds(this.difficulty),stage:'standing'};s.reform=0;s.reformStarted=false;this.zombies.push(s.remnant);this.boneEffect(boss,'death');this.autosaveRequested=true;this.parkingCue('骷髅倒下：宝箱与竖立复活遗骨分别出现。摧毁遗骨可延后复活，不能反复攻击同一堆碎骨追加时间。');
     }
     rewardSpot(p,reserved=[]){const clear=q=>Math.abs(q.x)<22&&q.y>6&&q.y<56&&!this.obstacles(q,q,.65).length&&dist(q,this.player)>1.1&&[...this.parking.layer.points,...reserved].every(o=>dist(q,o)>1.35);for(let i=0;i<129;i++){const r=i?Math.ceil(i/12)*.65:0,a=i*Math.PI/6,q={x:p.x+Math.cos(a)*r,y:p.y+Math.sin(a)*r};if(clear(q))return q;}return [...(this.navGrid().nodes?.values()||[])].find(clear)||this.freeBoneSpot(p)||{x:0,y:48};}
     skeletonHomeSpot(){const home={x:0,y:50},near=this.freeBoneSpot(home);if(near)return near;const nodes=[...(this.navGrid().nodes?.values()||[])].sort((a,b)=>dist(a,home)-dist(b,home)),old=this.zombies.find(z=>z.kind==='skeleton'&&z.hp>0);return nodes.find(p=>!this.obstacles(p,p,.65).length&&dist(p,this.player)>1.1)||(old?{x:old.x,y:old.y}:home);}
     freeBoneSpot(p){for(let i=0;i<65;i++){const r=i?Math.ceil(i/8)*.5:0,a=i*Math.PI/4,q={x:p.x+Math.cos(a)*r,y:p.y+Math.sin(a)*r};if(Math.abs(q.x)<22&&q.y>6&&q.y<56&&!this.obstacles(q,q,.65).length&&dist(q,this.player)>1.1)return q;}return null;}
-    linkRemnant(){const s=this.skeleton,r=s?.remnant;if(!this.secondFloor||!r||r.hp<=0)return;this.zombies=this.zombies.filter(z=>z.boneType!=='remnant');this.zombies.push(r);s.reform=r.remaining<=0?3:0;s.reformStarted=r.remaining<=0;}
+    revivalHours(seconds){return seconds/DifficultyRules.daySeconds(this.difficulty)*24;}
+    linkRemnant(){const s=this.skeleton,r=s?.remnant;if(!this.secondFloor||!r)return;this.zombies=this.zombies.filter(z=>z.boneType!=='remnant');if(r.hp>0)this.zombies.push(r);s.reform=r.remaining<=0?3:0;s.reformStarted=r.remaining<=0;}
     advanceRevival(dt){
-      const s=this.skeleton,r=s?.remnant;if(!r||s.alive||s.permanent||r.hp<=0)return;r.remaining=Math.max(0,r.remaining-dt);
+      const s=this.skeleton,r=s?.remnant;if(!r||s.alive||s.permanent||r.hp<=0&&!r.destroyed)return;r.remaining=Math.max(0,r.remaining-dt);
       if(!this.secondFloor)return;if(r.remaining<=3&&!s.reformStarted){s.reformStarted=true;s.reform=Math.max(dt,r.remaining+dt);}
       if(s.reform>0){s.reform=Math.max(0,s.reform-dt);if(s.reform===0&&r.remaining===0){const p=this.freeBoneSpot(r);if(!p){s.reform=dt;return;}r.hp=0;s.remnant=null;s.alive=true;s.cycle++;this.parking.layer.bossDead=false;this.zombies=this.zombies.filter(z=>z.boneType!=='remnant');this.zombies.push(this.makeSkeleton(p));this.autosaveRequested=true;this.parkingCue('遗骨已重组为骷髅，新的战斗轮次开始。');}}
     }
@@ -190,18 +191,19 @@
         }else{
           const targets=[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)];let victim=null;
           for(const z of targets){const t=circleHit(from,to,z,.2+(z.radius||.22));if(t<stop){stop=t;victim=z;block=null;}}
-          if(victim){if(victim===this.player)this.damagePlayer(3,'skeleton_bone');else this.damageZombie(victim,3,'skeleton_bone');block=victim;}
+          if(victim){if(victim===this.player)this.damagePlayer(3,'skeleton_bone');else this.damageZombie(victim,this.enemyDamage(3,'skeleton_bone'),'skeleton_bone');block=victim;}
         }
         b.x=from.x+(to.x-from.x)*stop;b.y=from.y+(to.y-from.y)*stop;b.range-=length*stop;
-        if(!player&&block&&block!==this.player&&!block.boneType&&!block.indestructible)this.damageBuilding(block,3);
+        if(!player&&block&&block!==this.player&&!block.boneType&&!block.indestructible)this.damageBuilding(block,this.enemyDamage(3,'skeleton_bone'));
         if(b.hp<=0||block||b.range<=.001){if(player){b.hp=0;this.boneEffect(b,'shatter');}else Object.assign(b,{stage:'ground',radius:.35,w:.7,h:.7,landedAt:this.seconds,contactAt:this.seconds+.75,recallAt:this.seconds+10});}
       }
       this.zombies=this.zombies.filter(z=>z.hp>0);
     }
     step(dt,input={}){if(this.result||dt<=0||this.parkingUnlockPending)return;super.step(dt,input);if(this.result)return;if(this.secondFloor&&this.parking.layer.carLayout?.pending.length){this._secondCarsRetry=(this._secondCarsRetry||0)+dt;if(this._secondCarsRetry>=1){this._secondCarsRetry=0;this.ensureSecondFloorCars({layer:this.parking.layer,state:this});}}if(!this._sceneJustChanged){this.updateCombatBones(dt);if(this.secondFloor){const boss=this.zombies.find(z=>z.kind==='skeleton'&&z.hp>0);if(boss)this.updateSkeleton(boss,dt);}}if(!this.result)this.advanceRevival(dt);}
-    snapshot(){const data=super.snapshot();data.skeleton=this.skeleton;data.boneSkill={...this.boneSkill};data.boneSerial=this.boneSerial;data.worldSystemsVersion=1;return data;}
+    snapshot(){const data=super.snapshot();data.skeleton=this.skeleton;data.boneSkill={...this.boneSkill};data.boneSerial=this.boneSerial;data.worldSystemsVersion=1;data.remnantRulesVersion=2;return data;}
     static restore(data){
       const game=Base.restore(data);Object.setPrototypeOf(game,SkeletonGame.prototype);game.skeleton=data.skeleton||null;game.boneSerial=data.boneSerial||0;game.boneSkill={unlocked:false,charging:false,cooldown:0,recoverUntil:0,...data.boneSkill};game.boneSkill.charging=false;
+      if(game.skeleton?.permanent&&data.remnantRulesVersion!==2){const s=game.skeleton;s.permanent=false;s.remnant={id:s.id+':legacy-remnant',kind:'combat_bone',boneType:'remnant',faction:'enemy',x:0,y:50,hp:0,maxHP:20,destroyed:true,stage:'shattered',remaining:game.difficultyRules.shatterDays*DifficultyRules.daySeconds(game.difficulty)};s.reform=0;s.reformStarted=false;}
       if(game.parking)game.parking.floor=game.parking.floor||1;game.linkRemnant();
       if(game.secondFloor)game.ensureSecondFloorCars({layer:game.parking.layer,state:game});else if(game.parking?.floors?.[2])game.ensureSecondFloorCars(game.parking.floors[2]);
       const boss=game.zombies.find(z=>z.kind==='skeleton');if(boss?.action&&!boss.action.released){const a=boss.action,delay={melee:.3,throw:2,sweep:1.5}[a.type];a.started=game.seconds;a.releaseAt=game.seconds+delay;a.until=a.releaseAt+(a.type==='sweep'?.7:.5);}

@@ -13,6 +13,15 @@
     building_dormitory:{floor:[[329,232],[450,332],[245,420],[87,323]],back:{feet:[[40,328],[310,250],[450,370]],tops:[[40,171],[310,84],[450,205]]},front:{feet:[[88,311],[205,413],[460,328]],tops:[[88,134],[205,254],[460,150]]}},
     building_warehouse:{floor:[[263,215],[477,329],[251,434],[48,320]],back:{feet:[[37,348],[210,271],[440,380]],tops:[[37,166],[210,89],[440,199]]},front:{feet:[[62,342],[326,456],[464,350]],tops:[[62,155],[326,285],[464,167]]}}
   };
+  // Frame-local hinge foot, free foot and hinge top. Visible bounds include
+  // hardware/glow and cannot register the open and closed leaves consistently.
+  const doorCal={
+    building_clinic:{door_closed:[[235,386],[373,345],[235,128]],door_open:[[237,344],[273,410],[237,90]]},
+    building_workshop:{door_closed:[[219,385],[336,339],[219,127]],door_open:[[212,331],[306,408],[212,75]]},
+    building_canteen:{door_closed:[[220,401],[344,348],[220,135]],door_open:[[240,416],[273,336],[240,154]]},
+    building_dormitory:{door_closed:[[232,427],[381,376],[232,145]],door_open:[[256,380],[316,442],[256,131]]},
+    building_warehouse:{door_closed:[[181,372],[344,419],[181,89]],door_open:[[235,360],[281,433],[235,53]]}
+  };
   const corners=(n,v,z=0)=>[v.project(n.x-n.w/2,n.y-n.h/2,z),v.project(n.x+n.w/2,n.y-n.h/2,z),v.project(n.x+n.w/2,n.y+n.h/2,z),v.project(n.x-n.w/2,n.y+n.h/2,z)];
   function layerWalls(n,v,front){
     const cfg=buildingCal[n.asset][front?'front':'back'],floor=corners(n,v),top=corners(n,v,2.1),indices=front?[3,2,1]:[3,0,1];
@@ -20,13 +29,12 @@
   }
   function building(n,game,v){
     const {ctx,items}=v,rear=n.x+n.y-(n.w+n.h)/2-.01,front=n.x+n.y+(n.w+n.h)/2+.01,inside=game.player.indoorHome===n.id,near=S.pointRect(game.player,n)<1.4;
-    items.push({depth:rear,draw:()=>{if(!A.worldFrameSurface(ctx,'camp_'+n.asset,'floor',buildingCal[n.asset].floor,corners(n,v)))v.plane(n.x,n.y,n.w,n.h,'#77786c');layerWalls(n,v,false);}});
-    items.push({depth:front,draw:()=>{ctx.save();if(inside)ctx.globalAlpha=.22;layerWalls(n,v,true);
-      const open=!n.private&&(game.camp.objects.find(o=>o.id===`camp:solid:${n.localId}:door`)?.open),state=open?'door_open':'door_closed',m=art.frames[art.assets['camp_'+n.asset].states[state]],b=m.bounds;
-      const source=[[b[0]+(b[2]-b[0])*.1,b[3]],[b[2]-(b[2]-b[0])*.05,b[3]-(b[3]-b[1])*.15],[b[0]+(b[2]-b[0])*.1,b[1]+(b[3]-b[1])*.17]];
-      const hinge={x:n.x+n.w/2,y:n.y+C.publicDoorWidth/2},end=open?{x:hinge.x+C.publicDoorWidth,y:hinge.y}:{x:hinge.x,y:hinge.y-C.publicDoorWidth};
-      A.worldFrameSurface(ctx,'camp_'+n.asset,state,source,[v.project(hinge.x,hinge.y),v.project(end.x,end.y),v.project(hinge.x,hinge.y,1.95)]);ctx.restore();
-    }});
+    items.push({layer:-2,depth:rear,draw:()=>{if(!A.worldFrameSurface(ctx,'camp_'+n.asset,'floor',buildingCal[n.asset].floor,corners(n,v)))v.plane(n.x,n.y,n.w,n.h,'#77786c');}});
+    items.push({depth:rear,draw:()=>layerWalls(n,v,false)});
+    items.push({layer:-1,depth:front,draw:()=>{ctx.save();if(inside)ctx.globalAlpha=.22;layerWalls(n,v,true);ctx.restore();}});
+    const door=game.camp.objects.find(o=>o.id===`camp:solid:${n.localId}:door`),open=!n.private&&!!door?.open,state=open?'door_open':'door_closed',source=doorCal[n.asset][state];
+    const width=door?.h||C.publicDoorWidth,hinge={x:door?.x??n.x+n.w/2,y:(door?.y??n.y)+width/2},end=open?{x:hinge.x-width,y:hinge.y}:{x:hinge.x,y:hinge.y-width};
+    items.push({depth:(hinge.x+hinge.y+end.x+end.y)/2+.04,draw:()=>{ctx.save();if(open&&S.pointRect(game.player,n)<1.4)ctx.globalAlpha=.35;A.worldFrameSurface(ctx,'camp_'+n.asset,state,source,[v.project(hinge.x,hinge.y),v.project(end.x,end.y),v.project(hinge.x,hinge.y,1.95)]);ctx.restore();}});
     if(!inside&&!(game.developer?.enabled&&game.developer.hideRoofs))items.push({depth:front+.01,draw:()=>{ctx.save();if(near)ctx.globalAlpha=.3;const m=art.frames[art.assets['camp_'+n.asset].states.roof],b=m.bounds,cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;A.worldFrameSurface(ctx,'camp_'+n.asset,'roof',[[cx,b[1]],[b[2],cy],[cx,b[3]],[b[0],cy]],corners({...n,w:n.w+.2,h:n.h+.2},v,2.2));ctx.restore();}});
   }
   function depth(game,p,value){
@@ -66,7 +74,7 @@
     if(npc==='C00'||npc==='board'){
       html+=`<p>05:00—20:00受理介绍与委托；常驻交易06:00—20:00。每日最多交付2项，今天已完成${c.completed.length}/2。营地不提供免伤、住宿跳夜或免费补给。</p>`;
       if(npc==='C00')html+=`<p>“我是许岚。带上可用的材料，大家会按公告公平交换。别耽误夜里的防守。”</p>`+button('intro',c.introduced?'已完成营地介绍':'了解营地 · 首次声望+5','',!open||c.introduced);
-      html+='<h3>今日物资委托</h3><div class="camp-offers">'+c.commissions.map(id=>{const q=C.quests[id],done=c.completed.includes(id);return `<section><strong>${icon('camp_delivery_state',done?'f1':!open||c.completed.length>=2?'f2':'f0',23)}${esc(q.name)} ${done?'· 已完成':''}</strong><p>交付：${esc(costText(q.cost))}<br>获得：${esc(costText(q.gain))} · 声望+3</p>${button('select','查看交付',`data-offer="${id}"`,!open||done||c.completed.length>=2)}</section>`;}).join('')+'</div>';
+      if(game.armory)html+='<p>军备库位置已公布，按M查看入口；园区与营地库存分别保存。</p>';html+='<h3>今日物资委托</h3><div class="camp-offers">'+c.commissions.map(id=>{const q=C.quests[id],done=c.completed.includes(id);return `<section><strong>${icon('camp_delivery_state',done?'f1':!open||c.completed.length>=2?'f2':'f0',23)}${esc(q.name)} ${done?'· 已完成':''}</strong><p>交付：${esc(costText(q.cost))}<br>获得：${esc(costText(q.gain))} · 声望+3</p>${button('select','查看交付',`data-offer="${id}"`,!open||done||c.completed.length>=2)}</section>`;}).join('')+'</div>';
       const nextVisit=game.day<=16?16:game.day+(3-(game.day-16)%3)%3;html+=`<p>流动商：${c.visit?'今日08:00—18:00，'+c.visit.offers.map(id=>costText(C.offers[id].gain)).join(' / '):`下次第${nextVisit}天08:00—18:00到访`}。</p>`;
       if(tier>=3&&game.weather.nextSchedule){const w=game.weather.nextSchedule[0];html+=`<p>次日首段天气：${S.Weather[w.kind].name}，持续${w.hours}游戏小时。</p>`;}
     }else{

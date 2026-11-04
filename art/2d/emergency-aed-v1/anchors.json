@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "coordinates": "Pixels relative to frame.rect origin; alpha>=10 visibleBounds are exclusive right/bottom. Suggested art anchors, not collision.",
+  "frames": {
+    "emergency_aed_inventory__intact": {
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        265,
+        129,
+        1271,
+        910
+      ],
+      "anchor": [
+        768,
+        519.5
+      ],
+      "anchorKind": "ui_center"
+    },
+    "emergency_aed_ground__intact": {
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        264,
+        119,
+        1273,
+        939
+      ],
+      "anchor": [
+        768,
+        820
+      ],
+      "anchorKind": "suggested_ground_center"
+    },
+    "blueprint_emergency_aed__knowledge": {
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        205,
+        39,
+        1332,
+        975
+      ],
+      "anchor": [
+        768.5,
+        507
+      ],
+      "anchorKind": "ui_center"
+    },
+    "aed_rescue_pulse__start": {
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "visibleBounds": [
+        252,
+        278,
+        517,
+        443
+      ],
+      "anchor": [
+        384,
+        360
+      ],
+      "anchorKind": "pulse_center"
+    },
+    "aed_rescue_pulse__expand": {
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "visibleBounds": [
+        166,
+        227,
+        558,
+        476
+      ],
+      "anchor": [
+        362,
+        352
+      ],
+      "anchorKind": "pulse_center"
+    },
+    "aed_rescue_pulse__fade": {
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "visibleBounds": [
+        132,
+        194,
+        555,
+        506
+      ],
+      "anchor": [
+        344,
+        350
+      ],
+      "anchorKind": "pulse_center"
+    },
+    "aed_protection__active": {
+      "rect": [
+        0,
+        0,
+        1271,
+        1238
+      ],
+      "visibleBounds": [
+        187,
+        62,
+        1085,
+        1130
+      ],
+      "anchor": [
+        636,
+        596
+      ],
+      "anchorKind": "ui_center"
+    },
+    "aed_sprint_penalty__active": {
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        266,
+        137,
+        1293,
+        887
+      ],
+      "anchor": [
+        779.5,
+        512
+      ],
+      "anchorKind": "ui_center"
+    }
+  }
+}

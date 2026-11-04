@@ -115,7 +115,7 @@
             const region=i<8?[8,19]:i<16?[20,37]:[39,54],p=this.spawnPoint(false,region);
             if(p)this.spawnUnderground(P.initial[i],p,'initial');else this.parking.initialPending.push({kind:P.initial[i],region});
           }
-          this.zombies.push({id:'parking:boss',kind:'lurker',x:0,y:50,hp:25,maxHP:25,state:'burrowed',phase:'normal',nextAttack:0,rootUntil:0,path:[],lastSeen:null,summonNext:null,summonPending:[],nextBurrow:null,lastRoar:null,noticed:false});
+          this.zombies.push(this.makeLurker());
         }
         this.announce('地下首层：基础视距8米，视野不驱怪。每60秒持续刷新6只，地面时间暂停。');
       }else{
@@ -125,6 +125,7 @@
       }
       this._nav=null;this._parkingCollision=null;this._flowCache=new Map();this._pathJobs=new Map();this._pathQueue=[];this._lights=null;this._gunSound=null;this._exploreNext=0;this.navigationChanged();this._sceneJustChanged=true;this.autosaveRequested=true;
     }
+    makeLurker(p={x:0,y:50}){return {id:'parking:boss',kind:'lurker',...p,hp:25,maxHP:25,state:'burrowed',phase:'normal',nextAttack:0,rootUntil:0,path:[],lastSeen:null,summonNext:null,summonPending:[],nextBurrow:null,lastRoar:null,noticed:false};}
     nearbyHomes(p,r){return this.scene==='parking'?[]:super.nearbyHomes(p,r);}
     updateDoors(){if(this.scene!=='parking')super.updateDoors();}
     updateIndoorHome(){if(this.scene==='parking')this.player.indoorHome=null;else super.updateIndoorHome();}
@@ -190,10 +191,16 @@
       if(o.kind==='boss_chest'&&!o.opened)return this.beginAction('parking_open',2,{target:o.id});
       if(o.opened)return this.takeParkingLoot(o);return this.beginAction('parking_search',o.time||2,{target:o.id});
     }
+    claimParkingSkill(o){
+      if(this.scene!=='parking'||!o.opened||this.find(o.id)!==o)return false;
+      const skill=o.kind==='boss_chest'?this.skill:o.kind==='skeleton_chest'?this.boneSkill:null,access=this.parkingAccess(o);
+      if(!skill||skill.unlocked||access.distance>2||!this.clearLine(this.player,access.point,access.ignore))return false;
+      skill.unlocked=true;this.autosaveRequested=true;this.announce(o.kind==='boss_chest'?'已补领潜伏技能。':'已补领投掷技能。');return true;
+    }
     takeParkingLoot(o,onlyKind=null){
-      this.endStealth();
+      this.endStealth();const skillClaimed=this.claimParkingSkill(o);
       let taken=0;for(const [k,amount] of Object.entries(o.loot||{}))if(!onlyKind||onlyKind===k){let left=amount;while(left>0&&this.add(k,1)){left--;taken++;}o.loot[k]=left;}
-      this.announce(taken?'已领取物资，装不下的部分留在原处。':Object.values(o.loot||{}).some(n=>n>0)?'背包空间不足，物资已保留。':'这里的物资已全部领取。');return taken>0;
+      this.announce(taken?'已领取物资，装不下的部分留在原处。':Object.values(o.loot||{}).some(n=>n>0)?'背包空间不足，物资已保留。':'这里的物资已全部领取。');return taken>0||skillClaimed;
     }
     updateAction(dt){
       const a=this.action;if(!a||!actionNames[a.type])return super.updateAction(dt);
@@ -234,7 +241,7 @@
         for(const axis of ['x','y']){const next={x:this.player.x,y:this.player.y};next[axis]+=f[axis]*Math.min(1,length)*speed*dt;if(!this.obstacles(this.player,next).length)this.player[axis]=next[axis];}
       }
       this.player.running=!!run&&dist(before,this.player)>1e-8;
-      if(this.player.running){this.spendStamina(Math.min(this.player.stamina,dt*(this.teaBuff?.until>this.seconds?.8:1)));this.interruptBandage('奔跑');}
+      if(this.player.running){this.spendStamina(Math.min(this.player.stamina,this.sprintStaminaCost(dt)));this.interruptBandage('奔跑');}
     }
     updateVitals(dt){
       super.updateVitals(dt);

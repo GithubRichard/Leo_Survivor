@@ -16,7 +16,8 @@
     },
     crushBuilding(o){if(o.hp>0){this.parkingVisual('building_crush',o,.5,38);this.damageBuilding(o,o.hp);}},
     spawnUnderground(kind,p,source){
-      const d=P.enemies[kind]||D.enemies[kind],z={...p,id:`underground:${this.spawned++}`,kind,hp:d.hp,maxHP:d.hp,nextAttack:0,rootUntil:0,boostUntil:0,rangedAt:0,screamAt:this.seconds+3,source,lastSeen:null,alerted:false};
+      if(kind==='lurker'){const boss=this.makeLurker(p);this.zombies.push(boss);this.parking.layer.bossDead=false;return boss;}
+      const d=P.enemies[kind]||D.enemies[kind],z={...p,id:`underground:${this.spawned++}`,kind,hp:this.enemyHP(kind,d.hp),maxHP:this.enemyHP(kind,d.hp),nextAttack:0,rootUntil:0,boostUntil:0,rangedAt:0,screamAt:this.seconds+3,source,lastSeen:null,alerted:false};
       this.zombies.push(z);if(source==='regular')this.parking.generated++;return z;
     },
     legalSpawn(p){return !this.obstacles(p,p,.4).length&&dist(p,this.player)>=12&&dist(p,P.exit)>=6&&!this.canSee(p)&&!this.isLit(p)&&this.staticReachable(p);},
@@ -31,7 +32,7 @@
         let made=0;while(made<6&&p.pending.length){const point=this.spawnPoint();if(!point)break;this.spawnUnderground(p.pending.shift(),point,'regular');made++;}
         this.parkingCue(`地下第${batch}批：生成${made}/6只，待生成${p.pending.length}只。`);
       }
-      if(p.initialPending?.length){const request=p.initialPending[0],point=this.spawnPoint(false,request.region);if(point){this.spawnUnderground(request.kind,point,'initial');p.initialPending.shift();}}
+      if(p.initialPending?.length){const request=p.initialPending.shift(),point=this.spawnPoint(false,request.region);if(point&&(!request.weekly||dist(point,this.player)>=12&&!this.isLit(point)))Object.assign(this.spawnUnderground(request.kind,point,'initial'),{refreshCycle:request.refreshCycle});else p.initialPending.push(request);}
     },
     navGrid(){
       if(this._nav?.revision===(this._navigationRevision||0))return this._nav;
@@ -106,7 +107,7 @@
     },
     nearFree(p){for(let r=.5;r<=3;r+=.5)for(let i=0;i<12;i++){const q={x:p.x+Math.cos(i*Math.PI/6)*r,y:p.y+Math.sin(i*Math.PI/6)*r};if(!this.obstacles(q,q,.3).length&&this.clearLine(p,q))return q;}return null;},
     enemyMove(z,target,speed,dt,retreat=false,boss=false){
-      const from={x:z.x,y:z.y};if(retreat)z.visualRetreatUntil=this.seconds+.12;
+      speed=this.enemySpeed(z.kind,speed);const from={x:z.x,y:z.y};if(retreat)z.visualRetreatUntil=this.seconds+.12;
       let waypoint=target;
       const blocked=boss?this.obstacles(z,target,.4).some(o=>o.indestructible):!this.clearLine(z,target);
       let crossesLight=false;
@@ -164,7 +165,7 @@
             if(dist(z,victim)>a.range)continue;const n=dist(z,victim)||1;
             this.enemyAttackVisual(z,'throw',victim);
             this.projectiles.push({kind:z.kind==='lamp_smasher'?'stone_projectile':'acid_projectile',x:z.x,y:z.y,vx:(victim.x-z.x)/n*5,vy:(victim.y-z.y)/n*5,range:a.range,damage:z.kind==='lamp_smasher'?2:3,buildingDamage:2,lampDamage:z.kind==='lamp_smasher'?4:2,source:z.kind,owner:'enemy'});
-          }else {this.enemyAttackVisual(z,'melee',victim);if((victim.type?pointRect(z,victim):dist(z,victim))<=1&&!this.isLit(victim)){if(victim===this.player)this.damagePlayer(def.damage,z.kind);else this.damageBuilding(victim,def.building);}}continue;
+          }else {this.enemyAttackVisual(z,'melee',victim);if((victim.type?pointRect(z,victim):dist(z,victim))<=1&&!this.isLit(victim)){if(victim===this.player)this.damagePlayer(def.damage,z.kind);else this.damageBuilding(victim,this.enemyDamage(def.building,z.kind));}}continue;
         }
         if(z.rootUntil>this.seconds)continue;
         if(z.kind==='screamer'&&this.seconds>=z.screamAt&&this.zombies.some(o=>o!==z&&o.hp>0&&!['lurker','screamer'].includes(o.kind)&&dist(o,z)<=6)){z.screamAt=this.seconds+20;z.windup={type:'scream',until:this.seconds+1.5};continue;}
@@ -174,10 +175,10 @@
           z.facing={x:target.x-z.x,y:target.y-z.y};z.rangedAt=this.seconds+(z.kind==='lamp_smasher'?5:4);z.nextAttack=z.rangedAt;z.windup={type:'ranged',target:player?'player':target.id,range,until:this.seconds+1};this.parkingCue(`${def.name}准备远程攻击！`);continue;
         }
         if((player||isObject)&&(isObject?pointRect(z,target):dist(z,target))<=1&&this.clearLine(z,target,target)&&!this.isLit(target)){
-          if(this.seconds>=z.nextAttack){z.nextAttack=this.seconds+def.interval;z.facing={x:target.x-z.x,y:target.y-z.y};if(def.windup)z.windup={type:'melee',target:player?'player':target.id,until:this.seconds+def.windup};else {this.enemyAttackVisual(z,'melee',target);if(player)this.damagePlayer(def.damage,z.kind);else this.damageBuilding(target,def.building);}}continue;
+          if(this.seconds>=z.nextAttack){z.nextAttack=this.seconds+def.interval;z.facing={x:target.x-z.x,y:target.y-z.y};if(def.windup)z.windup={type:'melee',target:player?'player':target.id,until:this.seconds+def.windup};else {this.enemyAttackVisual(z,'melee',target);if(player)this.damagePlayer(def.damage,z.kind);else this.damageBuilding(target,this.enemyDamage(def.building,z.kind));}}continue;
         }
         const moved=this.enemyMove(z,target,def.speed*(z.boostUntil>this.seconds?1.2:1)*(z.slowUntil>this.seconds?.7:1),dt);
-        if(!moved){const block=this.obstacles(z,target,.24).filter(o=>!o.indestructible&&pointRect(z,o)<=1&&!this.isLit(o)).sort((a,b)=>pointRect(z,a)-pointRect(z,b))[0];if(block&&this.seconds>=z.nextAttack){this.damageBuilding(block,def.building);z.nextAttack=this.seconds+def.interval;}}
+        if(!moved){const block=this.obstacles(z,target,.24).filter(o=>!o.indestructible&&pointRect(z,o)<=1&&!this.isLit(o)).sort((a,b)=>pointRect(z,a)-pointRect(z,b))[0];if(block&&this.seconds>=z.nextAttack){this.damageBuilding(block,this.enemyDamage(def.building,z.kind));z.nextAttack=this.seconds+def.interval;}}
       }
     },
     damageZombie(z,n,source='normal'){
@@ -191,6 +192,7 @@
     killBoss(z){
       const l=this.parking.layer;if(l.bossDead)return;l.bossDead=true;z.summonPending=[];z.summonNext=null;z.summonFlushDue=false;
       this.parkingVisual('lurker_death_fx',z,.6,38);
+      if(l.chest){this.autosaveRequested=true;this.parkingCue('潜伏者已被击败，原宝箱物资与技能领取记录保留。');return;}
       const loot={wood:6,iron:6,scrap:4,cloth:2,fuel_oil:2,battery:1,wire:1},packs=P.chestPacks.map(p=>({...p})),selected=[];
       for(let i=0;i<2;i++){
         let r=this.random()*packs.reduce((s,p)=>s+p.weight,0),index=0;while(index<packs.length-1&&r>=packs[index].weight)r-=packs[index++].weight;

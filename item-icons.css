@@ -1,0 +1,7 @@
+/* One visual viewport for inventory, recipes and storage, independent of atlas size. */
+.item-thumb.item-icon-box{display:flex;align-items:center;justify-content:center;width:100%;height:48px;flex:none;background:none;pointer-events:none}
+.item-icon-box>.parking-atlas-icon{position:relative;inset:auto;display:block;margin:0;flex:none}
+@media(max-width:480px){
+  .touch-mode .item-thumb.item-icon-box{height:40px}
+  .touch-mode .item-icon-box>.parking-atlas-icon{transform:scale(.833333);transform-origin:center}
+}
