@@ -165,7 +165,7 @@
     for(const home of homes){
       const inside=game.player.indoorHome===`${home.cx},${home.cy}`;
       items.push({depth:Layers.rear(home),draw:()=>art.houseBack(ctx,home,project)});
-      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({layer:o.type==='wall'&&!rearWall?-1:0,depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?(o.open&&o===home.doors[0]?-1.6:.04):0),draw:()=>{
+      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({layer:o.type==='wall'&&!rearWall?-1:0,depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
         if(o.type==='wall'){if(!art.available('house_base'))box(o,1.8,'#b9b7a4','#777d6b','#969b88');if(o.hp<o.maxHP){const q=project(o.x,o.y,1);art.sprite(ctx,'damage_stone',q.x,q.y,20,{width:24});}}
         else if(o.type==='furniture'){
           const file={'铁柜':'metal_cabinet','铁架':'metal_shelf','木桌':'wood_table','木椅':'wood_chair','木柜':'wood_cabinet'}[o.name],p=project(o.x,o.y);
@@ -538,7 +538,7 @@
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
     const soundActive=focused&&!document.hidden&&(opening?!openingPaused:mode==='play'&&!parkingIntro);
-    GameSound.setActive(soundActive);GameMusic.update(soundActive&&!opening&&!game.result,game.tvSession?.kind==='camp',dt);
+    GameSound.setActive(soundActive);GameMusic.update(soundActive&&!opening&&!game.result,game.tvSession?.kind==='camp',dt,game.scene==='parking'?(game.surfaceState?.minutes??game.minutes):game.minutes);
     if(opening&&soundActive)opening.update(dt);
     if(!parkingIntro&&mode==='play'&&game.scene==='surface'&&!game.result&&(game.parkingUnlockPending||game.parking?.introSeen===false))beginParkingIntro();
     if(parkingIntro&&focused&&!document.hidden)advanceParkingIntro(dt);

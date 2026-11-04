@@ -251,10 +251,10 @@
   function door(ctx,o,room,project){
     const key=`${room?'house_door':'yard_gate'}_${o.level?'reinforced_':''}${o.open?'open':'closed'}`;
     if(!available(key))return false;
-    // 开关状态使用同一门框三点标定；只改变门扇姿态，不改变尺寸。
+    // Open PNGs already contain the swung leaf. Keep their frame in the doorway.
     if(room){
       const source=o.level?(o.open?[{x:520,y:875},{x:982,y:1149},{x:520,y:70}]:[{x:388,y:894},{x:848,y:1158},{x:388,y:64}]):o.open?[{x:398,y:897},{x:854,y:1158},{x:398,y:66}]:[{x:390,y:895},{x:850,y:1154},{x:390,y:66}];
-      const hinge={x:o.x-.82,y:o.y},tip=o.open?{x:hinge.x,y:hinge.y-1.64}:{x:o.x+.82,y:o.y};
+      const hinge={x:o.x-.82,y:o.y},tip={x:o.x+.82,y:o.y};
       return fullAffine(ctx,key,source,[project(hinge.x,hinge.y),project(tip.x,tip.y),project(hinge.x,hinge.y,2.0)]);
     }
     // 两根门柱的脚点与院墙缺口两端重合，门顶沿用院墙高度。

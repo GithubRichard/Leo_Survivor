@@ -28,5 +28,16 @@
     "channels": 2,
     "sampleRate": 24000,
     "peak": 0.65
+  },
+  {
+    "id": "night-siege",
+    "title": "危夜围城",
+    "file": "audio/music/night-siege.wav",
+    "seconds": 141.143,
+    "bpm": 112,
+    "channels": 2,
+    "sampleRate": 24000,
+    "peak": 0.65,
+    "use": "night"
   }
 ]
