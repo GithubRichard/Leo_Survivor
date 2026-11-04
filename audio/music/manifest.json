@@ -1,0 +1,32 @@
+[
+  {
+    "id": "morning-light",
+    "title": "晨光",
+    "file": "audio/music/morning-light.wav",
+    "seconds": 110.667,
+    "bpm": 72,
+    "channels": 2,
+    "sampleRate": 24000,
+    "peak": 0.65
+  },
+  {
+    "id": "rain-window",
+    "title": "雨窗",
+    "file": "audio/music/rain-window.wav",
+    "seconds": 124.0,
+    "bpm": 64,
+    "channels": 2,
+    "sampleRate": 24000,
+    "peak": 0.65
+  },
+  {
+    "id": "quiet-watch",
+    "title": "静夜守望",
+    "file": "audio/music/quiet-watch.wav",
+    "seconds": 132.0,
+    "bpm": 60,
+    "channels": 2,
+    "sampleRate": 24000,
+    "peak": 0.65
+  }
+]

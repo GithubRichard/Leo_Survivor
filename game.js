@@ -395,6 +395,8 @@
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+Math.ceil(game.inventory.length/5))%Math.ceil(game.inventory.length/5))*5+(col+dx+5)%5;}
   function handleKey(event){
+    if(event.target instanceof Element&&event.target.closest('#music-controls,#sound-toggle')){if(event.key==='Escape'){event.preventDefault();document.querySelector('#music-controls details')?.removeAttribute('open');event.target.blur();if(mode==='pause')closeOverlay();}return;}
+    if(event.key==='Tab'&&['menu','pause'].includes(mode))return;
     if(event.key==='F2'){event.preventDefault();if(!event.repeat)performAction('f2');return;}
     if(event.target instanceof HTMLInputElement||event.target instanceof HTMLSelectElement||event.target instanceof HTMLTextAreaElement){if(event.key==='Escape'){event.preventDefault();performAction('escape');}if(event.key==='Enter'){event.target.blur();if(mode==='menu')start();}return;}
     if(characterModes.includes(mode)&&event.key==='Tab')return;
@@ -536,7 +538,7 @@
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
     const soundActive=focused&&!document.hidden&&(opening?!openingPaused:mode==='play'&&!parkingIntro);
-    GameSound.setActive(soundActive);
+    GameSound.setActive(soundActive);GameMusic.update(soundActive&&!opening&&!game.result,game.tvSession?.kind==='camp',dt);
     if(opening&&soundActive)opening.update(dt);
     if(!parkingIntro&&mode==='play'&&game.scene==='surface'&&!game.result&&(game.parkingUnlockPending||game.parking?.introSeen===false))beginParkingIntro();
     if(parkingIntro&&focused&&!document.hidden)advanceParkingIntro(dt);
@@ -561,6 +563,7 @@
     nearby=mode==='play'&&!parkingIntro&&!placement?game.nearbyInteraction():null;
     if(game.autosaveRequested){game.autosaveRequested=false;saveGame(false);}
     if(!opening)BroadcastView.updateTV(game,dt,soundActive&&mode==='play');
+    if(game.soundEvents){for(const event of game.soundEvents.splice(0))GameSound.effect(event.kind,event.volume);}
     game.advanceCampNavigation();
     if(!opening||opening.stages[opening.index]?.kind==='handoff')drawWorld();if(!opening&&mode!=='menu'&&!characterModes.includes(mode))updateHUD();if(['inventory','map','dialog','result','pause','context','stats','developer',...characterModes].includes(mode))renderOverlay();
     if(parkingIntro)PV.drawEntranceIntro(game,parkingIntro,{ctx,project,width,height,scale});

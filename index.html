@@ -3,24 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>守到天明 · 生存规则预览0.14.9</title>
-  <link rel="stylesheet" href="game.css?v=0.14.9-notice1">
+  <title>守到天明 · 生存规则预览0.14.10</title>
+  <link rel="stylesheet" href="game.css?v=0.14.10-notice1">
   <link rel="stylesheet" href="touch-layout.css">
-  <link rel="stylesheet" href="expansion.css?v=0.14.9">
+  <link rel="stylesheet" href="expansion.css?v=0.14.10">
   <link rel="stylesheet" href="developer-mode.css">
-  <link rel="stylesheet" href="parking.css?v=0.14.9">
-  <link rel="stylesheet" href="character.css?v=0.14.9">
-  <link rel="stylesheet" href="world.css?v=0.14.9">
-  <link rel="stylesheet" href="broadcast.css?v=0.14.9">
-  <link rel="stylesheet" href="camp.css?v=0.14.9">
-  <link rel="stylesheet" href="armory.css?v=0.14.9">
-  <link rel="stylesheet" href="item-icons.css?v=0.14.9">
+  <link rel="stylesheet" href="parking.css?v=0.14.10">
+  <link rel="stylesheet" href="character.css?v=0.14.10">
+  <link rel="stylesheet" href="world.css?v=0.14.10">
+  <link rel="stylesheet" href="broadcast.css?v=0.14.10">
+  <link rel="stylesheet" href="camp.css?v=0.14.10">
+  <link rel="stylesheet" href="armory.css?v=0.14.10">
+  <link rel="stylesheet" href="item-icons.css?v=0.14.10">
 </head>
 <body>
   <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
   <div id="story-subtitles" class="hidden" aria-live="polite"><span id="subtitle-speaker"></span><span id="subtitle-text"></span></div>
   <div id="opening-controls" class="hidden"><button id="opening-pause">暂停</button><button id="opening-skip">跳过开场</button><span>空格 暂停 / 继续 · Esc 跳过</span></div>
-  <button id="sound-toggle" aria-label="切换游戏音效与广播" aria-pressed="true">声音：开</button>
+  <button id="sound-toggle" aria-label="切换音效与配音" aria-pressed="true">声音：开</button>
+  <div id="music-controls"><button id="music-toggle" aria-pressed="true">音乐：开</button><details><summary aria-label="背景音乐设置">♫ 设置</summary><div class="music-settings"><label>曲目<select id="music-track" aria-label="背景音乐曲目"></select></label><label>音量 <output id="music-volume-label">22%</output><input id="music-volume" type="range" min="0" max="100" step="1" value="22" aria-label="背景音乐音量"></label><small>游玩时轮播 · 暂停及后台停止</small></div></details></div>
   <button id="camp-map" class="hidden" aria-label="查看幸存者营地与步行路线">幸存者营地 · M路线</button>
   <button id="firepower-skill" class="hidden">火力全开 T</button>
   <button id="gun-fire" class="hidden">射击 · 空格</button>
@@ -47,16 +48,14 @@
   <button id="bone-skill" class="hidden" aria-label="按住蓄力，松开发出大型骨头">投掷 R</button>
   <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互/攻击　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
   <div id="menu" class="scrim">
-    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存规则预览 0.14.9 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存规则预览 0.14.10 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
       <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
-      <aside class="release-notice" aria-labelledby="release-notice-title" data-release-notice="0.14.9">
-        <div class="release-notice-heading"><h2 id="release-notice-title">更新公告 · 0.14.9</h2><time datetime="2026-11-04">2026.11.04</time></div>
+      <aside class="release-notice" aria-labelledby="release-notice-title" data-release-notice="0.14.10">
+        <div class="release-notice-heading"><h2 id="release-notice-title">更新公告 · 0.14.10</h2><time datetime="2026-11-04">2026.11.04</time></div>
         <ul>
-          <li><b>应急AED：</b>每件占1格，背包内自动抵挡一次致命伤，剩1血、无敌1秒；同时3秒奔跑耗体力×1.5，用后消失。</li>
-          <li><b>蓝图概率：</b>军备箱0.25%、药店柜0.75%、民用车厢0.10%、Boss奖励1%；学会后可制作AED。</li>
-          <li><b>四档难度：</b>简单、普通、困难、天启，影响昼夜时长、怪物强度和资源补货周期。</li>
-          <li><b>大雾与遗骨：</b>室外大雾缩小视野，远处地形仍可见；摧毁遗骨追加复活等待：简单/普通3天、困难2天、天启1天。</li>
-          <li><b>显示修复：</b>商铺门向内开启，物品图标等比居中；旧档可继续使用。</li>
+          <li><b>三首轻音乐：</b>《晨光》《雨窗》《静夜守望》游玩时循环，可独立开关、选曲和调音量。</li>
+          <li><b>自动暂停：</b>暂停、背包、地图及切后台时停止音乐，返回后续播；电视广播时音乐音量降至25%。</li>
+          <li><b>新增音效：</b>制作、建造、拆除、开门、拾取、治疗、战斗及AED反馈；音效/配音可单独关闭。</li>
         </ul>
       </aside>
       <h2 class="difficulty-heading">选择难度</h2><div id="difficulty-options" class="difficulty-options" role="group" aria-label="本局难度"></div>
@@ -77,53 +76,55 @@
     <div class="touch-actions"><button id="touch-run" aria-label="按住奔跑">奔跑<small>按住</small></button><button data-key="e" id="touch-interact" class="primary">交互</button><button data-key="f" id="touch-build">建造</button><button data-key="g">丢弃</button></div>
   </div>
   <script src="touch-controls.js"></script>
-  <script src="difficulty-data.js?v=0.14.9"></script>
-  <script src="simulation.js?v=0.14.9"></script>
+  <script src="difficulty-data.js?v=0.14.10"></script>
+  <script src="simulation.js?v=0.14.10"></script>
   <script src="expansion-data.js"></script>
   <script src="parking-data.js"></script>
-  <script src="character-traits.js?v=0.14.9"></script>
-  <script src="expansion.js?v=0.14.9"></script>
-  <script src="parking.js?v=0.14.9"></script>
-  <script src="parking-lights.js?v=0.14.9"></script>
-  <script src="parking-ai.js?v=0.14.9"></script>
-  <script src="weather.js?v=0.14.9"></script>
-  <script src="skeleton.js?v=0.14.9"></script>
-  <script src="broadcast.js?v=0.14.9"></script>
-  <script src="camp-data.js?v=0.14.9"></script>
-  <script src="camp.js?v=0.14.9"></script>
-  <script src="armory-data.js?v=0.14.9"></script>
-  <script src="armory.js?v=0.14.9"></script>
-  <script src="thermal-combat.js?v=0.14.9"></script>
-  <script src="armory-ai.js?v=0.14.9"></script>
-  <script src="armory-world.js?v=0.14.9"></script>
-  <script src="resident-refresh.js?v=0.14.9"></script>
-  <script src="west-gate.js?v=0.14.9"></script>
-  <script src="difficulty.js?v=0.14.9"></script>
-  <script src="aed.js?v=0.14.9"></script>
-  <script src="developer-mode.js?v=0.14.9"></script>
+  <script src="character-traits.js?v=0.14.10"></script>
+  <script src="expansion.js?v=0.14.10"></script>
+  <script src="parking.js?v=0.14.10"></script>
+  <script src="parking-lights.js?v=0.14.10"></script>
+  <script src="parking-ai.js?v=0.14.10"></script>
+  <script src="weather.js?v=0.14.10"></script>
+  <script src="skeleton.js?v=0.14.10"></script>
+  <script src="broadcast.js?v=0.14.10"></script>
+  <script src="camp-data.js?v=0.14.10"></script>
+  <script src="camp.js?v=0.14.10"></script>
+  <script src="armory-data.js?v=0.14.10"></script>
+  <script src="armory.js?v=0.14.10"></script>
+  <script src="thermal-combat.js?v=0.14.10"></script>
+  <script src="armory-ai.js?v=0.14.10"></script>
+  <script src="armory-world.js?v=0.14.10"></script>
+  <script src="resident-refresh.js?v=0.14.10"></script>
+  <script src="west-gate.js?v=0.14.10"></script>
+  <script src="difficulty.js?v=0.14.10"></script>
+  <script src="aed.js?v=0.14.10"></script>
+  <script src="feedback-audio.js?v=0.14.10"></script>
+  <script src="developer-mode.js?v=0.14.10"></script>
   <script src="scene-layers.js"></script>
   <script src="asset-manifest.js"></script>
   <script src="expansion-assets.js"></script>
   <script src="player-animation-assets.js"></script>
   <script src="weapon-animation-assets.js"></script>
-  <script src="parking-assets.js?v=0.14.9"></script>
-  <script src="world-assets.js?v=0.14.9"></script>
-  <script src="camp-assets.js?v=0.14.9"></script>
-  <script src="armory-assets.js?v=0.14.9"></script>
-  <script src="west-gate-assets.js?v=0.14.9"></script>
-  <script src="aed-assets.js?v=0.14.9"></script>
-  <script src="art-renderer.js?v=0.14.9"></script>
-  <script src="parking-view.js?v=0.14.9"></script>
-  <script src="art/2d/talent-disease-v1/game-art.js?v=0.14.9"></script>
-  <script src="character-ui.js?v=0.14.9"></script>
-  <script src="world-view.js?v=0.14.9"></script>
-  <script src="expansion-ui.js?v=0.14.9"></script>
-  <script src="game-audio.js?v=0.14.9"></script>
-  <script src="opening-view.js?v=0.14.9"></script>
-  <script src="camp-view.js?v=0.14.9"></script>
-  <script src="armory-view.js?v=0.14.9"></script>
-  <script src="west-gate-view.js?v=0.14.9"></script>
-  <script src="aed-view.js?v=0.14.9"></script>
-  <script src="game.js?v=0.14.9"></script>
+  <script src="parking-assets.js?v=0.14.10"></script>
+  <script src="world-assets.js?v=0.14.10"></script>
+  <script src="camp-assets.js?v=0.14.10"></script>
+  <script src="armory-assets.js?v=0.14.10"></script>
+  <script src="west-gate-assets.js?v=0.14.10"></script>
+  <script src="aed-assets.js?v=0.14.10"></script>
+  <script src="art-renderer.js?v=0.14.10"></script>
+  <script src="parking-view.js?v=0.14.10"></script>
+  <script src="art/2d/talent-disease-v1/game-art.js?v=0.14.10"></script>
+  <script src="character-ui.js?v=0.14.10"></script>
+  <script src="world-view.js?v=0.14.10"></script>
+  <script src="expansion-ui.js?v=0.14.10"></script>
+  <script src="game-audio.js?v=0.14.10"></script>
+  <script src="game-music.js?v=0.14.10"></script>
+  <script src="opening-view.js?v=0.14.10"></script>
+  <script src="camp-view.js?v=0.14.10"></script>
+  <script src="armory-view.js?v=0.14.10"></script>
+  <script src="west-gate-view.js?v=0.14.10"></script>
+  <script src="aed-view.js?v=0.14.10"></script>
+  <script src="game.js?v=0.14.10"></script>
 </body>
 </html>
