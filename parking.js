@@ -233,7 +233,7 @@
     movePlayer(dt,input){
       if(!this.skill?.active&&this.weaknessUntil<=this.seconds)return super.movePlayer(dt,input);
       const sx=(input.right?1:0)-(input.left?1:0)+(input.moveX||0),sy=(input.down?1:0)-(input.up?1:0)+(input.moveY||0),length=Math.hypot(sx,sy),f=screenDirection(sx,sy);
-      const run=!this.skill.active&&input.run&&this.player.stamina>0,base=this.skill.active?3.4:run?this.runSpeed:2,speed=this.movementSpeed?this.movementSpeed(Math.max(.5,base-(this.weaknessUntil>this.seconds?.7:0))):Math.max(.5,base-(this.weaknessUntil>this.seconds?.7:0)),before={x:this.player.x,y:this.player.y};
+      const run=!this.skill.active&&input.run&&this.player.stamina>0,base=this.skill.active?3.4:run?this.runSpeed:(this.walkSpeed||2),speed=this.movementSpeed?this.movementSpeed(Math.max(.5,base-(this.weaknessUntil>this.seconds?.7:0))):Math.max(.5,base-(this.weaknessUntil>this.seconds?.7:0)),before={x:this.player.x,y:this.player.y};
       // Original recovery code still runs; running skips recovery in the override hook.
       this._skipRecovery=!!run;super.movePlayer(dt,{});this._skipRecovery=false;
       if(length&&this.action?.type!=='medkit'){

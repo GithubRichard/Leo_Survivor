@@ -72,7 +72,7 @@
     updateIndoorHome(){super.updateIndoorHome();const b=this.campIndoor(this.player);if(b)this.player.indoorHome=b.id;}
     obstacles(a,b=a,padding=.22){const out=super.obstacles(a,b,padding);if(this.scene==='surface'&&this.camp?.position)for(const o of this.camp.objects)if(!(o.kind==='door'&&o.open)&&segmentHits(a,b,o,padding))out.push(o);return out;}
     blocksVision(o){return o.type==='camp_solid'?['wall','door'].includes(o.kind):super.blocksVision(o);}
-    updateDoors(){super.updateDoors();if(this.scene==='surface'&&this.camp?.position)for(const o of this.camp.objects)if(o.kind==='door'){const open=pointRect(this.player,o)<1.5||this.zombies.some(z=>z.hp>0&&pointRect(z,o)<1.4)||this.camp.npcs.some(n=>pointRect(n,o)<1.2);if(open!==o.open){o.open=open;this.navigationChanged();}}}
+    updateDoors(){super.updateDoors();if(this.scene==='surface'&&this.camp?.position)for(const o of this.camp.objects)if(o.kind==='door'){const open=pointRect(this.player,o)<1.5||this.zombies.some(z=>z.hp>0&&pointRect(z,o)<1.4)||this.camp.npcs.some(n=>pointRect(n,o)<1.2)||(this.humanDoorActors?.()||[]).some(n=>pointRect(n,o)<1.4);if(open!==o.open){o.open=open;this.navigationChanged();}}}
     damageBuilding(o,n){if(o?.type!=='camp_solid')return super.damageBuilding(o,n);}
     canPlace(kind,p){if(this.scene==='surface'&&p&&this.camp?.position&&overlap({...p,w:1,h:1},this.camp.position))return '营地摊位和公共通道需保持通行，请在营地外建造';return super.canPlace(kind,p);}
     refreshCampDay(){
@@ -117,7 +117,7 @@
       if(q){if(!['C00','board'].includes(npc)||batches!==1||!c.commissions.includes(id)||c.completed.includes(id)||c.completed.length>=2)return {error:'此委托不可提交，或今天已完成2项'};}
       else if(!o||o.npc!==npc||this.day<o.day||this.campTier()<o.tier||!(id in c.stock)||(c.stock[id]||0)<batches||o.service&&batches!==1||npc==='C06'&&!c.visit?.offers.includes(id))return {error:'报价条件未满足或剩余批数不足'};
       if(o?.service&&this.player.hp>=this.maxHP)return {error:'生命已满，无需付费包扎'};
-      const cost=multiply((q||o).cost,batches),gain=multiply((q||o).gain,batches);
+      const rawCost=multiply((q||o).cost,batches),cost=this.humanCampCost?this.humanCampCost(rawCost,id):rawCost,gain=multiply((q||o).gain,batches);
       for(const [kind,n] of Object.entries(cost))if(this.count(kind)<n)return {error:`背包中${S.NAMES[kind]}不足，还需${n-this.count(kind)}份`};
       const slots=this.inventory.map(s=>s?{...s}:null);if(!S.transaction(slots,cost,gain))return {error:'扣除材料后背包仍装不下整笔产物'};
       return {cost,gain,slots,duration:o?.service?6:2,service:!!o?.service,quest:!!q};

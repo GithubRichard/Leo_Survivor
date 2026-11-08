@@ -11,16 +11,16 @@
       const wall=blockers.find(o=>!o.indestructible);if(z.kind==='armory_blade_zombie'&&wall&&pointRect(z,wall)<1.4&&this.seconds>=(z.nextAttack||0)){z.nextAttack=this.seconds+1.8;z.armoryAction={kind:'blade',started:this.seconds,release:this.seconds+.5,until:this.seconds+.9,facing:aim(z,wall),target:wall.id,released:false};}
     },
     updateBlade(z,dt){
-      const a=z.armoryAction;
-      if(a){if(!a.released&&this.seconds>=a.release){a.released=true;const target=a.target==='player'?this.player:this.find(a.target);if(target?.hp>0&&!(target===this.player&&this.hidden)){const d=target.w?pointRect(z,target):dist(z,target),f=aim(z,target);if(d<=1.4&&f.x*a.facing.x+f.y*a.facing.y>=.5&&this.clearLine(z,target,target)){if(target===this.player)this.damagePlayer(4,'armory_blade_zombie');else this.damageBuilding(target,this.enemyDamage(4,z.kind));}}}if(this.seconds>=a.until)z.armoryAction=null;return;}
-      if(this.hidden)return;
-      if(dist(z,this.player)<=1.4&&this.clearLine(z,this.player)){if(this.seconds>=z.nextAttack){z.nextAttack=this.seconds+1.8;z.facing=aim(z,this.player);z.armoryAction={kind:'blade',started:this.seconds,release:this.seconds+.5,until:this.seconds+.9,facing:{...z.facing},target:'player',released:false};}return;}
-      this.moveArmoryEnemy(z,this.player,2.2*(z.boostUntil>this.seconds?1.2:1),dt);
+      const victim=this.humanEnemyVictim?.(z,16)||this.player,a=z.armoryAction;
+      if(a){if(!a.released&&this.seconds>=a.release){a.released=true;const target=a.target==='player'?this.player:this.find(a.target);if(target?.hp>0&&!(target===this.player&&this.hidden)){const d=target.w?pointRect(z,target):dist(z,target),f=aim(z,target);if(d<=1.4&&f.x*a.facing.x+f.y*a.facing.y>=.5&&this.clearLine(z,target,target)){if(target===this.player)this.damagePlayer(4,'armory_blade_zombie');else if(target.human)this.humanZombieHit(target,4,z.kind,z);else this.damageBuilding(target,this.enemyDamage(4,z.kind));}}}if(this.seconds>=a.until)z.armoryAction=null;return;}
+      if(victim===this.player&&this.hidden)return;
+      if(dist(z,victim)<=1.4&&this.clearLine(z,victim)){if(this.seconds>=z.nextAttack){z.nextAttack=this.seconds+1.8;z.facing=aim(z,victim);z.armoryAction={kind:'blade',started:this.seconds,release:this.seconds+.5,until:this.seconds+.9,facing:{...z.facing},target:victim===this.player?'player':victim.id,released:false};}return;}
+      this.moveArmoryEnemy(z,victim,2.2*(z.boostUntil>this.seconds?1.2:1),dt);
     },
     updateSweeper(z,dt){
       if(z.hp<=0||this.result)return;
-      const visible=!this.hidden&&dist(z,this.player)<=22&&this.clearVision(z,this.player,this.player);
-      if(visible){z.lastSeen={x:this.player.x,y:this.player.y};if(!z.noticed){z.noticed=true;z.engagedAt=this.seconds;z.rocketAt=this.seconds+6;z.sweepAt=this.seconds+3;}}
+      const victim=this.humanEnemyVictim?.(z,22)||this.player,visible=!(victim===this.player&&this.hidden)&&dist(z,victim)<=22&&this.clearVision(z,victim,victim);
+      if(visible){z.lastSeen={x:victim.x,y:victim.y};if(!z.noticed){z.noticed=true;z.engagedAt=this.seconds;z.rocketAt=this.seconds+6;z.sweepAt=this.seconds+3;}}
       if(!z.noticed)return;
       let a=z.action;
       if(a){
@@ -33,11 +33,11 @@
         }
         if(a.next===total&&this.seconds>=a.recoverUntil){z.action=null;z.adjustUntil=this.seconds+1;}return;
       }
-      if(this.seconds<(z.adjustUntil||0)){if(visible&&dist(z,this.player)>10)this.moveArmoryEnemy(z,this.player,1.8,dt);return;}
+      if(this.seconds<(z.adjustUntil||0)){if(visible&&dist(z,victim)>10)this.moveArmoryEnemy(z,victim,1.8,dt);return;}
       if(!visible){if(z.lastSeen&&dist(z,z.lastSeen)>1&&pointRect(z.lastSeen,{...z.home,w:60,h:50})<1)this.moveArmoryEnemy(z,z.lastSeen,1.8,dt);return;}
-      let kind=this.seconds>=z.rocketAt?'rocket':this.seconds>=z.sweepAt?'sweep':this.seconds>=z.nextAttack&&dist(z,this.player)<=18?'burst':null;
+      let kind=this.seconds>=z.rocketAt?'rocket':this.seconds>=z.sweepAt?'sweep':this.seconds>=z.nextAttack&&dist(z,victim)<=18?'burst':null;
       if(kind){const group=`sweeper:${++this.ballisticSerial}`;z.nextAttack=this.seconds+2;z.action={kind,started:this.seconds,next:0,target:{...z.lastSeen},locked:{...z.lastSeen},group};z.facing=aim(z,z.lastSeen);}
-      else if(dist(z,this.player)>14&&pointRect(this.player,{...z.home,w:60,h:50})<1)this.moveArmoryEnemy(z,this.player,1.8,dt);
+      else if(dist(z,victim)>14&&pointRect(victim,{...z.home,w:60,h:50})<1)this.moveArmoryEnemy(z,victim,1.8,dt);
     }
   });
   const original=S.Game.prototype.updateZombies;

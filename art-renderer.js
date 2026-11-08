@@ -282,6 +282,8 @@
     return `<span class="parking-atlas-icon" style="width:${width}px;height:${height}px"><span class="atlas-icon-crop" style="position:absolute;overflow:hidden;width:${w*scale}px;height:${h*scale}px;left:${(width-w*scale)/2}px;top:${(height-h*scale)/2}px"><img src="${src}" alt="" loading="lazy" decoding="async" style="width:${entry.size[0]*scale}px;height:${entry.size[1]*scale}px;left:${-(r[0]+b[0])*scale}px;top:${-(r[1]+b[1])*scale}px"></span></span>`;
   }
   function itemIcon(kind,fallback=kind,size={width:72,height:48}){
+    if(kind==='hunger_totem')return worldIcon('humans_hunger_totem','normal',size);
+    if(kind==='human_blueprint')return worldIcon('armory_blueprint_assault_rifle','f0',size);
     if(kind==='emergency_aed')return worldIcon('aed_emergency_aed_inventory','intact',size);
     const military=window.ArmoryView?.icon(kind,size);if(military)return military;
     const alias=parking?.aliases[kind];if(alias)return parkingIcon(...alias,size);

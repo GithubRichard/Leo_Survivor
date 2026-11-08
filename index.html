@@ -3,26 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>守到天明 · 生存规则预览0.14.11</title>
-  <link rel="stylesheet" href="game.css?v=0.14.11-notice1">
+  <title>守到天明 · 生存规则预览0.15.0</title>
+  <link rel="stylesheet" href="game.css?v=0.15.0-notice1">
   <link rel="stylesheet" href="touch-layout.css">
-  <link rel="stylesheet" href="expansion.css?v=0.14.11">
+  <link rel="stylesheet" href="expansion.css?v=0.15.0">
   <link rel="stylesheet" href="developer-mode.css">
-  <link rel="stylesheet" href="parking.css?v=0.14.11">
-  <link rel="stylesheet" href="character.css?v=0.14.11">
-  <link rel="stylesheet" href="world.css?v=0.14.11">
-  <link rel="stylesheet" href="broadcast.css?v=0.14.11">
-  <link rel="stylesheet" href="camp.css?v=0.14.11">
-  <link rel="stylesheet" href="armory.css?v=0.14.11">
-  <link rel="stylesheet" href="item-icons.css?v=0.14.11">
+  <link rel="stylesheet" href="parking.css?v=0.15.0">
+  <link rel="stylesheet" href="character.css?v=0.15.0">
+  <link rel="stylesheet" href="world.css?v=0.15.0">
+  <link rel="stylesheet" href="broadcast.css?v=0.15.0">
+  <link rel="stylesheet" href="camp.css?v=0.15.0">
+  <link rel="stylesheet" href="armory.css?v=0.15.0">
+  <link rel="stylesheet" href="humans.css?v=0.15.0">
+  <link rel="stylesheet" href="item-icons.css?v=0.15.0">
+  <link rel="stylesheet" href="bestiary.css?v=0.15.0">
 </head>
 <body>
   <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
   <div id="story-subtitles" class="hidden" aria-live="polite"><span id="subtitle-speaker"></span><span id="subtitle-text"></span></div>
   <div id="opening-controls" class="hidden"><button id="opening-pause">暂停</button><button id="opening-skip">跳过开场</button><span>空格 暂停 / 继续 · Esc 跳过</span></div>
+  <button id="vehicle-skip" class="hidden">跳过行驶动画 · Esc</button>
   <button id="sound-toggle" aria-label="切换音效与配音" aria-pressed="true">声音：开</button>
   <div id="music-controls"><button id="music-toggle" aria-pressed="true">音乐：开</button><details><summary aria-label="背景音乐设置">♫ 设置</summary><div class="music-settings"><label>曲目<select id="music-track" aria-label="背景音乐曲目"></select></label><label>音量 <output id="music-volume-label">22%</output><input id="music-volume" type="range" min="0" max="100" step="1" value="22" aria-label="背景音乐音量"></label><small>白天轻音乐 · 夜间危夜围城</small></div></details></div>
   <button id="camp-map" class="hidden" aria-label="查看幸存者营地与步行路线">幸存者营地 · M路线</button>
+  <div id="human-status" class="panel hidden" aria-live="polite"></div>
+  <button id="loyal-skill" class="hidden" aria-label="召唤忠心随从">忠心随从 V</button>
   <button id="firepower-skill" class="hidden">火力全开 T</button>
   <button id="gun-fire" class="hidden">射击 · 空格</button>
   <div id="sweeper-hud" class="panel hidden" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:5"></div>
@@ -48,13 +53,16 @@
   <button id="bone-skill" class="hidden" aria-label="按住蓄力，松开发出大型骨头">投掷 R</button>
   <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互/攻击　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
   <div id="menu" class="scrim">
-    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存规则预览 0.14.11 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存规则预览 0.15.0 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
       <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
-      <aside class="release-notice" aria-labelledby="release-notice-title" data-release-notice="0.14.11">
-        <div class="release-notice-heading"><h2 id="release-notice-title">更新公告 · 0.14.11</h2><time datetime="2026-11-04">2026.11.04</time></div>
+      <aside class="release-notice" aria-labelledby="release-notice-title" data-release-notice="0.15.0">
+        <div class="release-notice-heading"><h2 id="release-notice-title">更新公告 · 0.15.0</h2><time datetime="2026-11-08">2026.11.08</time></div>
         <ul>
-          <li><b>夜战音乐：</b>新增紧张乐曲《危夜围城》，22:00自动切入并循环，05:00恢复白天轻音乐；仍可关闭音乐或调音量。</li>
-          <li><b>房门修复：</b>普通及加固房门的门框固定在门洞，修正开门时贴图旋转变形。</li>
+          <li><b>天启人类：</b>每日新增1—4名饥民搜箱进食；强盗有徒手、铁斧、手弩、散弹枪四种装备。击败6名普通强盗后，入营地迎战6 / 10 / 15人三波袭击。</li>
+          <li><b>守卫奖励：</b>胜利声望+20、营地交易八折240秒，首次解锁3血、2.5伤害的忠心随从；逃跑声望−10、禁交易7分钟。饥饿图腾使移速+15%、限时料理效果与时长+20%，自然饱食消耗+50%。</li>
+          <li><b>突击车与大门：</b>4份燃油加满1升，往返耗0.5升；首次播放上车、漂移和撞门动画，撞开后可步行进出。原出发路牌保留，返程回原路牌旁。</li>
+          <li><b>围界与通行：</b>新军备区南门距领地280—360米，外围栅栏不可摧毁；西门通行证永久保留，完全开门3秒后自动关闭并防夹。</li>
+          <li><b>图鉴与修复：</b>首页新增生物图鉴，按难度查看属性；强盗四种武器合并展示。食物简介写明实际效果，修复小数血量死亡判定、人类过门寻路、跨日刷新及图腾加速；未搜索资源箱正确关盖，夜战音乐移除高频镲声。</li>
         </ul>
       </aside>
       <h2 class="difficulty-heading">选择难度</h2><div id="difficulty-options" class="difficulty-options" role="group" aria-label="本局难度"></div>
@@ -62,68 +70,90 @@
       <div class="menu-option selected" data-mode="0"><b>01　完整的一天</b><span>05:00开局 · 白天12分45秒，夜晚5分15秒</span></div>
       <div class="menu-option" data-mode="1"><b>02　快速试玩</b><span>21:00开局 · 45秒准备，然后进入完整夜晚</span></div>
       <label class="name-field">幸存者名字<input id="name-input" maxlength="12" value="幸存者" autocomplete="off" enterkeyhint="done"></label>
-      <div class="menu-actions"><button id="start-game" class="primary" disabled>素材载入中…</button><button id="continue-game" disabled>继续存档</button><button id="touch-toggle" aria-pressed="false">触屏操作</button></div>
+      <div class="menu-actions"><button id="start-game" class="primary" disabled>素材载入中…</button><button id="continue-game" disabled>继续存档</button><button id="open-bestiary" type="button" aria-haspopup="dialog" aria-controls="bestiary-dialog">生物图鉴</button><button id="touch-toggle" aria-pressed="false">触屏操作</button></div>
       <div class="menu-actions dev-menu"><button id="start-developer" disabled>开发者试玩</button><button id="continue-developer" disabled>继续测试存档</button><small>测试进度与正常存档分开保存 · 游戏中按F2打开工具</small></div>
       <div class="menu-hint"><span class="keyboard-hint">A / D 难度　·　W / S 开局时间　·　E 开始</span><span class="touch-hint">点选模式后开始。横屏玩，视野更宽。</span></div>
       <small id="asset-status">正在加载美术素材……</small><br><small>天亮自动保存。确认新角色后会替换存档。背包、地图与窗口切换时暂停。</small>
     </section>
   </div>
   <div id="overlay" class="scrim hidden"><section id="overlay-card" class="overlay-card"></section></div>
+  <dialog id="bestiary-dialog" aria-labelledby="bestiary-title" aria-describedby="bestiary-note">
+    <div class="bestiary-heading"><div><div class="eyebrow">野外生存手册</div><h2 id="bestiary-title">生物图鉴</h2></div><form method="dialog"><button autofocus aria-label="关闭生物图鉴，返回首页">返回首页</button></form></div>
+    <div class="bestiary-toolbar">
+      <label>数值难度<select id="bestiary-difficulty"></select></label>
+      <label>分类<select id="bestiary-category"><option value="all">全部生物</option><option value="common">常见丧尸</option><option value="parking">地下生物</option><option value="armory">军备区生物</option><option value="human">人类与伙伴</option></select></label>
+      <span id="bestiary-count" role="status"></span>
+    </div>
+    <p id="bestiary-note">显示所选难度下的数值。伤害未计入角色护甲、天赋与无敌时间；速度单位为米/秒，不含天气、尖啸加速与减速效果。Boss生命不随难度变化，人类数值不套丧尸倍率；饥民、强盗和忠心随从仅天启启用。</p>
+    <div id="bestiary-list" class="bestiary-list"></div>
+  </dialog>
   <div id="touch-controls" class="hidden" aria-label="触屏游戏操作">
     <div class="touch-tools"><button data-key="tab">背包</button><button data-key="m">地图</button><button data-key="escape" aria-label="暂停游戏">暂停</button><button id="fullscreen-button">全屏</button></div>
     <div id="touch-stick" role="group" aria-label="移动摇杆"><div class="stick-ring"></div><div id="stick-knob"></div><span>移动</span></div>
     <div class="touch-actions"><button id="touch-run" aria-label="按住奔跑">奔跑<small>按住</small></button><button data-key="e" id="touch-interact" class="primary">交互</button><button data-key="f" id="touch-build">建造</button><button data-key="g">丢弃</button></div>
   </div>
   <script src="touch-controls.js"></script>
-  <script src="difficulty-data.js?v=0.14.11"></script>
-  <script src="simulation.js?v=0.14.11"></script>
+  <script src="difficulty-data.js?v=0.15.0"></script>
+  <script src="simulation.js?v=0.15.0"></script>
   <script src="expansion-data.js"></script>
   <script src="parking-data.js"></script>
-  <script src="character-traits.js?v=0.14.11"></script>
-  <script src="expansion.js?v=0.14.11"></script>
-  <script src="parking.js?v=0.14.11"></script>
-  <script src="parking-lights.js?v=0.14.11"></script>
-  <script src="parking-ai.js?v=0.14.11"></script>
-  <script src="weather.js?v=0.14.11"></script>
-  <script src="skeleton.js?v=0.14.11"></script>
-  <script src="broadcast.js?v=0.14.11"></script>
-  <script src="camp-data.js?v=0.14.11"></script>
-  <script src="camp.js?v=0.14.11"></script>
-  <script src="armory-data.js?v=0.14.11"></script>
-  <script src="armory.js?v=0.14.11"></script>
-  <script src="thermal-combat.js?v=0.14.11"></script>
-  <script src="armory-ai.js?v=0.14.11"></script>
-  <script src="armory-world.js?v=0.14.11"></script>
-  <script src="resident-refresh.js?v=0.14.11"></script>
-  <script src="west-gate.js?v=0.14.11"></script>
-  <script src="difficulty.js?v=0.14.11"></script>
-  <script src="aed.js?v=0.14.11"></script>
-  <script src="feedback-audio.js?v=0.14.11"></script>
-  <script src="developer-mode.js?v=0.14.11"></script>
+  <script src="character-traits.js?v=0.15.0"></script>
+  <script src="expansion.js?v=0.15.0"></script>
+  <script src="parking.js?v=0.15.0"></script>
+  <script src="parking-lights.js?v=0.15.0"></script>
+  <script src="parking-ai.js?v=0.15.0"></script>
+  <script src="weather.js?v=0.15.0"></script>
+  <script src="skeleton.js?v=0.15.0"></script>
+  <script src="broadcast.js?v=0.15.0"></script>
+  <script src="camp-data.js?v=0.15.0"></script>
+  <script src="camp.js?v=0.15.0"></script>
+  <script src="armory-data.js?v=0.15.0"></script>
+  <script src="armory.js?v=0.15.0"></script>
+  <script src="thermal-combat.js?v=0.15.0"></script>
+  <script src="armory-ai.js?v=0.15.0"></script>
+  <script src="armory-world.js?v=0.15.0"></script>
+  <script src="resident-refresh.js?v=0.15.0"></script>
+  <script src="west-gate.js?v=0.15.0"></script>
+  <script src="difficulty.js?v=0.15.0"></script>
+  <script src="aed.js?v=0.15.0"></script>
+  <script src="feedback-audio.js?v=0.15.0"></script>
+  <script src="armory-transport.js?v=0.15.0"></script>
+  <script src="humans-data.js?v=0.15.0"></script>
+  <script src="humans.js?v=0.15.0"></script>
+  <script src="humans-food.js?v=0.15.0"></script>
+  <script src="humans-ai.js?v=0.15.0"></script>
+  <script src="humans-combat.js?v=0.15.0"></script>
+  <script src="humans-raid.js?v=0.15.0"></script>
+  <script src="developer-mode.js?v=0.15.0"></script>
   <script src="scene-layers.js"></script>
   <script src="asset-manifest.js"></script>
   <script src="expansion-assets.js"></script>
   <script src="player-animation-assets.js"></script>
   <script src="weapon-animation-assets.js"></script>
-  <script src="parking-assets.js?v=0.14.11"></script>
-  <script src="world-assets.js?v=0.14.11"></script>
-  <script src="camp-assets.js?v=0.14.11"></script>
-  <script src="armory-assets.js?v=0.14.11"></script>
-  <script src="west-gate-assets.js?v=0.14.11"></script>
-  <script src="aed-assets.js?v=0.14.11"></script>
-  <script src="art-renderer.js?v=0.14.11"></script>
-  <script src="parking-view.js?v=0.14.11"></script>
-  <script src="art/2d/talent-disease-v1/game-art.js?v=0.14.11"></script>
-  <script src="character-ui.js?v=0.14.11"></script>
-  <script src="world-view.js?v=0.14.11"></script>
-  <script src="expansion-ui.js?v=0.14.11"></script>
-  <script src="game-audio.js?v=0.14.11"></script>
-  <script src="game-music.js?v=0.14.11"></script>
-  <script src="opening-view.js?v=0.14.11"></script>
-  <script src="camp-view.js?v=0.14.11"></script>
-  <script src="armory-view.js?v=0.14.11"></script>
-  <script src="west-gate-view.js?v=0.14.11"></script>
-  <script src="aed-view.js?v=0.14.11"></script>
-  <script src="game.js?v=0.14.11"></script>
+  <script src="parking-assets.js?v=0.15.0"></script>
+  <script src="world-assets.js?v=0.15.0"></script>
+  <script src="camp-assets.js?v=0.15.0"></script>
+  <script src="armory-assets.js?v=0.15.0"></script>
+  <script src="west-gate-assets.js?v=0.15.0"></script>
+  <script src="aed-assets.js?v=0.15.0"></script>
+  <script src="assault-car-assets.js?v=0.15.0"></script>
+  <script src="humans-assets.js?v=0.15.0"></script>
+  <script src="art-renderer.js?v=0.15.0"></script>
+  <script src="parking-view.js?v=0.15.0"></script>
+  <script src="art/2d/talent-disease-v1/game-art.js?v=0.15.0"></script>
+  <script src="character-ui.js?v=0.15.0"></script>
+  <script src="world-view.js?v=0.15.0"></script>
+  <script src="expansion-ui.js?v=0.15.0"></script>
+  <script src="game-audio.js?v=0.15.0"></script>
+  <script src="game-music.js?v=0.15.0"></script>
+  <script src="opening-view.js?v=0.15.0"></script>
+  <script src="camp-view.js?v=0.15.0"></script>
+  <script src="armory-view.js?v=0.15.0"></script>
+  <script src="west-gate-view.js?v=0.15.0"></script>
+  <script src="aed-view.js?v=0.15.0"></script>
+  <script src="assault-car-view.js?v=0.15.0"></script>
+  <script src="bestiary.js?v=0.15.0"></script>
+  <script src="humans-view.js?v=0.15.0"></script>
+  <script src="game.js?v=0.15.0"></script>
 </body>
 </html>

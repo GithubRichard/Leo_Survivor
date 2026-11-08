@@ -10,7 +10,6 @@ BPM=112
 beat=60/BPM
 duration=64*4*beat+4
 mix=np.zeros((int(duration*SR),2),dtype=np.float64)
-rng=np.random.default_rng(1411)
 
 def voice(midi,start,length,amp,pan=0,style='pluck'):
     at=int(start*SR);n=min(int(length*SR),len(mix)-at)
@@ -30,9 +29,7 @@ def voice(midi,start,length,amp,pan=0,style='pluck'):
 
 def drum(start,kind,amp):
     at=int(start*SR);n=min(int(.48*SR),len(mix)-at);t=np.arange(n)/SR
-    if kind=='low':signal=np.sin(2*np.pi*(46*t+1.5*(1-np.exp(-t*24))))*np.exp(-t*13)
-    else:
-        noise=rng.normal(size=n);signal=(noise-np.roll(noise,1))*.12*np.exp(-t*45)
+    signal=np.sin(2*np.pi*(46*t+1.5*(1-np.exp(-t*24))))*np.exp(-t*13)
     signal*=amp*(1-np.exp(-t/.002));signal[-200:]*=np.linspace(1,0,200)
     mix[at:at+n]+=signal[:,None]*.707
 
@@ -46,7 +43,6 @@ for b in range(64):
         interval=[0,7,12,7,third+12,7,12,7][(k+(b%4)*2)%8]
         voice(root+12+interval,start+k*.5*beat,.65*beat,.052*energy,(-1 if k%2 else 1)*.4)
         if k in [0,4] or section==3 and k==6:drum(start+k*.5*beat,'low',.12*energy)
-        if section!=2 or k%2==0:drum(start+(k*.5+.25)*beat,'tick',.065*energy)
     if b%4 in [2,3]:
         for k,interval in enumerate([19,15,14,12]):voice(root+12+interval,start+k*beat,1.1*beat,.036*energy,.18,'strings')
 dry=mix.copy()

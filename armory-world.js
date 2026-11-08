@@ -16,10 +16,14 @@
     }
     chooseArmoryLand(){
       const a=this.armory,host=this.scene==='parking'?this.surfaceState:this.scene==='armory'?this.armorySurface:this,known=[...this.homes.values()],candidates=[];
-      // Prefer the old entrance vicinity; expand only when known land is occupied.
+      // Keep the final south entrance in the 280–360m territory ring, including fallbacks.
       const initial={x:a.entrance.x,y:a.entrance.y-75};candidates.push(initial);
-      for(const radius of [260,400,560,760,1000,1400,1900,2500])for(let i=0;i<24;i++){const angle=i*Math.PI/12;candidates.push({x:Math.cos(angle)*radius,y:Math.sin(angle)*radius});}
+      const alternatives=[];
+      for(let cx=-14;cx<=14;cx++)for(let cy=-14;cy<=14;cy++){const e={x:14+cx*28,y:14+cy*28,w:3,h:3},d=S.Camp.distanceFromTerritory(e);if(d>=280&&d<=360)alternatives.push({x:e.x,y:e.y-75});}
+      for(let i=alternatives.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[alternatives[i],alternatives[j]]=[alternatives[j],alternatives[i]];}candidates.push(...alternatives);
       for(const center of candidates){const x=Math.round((center.x-100-26)/28)*28+26,y=Math.round((center.y-75-4)/28)*28+4,b={x:x+100,y:y+75,w:200,h:150};
+        const entryDistance=S.Camp.distanceFromTerritory({x:b.x,y:b.y+b.h/2,w:3,h:3});if(entryDistance<280||entryDistance>360)continue;
+        if(a.departureSign&&pointRect(a.departureSign,b)<50)continue;
         if(known.some(h=>!h.armoryReserved&&overlap(b,{x:h.x,y:h.y-1,w:12,h:14},2)))continue;
         if(overlap(b,{...(host.position||this.player),w:2,h:2},2)||this.camp?.position&&overlap(b,this.camp.position,5)||this.parking&&overlap(b,{...this.parking.entrance,w:16,h:16},5))continue;
         if([...(host.devices||[]),...(host.drops||[])].some(o=>o.hp!==0&&overlap(b,o,2)))continue;
@@ -28,6 +32,7 @@
     }
     integrateArmory(){
       const a=this.armory;if(!a||a.worldIntegrated)return;
+      a.departureSign=a.departureSign||{...a.entrance,id:'armory:departure-sign',kind:'armory_departure_sign',type:'armory',hp:1,indestructible:true};
       const land=this.chooseArmoryLand();if(!land){this._armoryRetry=this.seconds+15;return;}
       if(!a.generated)this.createArmory();
       let host=this.scene==='parking'?this.surfaceState:this,state=a.state;
@@ -50,14 +55,15 @@
       }
       for(const k of ['devices','drops'])for(const o of state?.[k]||[]){shift(o,x,y);for(const field of ['readyAt','flashUntil','lastToggle'])if(Number.isFinite(o[field]))o[field]+=delta;if(o.id&&!String(o.id).startsWith('armory:'))o.id='armory:migrated:'+o.id;host[k].push(o);}host.deviceId=Math.max(host.deviceId||0,state?.deviceId||0);
       a.origin=land.origin;a.bounds=land.bounds;a.worldIntegrated=true;a.version=2;a.state=null;a.playerInside=false;
+      a.departureSign=a.departureSign||{...a.entrance,id:'armory:departure-sign',kind:'armory_departure_sign',type:'armory',hp:1,indestructible:true};
       a.entrance={x:x+100,y:y+150,id:'armory:entrance',kind:'armory_gate',type:'armory',hp:1};a.gates=[a.entrance,{x,y:y+75,id:'armory:side',kind:'armory_gate',type:'armory',hp:1}];
       a.boss=host.zombies.find(z=>z.kind==='sweeper')||a.boss;if(a.boss&&!seen.has(a.boss.id)&&!a.bossDead)shift(a.boss,x,y);
       if(localPlayer){Object.assign(this.player,{x:localPlayer.x+x,y:localPlayer.y+y});this.playerAttack=null;this.fireHeld=false;this.cancelAction('军备库已并入主世界，未完成操作已取消。');}
       this._armoryIndex=null;this._collisionHomes=null;this.navigationChanged();this.autosaveRequested=true;
-      this.announce('军备库已成为主世界区域，可沿道路直接步行进入；时间与天气正常推进。');
+      this.announce('军备区已出现，首次须为突击车加油，乘车撞开南侧大门；撞开后可步行进出。');
     }
     ensureArmory(){super.ensureArmory();if(this.armory&&!this.armory.worldIntegrated)this.integrateArmory();}
-    switchArmory(){this.announce('军备库在主世界中，请直接步行进出，不需要切换场景。');}
+    switchArmory(){this.announce('军备区在主世界中，首次须乘突击车撞开南门；撞开后可步行进出，也可乘车返回。');}
     nearbyHomes(p,r){if(this.scene==='parking')return super.nearbyHomes(p,r);return this.withScene('surface',()=>super.nearbyHomes(p,r)).filter(h=>!h.armoryReserved);}
     movePlayer(dt,input){if(this.scene==='parking')return super.movePlayer(dt,input);return this.withScene('surface',()=>super.movePlayer(dt,input));}
     updateIndoorHome(){if(this.scene==='parking')return super.updateIndoorHome();const b=this.armory?.worldIntegrated&&this.armory.buildings.find(b=>b.hp>0&&Math.abs(this.player.x-b.x)<b.w/2&&Math.abs(this.player.y-b.y)<b.h/2);if(b){this.player.indoorHome=b.id;return;}if(this.getHome(Math.round(this.player.x/28),Math.round(this.player.y/28)).armoryReserved){this.player.indoorHome=null;return;}super.updateIndoorHome();if(this.player.indoorHome?.startsWith('H')||this.player.indoorHome?.startsWith('T'))this.player.indoorHome=null;}

@@ -266,6 +266,7 @@
     }});
     for(const zone of game.zones)if(game.canSee(zone))items.push({depth:zone.x+zone.y+.06,draw:()=>A.drawZone(ctx,zone,project,v.scale,game.seconds)});
     WorldView.items(game,{...v,items});window.AEDView?.items(game,{...v,items});
+    window.HumansView?.items(game,{...v,items});
     items.sort((a,b)=>a.depth-b.depth);for(const item of items)item.draw();
     // Draw only visual tints; gameplay lighting is evaluated by the rule module.
     ctx.save();ctx.fillStyle='#e5cd7f';for(const l of game.lightSources()){

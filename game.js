@@ -15,7 +15,7 @@
   let placement=false,buildKind='trap',dialogVisitor=null,dialogChoice=0,focused=true;
   let lastTime=performance.now(),uiKey='',nearby=null,notifications=[];
   let playerMotion={moving:false,phase:0,facing:null};
-  let parkingIntro=null;
+  let parkingIntro=null,vehicleIntro=null;
   let opening=null,openingPaused=false;
   let characterDraft=null,difficultyChoice='normal';
   const characterModes=['traits','character-preview'];
@@ -23,7 +23,7 @@
   function resize(){width=innerWidth;height=innerHeight;scale=touch?.enabled?Math.min(27,Math.max(19,width/18)):27;const ratio=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
   addEventListener('resize',resize);resize();
   art.loading.then(()=>{$('start-game').disabled=false;$('start-game').textContent=savedData()&&!savedData().result?'开始新游戏':'开始游戏';$('asset-status').textContent=art.failed.length?`${art.failed.length}个素材未能加载，请检查美术文件。`:'美术素材已加载 · 可以开始';uiKey='';});
-  const project=(x,y,z=0)=>{const camera=parkingIntro?.camera||game.player;return {x:width/2+(x-camera.x-y+camera.y)*scale,y:height*.56+(x-camera.x+y-camera.y)*scale*.5-z*scale};};
+  const project=(x,y,z=0)=>{const camera=vehicleIntro?.camera||parkingIntro?.camera||game.player;return {x:width/2+(x-camera.x-y+camera.y)*scale,y:height*.56+(x-camera.x+y-camera.y)*scale*.5-z*scale};};
   const inView=(o,margin=96)=>{const q=project(o.x,o.y);return q.x>=-margin&&q.x<=width+margin&&q.y>=-margin&&q.y<=height+margin;};
   function polygon(points,fill,stroke){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}}
   function plane(x,y,w,h,color,stroke){polygon([project(x-w/2,y-h/2),project(x+w/2,y-h/2),project(x+w/2,y+h/2),project(x-w/2,y+h/2)],color,stroke);}
@@ -34,11 +34,13 @@
   }
   function label(text,x,y,color='#d6d0b8',size=12){ctx.font=`${size}px "Microsoft YaHei",sans-serif`;ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='#172016';ctx.strokeText(text,x,y);ctx.fillStyle=color;ctx.fillText(text,x,y);}
   function actor(p,type){
+    if(type==='player'&&vehicleIntro){if(vehicleIntro.hidePlayer)return;p={...p,...vehicleIntro.actor};}
     if(p.kind==='lurker'&&p.state==='burrowed')return;
     ctx.save();
     if(type!=='player'&&game.scene==='surface'&&game.weatherKind()==='fog'&&game.outdoors(game.player)){const limit=game.isLit(p)?game.illuminatedSight:game.personalSight;ctx.globalAlpha*=Math.max(0,Math.min(1,(limit-dist(p,game.player))/(limit*.35)));}
     try{
     const q=project(p.x,p.y),hero=type==='player',visitor=type==='visitor';
+    if(HumansView.actor(ctx,game,p,type,{project,label,scale}))return;
     if(WorldView.actor(ctx,game,p,type,{project,label,scale}))return;
     if(ArmoryView.actor(ctx,game,p,type,{project,label,scale}))return;
     ctx.save();if(hero&&game.hidden)ctx.globalAlpha*=.4;
@@ -135,7 +137,7 @@
     if(game.scene==='armory'){ArmoryView.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});return;}
     if(game.scene==='parking'){PV.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});return;}
     ctx.clearRect(0,0,width,height);ctx.fillStyle='#4d5740';ctx.fillRect(0,0,width,height);
-    const homes=game.nearbyHomes(parkingIntro?.camera||game.player,45).filter(h=>{const p=project(h.x,h.y);return Math.abs(p.x-width/2)<width/2+480&&Math.abs(p.y-height/2)<height/2+380;});
+    const homes=game.nearbyHomes(vehicleIntro?.camera||parkingIntro?.camera||game.player,45).filter(h=>{const p=project(h.x,h.y);return Math.abs(p.x-width/2)<width/2+480&&Math.abs(p.y-height/2)<height/2+380;});
     // 每条路划分为不重叠的平面路段；交叉口单独画，去掉素材中的凸起侧面。
     for(const home of homes){
       art.ground(ctx,'road',home.x,home.y+14,23,5,project);
@@ -187,7 +189,7 @@
         if(site.hp<=0)continue;
         const outside=['stone_pile','water_point','herb_bed'].includes(site.kind);
         if(!outside&&!inside||site.searched&&!site.repeat&&site.kind==='stone_pile')continue;
-        const key=site.kind==='supply'?`supply_box_${site.searched?'open':'closed'}`:site.kind==='freezer'?`freezer_${site.searched?'open':'closed'}`:site.kind==='herb_bed'?`herb_bed_${site.searched?'empty':'full'}`:site.kind==='misc'?'wood_cabinet':site.kind==='kitchen'?'stove':['repair_shop','security_room','pharmacy'].includes(site.kind)?`storage_chest_${site.searched?'open':'closed'}`:site.kind;
+        const key=site.kind==='supply'?`supply_box_${site.searched?'open':'closed'}`:site.kind==='freezer'?`freezer_${site.searched&&!site.resourceDisabled?'open':'closed'}`:site.kind==='herb_bed'?`herb_bed_${site.searched?'empty':'full'}`:site.kind==='misc'?'wood_cabinet':site.kind==='kitchen'?'stove':['repair_shop','security_room','pharmacy'].includes(site.kind)?`storage_chest_${site.searched&&!site.resourceDisabled?'open':'closed'}`:site.kind;
         items.push({depth:Math.min(site.x+site.y,home.x+home.y-.1),draw:()=>{const q=project(site.x,site.y);if(!art.sprite(ctx,key,q.x,q.y,site.kind==='water_point'?45:30,{width:44}))box({...site},.4,'#8c8a69','#505948','#767e5a');}});
       }
     }
@@ -213,7 +215,9 @@
     CampView.items(game,{ctx,project,plane,scale,label,items});
     ArmoryView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
     WestGateView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
-    if(game.armory){const e=game.armory.entrance;items.push({depth:e.x+e.y,draw:()=>{const q=project(e.x,e.y);art.worldSprite(ctx,'armory_armory_entry_sign','f0',q.x,q.y,60*scale/27);label('军备库',q.x,q.y+18);}});}
+    HumansView.items(game,{ctx,project,scale,label,items,depth:actorDepth,drawActor:a=>visibleOutside(a,()=>actor(a,'human'))});
+    AssaultCarView.items(game,{ctx,project,scale,items},vehicleIntro);
+    if(game.armory)for(const [e,title] of [[game.armory.departureSign,'前往军备库 · 原出发路牌'],[game.armory.worldIntegrated?game.armory.entrance:null,game.armory.southBreach?.breached?'军备区南门 · 已撞开':'军备区南门 · 首次乘车撞门']]){if(!e||!inView(e,170))continue;items.push({depth:e.x+e.y,draw:()=>{const q=project(e.x,e.y);art.worldSprite(ctx,'armory_armory_entry_sign','f0',q.x,q.y,60*scale/27);label(title,q.x,q.y+18);}});}
     items.sort((a,b)=>(a.layer||0)-(b.layer||0)||a.depth-b.depth);for(const item of items)item.draw();
     ArmoryView.warnings(game,{ctx,project,scale});
     drawMolotovAim();WorldView.aim(game,{ctx,project,scale});
@@ -232,6 +236,15 @@
     opening=new BroadcastView.OpeningSequence(()=>{opening=null;document.documentElement.classList.remove('opening-active');game.broadcast.introDone=true;enterGame();saveGame(false);});
   }
   function pauseOpening(){if(!opening)return;openingPaused=!openingPaused;$('opening-pause').textContent=openingPaused?'继续':'暂停';GameSound.setActive(!openingPaused&&focused&&!document.hidden);}
+  function beginVehicleIntro(){
+    if(!game.armory?.transport?.departureRequested)return;
+    if(game.result||!game.canUseCar()){game.armory.transport.departureRequested=false;game.autosaveRequested=true;return;}
+    vehicleIntro=new AssaultCarView.Trip(game);mode='vehicle-intro';keys.clear();touch.clear();placement=false;game.stopAutomaticFire();game.cancelBoneCharge();game.playerAttack=null;game.player.running=false;playerMotion={moving:false,phase:0,facing:null};GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;PV.hideCombatHUD();document.documentElement.classList.add('vehicle-intro-active');$('vehicle-skip').classList.remove('hidden');$('overlay').classList.add('hidden');
+  }
+  function finishVehicleIntro(){
+    if(!vehicleIntro)return;game.completeVehicleTrip('inside');if(game.armory?.transport)game.armory.transport.departureRequested=false;vehicleIntro=null;mode='play';document.documentElement.classList.remove('vehicle-intro-active');$('vehicle-skip').classList.add('hidden');keys.clear();touch.clear();uiKey='';lastTime=performance.now();game.autosaveRequested=true;
+  }
+  $('vehicle-skip').addEventListener('click',finishVehicleIntro);
   function beginParkingIntro(){
     parkingIntro={time:0,camera:{x:game.player.x,y:game.player.y},origin:{x:game.player.x,y:game.player.y},failed:false};
     game.cancelAction();game.playerAttack=null;game.player.running=false;playerMotion={moving:false,phase:0,facing:null};placement=false;keys.clear();touch.clear();PV.hideCombatHUD();document.documentElement.classList.add('parking-intro-active');
@@ -310,11 +323,12 @@
     }
     else if(action==='skeleton-floor'){Dev.enable(game);if(game.scene==='parking'){if(!game.secondFloor){game.parking.layer.nextUnlocked=true;game.changeFloor(2);}Object.assign(game.player,{x:0,y:40});}else ok=false;}
     else if(action==='camp'){Dev.enable(game);if(game.scene==='parking')game.switchScene();if(game.day<14)Dev.jump(game,14);game.unlockCamp();if(game.camp?.position){Object.assign(game.player,game.camp.entries[1]);game.cancelAction();game.updateIndoorHome();}else{game.announce('营地正在分帧寻找合法位置，地图标记出现后可再次使用开发定位。');closeOverlay();return;}}
-    else if(action==='armory'){Dev.enable(game);if(game.scene==='parking')game.switchScene();if(game.scene==='armory')game.switchArmory();if(game.day<ArmoryData.provisional.unlockDay)Dev.jump(game,ArmoryData.provisional.unlockDay);game.ensureArmory();if(game.armory){Object.assign(game.player,game.armory.entrance);game.cancelAction();game.updateIndoorHome();}else{game.announce('军备库入口正在分帧选址，标记出现后可再次定位。');closeOverlay();return;}}
+    else if(action==='armory'){Dev.enable(game);if(game.scene==='parking')game.switchScene();if(game.scene==='armory')game.switchArmory();if(game.day<ArmoryData.provisional.unlockDay)Dev.jump(game,ArmoryData.provisional.unlockDay);game.ensureArmory();if(game.armory){Object.assign(game.player,game.armory.departureSign||game.armory.entrance);game.cancelAction();game.updateIndoorHome();}else{game.announce('军备库入口正在分帧选址，标记出现后可再次定位。');closeOverlay();return;}}
     else if(action==='parking-boss'){Dev.enable(game);if(game.scene==='parking'){game.cancelAction();Object.assign(game.player,{x:0,y:44});}else ok=false;}
     else if(action==='parking-return'){Dev.enable(game);if(game.scene==='parking'){game.cancelAction();game.switchScene();}else ok=false;}
     else if(action==='teleport')ok=Dev.teleport(game,button.dataset.position);
     else if(action==='speed'){const speed=Number($('dev-speed').value);ok=[1,2,5].includes(speed);if(ok){Dev.enable(game);Dev.state(game).speed=speed;}}
+    else if(action.startsWith('human-'))ok=Dev.human(game,action);
     else if(action==='save')ok=saveGame();
     overlayNotice=ok?'开发操作完成。':'未完成：请检查输入、背包空间或目标位置是否被占用。';uiKey='';
   }
@@ -322,8 +336,8 @@
   function statsOverlay(){
     const damageNames={hunger:'饥饿',acid_pool:'酸液区',fire_pool:'燃烧区'};
     const rows=game.history.map(h=>{
-      const kills=Object.entries(h.kills).map(([k,n])=>`${D.enemies[k]?.name||k}${n}`).join('、')||'无';
-      const damage=Object.entries(h.damage).map(([k,n])=>`${D.enemies[k]?.name||damageNames[k]||k}${Number(n.toFixed(1))}`).join('、')||'无';
+      const kills=Object.entries(h.kills).map(([k,n])=>`${D.enemies[k]?.name||NAMES[k]||k}${n}`).join('、')||'无';
+      const damage=Object.entries(h.damage).map(([k,n])=>`${D.enemies[k]?.name||damageNames[k]||NAMES[k]||k}${Number(n.toFixed(1))}`).join('、')||'无';
       const kinds=[...new Set([...Object.keys(h.income||{}),...Object.keys(h.spent||{})])];
       const net=kinds.map(k=>{const n=(h.income?.[k]||0)-(h.spent?.[k]||0);return `${NAMES[k]||k}${n>0?'+':''}${n}`;}).join('、')||'无';
       return `<div class="history-row"><b>第${h.day}晚</b><p>计划${h.planned} · 刷新${h.spawned} · 接近玩家10米内${h.arrived} · 建筑损失${h.lost} · 搜索${h.searches}</p><small>击败：${escapeText(kills)}<br>受伤：${escapeText(damage)}<br>食物：${escapeText(h.food.map(k=>NAMES[k]).join('、')||'无')}<br>资源净变化：${escapeText(net)}<br>累计游玩：${Math.floor(h.realSeconds/60)}分钟</small></div>`;
@@ -335,10 +349,10 @@
     $('overlay-card').classList.toggle('character-selection',characterModes.includes(mode));
     if(characterModes.includes(mode)){key+=JSON.stringify(characterDraft);html=CharacterUI.selection(characterDraft,mode==='character-preview');}
     else if(mode==='inventory'){key+=game.selectedSlot+JSON.stringify(game.inventory)+buildKind+inventoryPane+art.parkingRevision;html=inventoryOverlay();}
-    else if(mode==='context'){const o=contextTarget?.object;key+=o?.id+JSON.stringify(game.inventory)+JSON.stringify({hp:o?.hp,level:o?.level,energy:o?.energy,active:o?.active,opened:o?.opened,loot:o?.loot,gate:game.parking?.layer?.gateOpen,selection:contextTarget?.campOffer,batches:contextTarget?.campBatches,camp:contextTarget?.type==='camp'&&[game.camp.stock,game.camp.completed,game.camp.reputation,game.camp.effectiveReputation]})+art.parkingRevision;html=UI.context(game,contextTarget);}
+    else if(mode==='context'){const o=contextTarget?.object;key+=o?.id+JSON.stringify(game.inventory)+JSON.stringify({hp:o?.hp,level:o?.level,energy:o?.energy,active:o?.active,opened:o?.opened,loot:o?.loot,gate:game.parking?.layer?.gateOpen,transport:game.armory?.transport,human:game.humans&&[game.humans.heroUntil>game.seconds,Math.max(0,game.humans.banUntil-game.seconds),game.humans.raid?.phase],selection:contextTarget?.campOffer,batches:contextTarget?.campBatches,camp:contextTarget?.type==='camp'&&[game.camp.stock,game.camp.completed,game.camp.reputation,game.camp.effectiveReputation]})+art.parkingRevision;html=UI.context(game,contextTarget);}
     else if(mode==='stats'){html=statsOverlay();}
     else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><p>点继续游戏，回到你的领地。</p><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button><button data-command="developer">开发者模式（F2）</button></div>';}
-    else if(mode==='developer'){key+=JSON.stringify(Dev.state(game))+game.scene;html=Dev.panel(game)+PV.developer(game)+'<div class="dev-section"><h3>幸存者营地 / 军备库</h3><button data-dev="armory">军备库入口 / 第17天（开发测试）</button><button data-dev="camp">第14天营地 / 定位入口（开发测试）</button></div>';}
+    else if(mode==='developer'){key+=JSON.stringify(Dev.state(game))+game.scene+JSON.stringify(game.humans&&[game.humans.actors.length,game.humans.regularKills,game.humans.revenge,game.humans.raid?.phase,game.humans.unlocked]);html=Dev.panel(game)+PV.developer(game)+(Dev.humanPanel?Dev.humanPanel(game):'')+'<div class="dev-section"><h3>幸存者营地 / 军备库</h3><button data-dev="armory">军备库入口 / 第17天（开发测试）</button><button data-dev="camp">第14天营地 / 定位入口（开发测试）</button></div>';}
     else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：民居 · 食/修/药/保：商店 · 灰点：石头 · 蓝点：水 · 绿点：药草</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="overlay-actions"><button data-key="m">返回游戏</button></div>';}
     else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<button data-dialog="${i}" class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</button>`).join('')}<div class="key-hint keyboard-hint">W / S 选择　·　E 确认</div>`;}
     else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第${game.day}晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':'下次可以先搜补给箱、做武器和料理、修补受损的防线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
@@ -346,9 +360,9 @@
     if(key!==uiKey){$('overlay-card').innerHTML=html;uiKey=key;}
     if(mode==='context')$('overlay-card').querySelectorAll('[data-command]:not([disabled])').forEach((b,i)=>b.classList.toggle('selected',i===contextChoice));
     if(mode==='map'){
-      if(game.scene==='armory'){ArmoryView.map(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='军备库 · 200×150米';$('overlay-card').querySelector('p').textContent='南侧主入口自由通行；西门需拾取钥匙卡后刷卡，军备驻守按7天周期补充。';}
+      if(game.scene==='armory'){ArmoryView.map(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='军备库 · 200×150米';$('overlay-card').querySelector('p').textContent='首次须乘突击车撞开南门，此后可步行进出；西门仍须钥匙卡，军备驻守按难度周期补充。';}
       else if(game.scene==='parking'){PV.drawMap(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='地下首层 · 已探索区域';$('overlay-card').querySelector('p').textContent='靠近车身直接搜索车辆；油滴标记油箱。红点只显示当前可见敌人。';}
-      else {drawMap();if(game.parking){const c=$('map-canvas'),m=c.getContext('2d'),e=game.parking.entrance,x=275+(e.x-game.player.x)*.65,y=175+(e.y-game.player.y)*.65;if(!art.parkingSprite(m,'parking_marker','default',x,y,17)){m.fillStyle='#e2c971';m.font='bold 16px sans-serif';m.fillText('P',x,y);}}CampView.map(game,$('map-canvas'));ArmoryView.map(game,$('map-canvas'));}
+      else {drawMap();if(game.parking){const c=$('map-canvas'),m=c.getContext('2d'),e=game.parking.entrance,x=275+(e.x-game.player.x)*.65,y=175+(e.y-game.player.y)*.65;if(!art.parkingSprite(m,'parking_marker','default',x,y,17)){m.fillStyle='#e2c971';m.font='bold 16px sans-serif';m.fillText('P',x,y);}}CampView.map(game,$('map-canvas'));ArmoryView.map(game,$('map-canvas'));HumansView.map(game,$('map-canvas'));}
     }
   }
   function drawMap(){const c=$('map-canvas');if(!c)return;const m=c.getContext('2d'),s=.65,cx=275,cy=175;const p=o=>({x:cx+(o.x-game.player.x)*s,y:cy+(o.y-game.player.y)*s});m.fillStyle='#1e281e';m.fillRect(0,0,550,350);for(const h of game.nearbyHomes(game.player,300)){const q=p(h);m.fillStyle=h.own?'#b7a05b':h.kind==='house'?'#63705b':'#81aabc';m.fillRect(q.x-3.25,q.y-3.9,6.5,3.9);m.strokeStyle=h.own?'#cfbd7c':'#485c43';m.strokeRect(q.x-3.25,q.y,6.5,2.6);if(h.kind!=='house'){m.fillStyle='#dfd8b7';m.font='10px sans-serif';m.fillText(({food_shop:'食',repair_shop:'修',pharmacy:'药',security_room:'保'})[h.kind],q.x+5,q.y);}for(const site of h.sites)if(['stone_pile','water_point','herb_bed'].includes(site.kind)&&(!site.searched||site.repeat)){const a=p(site);m.fillStyle=site.kind==='water_point'?'#82bfd7':site.kind==='herb_bed'?'#90bb67':'#91958e';m.fillRect(a.x,a.y,3,3);}}for(const z of game.zombies)if(game.canSee(z)){const q=p(z);m.fillStyle='#d18673';m.beginPath();m.arc(q.x,q.y,3,0,Math.PI*2);m.fill();}m.fillStyle='#f0da91';m.beginPath();m.arc(cx,cy,5,0,Math.PI*2);m.fill();}
@@ -356,7 +370,7 @@
     const debug=Dev.state(game);$('developer-badge').classList.toggle('hidden',!game.developerUsed);$('developer-badge').textContent=game.developerUsed?`测试存档 · ${debug.enabled?'开发工具开启':'工具关闭'} · ${debug.enabled?debug.speed:1}倍速 · F2`:'';
     $('run-edge').style.opacity=mode==='play'&&focused&&game.player.running?'1':'0';
     $('hurt-edge').style.opacity=mode==='play'&&game.player.hurtUntil>game.seconds?'1':'0';
-    $('hp-label').textContent=`${Number(game.player.hp.toFixed(1))} / ${game.maxHP}`;$('hp-fill').style.width=`${game.player.hp/game.maxHP*100}%`;
+    $('hp-label').textContent=`${Number((game.player.hp>0?Math.max(.1,game.player.hp):0).toFixed(1))} / ${game.maxHP}`;$('hp-fill').style.width=`${game.player.hp/game.maxHP*100}%`;
     $('stamina-label').textContent=`${game.player.stamina.toFixed(1)} / ${game.maxStamina}`;$('stamina-fill').style.width=`${game.player.stamina/game.maxStamina*100}%`;
     $('hunger-label').textContent=`${Math.round(game.player.hunger)} / 100`;$('hunger-fill').style.width=`${game.player.hunger}%`;
     $('stamina-label').title=game.player.hunger<=0?'饱食度为0：停止恢复体力':`每${game.staminaRecoveryInterval}秒恢复1点体力`;
@@ -365,7 +379,7 @@
     if(game.player.hunger<=60)$('buffs').textContent+=game.player.hunger<=0?' · 饥饿：不回体，每12秒失去1血':` · 饱食偏低：体力上限${Number(game.maxStamina.toFixed(1))}，每${Number(game.staminaRecoveryInterval.toFixed(1))}秒回1`;
     if(game.player.hunger<=60&&['stamina2','stamina4','recovery'].includes(game.mainBuff?.type))$('buffs').textContent+='（料理体力增益暂不生效）';
     const action=game.action;document.documentElement.classList.toggle('working',!!action);$('action-progress').classList.toggle('hidden',!action);
-    if(action){const names={west_gate:action.operation==='west_keycard'?'拾取钥匙卡':'西门刷卡',armory_action:'军备库操作',camp_exchange:action.offer==='M04'?'现场包扎':action.offer==='intro'?'营地介绍':'交换物资',floor_travel:'楼层切换',skeleton_open:'开启骷髅宝箱',build:'建造',craft:'制作',search:'收集',dismantle:'拆除',repair:'维修',upgrade:'改造',eat:'食用',medkit:'急救',...Survival.parkingActionNames};$('action-progress').innerHTML=`${names[action.type]} · 剩余${Math.max(0,action.duration-action.elapsed).toFixed(1)}秒<div class="bar"><i style="width:${action.elapsed/action.duration*100}%"></i></div><button data-command="cancel">取消操作</button>`;}
+    if(action){const names={loyal_summon:'召唤忠心随从',vehicle_refuel:'加注燃油',vehicle_depart:'准备乘车',vehicle_return:'返回领地',west_gate:action.operation==='west_keycard'?'拾取钥匙卡':'西门刷卡',armory_action:'军备库操作',camp_exchange:action.offer==='M04'?'现场包扎':action.offer==='intro'?'营地介绍':'交换物资',floor_travel:'楼层切换',skeleton_open:'开启骷髅宝箱',build:'建造',craft:'制作',search:'收集',dismantle:'拆除',repair:'维修',upgrade:'改造',eat:'食用',medkit:'急救',...Survival.parkingActionNames};$('action-progress').innerHTML=`${names[action.type]} · 剩余${Math.max(0,action.duration-action.elapsed).toFixed(1)}秒<div class="bar"><i style="width:${action.elapsed/action.duration*100}%"></i></div><button data-command="cancel">取消操作</button>`;}
     const wave=game.warnedWaves[game.nextWave]&&game.nextWave<6,dir=game.waveDirections[game.nextWave];$('wave-warning').classList.toggle('hidden',!wave);$('wave-warning').innerHTML=wave?`${UI.thumb('wave_arrow')}下一批：${['东','南','西','北'][dir]}侧 · 第${game.nextWave+1}/6批`:'';
     $('resources').textContent=`铁 ${game.count('iron')}　木头 ${game.count('wood')}　击败 ${game.kills}`;
     const t=Math.floor(game.minutes)%1440;$('clock').textContent=`${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
@@ -383,6 +397,8 @@
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='television')text='E 收看电视';
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='camp')text=`E 与${nearby.object.name||'营地'}互动 · ${nearby.object.role||'公告与指引'}`;
     if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.type==='armory')text=nearby.object.kind==='west_keycard'?'E 拾取西部大门钥匙卡（2秒）':nearby.object.kind==='west_gate_reader'?(game.armory.westGate.owned?'E 西门刷卡（1秒）':'西门已锁定 · 击败扫荡者后拾取钥匙卡'):'E 查看军备库物资';
+    if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.object?.kind==='armory_departure_sign')text='E 查看原出发路牌 · 车辆往返地点';
+    if(mode==='play'&&!placement&&!game.action&&!game.playerAttack&&nearby?.object?.kind==='assault_car')text=game.armory.transport.side==='inside'?'E 乘车返回远处原路牌 · 本次返程无需额外燃油':'E 军用突击车 · 加油 / 满油出发';
     if(!text&&mode==='play')text=`E 攻击 · ${NAMES[game.player.weapon]||'徒手'} · 朝向前方敌人`;
     if(touch.enabled)text=text.replace(/E /g,'交互：').replace('E切换　F确认　Tab打开背包并取消','点切换装置 / 确认放置；点背包取消').replace('按F','点建造');
     $('interaction').textContent=text;$('interaction').classList.toggle('hidden',!text);
@@ -391,10 +407,11 @@
     const next=notifications.map(n=>`<div>${escapeText(n.text)}</div>`).join('');if($('messages').innerHTML!==next)$('messages').innerHTML=next;
     PV.hud(game,mode);WorldView.hud(game,mode);
     CampView.hud(game,mode);
-    ArmoryView.hud(game,mode);AEDView.hud(game,mode);
+    ArmoryView.hud(game,mode);AEDView.hud(game,mode);HumansView.hud(game,mode);
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+Math.ceil(game.inventory.length/5))%Math.ceil(game.inventory.length/5))*5+(col+dx+5)%5;}
   function handleKey(event){
+    if($('bestiary-dialog').open||event.target instanceof Element&&event.target.closest('#open-bestiary'))return;
     if(event.target instanceof Element&&event.target.closest('#music-controls,#sound-toggle')){if(event.key==='Escape'){event.preventDefault();document.querySelector('#music-controls details')?.removeAttribute('open');event.target.blur();if(mode==='pause')closeOverlay();}return;}
     if(event.key==='Tab'&&['menu','pause'].includes(mode))return;
     if(event.key==='F2'){event.preventDefault();if(!event.repeat)performAction('f2');return;}
@@ -405,6 +422,7 @@
   }
   function performAction(k){
     if(opening){if(k==='escape')opening.finish();else if(k===' ')pauseOpening();return;}
+    if(vehicleIntro){if(k==='escape')finishVehicleIntro();return;}
     if(parkingIntro)return;
     PV.unlockAudio();
     if(characterModes.includes(mode)){
@@ -442,6 +460,7 @@
     if(k==='r'){game.startBoneCharge();return;}
     if(k==='q'){game.toggleStealth();return;}
     if(k==='t'){game.activateFirepower();return;}
+    if(k==='v'){game.summonHumanFollower();return;}
     if(k===' '){game.attack();return;}
     if(k==='g'){game.drop();return;}
     if(k==='f'){if(!placement)placement=true;else if(game.place(buildKind,game.placementPoint()))placement=false;return;}
@@ -458,6 +477,7 @@
     }
   }
   function handleCommand(button){
+    if(button.dataset.command?.startsWith('vehicle-')){if(game.carAction(button.dataset.command.slice(8)))closeOverlay();return;}
     if(button.dataset.command==='armory-interact'){if(game.interact(contextTarget))closeOverlay();return;}
     const command=button.dataset.command,kind=button.dataset.kind,o=contextTarget?.object;let ok=false,leave=false;
     const camp=CampView.command(game,command,button,contextTarget);if(camp.handled){if(camp.ok&&camp.leave)closeOverlay();else{overlayNotice=camp.ok?'':game.events.at(-1)||'操作未完成。';contextChoice=0;uiKey='';}return;}
@@ -505,6 +525,7 @@
   art.loading.then(()=>{$('continue-game').disabled=!savedData()||!!savedData()?.result;$('start-developer').disabled=false;$('continue-developer').disabled=!savedData(DEV_SAVE_KEY)||!!savedData(DEV_SAVE_KEY)?.result;});
   $('action-progress').addEventListener('pointerdown',event=>{if(event.target.closest('[data-command="cancel"]')){event.preventDefault();game.cancelAction();}});
   $('touch-toggle').addEventListener('click',resize);
+  $('loyal-skill').addEventListener('click',event=>{event.currentTarget.blur();if(mode==='play')performAction('v');});
   $('parking-skill').addEventListener('click',()=>{if(mode==='play')performAction('q');});
   $('bone-skill').addEventListener('pointerdown',e=>{if(mode!=='play'||parkingIntro)return;e.preventDefault();if(game.startBoneCharge())e.currentTarget.setPointerCapture(e.pointerId);});
   $('bone-skill').addEventListener('pointerup',e=>{e.preventDefault();if(mode==='play')game.releaseBone();else if(game.boneSkill.charging)game.boneSkill.releasePending=true;});
@@ -537,9 +558,11 @@
   });
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
-    const soundActive=focused&&!document.hidden&&(opening?!openingPaused:mode==='play'&&!parkingIntro);
-    GameSound.setActive(soundActive);GameMusic.update(soundActive&&!opening&&!game.result,game.tvSession?.kind==='camp',dt,game.scene==='parking'?(game.surfaceState?.minutes??game.minutes):game.minutes);
+    const soundActive=focused&&!document.hidden&&(opening?!openingPaused:!!vehicleIntro||mode==='play'&&!parkingIntro);
+    GameSound.setActive(soundActive);GameMusic.update(soundActive&&!opening&&!vehicleIntro&&!game.result,game.tvSession?.kind==='camp',dt,game.scene==='parking'?(game.surfaceState?.minutes??game.minutes):game.minutes);
     if(opening&&soundActive)opening.update(dt);
+    if(!vehicleIntro&&mode==='play'&&game.armory?.transport?.departureRequested)beginVehicleIntro();
+    if(vehicleIntro&&focused&&!document.hidden&&vehicleIntro.update(dt))finishVehicleIntro();
     if(!parkingIntro&&mode==='play'&&game.scene==='surface'&&!game.result&&(game.parkingUnlockPending||game.parking?.introSeen===false))beginParkingIntro();
     if(parkingIntro&&focused&&!document.hidden)advanceParkingIntro(dt);
     if(mode==='play'&&!parkingIntro&&focused&&!document.hidden){
@@ -559,7 +582,7 @@
       playerMotion.moving=moving;
       if(game.result)openOverlay('result');
     }
-    touch.setContext(parkingIntro||opening?'cinematic':mode,placement);
+    touch.setContext(parkingIntro||opening||vehicleIntro?'cinematic':mode,placement);
     nearby=mode==='play'&&!parkingIntro&&!placement?game.nearbyInteraction():null;
     if(game.autosaveRequested){game.autosaveRequested=false;saveGame(false);}
     if(!opening)BroadcastView.updateTV(game,dt,soundActive&&mode==='play');
@@ -567,6 +590,7 @@
     game.advanceCampNavigation();
     if(!opening||opening.stages[opening.index]?.kind==='handoff')drawWorld();if(!opening&&mode!=='menu'&&!characterModes.includes(mode))updateHUD();if(['inventory','map','dialog','result','pause','context','stats','developer',...characterModes].includes(mode))renderOverlay();
     if(parkingIntro)PV.drawEntranceIntro(game,parkingIntro,{ctx,project,width,height,scale});
+    if(vehicleIntro)vehicleIntro.draw(ctx,{width,height});
     if(opening)opening.draw(ctx,width,height);
     requestAnimationFrame(frame);
   }

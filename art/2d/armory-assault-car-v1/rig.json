@@ -1,0 +1,72 @@
+{
+  "coordinates": "Frame-local pixels; screen compass (south=down), not map x/y. Ground origin is manual art registration, not collision.",
+  "boardingDirection": "southwest",
+  "boardingPixelsPerMeter": 90,
+  "directionPixelsPerMeter": 70,
+  "boarding": {
+    "ground": [
+      256,
+      399
+    ],
+    "doorHinge": [
+      273,
+      300
+    ],
+    "doorOuterOpen": [
+      347,
+      399
+    ],
+    "seat": [
+      301,
+      280
+    ],
+    "sill": [
+      298,
+      363
+    ],
+    "approachFoot": [
+      414,
+      421
+    ],
+    "frontWheel": [
+      234,
+      398
+    ],
+    "rearWheel": [
+      432,
+      317
+    ],
+    "frontWheelHubSize": [
+      28,
+      46
+    ],
+    "rearWheelHubSize": [
+      24,
+      42
+    ],
+    "doorHingedAt": "front edge of near front door"
+  },
+  "wheelHubSourceRectInCell": [
+    306,
+    243,
+    213,
+    280
+  ],
+  "layerOrder": [
+    "ground",
+    "skid",
+    "rear dust",
+    "full boarding or vehicle sprite (includes door and actor)",
+    "near hub overlay while rolling",
+    "foreground scenery/UI"
+  ],
+  "driver": {
+    "parked": false,
+    "reach": true,
+    "step_in": true,
+    "seated_open": true,
+    "closed_seated": "inside but hidden by opaque windows",
+    "driving": "hidden by opaque windows"
+  },
+  "noActorDoubleDraw": true
+}

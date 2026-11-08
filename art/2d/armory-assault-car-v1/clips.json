@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "visualOnly": true,
+  "boarding": {
+    "frames": [
+      "assault_car_boarding__closed_empty",
+      "assault_car_boarding__reach",
+      "assault_car_boarding__step_in",
+      "assault_car_boarding__seated_open",
+      "assault_car_boarding__closed_seated"
+    ],
+    "durationsMs": [
+      180,
+      260,
+      320,
+      260,
+      180
+    ],
+    "hideWorldPlayerFromFrame": 1,
+    "showWorldPlayerAfterReturn": true,
+    "compositedActor": true
+  },
+  "doorOpenEmpty": {
+    "frames": [
+      "assault_car_boarding__closed_empty",
+      "assault_car_boarding__open_empty"
+    ],
+    "durationsMs": [
+      180,
+      180
+    ]
+  },
+  "doorCloseEmpty": {
+    "frames": [
+      "assault_car_boarding__open_empty",
+      "assault_car_boarding__closed_empty"
+    ],
+    "durationsMs": [
+      180,
+      180
+    ]
+  },
+  "wheelRoll": {
+    "frames": [
+      "assault_wheel_spin__spin0",
+      "assault_wheel_spin__spin1",
+      "assault_wheel_spin__spin2"
+    ],
+    "durationsMs": [
+      70,
+      70,
+      70
+    ],
+    "loop": true,
+    "render": "Clip/crop hub only using hubSourceRect; never add a second full tire over the baked tire."
+  },
+  "drift": {
+    "frames": [
+      "assault_car_directions__southwest",
+      "assault_car_directions__south",
+      "assault_car_directions__southeast"
+    ],
+    "durationsMs": [
+      180,
+      160,
+      180
+    ],
+    "dustFrames": [
+      "assault_dust__small",
+      "assault_dust__expand",
+      "assault_dust__fade"
+    ],
+    "skidFrames": [
+      "assault_skid__short",
+      "assault_skid__curve",
+      "assault_skid__long"
+    ],
+    "translateWorld": true,
+    "neverMirrorDriverDoor": true
+  },
+  "depart": {
+    "frame": "assault_car_directions__southeast",
+    "durationMs": 800,
+    "translateOffScreen": true
+  },
+  "park": {
+    "frame": "assault_car_boarding__closed_empty"
+  },
+  "return": {
+    "frame": "assault_car_boarding__closed_empty",
+    "animation": false
+  }
+}

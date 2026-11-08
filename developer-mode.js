@@ -64,6 +64,53 @@
     }
     const p=project(game.player.x,game.player.y);ctx.strokeStyle='#ffe47e';ctx.beginPath();ctx.moveTo(p.x-6,p.y);ctx.lineTo(p.x+6,p.y);ctx.moveTo(p.x,p.y-6);ctx.lineTo(p.x,p.y+6);ctx.stroke();ctx.fillStyle='#fff3b6';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText(`x ${game.player.x.toFixed(2)} · y ${game.player.y.toFixed(2)} · ${game.player.indoorHome?'室内':'室外'}`,p.x,p.y+25);ctx.restore();
   }
-  const api={state,enable,toggle,clear,jump,teleport,give,spawn,panel,draw};
+  /* 天启人类测试工具：生成的单位带 simulated 标记，除非勾选“按正式击杀结算”。 */
+  const humanWeapons={bare:'徒手',iron_axe:'铁斧',hand_crossbow:'手弩',shotgun:'散弹枪'};
+  function humanSpot(game,n){
+    /* 先找和玩家之间没有墙或围栏的空位（强盗要看得见玩家才会进攻），找不到再放宽 */
+    for(const needSight of [true,false])for(let a=0;a<120;a++){const angle=(a+n*5)*Math.PI/12,r=3+Math.floor(a/24)*1.2,c={x:game.player.x+Math.cos(angle)*r,y:game.player.y+Math.sin(angle)*r};
+      if(game.obstacles(c,c,.3).length||game.zombies.some(z=>S.dist(z,c)<.8)||game.humans.actors.some(h=>h.hp>0&&S.dist(h,c)<.8)||game.inArmory&&game.inArmory(c)!==game.inArmory(game.player))continue;
+      if(needSight&&!game.clearVision(c,game.player,game.player))continue;return c;}
+    return null;
+  }
+  function humanSpawn(game,kind,weapon,count,real){
+    let placed=0;for(let n=0;n<count;n++){const p=humanSpot(game,n);if(!p)break;const a=game.newHuman(kind,p,kind==='bandit'?weapon:'bare');a.home={x:p.x,y:p.y};a.nextAttack=game.seconds+1.5;if(!real)a.simulated=true;placed++;}
+    return placed;
+  }
+  function campInsidePoint(game){
+    const b=game.camp.position;for(let i=0;i<400;i++){const t=i/400,c={x:b.x+(((i*37)%41)/40-.5)*(b.w-2),y:b.y+(((i*53)%43)/42-.5)*(b.h-2)};if(!game.obstacles(c,c,.3).length&&game.guardDistance(c)<=0)return c;}
+    return null;
+  }
+  function human(game,action){
+    if(!game.humanMode||!game.humans){game.announce('人类单位只在天启难度出现，请用天启难度开局。');return false;}
+    if(game.scene==='parking'&&!['human-revenge','human-unlock','human-hero'].includes(action)){game.announce('请先回到地面再使用人类测试工具。');return false;}
+    enable(game);const h=game.humans,real=!!document.getElementById('dev-human-real')?.checked;
+    if(action==='human-bandit'){const weapon=document.getElementById('dev-human-weapon')?.value||'bare',count=Number(document.getElementById('dev-human-count')?.value);if(!humanWeapons[weapon]||!Number.isInteger(count)||count<1||count>6)return false;const n=humanSpawn(game,'bandit',weapon,count,real);game.announce(`开发测试：已在附近生成${n}/${count}名${humanWeapons[weapon]}强盗${real?'（按正式击杀结算）':''}。`);return n===count;}
+    if(action==='human-starving'){const count=Number(document.getElementById('dev-human-count')?.value);if(!Number.isInteger(count)||count<1||count>6)return false;const n=humanSpawn(game,'starving_civilian','bare',count,real);game.announce(`开发测试：已在附近生成${n}/${count}名饥民，它们会去搜附近的箱子。`);return n===count;}
+    if(action==='human-revenge'){h.regularKills=Math.max(h.regularKills,6);h.revenge=true;h.retryOutside=false;h.banUntil=0;game.announce('开发测试：已获得“复仇”，进入幸存者营地即触发袭击。');return true;}
+    if(action==='human-raid'){
+      if(h.raid){game.announce('袭击已在进行或撤退中。');return false;}
+      if(!game.camp?.position){game.announce('营地还没有落地：先点“第14天营地 / 定位入口”，等地图出现营地标记后再试。');return false;}
+      h.regularKills=Math.max(h.regularKills,6);h.revenge=true;h.retryOutside=false;h.banUntil=0;
+      const p=campInsidePoint(game);if(!p)return false;game.cancelAction();Object.assign(game.player,p);game.updateIndoorHome();game.startHumanRaidIfNeeded();
+      game.announce('开发测试：已传送进营地并触发袭击，10秒后第一波。');return !!h.raid;
+    }
+    if(action==='human-wave'){const r=h.raid;if(!r?.active)return false;r.pending=[];if(r.phase==='warning'||r.phase==='between')r.readyAt=game.seconds;for(const a of h.actors)if(a.raidId===r.id&&a.hp>0)game.hurtHuman(a,a.hp,'player');game.announce('开发测试：已清除当前波次的袭击强盗。');return true;}
+    if(action==='human-unlock'){h.unlocked=true;h.cooldownUntil=0;game.announce('开发测试：已解锁忠心随从，按 V 召唤。');return true;}
+    if(action==='human-hero'){h.heroUntil=game.seconds+240;game.announce('开发测试：获得“英雄”240秒，营地交易八折。');return true;}
+    if(action==='human-clear'){h.actors=h.actors.filter(a=>a.raidId&&h.raid);h.shots=h.shots.filter(s=>s.raidId&&h.raid);for(const [k,g] of Object.entries(h.groups))if(!g.raidId)delete h.groups[k];h.claims={};game.announce('开发测试：已清除地面上的饥民和普通强盗（进行中的袭击保留）。');return true;}
+    return false;
+  }
+  function humanPanel(game){
+    if(!game.humanMode||!game.humans)return '<div class="dev-section"><h3>天启人类</h3><small>饥民、强盗和营地袭击只在天启难度出现。</small></div>';
+    const h=game.humans,f=a=>a.hp>0;const st=h.actors.filter(a=>f(a)&&a.kind==='starving_civilian').length,bd=h.actors.filter(a=>f(a)&&a.kind==='bandit'&&!a.raidId).length;
+    return `<div class="dev-section"><h3>天启人类</h3><small>当前地面：饥民${st}名 · 普通强盗${bd}/6名 · 普通强盗击败${h.regularKills}/6${h.revenge?' · 已带复仇':''}${h.raid?` · 袭击${h.raid.active?`第${h.raid.wave+1}/3波`:'撤退中'}`:''}</small>
+      <div class="dev-row"><label>强盗武器 <select id="dev-human-weapon">${Object.entries(humanWeapons).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></label><label>数量 <input id="dev-human-count" type="number" min="1" max="6" value="1"></label>${button('human-bandit','生成强盗')}${button('human-starving','生成饥民')}</div>
+      <div class="dev-row"><label><input id="dev-human-real" type="checkbox"> 按正式击杀结算（计入复仇、掉落武器与图腾）</label></div>
+      <div class="dev-row">${button('human-revenge','直接获得复仇')}${button('human-raid','进营地触发袭击')}${button('human-wave','清除当前袭击波次')}</div>
+      <div class="dev-row">${button('human-unlock','解锁忠心随从')}${button('human-hero','获得英雄240秒')}${button('human-clear','清除地面饥民和强盗')}</div>
+      <small>默认生成的单位带测试标记，击杀不计复仇、不掉落。饥饿图腾可在上方“添加物品”里直接领取。</small></div>`;
+  }
+  const api={state,enable,toggle,clear,jump,teleport,give,spawn,panel,draw,human,humanPanel};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DeveloperMode=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

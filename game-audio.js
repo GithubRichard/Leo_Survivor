@@ -36,6 +36,9 @@
     else if(kind==='aed'){tone(660,.22,.045*v,'sine');tone(880,.3,.045*v,'sine',.16);}
     else if(kind==='heal'){tone(420,.16,.025*v,'sine');tone(620,.2,.025*v,'sine',.12);}
     else if(kind==='pickup'){tone(700,.1,.025*v,'triangle');tone(930,.13,.025*v,'sine',.08);}
+    else if(kind==='engine'){tone(95,.7,.06*v,'sawtooth');tone(150,.7,.03*v,'triangle',.18);}
+    else if(kind==='skid'){burst(.35,.045*v,850);tone(520,.25,.018*v,'triangle');}
+    else if(kind==='gate_crash'){burst(.45,.14*v,1600);tone(75,.45,.08*v,'sine');tone(310,.3,.04*v,'triangle',.04);tone(640,.22,.025*v,'triangle',.09);}
   }
   function toggle(){enabled=!enabled;try{localStorage.setItem('survivor-audio-enabled',String(enabled));}catch{}if(current)current.muted=!enabled;unlock();syncButton();}
   function syncButton(){const b=document.getElementById('sound-toggle');if(b){b.textContent=enabled?'音效/配音：开':'音效/配音：关';b.setAttribute('aria-pressed',String(enabled));}}

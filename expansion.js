@@ -150,7 +150,7 @@
     }
     clearLine(a,b,ignore=null){return a.x===b.x&&a.y===b.y||!this.obstacles(a,b,0).some(o=>o!==ignore);}
     navigationChanged(){this._navigationRevision=(this._navigationRevision||0)+1;}
-    updateDoors(){for(const h of this.homes.values())for(const door of h.doors){if(door.hp<=0)continue;const wasOpen=door.open,d=pointRect(this.player,door);if(d<1.25)door.open=true;else if(door.open&&d>1.6&&!this.zombies.some(z=>z.hp>0&&pointRect(z,door)<.3))door.open=false;if(wasOpen!==door.open)this.navigationChanged();}}
+    updateDoors(){for(const h of this.homes.values())for(const door of h.doors){if(door.hp<=0)continue;const wasOpen=door.open,d=pointRect(this.player,door);if(d<1.25||(this.humanDoorActors?.()||[]).some(a=>pointRect(a,door)<1.25))door.open=true;else if(door.open&&d>1.6&&!this.zombies.some(z=>z.hp>0&&pointRect(z,door)<.3))door.open=false;if(wasOpen!==door.open)this.navigationChanged();}}
     canPlace(kind,p){
       const def=D.builds[kind];if(!def)return '未知建筑';if(this.day<def.day)return `第${def.day}天开放`;
       if(!p||!Number.isFinite(p.x)||!Number.isFinite(p.y))return '请选择有效的放置位置';
@@ -226,7 +226,7 @@
       const length=Math.hypot(sx,sy),before={x:this.player.x,y:this.player.y};this.player.running=false;
       if(length&&this.action?.type!=='medkit'){
         const movement=screenDirection(sx,sy),n=Math.hypot(movement.x,movement.y);this.player.facing={x:movement.x/n,y:movement.y/n};
-        const running=input.run&&this.player.stamina>0,speed=(this.movementSpeed?this.movementSpeed(running?this.runSpeed:2):(running?this.runSpeed:2))*Math.min(1,length),nx={x:this.player.x+movement.x*speed*dt,y:this.player.y};
+        const running=input.run&&this.player.stamina>0,speed=(this.movementSpeed?this.movementSpeed(running?this.runSpeed:(this.walkSpeed||2)):(running?this.runSpeed:(this.walkSpeed||2)))*Math.min(1,length),nx={x:this.player.x+movement.x*speed*dt,y:this.player.y};
         if(!this.obstacles(this.player,nx).length)this.player.x=nx.x;const ny={x:this.player.x,y:this.player.y+movement.y*speed*dt};if(!this.obstacles(this.player,ny).length)this.player.y=ny.y;
         this.player.running=Boolean(running&&dist(before,this.player)>1e-8);
       }
@@ -241,10 +241,14 @@
       amount=this.enemyDamage(amount,source);
       if(this.developer?.enabled&&this.developer.invincible)return false;
       if(amount<=0||this.result||this.aedProtectedUntil>this.seconds||!ground&&this.player.invulnerableUntil>this.seconds)return false;
-      if(this.mainBuff?.type==='armor'&&amount>=1)amount=Math.max(1,amount-1);
-      const rescued=amount>=this.player.hp&&this.rescueAED?.(amount,source);this.player.hp=rescued?1:Math.max(0,this.player.hp-amount);this.player.hurtUntil=this.seconds+1;if(!ground)this.player.invulnerableUntil=this.seconds+.5;
+      if(this.mainBuff?.type==='armor'&&amount>=1)amount=Math.max(1,amount-(this.foodArmorReduction??1));
+      const remaining=this.player.hp-amount,rescued=remaining<=1e-8&&this.rescueAED?.(amount,source);this.player.hp=rescued?1:remaining<=1e-8?0:remaining;this.player.hurtUntil=this.seconds+1;if(!ground)this.player.invulnerableUntil=this.seconds+.5;
       this.cancelAction('受伤中断了操作。');this.interruptBandage('受伤');this.stats.damage[source]=(this.stats.damage[source]||0)+amount;
-      if(this.player.hp<=0){this.result='dead';this.deathReason=source;this.finishStats();this.autosaveRequested=true;}return true;
+      this.checkPlayerDeath(source);return true;
+    }
+    checkPlayerDeath(source=this.deathReason||'unknown'){
+      if(this.result||this.player.hp>1e-8)return false;
+      this.player.hp=0;this.result='dead';this.deathReason=source;this.action=null;this.playerAttack=null;this.player.running=false;this.finishStats();this.autosaveRequested=true;return true;
     }
     damageZombie(z,n){if(z.hp<=0)return;z.hp=Math.max(0,z.hp-n);if(!z.hp){this.kills++;this.stats.kills[z.kind]=(this.stats.kills[z.kind]||0)+1;z.windup=null;}}
     damageBuilding(o,n){if(o.hp<=0)return;o.hp=Math.max(0,o.hp-n);if(o.hp>0)return;this.navigationChanged();this.stats.lost++;
@@ -288,7 +292,7 @@
     }
     updateVitals(dt){
       for(const key of ['mainBuff','teaBuff'])if(this[key]?.until<=this.seconds)this[key]=null;
-      this.player.hp=Math.min(this.player.hp,this.maxHP);this.player.hunger=Math.max(0,this.player.hunger-dt/.75/60*3*this.traitEffects.metabolism);this.syncStaminaRecovery();
+      this.player.hp=Math.min(this.player.hp,this.maxHP);this.player.hunger=Math.max(0,this.player.hunger-dt/.75/60*3*this.traitEffects.metabolism*(this.hungerMetabolism||1));this.syncStaminaRecovery();
       if(!this.player.hunger){this.starving=(this.starving||0)+dt;while(this.starving+1e-8>=12&&!this.result){this.starving-=12;this.damagePlayer(1,'hunger',true);}}else this.starving=0;
       if(this.result)return;
       for(const [key,interval] of [['foodRegen',30],['bandage',2]]){const heal=this[key];if(heal&&this.seconds>=heal.next){this.healPlayer(1);heal.left--;heal.next+=interval;if(!heal.left)this[key]=null;}}
@@ -411,8 +415,8 @@
       const heap=new MinHeap(),cost=new Map([[key(start),0]]),nodes=new Map([[key(start),start]]),parents=new Map();heap.push({...start,g:0,f:dist(start,goal)});
       let best=start,bestH=dist(start,goal),expanded=0;const def=D.enemies[z.kind];
       while(heap.length&&expanded++<1800){yield;const cur=heap.pop(),k=key(cur);if(cur.g!==cost.get(k))continue;const h=dist(cur,goal);if(h<bestH){best=cur;bestH=h;}if(h<.5){best=cur;break;}
-        for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)if(dx||dy){const next={x:cur.x+dx,y:cur.y+dy};if(Math.abs(next.x-start.x)>100||Math.abs(next.y-start.y)>100)continue;
-          const blockers=this.obstacles(cur,next,.24),crossing=blockers.reduce((n,o)=>o.type==='camp_solid'&&o.kind==='door'?n:o.indestructible?Infinity:n+Math.ceil(o.hp/def.building)*def.interval*def.speed,0),g=cur.g+Math.hypot(dx,dy)+crossing,nk=key(next);
+        for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)if(dx||dy){const next={x:cur.x+dx,y:cur.y+dy};if(Math.abs(next.x-start.x)>100||Math.abs(next.y-start.y)>100||z.kind==='home_helper'&&(Math.abs(next.x)>5||next.y< -6||next.y>4))continue;
+          const blockers=this.obstacles(cur,next,.24),crossing=blockers.reduce((n,o)=>z.human?(o.type==='door'&&!o.indestructible||o.type==='camp_solid'&&o.kind==='door'?n+1:Infinity):o.type==='camp_solid'&&o.kind==='door'?n:o.indestructible?Infinity:n+Math.ceil(o.hp/def.building)*def.interval*def.speed,0),g=cur.g+Math.hypot(dx,dy)+crossing,nk=key(next);
           if(g<(cost.get(nk)??Infinity)){cost.set(nk,g);parents.set(nk,k);nodes.set(nk,next);heap.push({...next,g,f:g+dist(next,goal)});}
         }
       }
@@ -424,13 +428,13 @@
       this._pathJobs=this._pathJobs||new Map();this._pathQueue=this._pathQueue||[];
       if(this._pathJobs.has(z)||this._pathQueue.length>=8)return false;
       if(!this.obstacles(z,target,.24).some(o=>o!==target)){z.path=[];return true;}
-      const start={x:z.x,y:z.y,kind:z.kind},goal={x:target.x,y:target.y};
+      const start={x:z.x,y:z.y,kind:z.kind,human:!!z.human},goal={x:target.x,y:target.y};
       const job={z,target,start,goal,revision:this._navigationRevision||0,search:this.pathSearch(start,goal)};
       this._pathJobs.set(z,job);this._pathQueue.push(job);return true;
     }
     updatePaths(){
       const queue=this._pathQueue;if(!queue?.length)return;
-      const alive=new Set(this.zombies),now=()=>root.performance?.now?.()??Date.now();
+      const alive=new Set(this.navigationActors?this.navigationActors():this.zombies),now=()=>root.performance?.now?.()??Date.now();
       const deadline=this._frameManaged?(this._pathFrameDeadline??=now()+3):now()+3;
       let remaining=this._pathFrameBudget??256;
       while(queue.length&&remaining>0&&now()<deadline){
@@ -458,7 +462,7 @@
           const combat=D.combatStats(d.kind,d.level);
           if(this.seconds<d.readyAt)continue;const z=ordered.find(z=>z.hp>0&&!z.boneType&&dist(z,d)<.6);if(z){this.damageZombie(z,combat.damage);d.triggeredAt=this.seconds;d.readyAt=this.seconds+combat.interval;d.flashUntil=this.seconds+.35;if(z.hp>0)z.rootUntil=Math.max(z.rootUntil,this.seconds+(z.kind==='brute'?.5:1));}
         }else if(d.kind==='ballista'){
-          const combat=D.combatStats(d.kind,d.level),valid=z=>z.hp>0&&dist(z,d)<=combat.radius&&this.clearLine(d,z,d);
+          const combat=D.combatStats(d.kind,d.level),valid=z=>z.hp>0&&(!z.human||z.hostile||z.kind==='bandit')&&dist(z,d)<=combat.radius&&this.clearLine(d,z,d);
           const candidates=ordered.filter(valid),visibleIds=new Set(candidates.map(z=>String(z.id)));
           d.entered=d.entered||{};for(const id of Object.keys(d.entered))if(!visibleIds.has(id))delete d.entered[id];for(const z of candidates)if(d.entered[z.id]===undefined)d.entered[z.id]=this.seconds;
           let z=candidates.find(z=>z.id===d.targetId);if(!z){for(const candidate of candidates)if(!z||d.entered[candidate.id]<d.entered[z.id]||d.entered[candidate.id]===d.entered[z.id]&&candidate.id<z.id)z=candidate;d.targetId=z?.id;}
@@ -489,8 +493,8 @@
         if(!z.arrived&&this.isNightRaider(z)&&dist(z,this.player)<=10){z.arrived=true;this.stats.arrived++;}
         if(z.windup){if(this.seconds>=z.windup.until){const attack=z.windup;z.windup=null;
           if(attack.type==='scream'){for(const other of this.zombies)if(other!==z&&other.hp>0&&other.kind!=='screamer'&&dist(other,z)<=6)other.boostUntil=Math.max(other.boostUntil,this.seconds+8);this.effects.push({kind:'scream_ring',x:z.x,y:z.y,radius:6,until:this.seconds+.8});}
-          else if(attack.type==='spit'){const target=attack.target==='player'?(this.hidden?null:this.player):this.find(attack.target);if(target&&target.hp>0&&dist(z,target)<=7&&this.clearLine(z,target,target)){const dx=target.x-z.x,dy=target.y-z.y,length=Math.hypot(dx,dy)||1;this.projectiles.push({kind:'acid_projectile',x:z.x,y:z.y,vx:dx/length*5,vy:dy/length*5,range:7,damage:2,source:'spitter',owner:'enemy'});}}
-          else {const target=attack.target==='player'?(this.hidden?null:this.player):this.find(attack.target);if(target&&target.hp>0&&(attack.target==='player'?dist(z,target):pointRect(z,target))<=1&&this.clearLine(z,target,target)){if(attack.target==='player')this.damagePlayer(def.damage,z.kind);else this.damageBuilding(target,this.enemyDamage(def.building,z.kind));}}
+          else if(attack.type==='spit'){const target=attack.target==='player'?(this.hidden?null:this.player):this.find(attack.target);if(target&&target.hp>0&&dist(z,target)<=7&&this.clearLine(z,target,target)){const dx=target.x-z.x,dy=target.y-z.y,length=Math.hypot(dx,dy)||1;this.projectiles.push({kind:'acid_projectile',x:z.x,y:z.y,vx:dx/length*5,vy:dy/length*5,range:7,damage:2,source:'spitter',actorId:z.id,owner:'enemy'});}}
+          else {const target=attack.target==='player'?(this.hidden?null:this.player):this.find(attack.target);if(target&&target.hp>0&&(attack.target==='player'?dist(z,target):pointRect(z,target))<=1&&this.clearLine(z,target,target)){if(attack.target==='player')this.damagePlayer(def.damage,z.kind);else if(target.human)this.humanZombieHit(target,def.damage,z.kind,z);else this.damageBuilding(target,this.enemyDamage(def.building,z.kind));}}
         }continue;}
         if(z.rootUntil>this.seconds)continue;
         if(z.kind==='screamer'&&this.seconds>=z.screamAt&&this.zombies.some(o=>o!==z&&o.kind!=='screamer'&&o.hp>0&&dist(o,z)<=6)){z.screamAt=this.seconds+20;z.windup={type:'scream',until:this.seconds+1.5};continue;}
@@ -498,7 +502,7 @@
         if(z.kind==='demolisher'){const devices=this.devices.filter(d=>d.hp>0&&dist(d,z)<=6).sort((a,b)=>dist(a,z)-dist(b,z)),device=devices.find(d=>this.reachableDevice(z,d));if(device)target=device;}
         if(z.kind==='spitter'&&(target===this.player||target.id)&&this.seconds>=z.rangedAt&&this.seconds>=z.nextAttack&&dist(z,target)<=7&&dist(z,target)>1&&this.clearLine(z,target,target)){z.rangedAt=this.seconds+4;z.nextAttack=this.seconds+4;z.facing={x:target.x-z.x,y:target.y-z.y};z.windup={type:'spit',target:target===this.player?'player':target.id,until:this.seconds+1};continue;}
         const attack=obstacle=>{if(this.seconds<z.nextAttack)return;z.nextAttack=this.seconds+def.interval;z.facing={x:obstacle.x-z.x,y:obstacle.y-z.y};const id=obstacle===this.player?'player':obstacle.id;
-          if(['brute','demolisher'].includes(z.kind))z.windup={type:'melee',target:id,until:this.seconds+def.windup};else if(id==='player')this.damagePlayer(def.damage,z.kind);else this.damageBuilding(obstacle,this.enemyDamage(def.building,z.kind));
+          if(['brute','demolisher'].includes(z.kind))z.windup={type:'melee',target:id,until:this.seconds+def.windup};else if(id==='player')this.damagePlayer(def.damage,z.kind);else if(obstacle.human)this.humanZombieHit(obstacle,def.damage,z.kind,z);else this.damageBuilding(obstacle,this.enemyDamage(def.building,z.kind));
         };
         const distanceToTarget=target.type?pointRect(z,target):dist(z,target);
         if((target===this.player||target.id)&&distanceToTarget<=1&&this.clearLine(z,target,target)){attack(target);continue;}
@@ -523,14 +527,14 @@
         }
         const from={x:shot.x,y:shot.y},length=Math.min(shot.range,Math.hypot(shot.vx,shot.vy)*dt),speed=Math.hypot(shot.vx,shot.vy),to={x:from.x+shot.vx/speed*length,y:from.y+shot.vy/speed*length};
         const hits=this.obstacles(from,to,0).map(o=>({object:o,distance:dist(from,o),type:'building'}));
-        const targets=shot.owner==='enemy'?[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)]:this.zombies.filter(z=>z.hp>0&&z.faction!=='player');for(const o of targets){const t=o.boneType&&S.boneCircleHit?S.boneCircleHit(from,to,o,(o.radius||.2)+.05):null;if(t!==null?Number.isFinite(t):segmentHits(from,to,{x:o.x,y:o.y,w:o.w||.45,h:o.h||.45},.05))hits.push({object:o,distance:dist(from,o),type:o===this.player?'player':'zombie',t});}
+        const targets=shot.owner==='enemy'?(this.enemyProjectileTargets?this.enemyProjectileTargets(shot):[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)]):this.zombies.filter(z=>z.hp>0&&z.faction!=='player');for(const o of targets){const t=o.boneType&&S.boneCircleHit?S.boneCircleHit(from,to,o,(o.radius||.2)+.05):null;if(t!==null?Number.isFinite(t):segmentHits(from,to,{x:o.x,y:o.y,w:o.w||.45,h:o.h||.45},.05))hits.push({object:o,distance:dist(from,o),type:o===this.player?'player':'zombie',t});}
         // Sort by first intersection along the segment, rather than object centers.
         for(const hit of hits){if(Number.isFinite(hit.t))continue;let lo=0,hi=1;for(let i=0;i<12;i++){const t=(lo+hi)/2,p={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t},o=hit.object,r=hit.type==='building'?o:{x:o.x,y:o.y,w:o.w||.45,h:o.h||.45};if(segmentHits(from,p,r,0))hi=t;else lo=t;}hit.t=hi;}
         hits.sort((a,b)=>a.t-b.t);const hit=hits[0];shot.x=to.x;shot.y=to.y;shot.range-=length;
         if(hit){shot.x=from.x+(to.x-from.x)*hit.t;shot.y=from.y+(to.y-from.y)*hit.t;shot.dead=true;if(hit.type==='zombie')this.damageZombie(hit.object,shot.owner==='enemy'?this.enemyDamage(shot.damage,shot.source||'spitter'):(this.directDamage?this.directDamage(shot.damage):shot.damage),shot.owner==='enemy'?(shot.source||'enemy'):'weapon');else if(shot.owner==='enemy'){if(hit.type==='player')this.damagePlayer(shot.damage??2,shot.source||'spitter');else this.damageBuilding(hit.object,this.enemyDamage((this.ParkingLampKind?.(hit.object.kind)?shot.lampDamage:null)??shot.buildingDamage??1,shot.source||'spitter'));}}
         if(shot.range<=.001)shot.dead=true;
         if(shot.dead&&shot.kind==='stone_projectile')this.parkingVisual?.('stone_impact',shot,.35,22);
-        if(shot.dead&&shot.kind==='acid_projectile')this.zones.push({kind:'acid_pool',x:shot.x,y:shot.y,radius:1,until:this.seconds+3});
+        if(shot.dead&&shot.kind==='acid_projectile')this.zones.push({kind:'acid_pool',x:shot.x,y:shot.y,radius:1,until:this.seconds+3,actorId:shot.actorId});
       }
       this.projectiles=this.projectiles.filter(p=>!p.dead);
     }
@@ -565,10 +569,10 @@
       game.nextRecoveryAt=data.nextRecoveryAt===null?Infinity:data.nextRecoveryAt;game.lastSpent=data.lastSpent===null?-Infinity:data.lastSpent;
       game.recoveryInterval=Number.isFinite(data.recoveryInterval)?data.recoveryInterval:Infinity;
       game.starving=data.survivalRulesVersion===2?Math.max(0,Math.min(12,game.starving||0)):0;game.syncStaminaRecovery();
-      game.action=null;game.events=[];game.selectedSlot=0;game.pathBudget=2;game.autosaveRequested=false;game.announce('存档已恢复。');return game;
+      game.action=null;game.events=[];game.selectedSlot=0;game.pathBudget=2;game.autosaveRequested=false;game.checkPlayerDeath();game.announce('存档已恢复。');return game;
     }
     step(dt,input={}){
-      if(this.result||dt<=0)return;this.seconds+=dt;this.pathBudget=2;this.updateDoors();this.movePlayer(dt,input);this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;
+      if(this.checkPlayerDeath()||this.result||dt<=0)return;this.seconds+=dt;this.pathBudget=2;this.updateDoors();this.movePlayer(dt,input);this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;
       this.updateAction(dt);this.updatePlayerAttack();this.updateProduction(dt);this.advanceClock(dt);this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);this.effects=this.effects.filter(e=>e.until>this.seconds);if(this.devices.some(d=>d.hp<=0))this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);
     }
   }

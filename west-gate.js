@@ -10,7 +10,7 @@
       const a=this.armory,c=this.westCenter();if(!c)return;
       const fresh=!a.westGate;
       if(fresh)a.westGate={version:1,owned:false,dropSpawned:false,card:null,phase:'closed',pose:0,remaining:0,animation:0};
-      const g=a.westGate;if(!g.owned&&g.phase!=='closed'){g.phase='closed';g.pose=0;g.remaining=0;}
+      const g=a.westGate;if(g.closePolicy!==2){g.remaining=Math.max(0,Math.min(3,g.remaining||0));g.closePolicy=2;this.autosaveRequested=true;}if(!g.owned&&g.phase!=='closed'){g.phase='closed';g.pose=0;g.remaining=0;}
       this.installWestGateSolids();
       if(fresh){this.migrateWestOccupants();this.autosaveRequested=true;}
       if(!g.owned&&!g.dropSpawned&&(a.bossDead||a.rewardClaimed||a.points.some(o=>o.kind==='armory_briefcase')||a.deadIds.includes('armory:sweeper'))){
@@ -83,7 +83,7 @@
       const o=this.find(a.target);if(this.action!==a||this.result||!o||!this.westAccessible(o)||dist(this.player,a.start)>.025)return;
       const g=this.armory.westGate;this.action=null;
       if(a.operation==='west_keycard'){if(g.owned||g.card!==o)return;g.owned=true;g.card=null;g.dropPending=false;this.announce('获得西部大门钥匙卡：本局永久保留，不占背包，刷卡不消耗。');}
-      else if(g.owned){g.phase=g.pose===3?'open':'opening';g.animation=g.pose/3*SPAN;g.remaining=6;g.lastTick=this.seconds;this.announce('西门刷卡通过，开启6秒；门口有生物时延迟关闭。');}
+      else if(g.owned){g.phase=g.pose===3?'open':'opening';g.animation=g.pose/3*SPAN;g.remaining=3;g.lastTick=this.seconds;this.announce('西门刷卡通过，完全打开后3秒自动关闭；门口有生物时延迟关闭。');}
       this.autosaveRequested=true;
     }
     updateDoors(){super.updateDoors();if(this.scene==='surface'&&this.armory?.westGate)this.updateWestDoor();}

@@ -6,6 +6,26 @@
   const thumb=k=>`<div class="item-thumb item-icon-box">${A.itemIcon(k,aliases[k]||k)}</div>`;
   const cost=obj=>Object.entries(obj||{}).map(([k,n])=>`${N[k]}${n}`).join('、')||'无';
   const num=n=>Number(n.toFixed(2));
+  function foodDetails(game,kind){
+    const f=D.foods[kind],healing=game.traitEffects.healing,amplitude=game.foodAmplitude||1,duration=num(360*amplitude),parts=[f.hunger?`饱食+${f.hunger}（最高100）`:'不增加饱食'];
+    if(f.heal)parts.push(`立即恢复${num(f.heal*healing)}点血`);
+    if(f.stamina)parts.push(`立即恢复${f.stamina}点体力（饱食度须大于0）`);
+    const buffs={
+      stamina2:`体力上限+${num(2*amplitude)}（饱食度大于60时生效）`,
+      stamina4:`体力上限+${num(4*amplitude)}（饱食度大于60时生效）`,
+      health:`血量上限+${num(2*amplitude)}（不会因此立即回血）`,
+      melee:`每次近战伤害+${num(amplitude)}`,
+      recovery:`每恢复1点体力的间隔由${num(2*game.traitEffects.recovery)}秒缩短至${num((2-.5*amplitude)*game.traitEffects.recovery)}秒（饱食度大于60时生效）`,
+      armor:`单次伤害达到1点时减少${num(amplitude)}点伤害，减伤后最低仍受1点`
+    };
+    if(f.buff)parts.push(`${buffs[f.buff]}，持续${duration}秒；料理增益只保留一种，新增益替换旧增益`);
+    if(f.regen)parts.push(`每${num(30*amplitude)}秒恢复${num(healing*amplitude)}点血，共${f.regen}次（${num(f.regen*30*amplitude)}秒内最多恢复${num(f.regen*healing*amplitude)}点）；再次获得持续回血效果会重置，不累加`);
+    if(f.tea)parts.push(`奔跑体力消耗减少${num(20*amplitude)}%，持续${duration}秒；可与料理增益同时生效，重复饮用刷新时间、不叠加倍率`);
+    if(amplitude>1&&(f.buff||f.regen||f.tea))parts.push('以上已计入背包中饥饿图腾的强化；移出图腾后按剩余基础进度恢复普通幅度和计时速度');
+    if(f.heal||f.regen||f.stamina)parts.push('回血及体力恢复不超过各自当前上限');
+    parts.push(`食用耗时1.5秒；${f.water?'饮水独立冷却30秒':'与其他食物共用20秒冷却'}`);
+    return parts.join('；')+'。';
+  }
   const combatDetails=s=>s?`${s.damage}伤害 / ${s.interval}秒${s.radius?' · 半径'+Number(s.radius.toFixed(2))+'米':''}`:'';
   const button=(command,label,data='',disabled=false)=>`<button data-command="${command}" ${data} ${disabled?'disabled':''}>${label}</button>`;
   function inventory(game,buildKind,pane='bag'){
@@ -15,7 +35,7 @@
     else if(pane==='bag'){
       const selected=game.inventory[game.selectedSlot],weapon=D.weapons[selected?.kind],food=D.foods[selected?.kind];
       A.prepareWeapon(selected?.kind,game.player.facing);
-      const details=weapon?`伤害${num(game.directDamage(weapon.ammo?weapon.damage:game.meleeDamage(weapon.damage)))}${weapon.pellets?'×4弹丸':''} · 距离${weapon.range}米 · 间隔${num(weapon.interval*game.rangedAttackScale(selected.kind))}秒 · 每次耗体力${weapon.stamina}${weapon.ammo?' · 使用'+N[weapon.ammo]:''}`:food?`饱食+${food.hunger}${food.heal?' · 恢复'+num(food.heal*game.traitEffects.healing)+'血':''}${food.stamina?' · 恢复'+food.stamina+'体力':''}${food.buff||food.tea?' · 增益持续360秒':''}`:selected?.kind==='emergency_aed'?'背包持有自动救命一次：致命伤后剩1血、保护1秒，同时3秒奔跑体力消耗×1.5；每件占一格，用后消失。':selected?.kind==='bandage'?`8秒内恢复${num(4*game.traitEffects.healing)}点血，每2秒恢复${num(game.traitEffects.healing)}点。治疗时可以步行。一旦奔跑、攻击或受伤，剩余治疗立即停止，绷带不返还。`:selected?.kind==='molotov'?'装备后手持，显示抛物线与4米落点；调整朝向，按E或触屏交互确认投出。红色表示当前不能投掷，落地后燃烧。':selected?.kind==='medkit'?`制作后存入背包。点使用开始3秒急救，完成后消耗1个急救包并恢复${num(8*game.traitEffects.healing)}血，受伤会中断。`:'';
+      const details=weapon?`伤害${num(game.directDamage(weapon.ammo?weapon.damage:game.meleeDamage(weapon.damage)))}${weapon.pellets?'×4弹丸':''} · 距离${weapon.range}米 · 间隔${num(weapon.interval*game.rangedAttackScale(selected.kind))}秒 · 每次耗体力${weapon.stamina}${weapon.ammo?' · 使用'+N[weapon.ammo]:''}`:food?foodDetails(game,selected.kind):['raw_meat','grain'].includes(selected?.kind)?'烹饪原料，不能直接食用；请先加工成料理。':selected?.kind==='emergency_aed'?'背包持有自动救命一次：致命伤后剩1血、保护1秒，同时3秒奔跑体力消耗×1.5；每件占一格，用后消失。':selected?.kind==='bandage'?`8秒内恢复${num(4*game.traitEffects.healing)}点血，每2秒恢复${num(game.traitEffects.healing)}点。治疗时可以步行。一旦奔跑、攻击或受伤，剩余治疗立即停止，绷带不返还。`:selected?.kind==='molotov'?'装备后手持，显示抛物线与4米落点；调整朝向，按E或触屏交互确认投出。红色表示当前不能投掷，落地后燃烧。':selected?.kind==='medkit'?`制作后存入背包。点使用开始3秒急救，完成后消耗1个急救包并恢复${num(8*game.traitEffects.healing)}血，受伤会中断。`:'';
       content=`<p>点物品格选择，点“使用”食用、包扎或装备武器。材料不能直接食用。</p><div class="inventory-grid">${game.inventory.map((s,i)=>`<button data-slot="${i}" class="slot ${i===game.selectedSlot?'selected':''}">${s?thumb(s.kind):''}<div>${s?`${escape(N[s.kind]||s.kind)} × ${s.amount}`:'空'}</div><span>${i+1}</span></button>`).join('')}</div><div class="selection-info">当前：${selected?escape(N[selected.kind]||selected.kind):'空格'}　装备：${escape(N[game.player.weapon]||'徒手')}</div><p class="item-details">${escape(details)}</p>`;
       content+=window.WestGateView?.inventoryExtras(game)||'';if(game.knowledge?.blueprint_emergency_aed)content+=`<p>${A.worldIcon('aed_blueprint_emergency_aed','knowledge',28)} 已学会AED蓝图 · 可在制作栏合成</p>`;
       extraActions=button('use',selected?.kind==='molotov'?'手持燃烧瓶':selected?.kind==='medkit'?'使用急救包':'使用/装备','',!selected)+button('fists','徒手')+button('drop','丢弃一份','',!selected);

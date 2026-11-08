@@ -164,8 +164,8 @@
           if(a.type==='ranged'){
             if(dist(z,victim)>a.range)continue;const n=dist(z,victim)||1;
             this.enemyAttackVisual(z,'throw',victim);
-            this.projectiles.push({kind:z.kind==='lamp_smasher'?'stone_projectile':'acid_projectile',x:z.x,y:z.y,vx:(victim.x-z.x)/n*5,vy:(victim.y-z.y)/n*5,range:a.range,damage:z.kind==='lamp_smasher'?2:3,buildingDamage:2,lampDamage:z.kind==='lamp_smasher'?4:2,source:z.kind,owner:'enemy'});
-          }else {this.enemyAttackVisual(z,'melee',victim);if((victim.type?pointRect(z,victim):dist(z,victim))<=1&&!this.isLit(victim)){if(victim===this.player)this.damagePlayer(def.damage,z.kind);else this.damageBuilding(victim,this.enemyDamage(def.building,z.kind));}}continue;
+            this.projectiles.push({kind:z.kind==='lamp_smasher'?'stone_projectile':'acid_projectile',x:z.x,y:z.y,vx:(victim.x-z.x)/n*5,vy:(victim.y-z.y)/n*5,range:a.range,damage:z.kind==='lamp_smasher'?2:3,buildingDamage:2,lampDamage:z.kind==='lamp_smasher'?4:2,source:z.kind,actorId:z.id,owner:'enemy'});
+          }else {this.enemyAttackVisual(z,'melee',victim);if((victim.type?pointRect(z,victim):dist(z,victim))<=1&&!this.isLit(victim)){if(victim===this.player)this.damagePlayer(def.damage,z.kind);else if(victim.human)this.humanZombieHit(victim,def.damage,z.kind,z);else this.damageBuilding(victim,this.enemyDamage(def.building,z.kind));}}continue;
         }
         if(z.rootUntil>this.seconds)continue;
         if(z.kind==='screamer'&&this.seconds>=z.screamAt&&this.zombies.some(o=>o!==z&&o.hp>0&&!['lurker','screamer'].includes(o.kind)&&dist(o,z)<=6)){z.screamAt=this.seconds+20;z.windup={type:'scream',until:this.seconds+1.5};continue;}
@@ -175,7 +175,7 @@
           z.facing={x:target.x-z.x,y:target.y-z.y};z.rangedAt=this.seconds+(z.kind==='lamp_smasher'?5:4);z.nextAttack=z.rangedAt;z.windup={type:'ranged',target:player?'player':target.id,range,until:this.seconds+1};this.parkingCue(`${def.name}准备远程攻击！`);continue;
         }
         if((player||isObject)&&(isObject?pointRect(z,target):dist(z,target))<=1&&this.clearLine(z,target,target)&&!this.isLit(target)){
-          if(this.seconds>=z.nextAttack){z.nextAttack=this.seconds+def.interval;z.facing={x:target.x-z.x,y:target.y-z.y};if(def.windup)z.windup={type:'melee',target:player?'player':target.id,until:this.seconds+def.windup};else {this.enemyAttackVisual(z,'melee',target);if(player)this.damagePlayer(def.damage,z.kind);else this.damageBuilding(target,this.enemyDamage(def.building,z.kind));}}continue;
+          if(this.seconds>=z.nextAttack){z.nextAttack=this.seconds+def.interval;z.facing={x:target.x-z.x,y:target.y-z.y};if(def.windup)z.windup={type:'melee',target:player?'player':target.id,until:this.seconds+def.windup};else {this.enemyAttackVisual(z,'melee',target);if(player)this.damagePlayer(def.damage,z.kind);else if(target.human)this.humanZombieHit(target,def.damage,z.kind,z);else this.damageBuilding(target,this.enemyDamage(def.building,z.kind));}}continue;
         }
         const moved=this.enemyMove(z,target,def.speed*(z.boostUntil>this.seconds?1.2:1)*(z.slowUntil>this.seconds?.7:1),dt);
         if(!moved){const block=this.obstacles(z,target,.24).filter(o=>!o.indestructible&&pointRect(z,o)<=1&&!this.isLit(o)).sort((a,b)=>pointRect(z,a)-pointRect(z,b))[0];if(block&&this.seconds>=z.nextAttack){this.damageBuilding(block,this.enemyDamage(def.building,z.kind));z.nextAttack=this.seconds+def.interval;}}
@@ -224,7 +224,7 @@
       if(z.state==='charging'){
         if(this.seconds+1e-8>=z.stateUntil){
           z.state='exposed';z.lastRoar=this.seconds;z.burrowDelay=z.phase==='cowering'?9+this.random()*3:15+this.random()*2;z.nextBurrow=this.seconds+z.burrowDelay;
-          if(dist(z,this.player)<=2&&this.clearLine(z,this.player)&&this.damagePlayer(.5,'lurker_roar'))this.weaknessUntil=this.seconds+5;
+          if(dist(z,this.player)<=2&&this.clearLine(z,this.player)&&this.damagePlayer(.5,'lurker_roar'))this.weaknessUntil=this.seconds+5;for(const victim of this.humanActiveActors?.()||[])if(dist(z,victim)<=2&&this.clearLine(z,victim))this.humanZombieHit(victim,.5,'lurker_roar',z);
           this.effects.push({kind:'boss_roar',x:z.x,y:z.y,radius:2,until:this.seconds+.6});
         }return;
       }
@@ -236,10 +236,10 @@
       const target=this.perceive(z);if(!target)return;
       const goal=target.y<28?{x:0,y:50}:target;
       if(z.windup){
-        if(this.seconds>=z.windup.until){z.windup=null;this.enemyAttackVisual(z,'melee');if(!this.hidden&&this.player.y>=28&&dist(z,this.player)<=1&&!this.isLit(this.player)&&this.clearLine(z,this.player))this.damagePlayer(z.phase==='cowering'?2.5:4.5,'lurker');}return;
+        if(this.seconds>=z.windup.until){const id=z.windup.target,victim=id&&id!=='player'?this.find(id):this.player;z.windup=null;this.enemyAttackVisual(z,'melee',victim);if(victim?.hp>0&&!(victim===this.player&&this.hidden)&&victim.y>=28&&dist(z,victim)<=1&&!this.isLit(victim)&&this.clearLine(z,victim)){if(victim===this.player)this.damagePlayer(z.phase==='cowering'?2.5:4.5,'lurker');else this.humanZombieHit?.(victim,z.phase==='cowering'?2.5:4.5,'lurker',z);}}return;
       }
       if(z.rootUntil>this.seconds)return;
-      if(target===this.player&&this.player.y>=28&&dist(z,this.player)<=1&&!this.isLit(this.player)&&this.seconds>=z.nextAttack){z.facing={x:target.x-z.x,y:target.y-z.y};z.nextAttack=this.seconds+2;z.windup={type:'boss_melee',until:this.seconds+.6};this.parkingCue('潜伏者地面隆起：攻击前摇！');return;}
+      if((target===this.player||target.human)&&target.y>=28&&dist(z,target)<=1&&!this.isLit(target)&&this.seconds>=z.nextAttack){z.facing={x:target.x-z.x,y:target.y-z.y};z.nextAttack=this.seconds+2;z.windup={type:'boss_melee',target:target===this.player?'player':target.id,until:this.seconds+.6};this.parkingCue('潜伏者地面隆起：攻击前摇！');return;}
       this.enemyMove(z,goal,z.phase==='cowering'?3:2.5,dt,false,true);
     },
     flushBossSummons(){

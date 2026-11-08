@@ -5,7 +5,7 @@
   const icon=(size=24)=>A.worldIcon('west_armory_west_keycard','item',size);
   function context(game,target){
     const o=target?.object,g=game.armory?.westGate;if(!g||!['west_keycard','west_gate_reader'].includes(o?.kind))return null;
-    const key=o.kind==='west_keycard';return `<div class="eyebrow">军备库 · 西部大门</div><h2>${icon()}${key?'西部大门钥匙卡':'西门读卡器'}</h2><p>${key?'拾取2秒，移动或受伤取消；不占背包格，本局永久保留，刷卡不消耗。':g.owned?'已持卡。刷卡1秒后开门6秒，通道有生物时延迟关闭；两侧使用同一权限。':'需要击败扫荡者并拾取钥匙卡；南侧主入口可自由撤退。'}</p><button data-command="armory-interact" ${!key&&!g.owned?'disabled':''}>${key?'拾取钥匙卡':'刷卡开门'}</button><button data-key="escape">返回游戏</button>`;
+    const key=o.kind==='west_keycard';return `<div class="eyebrow">军备库 · 西部大门</div><h2>${icon()}${key?'西部大门钥匙卡':'西门读卡器'}</h2><p>${key?'拾取2秒，移动或受伤取消；不占背包格，本局永久保留，刷卡不消耗。':g.owned?'已持卡。刷卡1秒，完全打开3秒后自动关闭，通道有生物时延迟关闭；两侧使用同一权限。':'需要击败扫荡者并拾取钥匙卡；南门首次须乘突击车撞开，撞开后可自由步行进出。'}</p><button data-command="armory-interact" ${!key&&!g.owned?'disabled':''}>${key?'拾取钥匙卡':'刷卡开门'}</button><button data-key="escape">返回游戏</button>`;
   }
   function inventoryExtras(game){return game.armory?.westGate?.owned?`<p class="key-items">${icon()}关键物品：西部大门钥匙卡 · 永久持有 · 不占格、不消耗</p>`:'';}
   function surface(game,v){

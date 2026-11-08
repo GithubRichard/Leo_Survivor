@@ -1,0 +1,1717 @@
+{
+  "schema": 2,
+  "gutterStrategy": "zero-alpha vertical gutters and per-column horizontal gutters; use frame.rect as authoritative",
+  "tool": "built-in image_gen",
+  "source": [
+    "verified programmer human request 2026-11-08"
+  ],
+  "expectedPNGs": 6,
+  "expectedFrames": 24,
+  "userCorrections": [
+    "必须乘车进入",
+    "返程无动画"
+  ],
+  "rectFormat": "source x,y,width,height; PNG pixels unchanged",
+  "anchorNote": "Frame-local pixels; screen compass (south=down), not map x/y. Ground origin is manual art registration, not collision.",
+  "assets": [
+    {
+      "id": "assault_car_sw",
+      "label": "突击车·西南空车",
+      "category": "vehicle",
+      "file": "png/assault_car_sw.png",
+      "grid": [
+        1,
+        1
+      ],
+      "states": [
+        "parked"
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 980258,
+      "opaquePixels": 588862,
+      "softPixels": 3525,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        1536
+      ],
+      "cutsY": [
+        0,
+        1024
+      ],
+      "sha256": "2d9a71167453de60955d1de09872776c104e67b11be8fa1021fff51c11b4064c",
+      "sourceVerified": true
+    },
+    {
+      "id": "assault_car_directions",
+      "label": "八向完整空车",
+      "category": "vehicle",
+      "file": "png/assault_car_directions.png",
+      "grid": [
+        4,
+        2
+      ],
+      "states": [
+        "south",
+        "southwest",
+        "west",
+        "northwest",
+        "north",
+        "northeast",
+        "east",
+        "southeast"
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1774,
+        887
+      ],
+      "transparentPixels": 1061245,
+      "opaquePixels": 497532,
+      "softPixels": 11347,
+      "cornerAlpha": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        443,
+        887,
+        1330,
+        1774
+      ],
+      "cutsY": [
+        0,
+        443,
+        887
+      ],
+      "sha256": "0f49a4cc1ae78a32b45e2504b909cde32fd165bb45042d5ac6d392f702ce4ea8",
+      "sourceVerified": true
+    },
+    {
+      "id": "assault_car_boarding",
+      "label": "西南向开门上车",
+      "category": "boarding",
+      "file": "png/assault_car_boarding.png",
+      "grid": [
+        3,
+        2
+      ],
+      "states": [
+        "closed_empty",
+        "open_empty",
+        "reach",
+        "step_in",
+        "seated_open",
+        "closed_seated"
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 924024,
+      "opaquePixels": 637071,
+      "softPixels": 10457,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        512,
+        1024,
+        1536
+      ],
+      "cutsY": [
+        0,
+        512,
+        1024
+      ],
+      "sha256": "ac6146457459a452a88d4a34fb0b6c1a444b1c5f2e6155e22143d973a98a0c8b",
+      "sourceVerified": true
+    },
+    {
+      "id": "assault_wheel_spin",
+      "label": "轮胎起步转动",
+      "category": "wheel",
+      "file": "png/assault_wheel_spin.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        "spin0",
+        "spin1",
+        "spin2"
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1050792,
+      "opaquePixels": 514867,
+      "softPixels": 5967,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "3ced827e578d1b273db725a985ac1e9381d064c397ba0efc1030c0c153f45226",
+      "sourceVerified": true
+    },
+    {
+      "id": "assault_dust",
+      "label": "车尾烟尘",
+      "category": "effect",
+      "file": "png/assault_dust.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        "small",
+        "expand",
+        "fade"
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1454053,
+      "opaquePixels": 3703,
+      "softPixels": 98733,
+      "cornerAlpha": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "5fd6f433b490b6d2ea3484e80307a47517c8f68930d1eb0fe39bd8a53f5fa74a",
+      "sourceVerified": true
+    },
+    {
+      "id": "assault_skid",
+      "label": "漂移轮胎痕",
+      "category": "effect",
+      "file": "png/assault_skid.png",
+      "grid": [
+        3,
+        1
+      ],
+      "states": [
+        "short",
+        "curve",
+        "long"
+      ],
+      "rules": null,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "size": [
+        2172,
+        724
+      ],
+      "transparentPixels": 1458763,
+      "opaquePixels": 103454,
+      "softPixels": 8312,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cutsX": [
+        0,
+        724,
+        1448,
+        2172
+      ],
+      "cutsY": [
+        0,
+        724
+      ],
+      "sha256": "c036fc42a1af713ca052f5dc1a48472ef6f9c70253c2662167239dd08c805fd1",
+      "sourceVerified": true
+    }
+  ],
+  "frames": [
+    {
+      "id": "assault_car_sw__parked",
+      "asset": "assault_car_sw",
+      "file": "png/assault_car_sw.png",
+      "label": "突击车·西南空车·parked",
+      "category": "vehicle",
+      "state": "parked",
+      "action": "vehicle",
+      "frame": 0,
+      "entity": null,
+      "direction": "southwest",
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "size": [
+        1536,
+        1024
+      ],
+      "visibleBounds": [
+        198,
+        79,
+        1314,
+        996
+      ],
+      "opaquePixels": 588862,
+      "center": [
+        832.71,
+        454.8
+      ],
+      "anchor": [
+        768,
+        860
+      ],
+      "pixelsPerMeter": 220
+    },
+    {
+      "id": "assault_car_directions__south",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·south",
+      "category": "vehicle",
+      "state": "south",
+      "action": "vehicle",
+      "frame": 0,
+      "entity": null,
+      "direction": "south",
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        443,
+        443
+      ],
+      "size": [
+        443,
+        443
+      ],
+      "visibleBounds": [
+        121,
+        79,
+        323,
+        392
+      ],
+      "opaquePixels": 56463,
+      "center": [
+        221.72,
+        191.58
+      ],
+      "anchor": [
+        222,
+        345
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__southwest",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·southwest",
+      "category": "vehicle",
+      "state": "southwest",
+      "action": "vehicle",
+      "frame": 1,
+      "entity": null,
+      "direction": "southwest",
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        443,
+        0,
+        444,
+        443
+      ],
+      "size": [
+        444,
+        443
+      ],
+      "visibleBounds": [
+        43,
+        73,
+        400,
+        392
+      ],
+      "opaquePixels": 64945,
+      "center": [
+        240.48,
+        201.31
+      ],
+      "anchor": [
+        222,
+        345
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__west",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·west",
+      "category": "vehicle",
+      "state": "west",
+      "action": "vehicle",
+      "frame": 2,
+      "entity": null,
+      "direction": "west",
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        887,
+        0,
+        443,
+        443
+      ],
+      "size": [
+        443,
+        443
+      ],
+      "visibleBounds": [
+        41,
+        112,
+        398,
+        359
+      ],
+      "opaquePixels": 67554,
+      "center": [
+        232.18,
+        206.64
+      ],
+      "anchor": [
+        222,
+        330
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__northwest",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·northwest",
+      "category": "vehicle",
+      "state": "northwest",
+      "action": "vehicle",
+      "frame": 3,
+      "entity": null,
+      "direction": "northwest",
+      "phase": null,
+      "cell": 4,
+      "rect": [
+        1330,
+        0,
+        444,
+        443
+      ],
+      "size": [
+        444,
+        443
+      ],
+      "visibleBounds": [
+        42,
+        96,
+        403,
+        386
+      ],
+      "opaquePixels": 63046,
+      "center": [
+        223.46,
+        205.97
+      ],
+      "anchor": [
+        222,
+        345
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__north",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·north",
+      "category": "vehicle",
+      "state": "north",
+      "action": "vehicle",
+      "frame": 4,
+      "entity": null,
+      "direction": "north",
+      "phase": null,
+      "cell": 5,
+      "rect": [
+        0,
+        443,
+        443,
+        444
+      ],
+      "size": [
+        443,
+        444
+      ],
+      "visibleBounds": [
+        122,
+        92,
+        323,
+        362
+      ],
+      "opaquePixels": 47397,
+      "center": [
+        221.82,
+        194.39
+      ],
+      "anchor": [
+        222,
+        330
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__northeast",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·northeast",
+      "category": "vehicle",
+      "state": "northeast",
+      "action": "vehicle",
+      "frame": 5,
+      "entity": null,
+      "direction": "northeast",
+      "phase": null,
+      "cell": 6,
+      "rect": [
+        443,
+        443,
+        444,
+        444
+      ],
+      "size": [
+        444,
+        444
+      ],
+      "visibleBounds": [
+        43,
+        93,
+        403,
+        384
+      ],
+      "opaquePixels": 63693,
+      "center": [
+        221.56,
+        205.48
+      ],
+      "anchor": [
+        222,
+        345
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__east",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·east",
+      "category": "vehicle",
+      "state": "east",
+      "action": "vehicle",
+      "frame": 6,
+      "entity": null,
+      "direction": "east",
+      "phase": null,
+      "cell": 7,
+      "rect": [
+        887,
+        443,
+        443,
+        444
+      ],
+      "size": [
+        443,
+        444
+      ],
+      "visibleBounds": [
+        46,
+        110,
+        404,
+        360
+      ],
+      "opaquePixels": 68513,
+      "center": [
+        211.29,
+        206.2
+      ],
+      "anchor": [
+        222,
+        330
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_directions__southeast",
+      "asset": "assault_car_directions",
+      "file": "png/assault_car_directions.png",
+      "label": "八向完整空车·southeast",
+      "category": "vehicle",
+      "state": "southeast",
+      "action": "vehicle",
+      "frame": 7,
+      "entity": null,
+      "direction": "southeast",
+      "phase": null,
+      "cell": 8,
+      "rect": [
+        1330,
+        443,
+        444,
+        444
+      ],
+      "size": [
+        444,
+        444
+      ],
+      "visibleBounds": [
+        43,
+        72,
+        402,
+        394
+      ],
+      "opaquePixels": 65921,
+      "center": [
+        203.52,
+        201.89
+      ],
+      "anchor": [
+        222,
+        345
+      ],
+      "pixelsPerMeter": 70
+    },
+    {
+      "id": "assault_car_boarding__closed_empty",
+      "asset": "assault_car_boarding",
+      "file": "png/assault_car_boarding.png",
+      "label": "西南向开门上车·closed_empty",
+      "category": "boarding",
+      "state": "closed_empty",
+      "action": "boarding",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        23,
+        71,
+        482,
+        457
+      ],
+      "opaquePixels": 101153,
+      "center": [
+        273.62,
+        229.72
+      ],
+      "anchor": [
+        256,
+        399
+      ],
+      "pixelsPerMeter": 90,
+      "attachments": {
+        "ground": [
+          256,
+          399
+        ],
+        "doorHinge": [
+          273,
+          300
+        ],
+        "doorOuterOpen": [
+          347,
+          399
+        ],
+        "seat": [
+          301,
+          280
+        ],
+        "sill": [
+          298,
+          363
+        ],
+        "approachFoot": [
+          414,
+          421
+        ],
+        "frontWheel": [
+          234,
+          398
+        ],
+        "rearWheel": [
+          432,
+          317
+        ],
+        "frontWheelHubSize": [
+          28,
+          46
+        ],
+        "rearWheelHubSize": [
+          24,
+          42
+        ],
+        "doorHingedAt": "front edge of near front door"
+      }
+    },
+    {
+      "id": "assault_car_boarding__open_empty",
+      "asset": "assault_car_boarding",
+      "file": "png/assault_car_boarding.png",
+      "label": "西南向开门上车·open_empty",
+      "category": "boarding",
+      "state": "open_empty",
+      "action": "boarding",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        23,
+        71,
+        482,
+        457
+      ],
+      "opaquePixels": 106781,
+      "center": [
+        273.71,
+        229.81
+      ],
+      "anchor": [
+        256,
+        399
+      ],
+      "pixelsPerMeter": 90,
+      "attachments": {
+        "ground": [
+          256,
+          399
+        ],
+        "doorHinge": [
+          273,
+          300
+        ],
+        "doorOuterOpen": [
+          347,
+          399
+        ],
+        "seat": [
+          301,
+          280
+        ],
+        "sill": [
+          298,
+          363
+        ],
+        "approachFoot": [
+          414,
+          421
+        ],
+        "frontWheel": [
+          234,
+          398
+        ],
+        "rearWheel": [
+          432,
+          317
+        ],
+        "frontWheelHubSize": [
+          28,
+          46
+        ],
+        "rearWheelHubSize": [
+          24,
+          42
+        ],
+        "doorHingedAt": "front edge of near front door"
+      }
+    },
+    {
+      "id": "assault_car_boarding__reach",
+      "asset": "assault_car_boarding",
+      "file": "png/assault_car_boarding.png",
+      "label": "西南向开门上车·reach",
+      "category": "boarding",
+      "state": "reach",
+      "action": "boarding",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        23,
+        71,
+        483,
+        464
+      ],
+      "opaquePixels": 111697,
+      "center": [
+        273.85,
+        229.97
+      ],
+      "anchor": [
+        256,
+        399
+      ],
+      "pixelsPerMeter": 90,
+      "attachments": {
+        "ground": [
+          256,
+          399
+        ],
+        "doorHinge": [
+          273,
+          300
+        ],
+        "doorOuterOpen": [
+          347,
+          399
+        ],
+        "seat": [
+          301,
+          280
+        ],
+        "sill": [
+          298,
+          363
+        ],
+        "approachFoot": [
+          414,
+          421
+        ],
+        "frontWheel": [
+          234,
+          398
+        ],
+        "rearWheel": [
+          432,
+          317
+        ],
+        "frontWheelHubSize": [
+          28,
+          46
+        ],
+        "rearWheelHubSize": [
+          24,
+          42
+        ],
+        "doorHingedAt": "front edge of near front door"
+      }
+    },
+    {
+      "id": "assault_car_boarding__step_in",
+      "asset": "assault_car_boarding",
+      "file": "png/assault_car_boarding.png",
+      "label": "西南向开门上车·step_in",
+      "category": "boarding",
+      "state": "step_in",
+      "action": "boarding",
+      "frame": 3,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 4,
+      "rect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        23,
+        71,
+        482,
+        460
+      ],
+      "opaquePixels": 109473,
+      "center": [
+        273.88,
+        229.97
+      ],
+      "anchor": [
+        256,
+        399
+      ],
+      "pixelsPerMeter": 90,
+      "attachments": {
+        "ground": [
+          256,
+          399
+        ],
+        "doorHinge": [
+          273,
+          300
+        ],
+        "doorOuterOpen": [
+          347,
+          399
+        ],
+        "seat": [
+          301,
+          280
+        ],
+        "sill": [
+          298,
+          363
+        ],
+        "approachFoot": [
+          414,
+          421
+        ],
+        "frontWheel": [
+          234,
+          398
+        ],
+        "rearWheel": [
+          432,
+          317
+        ],
+        "frontWheelHubSize": [
+          28,
+          46
+        ],
+        "rearWheelHubSize": [
+          24,
+          42
+        ],
+        "doorHingedAt": "front edge of near front door"
+      }
+    },
+    {
+      "id": "assault_car_boarding__seated_open",
+      "asset": "assault_car_boarding",
+      "file": "png/assault_car_boarding.png",
+      "label": "西南向开门上车·seated_open",
+      "category": "boarding",
+      "state": "seated_open",
+      "action": "boarding",
+      "frame": 4,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 5,
+      "rect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        23,
+        71,
+        482,
+        457
+      ],
+      "opaquePixels": 106813,
+      "center": [
+        273.75,
+        229.87
+      ],
+      "anchor": [
+        256,
+        399
+      ],
+      "pixelsPerMeter": 90,
+      "attachments": {
+        "ground": [
+          256,
+          399
+        ],
+        "doorHinge": [
+          273,
+          300
+        ],
+        "doorOuterOpen": [
+          347,
+          399
+        ],
+        "seat": [
+          301,
+          280
+        ],
+        "sill": [
+          298,
+          363
+        ],
+        "approachFoot": [
+          414,
+          421
+        ],
+        "frontWheel": [
+          234,
+          398
+        ],
+        "rearWheel": [
+          432,
+          317
+        ],
+        "frontWheelHubSize": [
+          28,
+          46
+        ],
+        "rearWheelHubSize": [
+          24,
+          42
+        ],
+        "doorHingedAt": "front edge of near front door"
+      }
+    },
+    {
+      "id": "assault_car_boarding__closed_seated",
+      "asset": "assault_car_boarding",
+      "file": "png/assault_car_boarding.png",
+      "label": "西南向开门上车·closed_seated",
+      "category": "boarding",
+      "state": "closed_seated",
+      "action": "boarding",
+      "frame": 5,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 6,
+      "rect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        23,
+        71,
+        483,
+        457
+      ],
+      "opaquePixels": 101154,
+      "center": [
+        273.7,
+        229.78
+      ],
+      "anchor": [
+        256,
+        399
+      ],
+      "pixelsPerMeter": 90,
+      "attachments": {
+        "ground": [
+          256,
+          399
+        ],
+        "doorHinge": [
+          273,
+          300
+        ],
+        "doorOuterOpen": [
+          347,
+          399
+        ],
+        "seat": [
+          301,
+          280
+        ],
+        "sill": [
+          298,
+          363
+        ],
+        "approachFoot": [
+          414,
+          421
+        ],
+        "frontWheel": [
+          234,
+          398
+        ],
+        "rearWheel": [
+          432,
+          317
+        ],
+        "frontWheelHubSize": [
+          28,
+          46
+        ],
+        "rearWheelHubSize": [
+          24,
+          42
+        ],
+        "doorHingedAt": "front edge of near front door"
+      }
+    },
+    {
+      "id": "assault_wheel_spin__spin0",
+      "asset": "assault_wheel_spin",
+      "file": "png/assault_wheel_spin.png",
+      "label": "轮胎起步转动·spin0",
+      "category": "wheel",
+      "state": "spin0",
+      "action": "wheel",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        140,
+        115,
+        583,
+        615
+      ],
+      "opaquePixels": 171649,
+      "center": [
+        367.08,
+        319.01
+      ],
+      "anchor": [
+        412,
+        383
+      ],
+      "hubSourceRect": [
+        306,
+        243,
+        213,
+        280
+      ]
+    },
+    {
+      "id": "assault_wheel_spin__spin1",
+      "asset": "assault_wheel_spin",
+      "file": "png/assault_wheel_spin.png",
+      "label": "轮胎起步转动·spin1",
+      "category": "wheel",
+      "state": "spin1",
+      "action": "wheel",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        140,
+        115,
+        583,
+        615
+      ],
+      "opaquePixels": 171640,
+      "center": [
+        367.14,
+        319.01
+      ],
+      "anchor": [
+        412,
+        383
+      ],
+      "hubSourceRect": [
+        306,
+        243,
+        213,
+        280
+      ]
+    },
+    {
+      "id": "assault_wheel_spin__spin2",
+      "asset": "assault_wheel_spin",
+      "file": "png/assault_wheel_spin.png",
+      "label": "轮胎起步转动·spin2",
+      "category": "wheel",
+      "state": "spin2",
+      "action": "wheel",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        140,
+        115,
+        583,
+        615
+      ],
+      "opaquePixels": 171578,
+      "center": [
+        367.17,
+        319.02
+      ],
+      "anchor": [
+        412,
+        383
+      ],
+      "hubSourceRect": [
+        306,
+        243,
+        213,
+        280
+      ]
+    },
+    {
+      "id": "assault_dust__small",
+      "asset": "assault_dust",
+      "file": "png/assault_dust.png",
+      "label": "车尾烟尘·small",
+      "category": "effect",
+      "state": "small",
+      "action": "effect",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        292,
+        307,
+        445,
+        431
+      ],
+      "opaquePixels": 3703,
+      "center": [
+        341.87,
+        386.47
+      ],
+      "anchor": [
+        292,
+        431
+      ],
+      "opacity": 0.27
+    },
+    {
+      "id": "assault_dust__expand",
+      "asset": "assault_dust",
+      "file": "png/assault_dust.png",
+      "label": "车尾烟尘·expand",
+      "category": "effect",
+      "state": "expand",
+      "action": "effect",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        174,
+        230,
+        482,
+        465
+      ],
+      "opaquePixels": 0,
+      "center": [
+        362,
+        289.6
+      ],
+      "anchor": [
+        174,
+        465
+      ],
+      "opacity": 0.27
+    },
+    {
+      "id": "assault_dust__fade",
+      "asset": "assault_dust",
+      "file": "png/assault_dust.png",
+      "label": "车尾烟尘·fade",
+      "category": "effect",
+      "state": "fade",
+      "action": "effect",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        143,
+        235,
+        441,
+        469
+      ],
+      "opaquePixels": 0,
+      "center": [
+        362,
+        289.6
+      ],
+      "anchor": [
+        143,
+        469
+      ],
+      "opacity": 0.27
+    },
+    {
+      "id": "assault_skid__short",
+      "asset": "assault_skid",
+      "file": "png/assault_skid.png",
+      "label": "漂移轮胎痕·short",
+      "category": "effect",
+      "state": "short",
+      "action": "effect",
+      "frame": 0,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 1,
+      "rect": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        160,
+        406,
+        431,
+        619
+      ],
+      "opaquePixels": 16955,
+      "center": [
+        354.77,
+        448.1
+      ],
+      "anchor": [
+        160,
+        619
+      ],
+      "opacity": 0.35
+    },
+    {
+      "id": "assault_skid__curve",
+      "asset": "assault_skid",
+      "file": "png/assault_skid.png",
+      "label": "漂移轮胎痕·curve",
+      "category": "effect",
+      "state": "curve",
+      "action": "effect",
+      "frame": 1,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 2,
+      "rect": [
+        724,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        109,
+        277,
+        558,
+        630
+      ],
+      "opaquePixels": 33626,
+      "center": [
+        447.75,
+        387.19
+      ],
+      "anchor": [
+        109,
+        630
+      ],
+      "opacity": 0.35
+    },
+    {
+      "id": "assault_skid__long",
+      "asset": "assault_skid",
+      "file": "png/assault_skid.png",
+      "label": "漂移轮胎痕·long",
+      "category": "effect",
+      "state": "long",
+      "action": "effect",
+      "frame": 2,
+      "entity": null,
+      "direction": null,
+      "phase": null,
+      "cell": 3,
+      "rect": [
+        1448,
+        0,
+        724,
+        724
+      ],
+      "size": [
+        724,
+        724
+      ],
+      "visibleBounds": [
+        68,
+        104,
+        678,
+        661
+      ],
+      "opaquePixels": 52873,
+      "center": [
+        502.04,
+        354.74
+      ],
+      "anchor": [
+        68,
+        661
+      ],
+      "opacity": 0.35
+    }
+  ],
+  "reuse": {
+    "playerReference": "reuse/player-yellow-reference.png",
+    "original": "../player-run-v1/player_run_southwest_01.png",
+    "productionVehicleReuse": false,
+    "notes": "Existing civilian/security cars not suitable for opening driver door and assault body. New 8 directional views reused for drift/depart/dock; no mirror metadata."
+  },
+  "coverage": {
+    "directions": 8,
+    "boarding": 6,
+    "wheelSpin": 3,
+    "dust": 3,
+    "skid": 3,
+    "hero": 1
+  },
+  "rig": {
+    "coordinates": "Frame-local pixels; screen compass (south=down), not map x/y. Ground origin is manual art registration, not collision.",
+    "boardingDirection": "southwest",
+    "boardingPixelsPerMeter": 90,
+    "directionPixelsPerMeter": 70,
+    "boarding": {
+      "ground": [
+        256,
+        399
+      ],
+      "doorHinge": [
+        273,
+        300
+      ],
+      "doorOuterOpen": [
+        347,
+        399
+      ],
+      "seat": [
+        301,
+        280
+      ],
+      "sill": [
+        298,
+        363
+      ],
+      "approachFoot": [
+        414,
+        421
+      ],
+      "frontWheel": [
+        234,
+        398
+      ],
+      "rearWheel": [
+        432,
+        317
+      ],
+      "frontWheelHubSize": [
+        28,
+        46
+      ],
+      "rearWheelHubSize": [
+        24,
+        42
+      ],
+      "doorHingedAt": "front edge of near front door"
+    },
+    "wheelHubSourceRectInCell": [
+      306,
+      243,
+      213,
+      280
+    ],
+    "layerOrder": [
+      "ground",
+      "skid",
+      "rear dust",
+      "full boarding or vehicle sprite (includes door and actor)",
+      "near hub overlay while rolling",
+      "foreground scenery/UI"
+    ],
+    "driver": {
+      "parked": false,
+      "reach": true,
+      "step_in": true,
+      "seated_open": true,
+      "closed_seated": "inside but hidden by opaque windows",
+      "driving": "hidden by opaque windows"
+    },
+    "noActorDoubleDraw": true
+  },
+  "clips": {
+    "schema": 1,
+    "visualOnly": true,
+    "boarding": {
+      "frames": [
+        "assault_car_boarding__closed_empty",
+        "assault_car_boarding__reach",
+        "assault_car_boarding__step_in",
+        "assault_car_boarding__seated_open",
+        "assault_car_boarding__closed_seated"
+      ],
+      "durationsMs": [
+        180,
+        260,
+        320,
+        260,
+        180
+      ],
+      "hideWorldPlayerFromFrame": 1,
+      "showWorldPlayerAfterReturn": true,
+      "compositedActor": true
+    },
+    "doorOpenEmpty": {
+      "frames": [
+        "assault_car_boarding__closed_empty",
+        "assault_car_boarding__open_empty"
+      ],
+      "durationsMs": [
+        180,
+        180
+      ]
+    },
+    "doorCloseEmpty": {
+      "frames": [
+        "assault_car_boarding__open_empty",
+        "assault_car_boarding__closed_empty"
+      ],
+      "durationsMs": [
+        180,
+        180
+      ]
+    },
+    "wheelRoll": {
+      "frames": [
+        "assault_wheel_spin__spin0",
+        "assault_wheel_spin__spin1",
+        "assault_wheel_spin__spin2"
+      ],
+      "durationsMs": [
+        70,
+        70,
+        70
+      ],
+      "loop": true,
+      "render": "Clip/crop hub only using hubSourceRect; never add a second full tire over the baked tire."
+    },
+    "drift": {
+      "frames": [
+        "assault_car_directions__southwest",
+        "assault_car_directions__south",
+        "assault_car_directions__southeast"
+      ],
+      "durationsMs": [
+        180,
+        160,
+        180
+      ],
+      "dustFrames": [
+        "assault_dust__small",
+        "assault_dust__expand",
+        "assault_dust__fade"
+      ],
+      "skidFrames": [
+        "assault_skid__short",
+        "assault_skid__curve",
+        "assault_skid__long"
+      ],
+      "translateWorld": true,
+      "neverMirrorDriverDoor": true
+    },
+    "depart": {
+      "frame": "assault_car_directions__southeast",
+      "durationMs": 800,
+      "translateOffScreen": true
+    },
+    "park": {
+      "frame": "assault_car_boarding__closed_empty"
+    },
+    "return": {
+      "frame": "assault_car_boarding__closed_empty",
+      "animation": false
+    }
+  },
+  "integration": {
+    "entry": "vehicle_only",
+    "initialFuelLiters": 1,
+    "initialFuelUnits": 4,
+    "fuelItem": "fuel_oil",
+    "roundTripLiters": 0.5,
+    "roundTripFuelUnits": 2,
+    "consumeAt": "outbound departure prepays round trip",
+    "returnConsumesAgain": false,
+    "returnAnimation": false,
+    "gameCodeModified": false,
+    "gameplayTested": false,
+    "published": false
+  }
+}

@@ -134,24 +134,24 @@
     }
     updateSkeleton(boss,dt){
       if(this.isLit(boss)){this.cancelSkeletonAction(boss);this.enemyMove(boss,boss,2.2,dt,true);return;}
-      const visible=!this.hidden&&dist(boss,this.player)<=12&&this.clearVision(boss,this.player);
-      if(visible){boss.lastSeen={x:this.player.x,y:this.player.y};if(!boss.noticed){boss.noticed=true;boss.throwAt=this.seconds+3;boss.sweepAt=this.seconds+5;this.parkingCue('二层Boss：骷髅。拆出的骨头可以攻击摧毁。');}}
+      const victim=this.humanEnemyVictim?.(boss,12)||this.player,visible=!(victim===this.player&&this.hidden)&&dist(boss,victim)<=12&&this.clearVision(boss,victim);
+      if(visible){boss.lastSeen={x:victim.x,y:victim.y};if(!boss.noticed){boss.noticed=true;boss.throwAt=this.seconds+3;boss.sweepAt=this.seconds+5;this.parkingCue('二层Boss：骷髅。拆出的骨头可以攻击摧毁。');}}
       if(boss.action){const a=boss.action,b=this.zombies.find(z=>z.id===a.boneId&&z.hp>0);
         if(b?.stage==='held'){b.x=boss.x+a.facing.x*.6;b.y=boss.y+a.facing.y*.6;}
-        if(a.type==='throw'&&!a.released&&visible&&dist(boss,this.player)<=10)a.aim={x:this.player.x,y:this.player.y};
+        if(a.type==='throw'&&!a.released&&visible&&dist(boss,victim)<=10)a.aim={x:victim.x,y:victim.y};
         if(!a.released&&this.seconds+1e-8>=a.releaseAt){a.released=true;
           const target=a.target==='player'?this.player:this.find(a.target);
           if(a.type==='melee'||a.type==='sweep'){
-            const radius=a.type==='sweep'?2.6:1.3,victims=[target,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)];for(const victim of victims)if((a.type!=='sweep'||b)&&victim?.hp>0&&!(victim===this.player&&this.hidden)&&!this.isLit(victim)&&(victim.type?pointRect(boss,victim):dist(boss,victim))<=radius&&front(boss,victim,a.facing)&&this.clearLine(boss,victim,victim)){if(victim===this.player)this.damagePlayer(3,'skeleton');else this.damageBuilding(victim,this.enemyDamage(3,'skeleton'));}
+            const radius=a.type==='sweep'?2.6:1.3,victims=[...new Set([target,...(a.type==='sweep'&&this.enemyProjectileTargets?this.enemyProjectileTargets():this.zombies.filter(z=>z.boneType==='player'&&z.hp>0))])];for(const victim of victims)if((a.type!=='sweep'||b)&&victim?.hp>0&&!(victim===this.player&&this.hidden)&&!this.isLit(victim)&&(victim.type?pointRect(boss,victim):dist(boss,victim))<=radius&&front(boss,victim,a.facing)&&this.clearLine(boss,victim,victim)){if(victim===this.player)this.damagePlayer(3,'skeleton');else this.damageBuilding(victim,this.enemyDamage(3,'skeleton'));}
           }else if(a.type==='throw'&&b&&a.aim){Object.assign(b,{stage:'flight',facing:facing(boss,a.aim),range:Math.min(12,dist(boss,a.aim))});boss.throwAt=this.seconds+6;}
         }
         if(this.seconds>=a.until){if(a.type==='sweep'){if(b)b.hp=0;boss.sweepAt=this.seconds+10;}boss.action=null;}return;
       }
       if(!boss.noticed||boss.rootUntil>this.seconds||this.seconds<boss.readyAt)return;
-      const target=visible?this.player:boss.lastSeen;if(!target)return;const distance=dist(boss,target),canAttack=visible&&!this.isLit(this.player);
-      if(canAttack&&distance<=2.6&&boss.hp>1&&this.seconds>=boss.sweepAt&&this.seconds>=boss.splitAt){this.skeletonAction(boss,'sweep',this.player);return;}
-      if(canAttack&&distance<=1.3&&this.seconds>=boss.nextAttack){this.skeletonAction(boss,'melee',this.player);return;}
-      if(visible&&distance<=10&&boss.hp>1&&this.seconds>=boss.throwAt&&this.seconds>=boss.splitAt&&this.zombies.filter(z=>z.boneType==='ordinary'&&z.mode==='throw'&&z.hp>0).length<3){this.skeletonAction(boss,'throw',this.player);return;}
+      const target=visible?victim:boss.lastSeen;if(!target)return;const distance=dist(boss,target),canAttack=visible&&!this.isLit(victim);
+      if(canAttack&&distance<=2.6&&boss.hp>1&&this.seconds>=boss.sweepAt&&this.seconds>=boss.splitAt){this.skeletonAction(boss,'sweep',victim);return;}
+      if(canAttack&&distance<=1.3&&this.seconds>=boss.nextAttack){this.skeletonAction(boss,'melee',victim);return;}
+      if(visible&&distance<=10&&boss.hp>1&&this.seconds>=boss.throwAt&&this.seconds>=boss.splitAt&&this.zombies.filter(z=>z.boneType==='ordinary'&&z.mode==='throw'&&z.hp>0).length<3){this.skeletonAction(boss,'throw',victim);return;}
       if(distance>.3&&!this.enemyMove(boss,target,2.2,dt)){
         const block=this.obstacles(boss,target,.25).find(o=>!o.indestructible&&pointRect(boss,o)<=1.3&&!this.isLit(o));if(block&&this.seconds>=boss.nextAttack)this.skeletonAction(boss,'melee',block);
       }
@@ -177,7 +177,7 @@
       const boss=this.secondFloor&&this.zombies.find(z=>z.kind==='skeleton'&&z.hp>0);
       for(const b of [...this.zombies]){if(!b.boneType||b.hp<=0||b.boneType==='remnant'||b.stage==='held')continue;
         if(b.stage==='ground'){
-          if(this.seconds>=b.contactAt&&dist(b,this.player)<=.35&&this.clearLine(b,this.player)){this.damagePlayer(1,'skeleton_bone');b.contactAt=this.seconds+1;}
+          if(this.seconds>=b.contactAt){const victim=(this.enemyProjectileTargets?this.enemyProjectileTargets():[this.player]).find(a=>a.hp>0&&dist(b,a)<=.35&&this.clearLine(b,a));if(victim){if(victim===this.player)this.damagePlayer(1,'skeleton_bone');else this.damageZombie(victim,this.enemyDamage(1,'skeleton_bone'),'skeleton_bone');b.contactAt=this.seconds+1;}}
           if(this.seconds>=b.recallAt){if(!boss){b.hp=0;continue;}b.stage='return';}continue;
         }
         if(b.stage==='return'){
@@ -189,12 +189,12 @@
         if(player){const hits=this.zombies.filter(z=>z!==b&&z.hp>0&&z.faction!=='player'&&!b.hits.includes(String(z.id))).map(z=>({z,t:circleHit(from,to,z,1+(z.radius||.22))})).filter(h=>h.t<=stop).sort((a,c)=>a.t-c.t);
           for(const {z} of hits){if(b.hp<=0)break;b.hits.push(String(z.id));this.damageZombie(z,this.directDamage(4),'bone_skill');}
         }else{
-          const targets=[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)];let victim=null;
+          const targets=this.enemyProjectileTargets?this.enemyProjectileTargets():[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)];let victim=null;
           for(const z of targets){const t=circleHit(from,to,z,.2+(z.radius||.22));if(t<stop){stop=t;victim=z;block=null;}}
           if(victim){if(victim===this.player)this.damagePlayer(3,'skeleton_bone');else this.damageZombie(victim,this.enemyDamage(3,'skeleton_bone'),'skeleton_bone');block=victim;}
         }
         b.x=from.x+(to.x-from.x)*stop;b.y=from.y+(to.y-from.y)*stop;b.range-=length*stop;
-        if(!player&&block&&block!==this.player&&!block.boneType&&!block.indestructible)this.damageBuilding(block,this.enemyDamage(3,'skeleton_bone'));
+        if(!player&&block&&block!==this.player&&!block.human&&!block.boneType&&!block.indestructible)this.damageBuilding(block,this.enemyDamage(3,'skeleton_bone'));
         if(b.hp<=0||block||b.range<=.001){if(player){b.hp=0;this.boneEffect(b,'shatter');}else Object.assign(b,{stage:'ground',radius:.35,w:.7,h:.7,landedAt:this.seconds,contactAt:this.seconds+.75,recallAt:this.seconds+10});}
       }
       this.zombies=this.zombies.filter(z=>z.hp>0);

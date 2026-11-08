@@ -32,7 +32,7 @@
     emitThermal(actor,weapon,facing,options={}){
       const w=gun(weapon),enemy=actor!==this.player,damage=enemy?(options.damage??1.5):Math.max(0,w.damage+(this.seconds<this.firepower.until?1:0)-(this.weaknessUntil>this.seconds?.7:0)),asset=enemy?'sweeper':'player_'+weapon;
       const p=this.muzzlePoint(actor,asset,options.state||'fire',facing),rocket=weapon==='rocket_launcher',radius=rocket?(enemy?.5:1.5):undefined;
-      const shot={...p,id:`ballistic:${++this.ballisticSerial}`,thermal:true,kind:rocket?'thermal_rocket':'thermal_bullet',weapon,owner:enemy?'enemy':'player',source:enemy?'sweeper':'weapon',group:options.group,groupWindow:options.groupWindow||0,damage,radius,speed:options.speed||w?.speed||1.5,range:options.range||w?.range||18};
+      const shot={...p,id:`ballistic:${++this.ballisticSerial}`,thermal:true,actorId:actor.id,kind:rocket?'thermal_rocket':'thermal_bullet',weapon,owner:enemy?'enemy':'player',source:enemy?'sweeper':'weapon',group:options.group,groupWindow:options.groupWindow||0,damage,radius,speed:options.speed||w?.speed||1.5,range:options.range||w?.range||18};
       shot.vx=facing.x*shot.speed;shot.vy=facing.y*shot.speed;
       const hits=this.thermalCovers(actor,p).map(o=>({o,t:this.thermalHitFraction(actor,p,o)})).sort((a,b)=>a.t-b.t),hit=hits[0];if(hit){const t=Math.max(0,hit.t-1e-4);shot.x=actor.x+(p.x-actor.x)*t;shot.y=actor.y+(p.y-actor.y)*t;this.thermalImpact(shot,hit.o);}else this.projectiles.push(shot);
       actor.fireVisual={state:options.state||'fire',at:this.seconds,until:this.seconds+.1};return shot;
@@ -67,10 +67,11 @@
       shot.dead=true;
       if(A.isRocketShot(shot)){
         // Resolve every line against intact cover before applying any damage.
-        const victims=shot.owner==='enemy'?[this.player,...this.devices,...this.zombies.filter(z=>z.hp>0&&z.faction==='player')]:[...this.zombies.filter(z=>z.hp>0),this.player,...this.devices];
+        const basicVictims=shot.owner==='enemy'?[this.player,...this.devices,...this.zombies.filter(z=>z.hp>0&&z.faction==='player')]:[...this.zombies.filter(z=>z.hp>0),this.player,...this.devices];
+        const victims=this.blastTargets?this.blastTargets(shot,basicVictims):basicVictims;
         const structures=[...this.nearbyHomes(shot,shot.radius+3).flatMap(h=>h.objects),...(this.armoryWorldActive?this.armory.objects:[])];
         const all=[...new Set([...victims,...structures])],hits=all.filter(o=>o.hp>0&&(o.w?S.pointRect(shot,o):dist(shot,o))<=shot.radius+1e-8&&!this.thermalCovers(shot,o).some(c=>c!==o));
-        const structuresHit=new Set();for(const o of hits)if(o===this.player)this.damagePlayer(shot.damage,shot.owner==='enemy'?'sweeper_rocket':'rocket_self');else if(this.zombies.includes(o))this.damageZombie(o,shot.owner==='enemy'?this.enemyDamage(shot.damage,shot.source):shot.damage,shot.owner==='enemy'?shot.source:'weapon');else {const id=o.shared||o.id;if(!structuresHit.has(id)){structuresHit.add(id);this.damageBuilding(o,shot.owner==='enemy'?this.enemyDamage(shot.damage,shot.source):shot.damage);}}
+        const structuresHit=new Set();for(const o of hits)if(o===this.player)this.damagePlayer(shot.damage,shot.owner==='enemy'?'sweeper_rocket':'rocket_self');else if(this.zombies.includes(o))this.damageZombie(o,shot.owner==='enemy'?this.enemyDamage(shot.damage,shot.source):shot.damage,shot.owner==='enemy'?shot.source:'weapon',shot.actorId);else {const id=o.shared||o.id;if(!structuresHit.has(id)){structuresHit.add(id);this.damageBuilding(o,shot.owner==='enemy'?this.enemyDamage(shot.damage,shot.source):shot.damage);}}
         this.effects.push({kind:'thermal_rocket_explosion',weapon:'rocket_launcher',projectileKind:'thermal_rocket',x:shot.x,y:shot.y,radius:shot.radius,enemy:shot.owner==='enemy',started:this.seconds,until:this.seconds+.5});
       }else {if(wall)this.damageBuilding(wall,shot.owner==='enemy'?this.enemyDamage(shot.damage,shot.source):shot.damage);if(wall||targetHit)this.effects.push({kind:'thermal_bullet_hit',x:shot.x,y:shot.y,z:.85,started:this.seconds,until:this.seconds+.12});}
     }
@@ -82,7 +83,7 @@
         this.normalizeThermalShot(shot);
         if(this.result)break;if((this.scene==='armory'||this.armoryWorldActive)&&this.armory.bossDead&&shot.owner==='enemy'&&shot.source==='sweeper')continue;
         const from={x:shot.x,y:shot.y},travel=Math.min(shot.range,shot.speed*dt),to={x:from.x+shot.vx/shot.speed*travel,y:from.y+shot.vy/shot.speed*travel};
-        const targets=shot.owner==='enemy'?[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)]:this.zombies.filter(z=>z.hp>0&&z.faction!=='player');
+        const targets=shot.owner==='enemy'?(this.enemyProjectileTargets?this.enemyProjectileTargets(shot):[this.player,...this.zombies.filter(z=>z.boneType==='player'&&z.hp>0)]):this.zombies.filter(z=>z.hp>0&&z.faction!=='player');
         const hits=this.thermalCovers(from,to).map(o=>({o,t:this.thermalHitFraction(from,to,o),wall:true}));
         for(const o of targets){const t=S.boneCircleHit(from,to,o,o.radius||.24);if(Number.isFinite(t))hits.push({o,t,wall:false});}
         hits.sort((a,b)=>a.t-b.t||Number(b.wall)-Number(a.wall));const hit=hits[0];
