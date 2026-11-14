@@ -2,6 +2,7 @@
 (function(root){
   'use strict';const S=root.Survival,Base=S.Game,D=S.Expansion;
   const TYPES={sunny:{name:'晴天',speed:1.1,growth:1.25,weight:30},overcast:{name:'阴天',speed:1.05,growth:1,weight:25},rain:{name:'雨天',speed:.9,growth:1.5,weight:25},fog:{name:'大雾',speed:1,growth:1,weight:12},thunderstorm:{name:'雷暴雨',speed:.9,growth:1.5,weight:6},tornado:{name:'龙卷风',speed:1,growth:1,weight:2}};
+  const DUST={name:'沙尘暴',speed:.75,growth:1,hunger:1.5,probability:.05,dehydration:15,minDuration:20,maxDuration:70,mapScale:.5};
   class WeatherGame extends Base{
     constructor(options={}){super(options);this.weather=this.makeWeather(true);}
     weatherRandom(){const w=this.weather;w.seed=(Math.imul(w.seed,1664525)+1013904223)>>>0;return w.seed/4294967296;}
@@ -37,8 +38,67 @@
         const durations=list.filter(o=>o.kind===kind),o=durations[Math.floor(this.weatherRandom()*durations.length)];schedule.push(o);hours-=o.hours;last=o.kind;used+=hazard(last)?1:0;slots--;
       }return schedule;
     }
-    weatherType(){return TYPES[this.weather?.schedule[this.weather.index]?.kind]||TYPES.sunny;}
-    weatherKind(){return this.weather?.schedule[this.weather.index]?.kind||'sunny';}
+    get dustStorm(){return this.scene==='surface'&&['hard','apocalypse'].includes(this.difficulty)?this.weather?.dustStorm??null:null;}
+    get dustCurtain(){
+      const storm=this.dustStorm;if(!storm)return 0;
+      const t=Math.max(0,Math.min(1,((storm.age??4)-.85)/3.15));
+      return t*t*(3-2*t);
+    }
+    canSelectWeather(kind){return Object.hasOwn(TYPES,kind)||kind==='duststorm'&&['hard','apocalypse'].includes(this.difficulty);}
+    setDeveloperWeather(kind){
+      if(!this.developer?.enabled||!this.developerUsed||this.scene!=='surface'||!this.canSelectWeather(kind))return false;
+      const w=this.weather;
+      if(kind==='duststorm'){
+        w.dustPlan={day:this.day,at:null,done:true};
+        this.startDustStorm();
+      }else{
+        w.dustStorm=null;
+        w.schedule[w.index].kind=kind;
+        w.notified=-1;
+        this.resetWeatherHazards();
+        this.announce(`开发测试：天气已切换为${TYPES[kind].name}。`);
+        this.autosaveRequested=true;
+      }
+      return true;
+    }
+    get weatherHungerMultiplier(){return this.dustStorm?DUST.hunger:1;}
+    weatherType(){return this.dustStorm?DUST:TYPES[this.weather?.schedule[this.weather.index]?.kind]||TYPES.sunny;}
+    weatherKind(){return this.dustStorm?'duststorm':this.weather?.schedule[this.weather.index]?.kind||'sunny';}
+    foodReadyAt(kind){return kind==='clean_water'&&this.dustStorm?0:super.foodReadyAt(kind);}
+    completeFood(kind){
+      const storm=kind==='clean_water'&&this.dustStorm,water=storm?this.count(kind):0;
+      super.completeFood(kind);
+      if(storm&&this.count(kind)<water){storm.waterLeft=DUST.dehydration;storm.waterResetAt=this.seconds;this.autosaveRequested=true;}
+    }
+    startDustStorm(){
+      this.weather.dustStorm={remaining:DUST.minDuration+Math.floor(this.weatherRandom()*(DUST.maxDuration-DUST.minDuration+1)),waterLeft:DUST.dehydration,age:0};
+      this.resetWeatherHazards();this.announce('沙尘暴来袭！失水：15秒内喝一瓶清水。');this.autosaveRequested=true;
+    }
+    updateDustStorm(dt){
+      if(!['hard','apocalypse'].includes(this.difficulty))return;
+      const w=this.weather;
+      if(w.dustStorm){
+        const storm=w.dustStorm,elapsed=Math.min(dt,storm.remaining);
+        storm.age=Math.min(4,(storm.age??4)+elapsed);
+        if(storm.waterResetAt!==this.seconds){
+          if(storm.waterLeft<=elapsed+1e-8&&storm.waterLeft<storm.remaining-1e-8){
+            this.stats.damage.dehydration=(this.stats.damage.dehydration||0)+this.player.hp;
+            this.player.hp=0;this.checkPlayerDeath('dehydration');return;
+          }
+          storm.waterLeft=Math.max(0,storm.waterLeft-elapsed);
+        }
+        storm.remaining=Math.max(0,storm.remaining-dt);
+        if(storm.remaining<=1e-8){w.dustStorm=null;this.announce('沙尘暴结束，失水状态解除。');this.autosaveRequested=true;}
+        return;
+      }
+      if(w.dustPlan?.day!==this.day){
+        const at=this.weatherRandom()<DUST.probability?480+Math.floor(this.weatherRandom()*781):null;
+        w.dustPlan={day:this.day,at,done:at===null||at<this.minutes};this.autosaveRequested=true;
+      }
+      const plan=w.dustPlan;
+      if(plan.done||this.minutes+this.clockMinutes(dt)<plan.at)return;
+      plan.done=true;this.startDustStorm();
+    }
     outdoors(p){
       if(this.scene!=='surface')return false;
       const h=this.getHome(Math.round(p.x/S.RULES.lotSpacing),Math.round(p.y/S.RULES.lotSpacing));
@@ -48,9 +108,9 @@
       if(!this.outdoors(p))return true;const e=this.parking?.entrance;if(!e)return false;
       return S.pointRect(p,e.axis==='x'?{x:e.x-3,y:e.y,w:6.8,h:5.8}:{x:e.x,y:e.y-3,w:5.8,h:6.8})<.5;
     }
-    movementSpeed(base,p=this.player){let speed=p!==this.player&&p.kind&&!p.boneType?this.enemySpeed(p.kind,base):base;if(this.outdoors(p))speed*=this.weatherType().speed;if(p===this.player&&this.boneSkill?.charging)speed*=.5;return Math.max(.5,speed);}
-    get personalSight(){const original=super.personalSight;return this.scene==='surface'&&this.outdoors(this.player)&&this.weatherKind()==='fog'?Math.min(original/this.traitEffects.sight,10)*this.traitEffects.sight:original;}
-    get illuminatedSight(){return this.scene==='surface'&&this.outdoors(this.player)&&this.weatherKind()==='fog'?14*this.traitEffects.sight:super.illuminatedSight;}
+    movementSpeed(base,p=this.player){let speed=p!==this.player&&p.kind&&!p.boneType?this.enemySpeed(p.kind,base):base;if(this.dustStorm){if(p===this.player)speed*=DUST.speed;}else if(this.outdoors(p))speed*=this.weatherType().speed;if(p===this.player&&this.boneSkill?.charging)speed*=.5;return Math.max(.5,speed);}
+    get personalSight(){const original=super.personalSight;return this.dustStorm||this.scene==='surface'&&this.outdoors(this.player)&&this.weatherKind()==='fog'?Math.min(original/this.traitEffects.sight,10)*this.traitEffects.sight:original;}
+    get illuminatedSight(){return this.dustStorm||this.scene==='surface'&&this.outdoors(this.player)&&this.weatherKind()==='fog'?14*this.traitEffects.sight:super.illuminatedSight;}
     canSee(p){if(this.scene==='surface'&&this.weatherKind()==='fog'&&this.outdoors(this.player)){const d=S.dist(p,this.player);return (d<=this.personalSight||d<=this.illuminatedSight&&this.isLit(p))&&this.clearVision(this.player,p,p);}return super.canSee(p)&&(this.scene!=='surface'||this.weatherKind()!=='fog'||this.outdoors(this.player)||this.clearVision(this.player,p,p));}
     weatherPoint(min,max,radius){
       for(let i=0;i<32;i++){const a=this.weatherRandom()*Math.PI*2,r=min+this.weatherRandom()*(max-min),p={x:this.player.x+Math.cos(a)*r,y:this.player.y+Math.sin(a)*r};if(!this.weatherSafe(p)&&!this.obstacles(p,p,radius).length)return p;}return null;
@@ -58,11 +118,12 @@
     resetWeatherHazards(){const w=this.weather;for(const h of w.hazards)if(h.type==='tornado'&&h.warning<=0)w.flash.push({...h,type:'tornado_end',life:.45});w.hazards=[];w.nextStrike=8+this.weatherRandom()*6;w.nextTornado=15+this.weatherRandom()*10;}
     advanceWeather(dt){
       if(this.scene!=='surface')return;const w=this.weather;
+      this.updateDustStorm(dt);if(this.result)return;
       if(w.day!==this.day){const old=w.schedule;w.schedule=w.nextSchedule||this.weatherSchedule(old.at(-1).kind,false,old);w.nextSchedule=null;w.day=this.day;w.index=0;w.elapsed=Math.max(0,(this.minutes-300)*.75);w.notified=-1;this.resetWeatherHazards();}
       w.elapsed+=this.clockMinutes(dt)*.75;
-      while(w.elapsed>=w.schedule[w.index].hours*45){if(w.index===w.schedule.length-1)break;w.elapsed-=w.schedule[w.index].hours*45;w.index++;this.resetWeatherHazards();this.announce(`天气转为${this.weatherType().name}。`);}
+      while(w.elapsed>=w.schedule[w.index].hours*45){if(w.index===w.schedule.length-1)break;w.elapsed-=w.schedule[w.index].hours*45;w.index++;this.resetWeatherHazards();if(!this.dustStorm)this.announce(`天气转为${this.weatherType().name}。`);}
       const remaining=w.schedule[w.index].hours*45-w.elapsed;if(remaining<=22.5&&w.index===w.schedule.length-1&&!w.nextSchedule)w.nextSchedule=this.weatherSchedule(w.schedule.at(-1).kind,false,w.schedule);
-      const next=w.schedule[w.index+1]||w.nextSchedule?.[0];if(remaining<=22.5&&next&&w.notified!==w.index){w.notified=w.index;this.announce(`30游戏分钟后：${TYPES[next.kind].name}${['thunderstorm','tornado'].includes(next.kind)?'，请留意地面预警并进屋避险':''}。`);}
+      const next=w.schedule[w.index+1]||w.nextSchedule?.[0];if(!this.dustStorm&&remaining<=22.5&&next&&w.notified!==w.index){w.notified=w.index;this.announce(`30游戏分钟后：${TYPES[next.kind].name}${['thunderstorm','tornado'].includes(next.kind)?'，请留意地面预警并进屋避险':''}。`);}
       const kind=this.weatherKind();
       if(kind==='thunderstorm'){w.nextStrike-=dt;if(w.nextStrike<=0){w.nextStrike=8+this.weatherRandom()*6;const p=this.weatherPoint(0,20,1.1);if(p){w.hazards.push({...p,id:`weather:${++w.serial}`,type:'lightning',remaining:1.2,radius:1.1});this.parkingCue('附近即将落雷，避开地面提示圈！');}}}
       if(kind==='tornado'&&!w.hazards.some(h=>h.type==='tornado')){w.nextTornado-=dt;if(w.nextTornado<=0){const p=this.weatherPoint(12,20,1.2);w.nextTornado=45+this.weatherRandom()*15;if(p){const a=this.weatherRandom()*Math.PI*2;w.hazards.push({...p,id:`weather:${++w.serial}`,type:'tornado',warning:3,life:15,radius:1.2,vx:Math.cos(a)*1.6,vy:Math.sin(a)*1.6,hits:[]});this.parkingCue('旋风正在形成，避开预警与风柱路线！');}}}
@@ -92,10 +153,10 @@
     updateProduction(dt){super.updateProduction(dt);if(this.scene==='parking')return;for(const o of this.devices)if(o.hp>0&&o.crop){const c=o.crop;if(!Number.isFinite(c.growth))c.growth=Math.min(48,(c.dawns||0)*24);c.growth=Math.min(48,c.growth+this.clockMinutes(dt)/60*(this.outdoors(o)?this.weatherType().growth:1));}}
     plant(o,kind){const ok=super.plant(o,kind);if(ok)o.crop={kind,growth:0};return ok;}
     harvest(o){if(!o.crop||(o.crop.growth??(o.crop.dawns||0)*24)<48)return false;if(this.pay({}, {[o.crop.kind]:3})){o.crop=null;return true;}return false;}
-    advanceClock(dt){this.advanceWeather(dt);super.advanceClock(dt);}
+    advanceClock(dt){this.advanceWeather(dt);if(!this.result)super.advanceClock(dt);}
     snapshot(){const data=super.snapshot();data.weather=this.weather;return data;}
     static restore(data){const game=Base.restore(data);Object.setPrototypeOf(game,WeatherGame.prototype);game.weather=data.weather||game.makeWeather(false);if(!data.weather){game.weather.nextStrike=8+game.weatherRandom()*6;game.weather.nextTornado=15+game.weatherRandom()*10;}for(const h of game.weather.hazards)if(h.type==='lightning')h.remaining=1.2;return game;}
     switchScene(){const from=this.scene;super.switchScene();if(from==='parking'&&this.scene==='surface')for(const h of this.weather.hazards)if(h.type==='lightning')h.remaining=1.2;}
   }
-  S.Game=WeatherGame;S.Weather=TYPES;
+  S.Game=WeatherGame;S.Weather={...TYPES,duststorm:DUST};
 })(globalThis);

@@ -1,6 +1,7 @@
 /* Population slots and theft commit records survive dawn, travel and restore. */
 (() => {
-  const P=HumansGame.prototype,S=Survival,D=S.Expansion,H=HumansData,{dist,pointRect}=S,copy=x=>JSON.parse(JSON.stringify(x));
+  const P=HumansGame.prototype,S=Survival,H=HumansData,{dist,pointRect}=S,copy=x=>JSON.parse(JSON.stringify(x));
+  const searchableKinds=new Set(['kitchen','storage_chest','misc','freezer']);
   Object.assign(P,{
     newHuman(kind,p,weapon='bare',raidId=null){const h=this.humans,a={id:'human:'+ ++h.serial,human:true,type:'human',kind,...p,w:.4,h:.4,hp:kind==='starving_civilian'?2:3,maxHP:kind==='starving_civilian'?2:3,weapon,home:{x:p.x,y:p.y},raidId,hostile:kind==='bandit',faction:kind==='bandit'?'enemy':'neutral',carry:[],knowledge:[],eatLeft:0,nextAttack:this.seconds+1,path:[],repathAt:0,rootUntil:0,lastCombat:-1e6,facing:{x:0,y:1},aiDebt:0};h.actors.push(a);this.autosaveRequested=true;return a;},
     humanSpawnCandidate(kind){
@@ -23,27 +24,70 @@
       if(!p){if(work.kind==='bandit')work.slot.state='blocked';else work.slot.retryAt=this.seconds+2;this.autosaveRequested=true;return;}
       this._humanSpawnJob={...work,day:this.day,p,route:this.makeCampRoute({x:0,y:5},[p],false)};work.slot.retryAt=this.seconds+2;
     },
-    moveHuman(a,goal,speed,dt){
+    moveHuman(a,goal,speed,dt,route=null){
       if(a.rootUntil>this.seconds)return false;
-      if(this.seconds>=(a.repathAt||0)&&this.pathBudget>0&&this.requestPath(a,goal)){a.repathAt=this.seconds+1.5;this.pathBudget--;}
-      a.path=a.path||[];while(a.path.length&&dist(a,a.path[0])<.2)a.path.shift();const to=a.path[0]||goal,n=dist(a,to);if(n<.05)return true;
+      if(!route&&this.seconds>=(a.repathAt||0)&&this.pathBudget>0&&this.requestPath(a,goal)){a.repathAt=this.seconds+1.5;this.pathBudget--;}
+      const path=route||(a.path||=[]),arrival=route ? .02 : .2;while(path.length&&dist(a,path[0])<arrival)path.shift();const to=path[0]||goal,n=dist(a,to);if(n<(route ? .02 : .05))return true;
       const amount=Math.min(n,this.movementSpeed(speed,a)*dt),f={x:(to.x-a.x)/n,y:(to.y-a.y)/n},next={x:a.x+f.x*amount,y:a.y+f.y*amount};a.facing=f;
       if(a.kind==='home_helper'&&(Math.abs(next.x)>5||next.y< -6||next.y>4)||this.obstacles(a,next,.22).length){a.repathAt=Math.min(a.repathAt,this.seconds+.2);return false;}
       Object.assign(a,next);a.visualDistance=(a.visualDistance||0)+amount;a.visualMoveAt=this.seconds;return true;
     },
     humanContainerContents(o){
-      if(!o||o.hp<=0||o.resourceDisabled)return [];
+      if(!o||o.hp<=0||o.resourceDisabled||!searchableKinds.has(o.kind))return [];
       if(o.kind==='storage_chest')return (o.storage||[]).filter(s=>s&&s.amount>0&&!['fuse','armory_west_keycard'].includes(s.kind)).map(copy);
-      if(o.searched||!['misc','kitchen','supply','freezer'].includes(o.kind)||o.loot?.fuse)return [];
+      if(o.searched||o.loot?.fuse)return [];
       return Object.entries(o.loot||{}).filter(([k,n])=>n>0&&k!=='fuse').map(([kind,amount])=>({kind,amount}));
     },
-    humanContainers(a){
-      const occupied=new Set(this.humans.actors.filter(o=>o!==a&&o.hp>0&&o.search).map(o=>o.search.id));
+    humanContainers(a,occupied){
       return [...this.nearbyHomes(a,21).flatMap(h=>h.armoryReserved?[]:h.sites),...this.devices.filter(o=>o.kind==='storage_chest')].filter(o=>dist(o,a)<=20&&!occupied.has(o.id)&&this.humanContainerContents(o).length).sort((x,y)=>dist(a,x)-dist(a,y)||String(x.id).localeCompare(String(y.id)));
     },
-    humanContainerPoint(a,o){
-      const key=o.id+':'+Math.round(o.x)+','+Math.round(o.y);if(a.searchPoint?.key===key&&!this.obstacles(a.searchPoint,a.searchPoint,.25).length)return a.searchPoint;
-      for(let i=0;i<16;i++){const angle=i*Math.PI/8,p={x:o.x+Math.cos(angle)*.95,y:o.y+Math.sin(angle)*.95};if(!this.obstacles(p,p,.24).length&&this.clearLine(p,o,o))return a.searchPoint={...p,key};}return null;
+    clearHumanSearch(a){
+      a.search=null;a.containerId=null;this._humanSearchRoutes?.delete(a);
+    },
+    humanCanSearch(a,o){return pointRect(a,o)<=1&&this.clearLine(a,o,o);},
+    humanSearchPlan(a,occupied){
+      const routes=this._humanSearchRoutes||=new WeakMap();
+      let plan=routes.get(a);
+      if(!plan){
+        const candidates=this.humanContainers(a,occupied);
+        const saved=candidates.find(o=>o.id===a.search?.id);
+        if(saved&&this.humanCanSearch(a,saved))return {object:saved,point:a,path:[]};
+        a.search=null;a.containerId=null;
+        plan={candidates,index:0,retryAt:this.seconds+2};routes.set(a,plan);
+      }
+      if(plan.index>=plan.candidates.length){if(this.seconds>=plan.retryAt)routes.delete(a);return null;}
+      const o=plan.candidates[plan.index];
+      if(occupied.has(o.id)||!this.humanContainerContents(o).length){plan.index++;plan.route=null;plan.point=null;plan.blocked=0;a.search=null;a.containerId=null;return null;}
+      if(this.humanCanSearch(a,o))return {object:o,point:a,path:[]};
+      if(plan.point)return {object:o,point:plan.point,path:plan.path,plan};
+      if(!plan.route){
+        const points=[];
+        for(let i=0;i<16;i++){
+          const angle=i*Math.PI/8,p={x:o.x+Math.cos(angle)*.95,y:o.y+Math.sin(angle)*.95};
+          if(!this.obstacles(p,p,.24).length&&this.humanCanSearch(p,o))points.push(p);
+        }
+        const direct=points.find(p=>!this.obstacles(a,p,.24).length);
+        if(direct){plan.point=direct;plan.path=[];return {object:o,point:direct,path:plan.path,plan};}
+        // Connect exact interaction positions to nearby grid cells before routing.
+        const goals=new Map();
+        for(const p of points)for(const x of [Math.floor(p.x),Math.ceil(p.x)])for(const y of [Math.floor(p.y),Math.ceil(p.y)]){
+          const cell={x,y},key=`${x},${y}`;
+          if(!goals.has(key)&&!this.obstacles(cell,p,.25).length)goals.set(key,{...cell,point:p});
+        }
+        if(!goals.size){plan.index++;return null;}
+        plan.route=this.makeCampRoute(a,[...goals.values()]);
+        const {bounds}=plan.route;bounds.left=Math.floor(a.x)-32;bounds.right=Math.ceil(a.x)+32;bounds.top=Math.floor(a.y)-32;bounds.bottom=Math.ceil(a.y)+32;
+        plan.route.maxExpanded=2000;
+      }
+      if(this._humanSearchBudget<=0)return null;
+      this._humanSearchBudget--;
+      this.advanceCampRoute(plan.route,48);
+      if(!plan.route.done)return null;
+      const route=plan.route;plan.route=null;
+      if(!route.path){plan.index++;return null;}
+      const end=route.path.at(-1),goal=route.actualGoals.find(p=>p.x===end.x&&p.y===end.y);
+      plan.point=goal.point;plan.path=route.path;
+      return {object:o,point:plan.point,path:plan.path,plan};
     },
     commitHumanTheft(a,o){
       const contents=this.humanContainerContents(o);if(!contents.length||pointRect(a,o)>1||!this.clearLine(a,o,o)||this.humans.actors.some(other=>other!==a&&other.hp>0&&other.search?.id===o.id&&String(other.id)<String(a.id)))return false;
@@ -51,7 +95,7 @@
       else {o.loot={};o.searched=true;o.opened=true;}
       a.carry.push(...contents);if(o.blueprintId&&!o.blueprintLearned&&!this.knowledge[o.blueprintId]){a.knowledge.push(o.blueprintId);o.blueprintLearned=true;}if(o.aedBlueprintFound&&!o.aedBlueprintChecked&&!this.knowledge.blueprint_emergency_aed)a.knowledge.push('blueprint_emergency_aed');o.aedBlueprintChecked=true;
       a.eatLeft=100;a.eating=null;for(const kind of H.foodOrder){const food=a.carry.find(s=>s.kind===kind&&s.amount>0);if(food){a.eating={...copy(food),amount:1};food.amount--;a.carry=a.carry.filter(s=>s.amount>0);break;}}
-      a.search=null;a.containerId=null;a.path=[];this.autosaveRequested=true;return true;
+      this.clearHumanSearch(a);a.path=[];this.autosaveRequested=true;return true;
     },
     humanShelter(a){
       if(a.shelter&&!this.obstacles(a.shelter,a.shelter,.25).length)return a.shelter;
@@ -68,23 +112,43 @@
       a.targetId=null;return null;
     },
     updateHumanActors(dt){
-      const h=this.humans,night=this.minutes>=1320||this.minutes<300;let budget=8;
-      for(const a of h.actors){if(a.hp<=0)continue;this.updateHumanHazards(a,dt);if(a.eatLeft>0){a.eatLeft=Math.max(0,a.eatLeft-(this._humanGameMinutes||0));if(a.eatLeft===0)a.eating=null;}a.aiDebt=(a.aiDebt||0)+dt;}
-      const start=(this._humanAICursor||0)%Math.max(1,h.actors.length);
-      for(let i=0;i<h.actors.length&&budget>0;i++){
+      const h=this.humans,night=this.minutes>=1320||this.minutes<300;let budget=8;this._humanSearchBudget=1;
+      const occupied=new Map();
+      for(const a of h.actors){if(a.hp<=0)continue;this.updateHumanHazards(a,dt);if(a.eatLeft>0){a.eatLeft=Math.max(0,a.eatLeft-(this._humanGameMinutes||0));if(a.eatLeft===0)a.eating=null;}if(a.hp>0&&a.search)occupied.set(a.search.id,a);a.aiDebt=(a.aiDebt||0)+dt;}
+      const count=h.actors.length,start=(this._humanAICursor||0)%Math.max(1,count);
+      let i=0;
+      for(;i<count&&budget>0;i++){
         const a=h.actors[(start+i)%h.actors.length];if(a.hp<=0||a.retreating||dist(a,this.player)>45&&a.aiDebt<.5)continue;budget--;const elapsed=Math.min(.5,a.aiDebt);a.aiDebt-=elapsed;
         if(a.action){this.updateHumanAttack(a);continue;}
-        const enemy=this.humanCombatTarget(a);if(enemy){a.search=null;if(enemy.hp>0&&this.startHumanAttack(a,enemy))continue;this.moveHuman(a,enemy,a.kind==='starving_civilian'?2:1,elapsed);continue;}
+        const enemy=this.humanCombatTarget(a);if(enemy){if(a.search&&occupied.get(a.search.id)===a)occupied.delete(a.search.id);this.clearHumanSearch(a);if(enemy.hp>0&&this.startHumanAttack(a,enemy))continue;this.moveHuman(a,enemy,a.kind==='starving_civilian'?2:1,elapsed);continue;}
         if(a.kind==='starving_civilian'){
-          if(night){a.search=null;a.containerId=null;this.moveHuman(a,this.humanShelter(a),2,elapsed);continue;}
-          a.shelter=null;if(a.eatLeft>0){if(a.eating&&dist(a,this.player)<45)a.visualEating=true;continue;}a.visualEating=false;
-          let o=a.containerId&&this.find(a.containerId);if(!o||!this.humanContainerContents(o).length){a.search=null;a.containerId=null;const choices=this.humanContainers(a);o=choices[0];if(o)a.containerId=o.id;}
-          if(o){if(h.actors.some(other=>other!==a&&other.hp>0&&other.search?.id===o.id)){a.containerId=null;a.search=null;continue;}const p=this.humanContainerPoint(a,o);if(p){if(pointRect(a,o)<=1&&this.clearLine(a,o,o)){a.search=a.search||{id:o.id,elapsed:0};a.search.elapsed+=elapsed;if(a.search.elapsed+1e-8>=3)this.commitHumanTheft(a,o);}else{a.search=null;this.moveHuman(a,p,2,elapsed);}continue;}a.containerId=null;}
+          if(a.search&&occupied.get(a.search.id)===a)occupied.delete(a.search.id);
+          if(night){this.clearHumanSearch(a);this.moveHuman(a,this.humanShelter(a),2,elapsed);continue;}
+          a.shelter=null;if(a.eatLeft>0)continue;
+          const target=this.humanSearchPlan(a,occupied);
+          if(target){
+            const {object:o,point,path,plan}=target;a.containerId=o.id;
+            if(this.humanCanSearch(a,o)){
+              if(a.search?.id!==o.id)a.search={id:o.id,elapsed:0};
+              occupied.set(o.id,a);a.search.elapsed+=elapsed;
+              if(a.search.elapsed+1e-8>=3){if(!this.commitHumanTheft(a,o))this.clearHumanSearch(a);occupied.delete(o.id);}
+            }else{
+              a.search=null;
+              if(a.rootUntil<=this.seconds){
+                const moved=this.moveHuman(a,point,2,elapsed,path);
+                plan.blocked=moved&&dist(a,point)>.05?0:(plan.blocked||0)+elapsed;
+                if(plan.blocked>=1.5){plan.index++;plan.point=null;plan.path=null;plan.blocked=0;a.containerId=null;}
+              }
+            }
+            continue;
+          }
+          const plan=this._humanSearchRoutes?.get(a);
+          if(plan&&plan.index<plan.candidates.length)continue;
         }
         if(a.raidId&&h.raid?.active){const goal=!this.hidden&&this.player.hp>0?this.player:this.camp.position;this.moveHuman(a,goal,1,elapsed);continue;}
         if(!a.wander||this.seconds>=a.wander.until){const angle=this.random()*Math.PI*2,r=this.random()*10;a.wander={x:a.home.x+Math.cos(angle)*r,y:a.home.y+Math.sin(angle)*r,until:this.seconds+4+this.random()*4};}this.moveHuman(a,a.wander,a.kind==='starving_civilian'?2:1,elapsed);
       }
-      this._humanAICursor=(start+8)%Math.max(1,h.actors.length);
+      this._humanAICursor=(start+(i<count?i:1))%Math.max(1,count);
     },
     updateHelperGuard(dt){
       const helper=this.visitors.find(v=>v.recruited);if(!helper||!this.helper)return;helper.human=true;helper.kind='home_helper';helper.path=helper.path||[];helper.repathAt=helper.repathAt||0;helper.hp=helper.hp||1;

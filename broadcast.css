@@ -5,10 +5,9 @@
 .opening-active #hud,.opening-active #objective,.opening-active #controls,.opening-active #messages,.opening-active #interaction,.opening-active #action-progress,.opening-active #developer-badge,.opening-active #boss-status,.opening-active #parking-skill,.opening-active #bone-skill,.opening-active #touch-controls,.opening-active .screen-edge{display:none!important}
 @media(max-width:600px){#story-subtitles{width:90vw;bottom:max(15vh,100px);font-size:19px}#opening-controls{left:12px;top:max(12px,env(safe-area-inset-top))}#opening-controls span{display:none}.touch-mode #sound-toggle{bottom:calc(env(safe-area-inset-bottom) + 160px)}}
 
-#music-controls{position:fixed;right:130px;bottom:calc(env(safe-area-inset-bottom) + 12px);z-index:15;display:flex;align-items:center;gap:6px;font-size:11px}
-#music-controls button,#music-controls summary{min-height:38px;padding:6px 9px;background:#192125ed;color:#e8eff3;border:1px solid #687478;border-radius:7px;cursor:pointer}
-#music-controls details{position:relative}#music-controls summary{display:flex;align-items:center;list-style:none}#music-controls summary:focus-visible{outline:2px solid var(--gold)}
-.music-settings{position:absolute;right:0;bottom:46px;width:220px;padding:14px;background:#192125fa;border:1px solid #687478;border-radius:8px;box-shadow:0 4px 18px #0007}
-.music-settings label{display:block;margin:6px 0 12px}.music-settings select,.music-settings input{display:block;width:100%;margin-top:5px}.music-settings select{background:#263129;color:#e8eff3;padding:6px;border:1px solid #687478;border-radius:5px;min-height:38px}.music-settings input{accent-color:var(--gold);min-height:28px}
-@media(max-width:600px){.touch-mode #music-controls{bottom:calc(env(safe-area-inset-bottom) + 160px)}#music-controls{right:128px;gap:3px}}
-@media(max-width:380px){.music-settings{right:-100px}}
+#music-controls{margin:14px 0;padding:12px 16px;background:#192125;border:1px solid #687478;border-radius:8px}
+.music-settings h3{margin:0 0 8px;font-size:16px}
+.music-settings label{display:block;margin:8px 0 10px}
+.music-settings select,.music-settings input{display:block;width:100%;margin-top:5px}
+.music-settings select{background:#263129;color:#e8eff3;padding:6px;border:1px solid #687478;border-radius:5px;min-height:38px}
+.music-settings input{accent-color:var(--gold);min-height:28px}

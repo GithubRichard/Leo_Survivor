@@ -21,7 +21,7 @@
     }
     campSiteFree(b){
       if(overlap(b,{...this.player,w:1,h:1},.1))return false;
-      for(const h of this.nearbyHomes(b,22))for(const o of [...h.objects,...h.sites])if(o.hp>0&&overlap(b,o,.04))return false;
+      for(const h of this.nearbyHomes(b,22))for(const o of [...h.objects,...h.sites])if(o.hp>0&&this.resourcePresent(o)&&overlap(b,o,.04))return false;
       if([...this.devices,...this.drops,...this.zombies].some(o=>(o.hp===undefined||o.hp>0)&&overlap(b,o,.1)))return false;
       const e=this.parking?.entrance;if(e&&overlap(b,e.axis==='x'?{x:e.x-3,y:e.y,w:6.8,h:5.8}:{x:e.x,y:e.y-3,w:5.8,h:6.8},1))return false;
       return !this.parking?.toolbox||!overlap(b,this.parking.toolbox,.6);
@@ -39,7 +39,7 @@
       while(job.heap.length&&budget-->0&&performance.now()<end){
         const p=heapPop(job.heap),pk=key(p);if(p.g!==job.cost.get(pk))continue;
         if(job.goals.some(g=>dist(p,g)<.1)){const path=[p];let k=pk;while(job.parents.has(k)){k=job.parents.get(k);path.push(job.nodes.get(k));}job.path=path.reverse();job.length=dist(job.origin,job.start)+path.slice(1).reduce((n,q,i)=>n+dist(q,path[i]),0)+dist(p,job.actualGoals[job.goals.findIndex(g=>dist(p,g)<.1)]);job.done=true;return;}
-        if(++job.expanded>20000){job.done=true;return;}
+        if(++job.expanded>(job.maxExpanded??20000)){job.done=true;return;}
         for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const n={x:p.x+dx,y:p.y+dy};if(n.x<job.bounds.left||n.x>job.bounds.right||n.y<job.bounds.top||n.y>job.bounds.bottom)continue;
           const road=v=>Math.abs(v-(Math.round((v-14)/28)*28+14))<=2.1,initial=Math.abs(n.x)<=1&&n.y>=4.8&&n.y<=14;
           if(job.roadsOnly&&!initial&&!road(n.x)&&!road(n.y))continue;

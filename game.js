@@ -8,17 +8,20 @@
   let inventoryPane="bag",contextTarget=null,contextChoice=0,overlayNotice="";
   const art=window.GameArt;
   const $=id=>document.getElementById(id);
-  const canvas=$('world'),ctx=canvas.getContext('2d');
+  const canvas=$('world'),ctx=canvas.getContext('2d'),musicControls=$('music-controls');
   const keys=new Set();let scale=27;
   const touch=window.TouchControls;
   let width=innerWidth,height=innerHeight,game=new Game(),mode='menu',menuChoice=0;
   let placement=false,buildKind='trap',dialogVisitor=null,dialogChoice=0,focused=true;
   let lastTime=performance.now(),uiKey='',nearby=null,notifications=[];
   let playerMotion={moving:false,phase:0,facing:null};
+  let nightAlert=null;
   let parkingIntro=null,vehicleIntro=null;
   let opening=null,openingPaused=false;
   let characterDraft=null,difficultyChoice='normal';
   const characterModes=['traits','character-preview'];
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  const smoothstep=t=>{const x=Math.max(0,Math.min(1,t));return x*x*(3-2*x);};
   const escapeText=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function resize(){width=innerWidth;height=innerHeight;scale=touch?.enabled?Math.min(27,Math.max(19,width/18)):27;const ratio=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);}
   addEventListener('resize',resize);resize();
@@ -103,7 +106,8 @@
       if(d.kind==='drying_rack'&&d.jobs?.length)asset='drying_rack_full';
       if(d.kind==='storage_chest'&&contextTarget?.object===d&&mode==='context')asset='storage_chest_open';
       const fence=['wood_fence','iron_fence','brick_wall'].includes(d.kind);
-      if(!art.sprite(ctx,asset,q.x,q.y+4,d.kind==='spike_floor'?22:fence?37:44,{width:fence?46:d.kind==='spike_floor'?48:60,flip:fence&&d.w>d.h}))box({...d,w:d.w||.7,h:d.h||.7},.7,'#8b825e','#4e5847','#686c50');
+      const size=d.kind==='storage_chest'?.78:1;
+      if(!art.sprite(ctx,asset,q.x,q.y+4,(d.kind==='spike_floor'?22:fence?37:44)*size,{width:(fence?46:d.kind==='spike_floor'?48:60)*size,flip:fence&&d.w>d.h}))box({...d,w:(d.w||.7)*size,h:(d.h||.7)*size},.7*size,'#8b825e','#4e5847','#686c50');
       if(d.hp<d.maxHP)label(`${d.hp.toFixed(1)}/${d.maxHP}`,q.x,q.y-46,'#d1b080',10);
       if(d.jobs?.length&&['grill','stove'].includes(d.kind))art.sprite(ctx,'stove_fire',q.x,q.y-12,20,{width:26});
       ctx.restore();return;
@@ -133,8 +137,55 @@
     const p=project(x-5.2,y,3.5),q=project(x+5.2,y,3.5);
     polygon([a,b,q,p],'#755146','#3a342b');polygon([p,q,c,d],'#946052','#3a342b');polygon([a,p,d],'#65483b','#3a342b');
   }
+  function drawDaylight(){
+    const m=game.minutes,night=m<345?smoothstep((345-m)/90):smoothstep((m-1275)/90)*smoothstep((1785-m)/90);
+    ctx.save();
+    if(night>0){
+      ctx.globalCompositeOperation='source-over';ctx.globalAlpha=night;
+      const p=project(game.player.x,game.player.y),g=ctx.createRadialGradient(p.x,p.y,80,p.x,p.y,Math.max(81,Math.max(width,height)*.8));
+      g.addColorStop(0,'#15213610');g.addColorStop(1,'#18264166');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);
+    }
+    ctx.restore();
+  }
+  function showNightAlert(){
+    const siege=game.day%7===0;
+    nightAlert={game,age:0,duration:siege?5:3.2,siege};
+    $('night-alert-text').textContent=siege?'丧尸已锁定你的位置，尸潮来袭！':'夜幕降临';
+  }
+  function drawNightAlert(dt){
+    const banner=$('night-alert');
+    if(nightAlert?.game!==game||game.scene==='parking'||mode==='menu'||game.result)nightAlert=null;
+    const show=!!nightAlert&&mode==='play'&&!parkingIntro&&!vehicleIntro;
+    banner.classList.toggle('hidden',!show);
+    if(!show)return;
+    nightAlert.age+=dt;
+    const {age,duration,siege}=nightAlert;
+    if(age>=duration){nightAlert=null;banner.classList.add('hidden');return;}
+    banner.style.opacity=Math.min(smoothstep(age/.3),smoothstep((duration-age)/.5));
+    if(!siege)return;
+    const still=reducedMotion.matches,depth=Math.min(34,width*.07,height*.08);
+    const inset=still?depth:-18+(depth+18+3*Math.sin(age*2))*smoothstep(age/.65)*(1-smoothstep((age-duration+1.15)/1.15));
+    const tape=[[-12,inset,width+12,inset],[width-inset,-12,width-inset,height+12],[width+12,height-inset,-12,height-inset],[inset,height+12,inset,-12]];
+    ctx.save();ctx.globalAlpha=still?Math.min(smoothstep(age/.3),smoothstep((duration-age)/.5)):.9;
+    ctx.beginPath();for(const [x,y,ex,ey] of tape){ctx.moveTo(x,y);ctx.lineTo(ex,ey);}
+    ctx.lineWidth=9;ctx.strokeStyle='#e5ba4b';ctx.stroke();ctx.strokeStyle='#3d3018';ctx.setLineDash([9,12]);ctx.lineDashOffset=still?0:-age*52;ctx.stroke();ctx.restore();
+  }
+  function updateDehydrationAlert(){
+    const storm=mode==='play'&&!parkingIntro&&!vehicleIntro&&!game.result?game.dustStorm:null;
+    const urgent=storm&&storm.waterLeft<storm.remaining?1-smoothstep(storm.waterLeft/5):0;
+    $('dehydration-edge').style.opacity=urgent;
+    const banner=$('dehydration-alert');
+    const visible=!!storm&&$('night-alert').classList.contains('hidden');
+    banner.classList.toggle('hidden',!visible);
+    if(visible){
+      const limit=Survival.Weather.duststorm.dehydration,left=Math.max(0,storm.waterLeft);
+      const time=`${Math.ceil(left)} / ${limit} 秒`,label=$('dehydration-time'),meter=$('dehydration-meter');
+      if(label.textContent!==time){label.textContent=time;meter.setAttribute('aria-valuemax',limit);meter.setAttribute('aria-valuenow',Math.ceil(left));}
+      $('dehydration-fill').style.width=`${Math.min(1,left/limit)*100}%`;
+    }
+  }
   function drawWorld(){
-    if(game.scene==='armory'){ArmoryView.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});return;}
+    if(game.scene==='armory'){ArmoryView.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});drawDaylight();return;}
     if(game.scene==='parking'){PV.draw(game,{ctx,project,plane,box,actor,label,drawDevice,drawMolotovAim,width,height,scale,placement,buildKind,nearby,mode});return;}
     ctx.clearRect(0,0,width,height);ctx.fillStyle='#4d5740';ctx.fillRect(0,0,width,height);
     const homes=game.nearbyHomes(vehicleIntro?.camera||parkingIntro?.camera||game.player,45).filter(h=>{const p=project(h.x,h.y);return Math.abs(p.x-width/2)<width/2+480&&Math.abs(p.y-height/2)<height/2+380;});
@@ -160,14 +211,17 @@
     ArmoryView.ground(game,{ctx,project,plane,scale});
     const items=[];
     const indoor=homes.find(h=>game.player.indoorHome===`${h.cx},${h.cy}`);
-    const roomOf=o=>homes.find(h=>Math.abs(o.x-h.x)<5&&o.y>h.y-6&&o.y<h.y);
+    const roomOf=o=>homes.find(h=>Layers.contains(h,o));
+    const showRoofs=!(game.developer?.enabled&&game.developer.hideRoofs);
+    const roofVisible=home=>showRoofs&&home!==indoor&&home.objects.some(o=>o.type==='wall'&&o.hp>0);
+    const visitorUnderRoof=visitor=>{const home=roomOf(visitor);return !!home&&roofVisible(home);};
     // Rear and front walls use independent anchors, including the rear indoor corners.
     const actorDepth=o=>ArmoryView.depth(game,o,CampView.depth(game,o,Layers.actor(o,homes)));
     const visibleOutside=(o,draw)=>{if(!indoor||roomOf(o)===indoor){draw();return;}ctx.save();ctx.beginPath();ctx.rect(-2000,-2000,width+4000,height+4000);const corners=[project(indoor.x-5,indoor.y-6),project(indoor.x+5,indoor.y-6),project(indoor.x+5,indoor.y),project(indoor.x-5,indoor.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.clip('evenodd');draw();ctx.restore();};
     for(const home of homes){
       const inside=game.player.indoorHome===`${home.cx},${home.cy}`;
       items.push({depth:Layers.rear(home),draw:()=>art.houseBack(ctx,home,project)});
-      for(const o of home.objects){if(o.hp<=0||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({layer:o.type==='wall'&&!rearWall?-1:0,depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
+      for(const o of home.objects){if(o.hp<=0||!game.resourcePresent(o)||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({layer:o.type==='wall'&&!rearWall?-1:0,depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
         if(o.type==='wall'){if(!art.available('house_base'))box(o,1.8,'#b9b7a4','#777d6b','#969b88');if(o.hp<o.maxHP){const q=project(o.x,o.y,1);art.sprite(ctx,'damage_stone',q.x,q.y,20,{width:24});}}
         else if(o.type==='furniture'){
           const file={'铁柜':'metal_cabinet','铁架':'metal_shelf','木桌':'wood_table','木椅':'wood_chair','木柜':'wood_cabinet'}[o.name],p=project(o.x,o.y);
@@ -184,13 +238,13 @@
         }
       }});}
       items.push({layer:-1,depth:Layers.front(home),draw:()=>art.houseFront(ctx,home,project,inside)});
-      if(!inside&&!(game.developer?.enabled&&game.developer.hideRoofs)&&home.objects.some(o=>o.type==='wall'&&o.hp>0))items.push({depth:home.x+home.y+.02,draw:()=>roof(home)});
+      if(roofVisible(home))items.push({depth:home.x+home.y+.02,draw:()=>roof(home)});
       for(const site of home.sites){
-        if(site.hp<=0)continue;
+        if(site.hp<=0||!game.resourcePresent(site))continue;
         const outside=['stone_pile','water_point','herb_bed'].includes(site.kind);
         if(!outside&&!inside||site.searched&&!site.repeat&&site.kind==='stone_pile')continue;
         const key=site.kind==='supply'?`supply_box_${site.searched?'open':'closed'}`:site.kind==='freezer'?`freezer_${site.searched&&!site.resourceDisabled?'open':'closed'}`:site.kind==='herb_bed'?`herb_bed_${site.searched?'empty':'full'}`:site.kind==='misc'?'wood_cabinet':site.kind==='kitchen'?'stove':['repair_shop','security_room','pharmacy'].includes(site.kind)?`storage_chest_${site.searched&&!site.resourceDisabled?'open':'closed'}`:site.kind;
-        items.push({depth:Math.min(site.x+site.y,home.x+home.y-.1),draw:()=>{const q=project(site.x,site.y);if(!art.sprite(ctx,key,q.x,q.y,site.kind==='water_point'?45:30,{width:44}))box({...site},.4,'#8c8a69','#505948','#767e5a');}});
+        items.push({depth:Math.min(site.x+site.y,home.x+home.y-.1),draw:()=>{const q=project(site.x,site.y),size=['water_point','herb_bed'].includes(site.kind)?1:.78;if(!art.sprite(ctx,key,q.x,q.y,(site.kind==='water_point'?45:30)*size,{width:44*size}))box({...site,w:site.w*size,h:site.h*size},.4*size,'#8c8a69','#505948','#767e5a');}});
       }
     }
     for(const d of game.devices){
@@ -199,7 +253,7 @@
       items.push({depth:CampView.depth(game,d,room?Math.min(d.x+d.y,room.x+room.y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>drawDevice(d))});
     }
     for(const z of game.zombies)if(z.hp>0&&inView(z)&&game.canSee(z))items.push({depth:actorDepth(z),draw:()=>visibleOutside(z,()=>actor(z,'zombie'))});
-    for(const v of game.visitors)if(inView(v)&&game.canSee(v))items.push({depth:actorDepth(v),draw:()=>visibleOutside(v,()=>actor(v,'visitor'))});
+    for(const v of game.visitors)if(inView(v)&&!visitorUnderRoof(v)&&game.canSee(v))items.push({depth:actorDepth(v),draw:()=>visibleOutside(v,()=>actor(v,'visitor'))});
     for(const d of game.drops)if(inView(d))items.push({depth:CampView.depth(game,d,roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>{const p=project(d.x,d.y);if(!ArmoryView.item(ctx,d.kind,{x:p.x,y:p.y+5},20)&&!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');})});
     items.push({depth:actorDepth(game.player),draw:()=>actor(game.player,'player')});
     for(const zone of game.zones)if(inView(zone))items.push({depth:zone.x+zone.y+.06,draw:()=>art.drawZone(ctx,zone,project,scale,game.seconds)});
@@ -223,14 +277,14 @@
     drawMolotovAim();WorldView.aim(game,{ctx,project,scale});
     WorldView.weatherOverlay(game,{ctx,project,scale,width,height});
     if(placement){const p=game.placementPoint(),error=game.canPlace(buildKind,p);plane(p.x,p.y,1,1,error?'#ad5b5666':'#ceb56755',error?'#d1917b':'#e5d99b');drawDevice({...p,kind:buildKind,readyAt:0},true);}
-    if(nearby&&mode==='play'&&!placement&&!game.playerAttack&&game.player.weapon!=='molotov'){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
-    const night=game.minutes>=1320&&game.minutes<1740;
-    if(night){const p=project(game.player.x,game.player.y),g=ctx.createRadialGradient(p.x,p.y,80,p.x,p.y,Math.max(width,height)*.8);g.addColorStop(0,'#0a142519');g.addColorStop(1,'#07101eae');ctx.fillStyle=g;ctx.fillRect(0,0,width,height);}
+    if(nearby&&mode==='play'&&!placement&&!game.playerAttack&&game.player.weapon!=='molotov'&&(!['visitor','helper'].includes(nearby.type)||!visitorUnderRoof(nearby.object))){const p=project(nearby.object.x,nearby.object.y,.95);label(touch.enabled?'交互':'E',p.x,p.y-10,'#f0d88b',16);}
+    drawDaylight();
+    WorldView.dustOverlay(game,{ctx,project,scale,width,height});
     if(mode!=='menu'&&!parkingIntro)PV.groundSight(game,{ctx,project,width,height,scale});
     Dev.draw(ctx,game,project,homes);
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
-  function showMenu(){$('gun-fire').classList.add('hidden');$('firepower-skill').classList.add('hidden');$('sweeper-hud').classList.add('hidden');game.stopAutomaticFire();GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('developer-badge').classList.add('hidden');$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function showMenu(){$('gun-fire').classList.add('hidden');$('firepower-skill').classList.add('hidden');$('sweeper-hud').classList.add('hidden');game.stopAutomaticFire();GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
   function beginOpening(){
     mode='opening';openingPaused=false;keys.clear();touch.clear();PV.hideCombatHUD();GameSound.unlock();document.documentElement.classList.add('opening-active');$('opening-pause').textContent='暂停';
     opening=new BroadcastView.OpeningSequence(()=>{opening=null;document.documentElement.classList.remove('opening-active');game.broadcast.introDone=true;enterGame();saveGame(false);});
@@ -277,7 +331,7 @@
   }
   function enterGame(){
     mode='play';placement=false;playerMotion={moving:false,phase:0,facing:null};keys.clear();touch.clear();uiKey='';overlayNotice='';notifications=[];lastTime=performance.now();
-    $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','objective'])$(id).classList.remove('hidden');$('player-name').textContent=game.player.name;
+    $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls'])$(id).classList.remove('hidden');$('player-name').textContent=game.player.name;
   }
   function resumeGame(test=false){if(!art.ready)return;try{const data=savedData(test?DEV_SAVE_KEY:SAVE_KEY);if(!data||data.result)return;game=Game.restore(data);if(test)Dev.enable(game);enterGame();if(!game.broadcast.introDone)beginOpening();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
   document.querySelectorAll('.menu-option').forEach((el,i)=>el.addEventListener('pointerenter',()=>{if(mode==='menu'){menuChoice=i;updateMenu();}}));
@@ -285,7 +339,7 @@
     if(!art.ready)return;
     const name=$('name-input').value||'幸存者';$('name-input').blur();
     characterDraft={name:name.trim().slice(0,12)||'幸存者',startMode:menuChoice===1?'quick':'full',developer,difficulty:difficultyChoice,traits:characterDraft?.traits||CharacterTraits.empty()};
-    $('menu').classList.add('hidden');for(const id of ['hud','controls','objective','interaction'])$(id).classList.add('hidden');PV.hideCombatHUD();openOverlay('traits');
+    $('menu').classList.add('hidden');for(const id of ['hud','controls','interaction'])$(id).classList.add('hidden');PV.hideCombatHUD();openOverlay('traits');
   }
   function characterCommand(command){
     if(!characterDraft||!characterModes.includes(mode))return;
@@ -318,6 +372,12 @@
     else if(action==='day'||action==='night')ok=Dev.jump(game,Number($('dev-day').value),action==='night');
     else if(action==='give')ok=Dev.give(game,$('dev-item').value,Number($('dev-amount').value));
     else if(action==='spawn')ok=Dev.spawn(game,$('dev-enemy').value,Number($('dev-count').value));
+    else if(action==='spawn-visitor'){overlayNotice=Dev.spawnVisitor(game);uiKey='';return;}
+    else if(action==='weather'){
+      Dev.enable(game);
+      if(game.setDeveloperWeather($('dev-weather').value)){closeOverlay();return;}
+      overlayNotice='该天气在当前场景或难度下不可用。';uiKey='';return;
+    }
     else if(action==='parking'){
       Dev.enable(game);if(game.secondFloor)game.changeFloor(1);if(game.scene==='surface'){if(game.day<15)Dev.jump(game,15);game.ensureParking();if(game.parking){game.parking.introSeen=true;game.parkingUnlockPending=false;Object.assign(game.player,{x:game.parking.entrance.x,y:game.parking.entrance.y});game.cancelAction();game.switchScene();}else{game._parkingDevEnter=true;closeOverlay();return;}}
     }
@@ -334,7 +394,7 @@
   }
   function inventoryOverlay(){return UI.inventory(game,buildKind,inventoryPane);}
   function statsOverlay(){
-    const damageNames={hunger:'饥饿',acid_pool:'酸液区',fire_pool:'燃烧区'};
+    const damageNames={dehydration:'失水',hunger:'饥饿',acid_pool:'酸液区',fire_pool:'燃烧区'};
     const rows=game.history.map(h=>{
       const kills=Object.entries(h.kills).map(([k,n])=>`${D.enemies[k]?.name||NAMES[k]||k}${n}`).join('、')||'无';
       const damage=Object.entries(h.damage).map(([k,n])=>`${D.enemies[k]?.name||damageNames[k]||NAMES[k]||k}${Number(n.toFixed(1))}`).join('、')||'无';
@@ -351,23 +411,27 @@
     else if(mode==='inventory'){key+=game.selectedSlot+JSON.stringify(game.inventory)+buildKind+inventoryPane+art.parkingRevision;html=inventoryOverlay();}
     else if(mode==='context'){const o=contextTarget?.object;key+=o?.id+JSON.stringify(game.inventory)+JSON.stringify({hp:o?.hp,level:o?.level,energy:o?.energy,active:o?.active,opened:o?.opened,loot:o?.loot,gate:game.parking?.layer?.gateOpen,transport:game.armory?.transport,human:game.humans&&[game.humans.heroUntil>game.seconds,Math.max(0,game.humans.banUntil-game.seconds),game.humans.raid?.phase],selection:contextTarget?.campOffer,batches:contextTarget?.campBatches,camp:contextTarget?.type==='camp'&&[game.camp.stock,game.camp.completed,game.camp.reputation,game.camp.effectiveReputation]})+art.parkingRevision;html=UI.context(game,contextTarget);}
     else if(mode==='stats'){html=statsOverlay();}
-    else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><p>点继续游戏，回到你的领地。</p><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button><button data-command="developer">开发者模式（F2）</button></div>';}
+    else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><div id="pause-music-slot"></div><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button><button data-command="developer">开发者模式（F2）</button></div>';}
     else if(mode==='developer'){key+=JSON.stringify(Dev.state(game))+game.scene+JSON.stringify(game.humans&&[game.humans.actors.length,game.humans.regularKills,game.humans.revenge,game.humans.raid?.phase,game.humans.unlocked]);html=Dev.panel(game)+PV.developer(game)+(Dev.humanPanel?Dev.humanPanel(game):'')+'<div class="dev-section"><h3>幸存者营地 / 军备库</h3><button data-dev="armory">军备库入口 / 第17天（开发测试）</button><button data-dev="camp">第14天营地 / 定位入口（开发测试）</button></div>';}
     else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：民居 · 食/修/药/保：商店 · 灰点：石头 · 蓝点：水 · 绿点：药草</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="overlay-actions"><button data-key="m">返回游戏</button></div>';}
     else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<button data-dialog="${i}" class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</button>`).join('')}<div class="key-hint keyboard-hint">W / S 选择　·　E 确认</div>`;}
-    else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第${game.day}晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':'下次可以先搜补给箱、做武器和料理、修补受损的防线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
+    else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第${game.day}晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':game.deathReason==='dehydration'?'沙尘暴中失水，未在时限内喝下清水。':'下次可以先搜补给箱、做武器和料理、修补受损的防线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
     if(overlayNotice)html+=`<p class="inline-notice">${escapeText(overlayNotice)}</p>`;key+=overlayNotice;
-    if(key!==uiKey){$('overlay-card').innerHTML=html;uiKey=key;}
+    if(key!==uiKey){
+      const card=$('overlay-card');
+      if(card.contains(musicControls)){musicControls.classList.add('hidden');document.body.append(musicControls);}
+      card.innerHTML=html;uiKey=key;
+      if(mode==='pause'){$('pause-music-slot').append(musicControls);musicControls.classList.remove('hidden');}
+    }
     if(mode==='context')$('overlay-card').querySelectorAll('[data-command]:not([disabled])').forEach((b,i)=>b.classList.toggle('selected',i===contextChoice));
     if(mode==='map'){
       if(game.scene==='armory'){ArmoryView.map(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='军备库 · 200×150米';$('overlay-card').querySelector('p').textContent='首次须乘突击车撞开南门，此后可步行进出；西门仍须钥匙卡，军备驻守按难度周期补充。';}
       else if(game.scene==='parking'){PV.drawMap(game,$('map-canvas'));$('overlay-card').querySelector('h2').textContent='地下首层 · 已探索区域';$('overlay-card').querySelector('p').textContent='靠近车身直接搜索车辆；油滴标记油箱。红点只显示当前可见敌人。';}
-      else {drawMap();if(game.parking){const c=$('map-canvas'),m=c.getContext('2d'),e=game.parking.entrance,x=275+(e.x-game.player.x)*.65,y=175+(e.y-game.player.y)*.65;if(!art.parkingSprite(m,'parking_marker','default',x,y,17)){m.fillStyle='#e2c971';m.font='bold 16px sans-serif';m.fillText('P',x,y);}}CampView.map(game,$('map-canvas'));ArmoryView.map(game,$('map-canvas'));HumansView.map(game,$('map-canvas'));}
+      else {drawMap();if(game.parking){const c=$('map-canvas'),m=c.getContext('2d'),e=game.parking.entrance,x=275+(e.x-game.player.x)*.65,y=175+(e.y-game.player.y)*.65;if(!art.parkingSprite(m,'parking_marker','default',x,y,17)){m.fillStyle='#e2c971';m.font='bold 16px sans-serif';m.fillText('P',x,y);}}CampView.map(game,$('map-canvas'));ArmoryView.map(game,$('map-canvas'));HumansView.map(game,$('map-canvas'));WorldView.dustMap(game,$('map-canvas'));}
     }
   }
-  function drawMap(){const c=$('map-canvas');if(!c)return;const m=c.getContext('2d'),s=.65,cx=275,cy=175;const p=o=>({x:cx+(o.x-game.player.x)*s,y:cy+(o.y-game.player.y)*s});m.fillStyle='#1e281e';m.fillRect(0,0,550,350);for(const h of game.nearbyHomes(game.player,300)){const q=p(h);m.fillStyle=h.own?'#b7a05b':h.kind==='house'?'#63705b':'#81aabc';m.fillRect(q.x-3.25,q.y-3.9,6.5,3.9);m.strokeStyle=h.own?'#cfbd7c':'#485c43';m.strokeRect(q.x-3.25,q.y,6.5,2.6);if(h.kind!=='house'){m.fillStyle='#dfd8b7';m.font='10px sans-serif';m.fillText(({food_shop:'食',repair_shop:'修',pharmacy:'药',security_room:'保'})[h.kind],q.x+5,q.y);}for(const site of h.sites)if(['stone_pile','water_point','herb_bed'].includes(site.kind)&&(!site.searched||site.repeat)){const a=p(site);m.fillStyle=site.kind==='water_point'?'#82bfd7':site.kind==='herb_bed'?'#90bb67':'#91958e';m.fillRect(a.x,a.y,3,3);}}for(const z of game.zombies)if(game.canSee(z)){const q=p(z);m.fillStyle='#d18673';m.beginPath();m.arc(q.x,q.y,3,0,Math.PI*2);m.fill();}m.fillStyle='#f0da91';m.beginPath();m.arc(cx,cy,5,0,Math.PI*2);m.fill();}
+  function drawMap(){const c=$('map-canvas');if(!c)return;const m=c.getContext('2d'),s=.65,cx=275,cy=175;const p=o=>({x:cx+(o.x-game.player.x)*s,y:cy+(o.y-game.player.y)*s});m.fillStyle='#1e281e';m.fillRect(0,0,550,350);for(const h of game.nearbyHomes(game.player,300)){const q=p(h);m.fillStyle=h.own?'#b7a05b':h.kind==='house'?'#63705b':'#81aabc';m.fillRect(q.x-3.25,q.y-3.9,6.5,3.9);m.strokeStyle=h.own?'#cfbd7c':'#485c43';m.strokeRect(q.x-3.25,q.y,6.5,2.6);if(h.kind!=='house'){m.fillStyle='#dfd8b7';m.font='10px sans-serif';m.fillText(({food_shop:'食',repair_shop:'修',pharmacy:'药',security_room:'保'})[h.kind],q.x+5,q.y);}for(const site of h.sites)if(site.hp>0&&game.resourcePresent(site)&&['stone_pile','water_point','herb_bed'].includes(site.kind)&&(!site.searched||site.repeat)){const a=p(site);m.fillStyle=site.kind==='water_point'?'#82bfd7':site.kind==='herb_bed'?'#90bb67':'#91958e';m.fillRect(a.x,a.y,3,3);}}for(const z of game.zombies)if(game.canSee(z)){const q=p(z);m.fillStyle='#d18673';m.beginPath();m.arc(q.x,q.y,3,0,Math.PI*2);m.fill();}m.fillStyle='#f0da91';m.beginPath();m.arc(cx,cy,5,0,Math.PI*2);m.fill();}
   function updateHUD(){
-    const debug=Dev.state(game);$('developer-badge').classList.toggle('hidden',!game.developerUsed);$('developer-badge').textContent=game.developerUsed?`测试存档 · ${debug.enabled?'开发工具开启':'工具关闭'} · ${debug.enabled?debug.speed:1}倍速 · F2`:'';
     $('run-edge').style.opacity=mode==='play'&&focused&&game.player.running?'1':'0';
     $('hurt-edge').style.opacity=mode==='play'&&game.player.hurtUntil>game.seconds?'1':'0';
     $('hp-label').textContent=`${Number((game.player.hp>0?Math.max(.1,game.player.hp):0).toFixed(1))} / ${game.maxHP}`;$('hp-fill').style.width=`${game.player.hp/game.maxHP*100}%`;
@@ -384,7 +448,6 @@
     $('resources').textContent=`铁 ${game.count('iron')}　木头 ${game.count('wood')}　击败 ${game.kills}`;
     const t=Math.floor(game.minutes)%1440;$('clock').textContent=`${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
     const night=game.minutes>=1320&&game.minutes<1740,raiders=game.zombies.filter(z=>z.hp>0&&game.isNightRaider(z)).length;$('phase').textContent=night?`夜间 · 夜袭存活${raiders}只${game.pendingSpawn.length?` · 待生成${game.pendingSpawn.length}只`:''}`:game.result?'天明':'白天 · 探索与部署';
-    $('objective').innerHTML=night?'<b>活到05:00</b><br>丧尸受阻会攻击护栏。可以移动、奔跑和继续部署。':(touch.enabled?'<b>22:00前做好准备</b><br>收集材料，布置防御。普通门自动开关。':'<b>22:00前做好准备</b><br>进屋搜补给；Tab制作武器和设备。E攻击/交互。普通门自动开关。');
     let text='';
     if(!focused&&mode==='play')text='游戏已暂停，回到此窗口继续。';
     else if(mode==='play'&&placement){const error=game.canPlace(buildKind,game.placementPoint());text=`${NAMES[buildKind]} · ${error||'可放置'}　｜　E切换　F确认　Tab打开背包并取消`;}
@@ -411,8 +474,8 @@
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+Math.ceil(game.inventory.length/5))%Math.ceil(game.inventory.length/5))*5+(col+dx+5)%5;}
   function handleKey(event){
-    if($('bestiary-dialog').open||event.target instanceof Element&&event.target.closest('#open-bestiary'))return;
-    if(event.target instanceof Element&&event.target.closest('#music-controls,#sound-toggle')){if(event.key==='Escape'){event.preventDefault();document.querySelector('#music-controls details')?.removeAttribute('open');event.target.blur();if(mode==='pause')closeOverlay();}return;}
+    if($('bestiary-dialog').open||$('weather-guide').open||event.target instanceof Element&&event.target.closest('#open-bestiary,#open-weather-guide'))return;
+    if(event.target instanceof Element&&event.target.closest('#music-controls,#sound-toggle')){if(event.key==='Escape'){event.preventDefault();event.target.blur();if(mode==='pause')closeOverlay();}return;}
     if(event.key==='Tab'&&['menu','pause'].includes(mode))return;
     if(event.key==='F2'){event.preventDefault();if(!event.repeat)performAction('f2');return;}
     if(event.target instanceof HTMLInputElement||event.target instanceof HTMLSelectElement||event.target instanceof HTMLTextAreaElement){if(event.key==='Escape'){event.preventDefault();performAction('escape');}if(event.key==='Enter'){event.target.blur();if(mode==='menu')start();}return;}
@@ -521,7 +584,6 @@
   $('continue-game').addEventListener('click',()=>resumeGame());
   $('start-developer').addEventListener('click',()=>start(true));
   $('continue-developer').addEventListener('click',()=>resumeGame(true));
-  $('developer-badge').addEventListener('click',()=>openDeveloper());
   art.loading.then(()=>{$('continue-game').disabled=!savedData()||!!savedData()?.result;$('start-developer').disabled=false;$('continue-developer').disabled=!savedData(DEV_SAVE_KEY)||!!savedData(DEV_SAVE_KEY)?.result;});
   $('action-progress').addEventListener('pointerdown',event=>{if(event.target.closest('[data-command="cancel"]')){event.preventDefault();game.cancelAction();}});
   $('touch-toggle').addEventListener('click',resize);
@@ -567,16 +629,20 @@
     if(parkingIntro&&focused&&!document.hidden)advanceParkingIntro(dt);
     if(mode==='play'&&!parkingIntro&&focused&&!document.hidden){
       const before={x:game.player.x,y:game.player.y};
+      const beforeDay=game.day,beforeMinutes=game.minutes,beforeScene=game.scene;
       const input={up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY,fireHeld:keys.has('e')||keys.has(' ')||touch.input.fireHeld};
       const debug=Dev.state(game),speed=debug.enabled?debug.speed:1;
       game.beginFrame();
       for(let tick=0;tick<speed&&!game.result&&!game.parkingUnlockPending;tick++)game.step(dt,input);
       game.endFrame();
+      if(beforeScene!=='parking'&&game.scene!=='parking'&&beforeDay===game.day&&beforeMinutes<1320&&game.minutes>=1320)showNightAlert();
       const moved=dist(before,game.player),moving=moved>1e-7;
       if(moving){
         if(!playerMotion.moving)playerMotion.phase=0;
         const dx=game.player.x-before.x,dy=game.player.y-before.y,screenMoved=Math.hypot(dx-dy,(dx+dy)*.5)/Math.SQRT2;
-        playerMotion.phase=(playerMotion.phase+screenMoved/(window.PLAYER_ANIMATION?.metersPerFrame||.4))%4;
+        const frameDistance=window.PLAYER_ANIMATION?.metersPerFrame||.4;
+        const frames=game.player.running?Math.min(moved/(frameDistance*1.65),8*dt):screenMoved/frameDistance;
+        playerMotion.phase=(playerMotion.phase+frames)%4;
         playerMotion.facing={x:(game.player.x-before.x)/moved,y:(game.player.y-before.y)/moved};
       }else playerMotion.phase=0;
       playerMotion.moving=moving;
@@ -589,6 +655,8 @@
     if(game.soundEvents){for(const event of game.soundEvents.splice(0))GameSound.effect(event.kind,event.volume);}
     game.advanceCampNavigation();
     if(!opening||opening.stages[opening.index]?.kind==='handoff')drawWorld();if(!opening&&mode!=='menu'&&!characterModes.includes(mode))updateHUD();if(['inventory','map','dialog','result','pause','context','stats','developer',...characterModes].includes(mode))renderOverlay();
+    drawNightAlert(focused&&!document.hidden?dt:0);
+    updateDehydrationAlert();
     if(parkingIntro)PV.drawEntranceIntro(game,parkingIntro,{ctx,project,width,height,scale});
     if(vehicleIntro)vehicleIntro.draw(ctx,{width,height});
     if(opening)opening.draw(ctx,width,height);

@@ -23,7 +23,7 @@
     {kind:'loyal_follower',group:'human',human:true,description:'天启首次守住营地三波袭击后解锁。按V或触屏按钮召唤；会跟随玩家跨场景、攻击可见敌人，保留残余生命。',art:humanArt('loyal_follower')},
     {kind:'home_helper',group:'human',human:true,description:'收留来访幸存者得到的后勤助手。各难度均可提供后勤；天启额外守卫初始领地、驱除进入领地的饥民，不追出界。',art:humanArt('home_helper','windup')}
   ];
-  const humanStats={starving_civilian:{name:'饥民',hp:2,damage:1,speed:2,interval:1.5,range:1.1,windup:.3},bandit:{name:'强盗',hp:3,speed:1,interval:2},loyal_follower:{name:'忠心随从',hp:3,damage:2.5,speed:3,interval:2,range:1.3,windup:.4},home_helper:{name:'后勤助手',damage:2,speed:2,interval:2,range:1.3,windup:.4}};
+  const humanStats={starving_civilian:{name:'饥民',hp:2,damage:1,speed:2,interval:1.5,range:1.1,windup:.3},bandit:{name:'强盗',hp:3,speed:1,interval:2},loyal_follower:{name:'忠心随从',hp:H.loyalFollowerHP,damage:2.5,speed:3,interval:2,range:1.3,windup:.4},home_helper:{name:'后勤助手',damage:2,speed:2,interval:2,range:1.3,windup:.4}};
   const definition=kind=>P.enemies[kind]||D.enemies[kind];
   const damage=(amount,kind,id)=>number(M.damage(amount,kind,id));
   const speed=(amount,kind,id)=>number(amount*(M.boss(kind)?M.profile(id).bossSpeed:M.profile(id).speed));

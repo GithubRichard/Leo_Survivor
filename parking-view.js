@@ -73,9 +73,9 @@
     return A.parkingSurface(ctx,asset,'default',source||[[.5,.055],[.93,.493],[.49,.948],[.07,.486]],
       [project(x-w/2,y-h/2),project(x+w/2,y-h/2),project(x+w/2,y+h/2),project(x-w/2,y+h/2)]);
   }
-  function carModel(ctx,car,layer,v){
-    const asset={civilian:'civilian_car',repair:'maintenance_van',supply:'supply_van',security:'security_car'}[car.vehicle],searched=layer.points.some(p=>p.carId===car.id&&p.kind==='cargo'&&p.opened),q=v.project(car.x,car.y);
-    return A.parkingSprite(ctx,asset,`south_${searched?'searched':'unsearched'}`,q.x,q.y,88*v.scale/27);
+  function carModel(ctx,car,game,v){
+    const asset={civilian:'civilian_car',repair:'maintenance_van',supply:'supply_van',security:'security_car'}[car.vehicle],searched=game.parking.layer.points.some(p=>p.carId===car.id&&p.kind==='cargo'&&p.opened&&game.resourcePresent(p)),q=v.project(car.x,car.y);
+    return A.parkingSprite(ctx,asset,`south_${searched?'searched':'unsearched'}`,q.x,q.y,69*v.scale/27);
   }
   function bayPaint(ctx,car,project){
     // Flat paint has neither a glow texture nor a solid object casting sight rays.
@@ -144,7 +144,7 @@
     // Clip model completion to the same visible distance and lit areas. Never
     // punch a complete, isolated car-shaped hole into unexplored blackness.
     const c=carCanvas.getContext('2d');c.globalCompositeOperation='source-over';c.clearRect(0,0,width,height);
-    for(const car of visibility.cars)carModel(c,car,game.parking.layer,v);
+    for(const car of visibility.cars)carModel(c,car,game,v);
     c.globalCompositeOperation='destination-in';c.drawImage(sightCanvas,old.x-width/2,old.y-height*.56);c.globalCompositeOperation='source-over';f.drawImage(carCanvas,0,0);
     f.globalCompositeOperation='source-over';ctx.drawImage(fogCanvas,0,0);
   }
@@ -163,7 +163,7 @@
       if(rise>0&&!A.parkingSprite(ctx,'parking_entrance','default',q.x,q.y,1,{anchors,dest})){const c=entrancePoint(e,0,-3);plane(c.x,c.y,e.axis==='x'?6:5,e.axis==='x'?5:6,'#383d3f','#aa9b65');}ctx.restore();
       if(rise>=1)label('P · 地下停车场',q.x,q.y+17,'#d8bb68',12);
     };
-    const toolbox=()=>{const q=project(t.x,t.y),state=!t.opened?'closed':Object.values(t.loot).some(n=>n>0)?'open_supplied':'open_empty';if(!A.parkingSprite(ctx,'entrance_toolbox',state,q.x,q.y,24)&&!A.sprite(ctx,t.opened?'storage_chest_open':'storage_chest_closed',q.x,q.y,24))plane(t.x,t.y,.5,.5,t.opened?'#555747':'#9b844e','#d0ba72');};
+    const toolbox=()=>{const q=project(t.x,t.y),state=!t.opened?'closed':Object.values(t.loot).some(n=>n>0)?'open_supplied':'open_empty';if(!A.parkingSprite(ctx,'entrance_toolbox',state,q.x,q.y,19)&&!A.sprite(ctx,t.opened?'storage_chest_open':'storage_chest_closed',q.x,q.y,19))plane(t.x,t.y,.4,.4,t.opened?'#555747':'#9b844e','#d0ba72');};
     // The ramp is ground beneath actors, not a foreground picture covering them.
     if(items){items.push({depth:e.x+e.y-6.1,draw:entry});if(rise>=1)items.push({depth:t.x+t.y,draw:toolbox});}else{entry();if(rise>=1)toolbox();}
   }
@@ -205,8 +205,8 @@
       items.push({depth:o.x+o.y,draw:()=>{
       const q=project(o.x,o.y);
       if(o.kind==='car'){
-        if(carModel(ctx,o,layer,v))return;
-        const color={civilian:'#6c7169',repair:'#8c7a4a',supply:'#677e77',security:'#555b67'}[o.vehicle];box(o,1.2,color,'#393f3d','#505753');const window=project(o.x,o.y,.9);ctx.fillStyle='#1e292b';ctx.fillRect(window.x-12,window.y-9,24,8);
+        if(carModel(ctx,o,game,v))return;
+        const color={civilian:'#6c7169',repair:'#8c7a4a',supply:'#677e77',security:'#555b67'}[o.vehicle];box({...o,w:o.w*.78,h:o.h*.78},.94,color,'#393f3d','#505753');const glass=project(o.x,o.y,.7);ctx.fillStyle='#1e292b';ctx.fillRect(glass.x-9,glass.y-7,18,6);
       }else if(o.kind==='fuse_gate'){
         if(A.parkingSprite(ctx,'fuse_gate',layer.gateOpen?'open':'locked',q.x,q.y,60*v.scale/27)||layer.gateOpen)return;
         box(o,1.6,'#777a6e','#424a47','#58605b');
@@ -216,9 +216,9 @@
     }});}
     for(const [x,y,state] of [[-24,0,'NE'],[24,0,'SE'],[-24,60,'NW'],[24,60,'SW']])items.push({depth:x+y+.01,draw:()=>{const q=project(x,y);ctx.save();if(Math.hypot(game.player.x-x,game.player.y-y)<3)ctx.globalAlpha*=.28;A.parkingSprite(ctx,'concrete_corner',state,q.x,q.y,2.1*v.scale);ctx.restore();}});
     const emergency=project(P.exit.x,P.exit.y);items.push({depth:P.exit.x+P.exit.y-.01,draw:()=>A.parkingSprite(ctx,'emergency_light','default',emergency.x+24,emergency.y-43,16*v.scale/27)});
-    for(const p of [...layer.points,...(layer.chest?[layer.chest]:[])])if(p.kind!=='cargo'&&game.canSee(p))items.push({depth:p.x+p.y+.03,draw:()=>{
+    for(const p of [...layer.points,...(layer.chest?[layer.chest]:[])])if(p.kind!=='cargo'&&game.resourcePresent(p)&&game.canSee(p))items.push({depth:p.x+p.y+.03,draw:()=>{
       const q=project(p.x,p.y);let modeled=false;
-      if(p.kind==='boss_chest'||p.kind==='skeleton_chest')modeled=A.parkingSprite(ctx,'boss_chest',game.action?.type==='parking_open'?'opening':!p.opened?'closed':Object.values(p.loot).some(n=>n>0)?'open_loot':'open_empty',q.x,q.y,32);
+      if(p.kind==='boss_chest'||p.kind==='skeleton_chest')modeled=A.parkingSprite(ctx,'boss_chest',game.action?.type==='parking_open'?'opening':!p.opened?'closed':Object.values(p.loot).some(n=>n>0)?'open_loot':'open_empty',q.x,q.y,26);
       if(p.kind==='exit')modeled=A.parkingSprite(ctx,'underground_exit','default',q.x,q.y,58);
       if(p.kind==='next_floor')modeled=A.parkingSprite(ctx,'next_floor_entrance',layer.nextUnlocked?'unlocked':'locked',q.x,q.y,55);
       if(p.kind==='cargo'||p.kind==='tank')modeled=A.parkingSprite(ctx,p.kind==='cargo'?'cargo_marker':'fuel_marker',p.opened?(p.kind==='cargo'?'searched':'drained'):'available',q.x,q.y,16);
@@ -309,7 +309,7 @@
     if(game.scene==='parking'){
       document.getElementById('day-label').textContent='地下停车场 · 首层';document.getElementById('clock').textContent=`${Math.floor(game.seconds/60)}:${String(Math.floor(game.seconds%60)).padStart(2,'0')}`;
       document.getElementById('phase').textContent=`常规刷新 ${Math.max(0,Math.ceil(game.parking.nextBatch*60-game.seconds))}秒 · 存活${game.zombies.filter(z=>!z.boneType).length}`;
-      document.getElementById('wave-warning').classList.add('hidden');document.getElementById('objective').innerHTML='<b>照明与撤退</b><br>灯光驱赶近战怪，暗处弹体仍能射入。入口可随时返回。';
+      document.getElementById('wave-warning').classList.add('hidden');
     }
     if(game.weaknessUntil>game.seconds)document.getElementById('buffs').textContent+=` · 虚弱 ${Math.ceil(game.weaknessUntil-game.seconds)}秒（伤害/移速-0.7）`;
     for(const id of [game.heldLightId,game.headLightId]){const l=game.lampById(id);if(l)document.getElementById('buffs').textContent+=` · ${S.NAMES[l.kind]} ${l.active?'亮':'灭'} ${Math.ceil(l.energy)}秒`;}

@@ -44,14 +44,30 @@
     }
     game.announce(`开发测试：已在6—8米外生成${placed}/${count}只${def.name}。`);return placed===count;
   }
+  function spawnVisitor(game){
+    if(game.scene!=='surface')return '请回到地面后生成来访幸存者。';
+    if(game.visitors.some(v=>!v.recruited))return '已有来访幸存者在等候。';
+    const spots=[];
+    for(const y of [6,7,8])for(const x of [0,-1,1,-2,2,-3,3,-4,4])spots.push({x,y});
+    const actors=[game.player,...game.visitors,...game.zombies.filter(z=>z.hp>0),...(game.humanActiveActors?.()||[])];
+    const p=spots.find(q=>!game.obstacles(q,q,.3).length&&actors.every(o=>S.dist(o,q)>=.8));
+    if(!p)return '院门外没有空位，请清理后再试。';
+    enable(game);
+    const afterHours=game.minutes>=1200;
+    game.spawnVisitor(p,afterHours);
+    return `已在初始领地院门外生成来访幸存者，按 E 或点交互交谈。${afterHours?'来访者会等到次日05:00。':''}`;
+  }
   const positionNames={rear_left:'屋内后左角',rear_right:'屋内后右角',front_left:'屋内前左角',front_right:'屋内前右角',yard:'院子中央',outside_front:'房屋正前方',outside_back:'房屋后侧',outside_right:'房屋右侧',outside_left:'房屋左侧'};
   const button=(key,text,extra='')=>`<button data-dev="${key}" ${extra}>${text}</button>`;
   function panel(game){
     const s=state(game),options=['wood','iron',...Object.keys(D.items),...Object.keys(D.weapons).filter(k=>k!=='fists')].map(k=>`<option value="${k}">${S.NAMES[k]}</option>`).join('');
+    const weatherOptions=Object.entries(S.Weather).filter(([kind])=>game.canSelectWeather(kind)).map(([kind,{name}])=>`<option value="${kind}" ${kind===game.weatherKind()?'selected':''}>${name}</option>`).join('');
     return `<div class="eyebrow">暂停中 · 独立测试存档</div><h2>开发者模式</h2><p>F2打开或关闭面板。启用工具后只写测试存档，正常进度保留。总开关关闭时所有工具无效，本局仍保存为测试存档。</p>
       <div class="dev-toggles">${[['enabled','开发工具'],['invincible','无敌'],['infiniteStamina','无限体力'],['hideRoofs','隐藏所有屋顶'],['collisions','碰撞框与坐标']].map(([k,t])=>button('toggle',`${t}：${s[k]?'开启':'关闭'}`,`data-option="${k}" aria-pressed="${s[k]}"`)).join('')}</div>
       <div class="dev-section"><h3>状态与时间</h3><div class="dev-row">${button('heal','补满血量 / 体力 / 饱食')}${button('clear','清除当前敌人和危险区域')}</div><div class="dev-row"><label>第几天 <input id="dev-day" type="number" min="1" max="365" value="${game.day}"></label>${button('day','切换至该天05:00')}${button('night','切换至该天22:00')}</div><small>切换天数会重置当晚批次，不发放跳过日期的奖励或作物收成。</small><div class="dev-row"><label>游戏速度 <select id="dev-speed">${[1,2,5].map(n=>`<option value="${n}" ${n===s.speed?'selected':''}>${n}倍</option>`).join('')}</select></label>${button('speed','应用速度')}</div></div>
       <div class="dev-section"><h3>物资与敌人</h3><div class="dev-row"><label>物品 <select id="dev-item">${options}</select></label><label>数量 <input id="dev-amount" type="number" min="1" max="999" value="20"></label>${button('give','添加物品')}</div><small>遵守背包格数和堆叠上限；空间不足时整笔取消。</small><div class="dev-row"><label>怪物 <select id="dev-enemy">${Object.entries(D.enemies).filter(([k])=>k!=='skeleton').map(([k,v])=>`<option value="${k}">${v.name}</option>`).join('')}</select></label><label>数量 <input id="dev-count" type="number" min="1" max="20" value="1"></label>${button('spawn','生成怪物')}</div></div>
+      <div class="dev-section"><h3>天气</h3><div class="dev-row"><label>地面天气 <select id="dev-weather" ${game.scene==='surface'?'':'disabled'}>${weatherOptions}</select></label>${button('weather','切换天气',game.scene==='surface'?'':'disabled')}</div><small>常规天气沿用当前天气段的剩余时间。沙尘暴仅限困难与天启，切换后会开始失水倒计时。</small></div>
+      <div class="dev-section"><h3>来访幸存者</h3><div class="dev-row">${button('spawn-visitor','生成来访幸存者',game.scene==='surface'?'':'disabled')}</div><small>生成在初始领地院门外。</small></div>
       <div class="dev-section"><h3>图层检查传送</h3><div class="dev-toggles">${Object.entries(positionNames).map(([k,t])=>button('teleport',t,`data-position="${k}"`)).join('')}</div><small>目标被家具或建筑占用时拒绝传送，避免卡进墙。</small></div>
       <div class="overlay-actions">${button('save','保存测试进度')}<button data-key="escape" class="primary">返回游戏</button></div>`;
   }
@@ -111,6 +127,6 @@
       <div class="dev-row">${button('human-unlock','解锁忠心随从')}${button('human-hero','获得英雄240秒')}${button('human-clear','清除地面饥民和强盗')}</div>
       <small>默认生成的单位带测试标记，击杀不计复仇、不掉落。饥饿图腾可在上方“添加物品”里直接领取。</small></div>`;
   }
-  const api={state,enable,toggle,clear,jump,teleport,give,spawn,panel,draw,human,humanPanel};
+  const api={state,enable,toggle,clear,jump,teleport,give,spawn,spawnVisitor,panel,draw,human,humanPanel};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DeveloperMode=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

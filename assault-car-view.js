@@ -56,7 +56,7 @@
     if(game.scene!=='surface')return;gateItems(game,v,movie);const c=game.assaultCar();if(!c)return;
     const p=origin(movie?.position||c),id=movie?.frame||D.clips.park.frame,t=movie?.time||0;
     if(t>=2.1&&t<3.42){const age=t-2.1,u=clamp(age/1.07),fx=origin(movie.start),skid=D.clips.drift.skidFrames[Math.min(2,Math.floor(age/.18))],dust=D.clips.drift.dustFrames[Math.min(2,Math.floor(age/.2))];v.items.push({layer:-1,depth:fx.x+fx.y,draw:()=>{v.ctx.save();v.ctx.globalCompositeOperation='multiply';registered(v.ctx,skid,fx,v,.35*(1-u),90);v.ctx.restore();registered(v.ctx,dust,fx,v,.27*(1-u),90);}});}
-    v.items.push({depth:(movie?.position||c).x+(movie?.position||c).y+1.5,draw:()=>{registered(v.ctx,id,p,v);if(t>=1.85&&t<2.1)hubs(v.ctx,id,p,v,t);}});
+    v.items.push({depth:(movie?.position||c).x+(movie?.position||c).y+1.5,draw:()=>{registered(v.ctx,id,p,movie?v:{...v,scale:v.scale*.82});if(t>=1.85&&t<2.1)hubs(v.ctx,id,p,v,t);}});
   }
   window.AssaultCarView={ready,context,Trip,items};
 })();

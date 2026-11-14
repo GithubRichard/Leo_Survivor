@@ -2,6 +2,7 @@
 (() => {
   'use strict';const S=Survival,A=GameArt;
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const weatherIcon=kind=>kind==='duststorm'?'<img src="art/2d/weather-duststorm-icon.svg" width="26" height="26" alt="" class="duststorm-icon">':A.worldIcon('weather_'+kind);
   function polygon(ctx,points,project){ctx.beginPath();points.forEach((p,i)=>{const q=project(p.x,p.y);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.closePath();}
   function sector(ctx,game,p,r,f,angle,v){
     const points=angle<360?[p]:[],start=Math.atan2(f.y,f.x)-angle*Math.PI/360;
@@ -69,6 +70,48 @@
     if(kind==='rain'||kind==='thunderstorm'){ctx.strokeStyle='#bac6b94a';ctx.lineWidth=1;for(let i=0;i<count;i++){const x=(i*127.3-game.seconds*70+width*100)%width,y=(i*73.7+game.seconds*430)%height;if(i%6===0)A.worldSprite(ctx,'rain_streaks','f0',x,y,36,{alpha:.15});else{ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-7,y+17);ctx.stroke();}}const q=project(game.player.x+2,game.player.y+1);A.worldSprite(ctx,'rain_splash','f'+Math.floor(game.seconds*8)%3,q.x,q.y,8,{alpha:.4});}
     else{ctx.fillStyle='#101a1b10';ctx.fillRect(0,0,width,height);}ctx.restore();
   }
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  function dustOverlay(game,{ctx,project,scale,width,height}){
+    const storm=game.dustStorm;if(!storm||width<=0||height<=0)return;
+    const p=project(game.player.x,game.player.y),progress=game.dustCurtain;
+    const radius=game.personalSight*scale*Math.SQRT2*(2.3-1.3*progress);
+    ctx.save();
+    if(progress>0){
+      ctx.save();ctx.translate(p.x,p.y);ctx.scale(1,.5);
+      const veil=ctx.createRadialGradient(0,0,radius*.75,0,0,radius*1.22);
+      veil.addColorStop(0,'#a6866100');veil.addColorStop(.32,'#a686614d');veil.addColorStop(.53,'#a2835e');veil.addColorStop(.78,'#987857');veil.addColorStop(1,'#80644e');
+      ctx.globalAlpha=progress;ctx.fillStyle=veil;ctx.fillRect(-p.x,-2*p.y,width,height*2);ctx.restore();
+    }
+    const time=reducedMotion.matches?0:game.seconds,age=storm.age??4;
+    const reach=Math.min(1,age/3.5),span=width+70,rows=height+60;
+    ctx.strokeStyle='#dfc19b';ctx.globalAlpha=.19+.23*reach;ctx.lineWidth=1;ctx.beginPath();
+    for(let i=0,n=Math.min(130,Math.max(32,Math.round(width*height/9000)));i<n;i++){
+      const speed=300+i%5*85,x=(i*137.51+time*speed)%span-35,y=(i*73.25+time*(55+i%4*15))%rows-30;
+      const px=p.x+(x-p.x)*(.24+.76*reach),py=p.y+(y-p.y)*(.22+.78*reach);
+      ctx.moveTo(px,py);ctx.lineTo(px+5+i%16,py+2);
+    }
+    ctx.stroke();ctx.restore();
+  }
+  function dustMap(game,canvas){
+    if(!game.dustStorm)return;
+    const ctx=canvas.getContext('2d'),{width,height}=canvas,ratio=S.Weather.duststorm.mapScale;
+    const viewWidth=width*ratio,viewHeight=height*ratio,left=(width-viewWidth)/2,top=(height-viewHeight)/2;
+    // Signal noise uses display time because the map pauses the simulation.
+    const tick=reducedMotion.matches?0:Math.floor(performance.now()/100);
+    ctx.save();ctx.beginPath();ctx.rect(0,0,width,height);ctx.rect(left,top,viewWidth,viewHeight);ctx.clip('evenodd');
+    ctx.fillStyle='#121a17';ctx.fillRect(0,0,width,height);
+    ctx.fillStyle='#647c6b21';
+    for(let y=1;y<height;y+=4)ctx.fillRect(0,y,width,1);
+    const tones=['#4e6c5c5c','#85a28e66','#b9c8a940','#b7a87f55'];
+    let seed=(tick+1)>>>0;
+    const roll=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+    for(let i=0;i<155;i++){
+      const x=roll()*width,y=roll()*height;
+      ctx.fillStyle=tones[i%tones.length];ctx.fillRect(x,y,2+roll()*(i%10===0?70:12),i%10===0?2:1);
+    }
+    ctx.restore();
+    ctx.save();ctx.strokeStyle='#839987';ctx.strokeRect(left,top,viewWidth,viewHeight);ctx.restore();
+  }
   function aim(game,v){if(!game.boneSkill.charging)return;const f=game.player.facing,n=Math.hypot(f.x,f.y)||1,r=5+2.5*Math.min(2,game.seconds-game.boneSkill.startedAt),p={x:game.player.x+f.x/n*r,y:game.player.y+f.y/n*r};warning(v.ctx,game,p,1,v);const a=v.project(game.player.x,game.player.y),b=v.project(p.x,p.y);v.ctx.save();v.ctx.setLineDash([5,5]);v.ctx.strokeStyle='#e0c57a';v.ctx.beginPath();v.ctx.moveTo(a.x,a.y);v.ctx.lineTo(b.x,b.y);v.ctx.stroke();v.ctx.restore();}
   function context(game,target){
     const o=target?.object;if(!o)return null;
@@ -79,12 +122,12 @@
   function hud(game,mode){
     const alive=!game.result&&game.player.hp>0,button=document.getElementById('bone-skill'),s=game.boneSkill;button.classList.toggle('hidden',!alive||mode!=='play'||!s.unlocked);
     const text=s.charging?'松开发出 · 取消：Esc':game.seconds<s.cooldown?`投掷 ${Math.ceil(s.cooldown-game.seconds)}秒`:game.player.hp<=1?'投掷需大于1血':'投掷 R · 按住蓄力';if(button._text!==text){button._text=text;button.innerHTML=A.worldIcon('bone_throw_skill','f0')+`<span>${text}</span>`;}
-    const status=document.getElementById('weather-status');status.title='室外移动×'+game.weatherType().speed+'，室外作物生长×'+game.weatherType().growth+'；室内与地下免天气影响';const weatherText=game.scene==='armory'?'军备库 · 阴天 · 地面时间暂停':game.scene==='parking'?'地面天气暂停':`${S.Weather[game.weatherKind()].name} · 剩余${Math.max(0,Math.ceil((game.weather.schedule[game.weather.index].hours*45-game.weather.elapsed)/.75))}游戏分钟${game.outdoors(game.player)?'':' · 室内豁免'}`;if(status._text!==weatherText){status._text=weatherText;status.innerHTML=(game.scene==='surface'?A.worldIcon('weather_'+game.weatherKind()):'')+esc(weatherText);}
-    if(!game.secondFloor)return;document.getElementById('day-label').textContent='地下停车场 · 二层';document.getElementById('objective').innerHTML=`<b>骷髅与可摧毁骨头</b><br>遗骨等待${game.difficultyRules.reviveDays}天，摧毁追加${game.difficultyRules.shatterDays}天；离层与暂停规则保留。`;
+    const status=document.getElementById('weather-status'),storm=game.dustStorm;status.classList.toggle('dust-status',!!storm);status.title=storm?'每15秒喝一瓶清水，超时直接死亡。':'室外移动×'+game.weatherType().speed+'，室外作物生长×'+game.weatherType().growth+'；室内与地下免天气影响';const weatherText=storm?`沙尘暴 ${Math.ceil(storm.remaining)}秒 `:game.scene==='armory'?'军备库 · 阴天 · 地面时间暂停':game.scene==='parking'?'地面天气暂停':`${S.Weather[game.weatherKind()].name} · 剩余${Math.max(0,Math.ceil((game.weather.schedule[game.weather.index].hours*45-game.weather.elapsed)/.75))}游戏分钟${game.outdoors(game.player)?'':' · 室内豁免'}`;if(status._text!==weatherText){status._text=weatherText;status.innerHTML=(game.scene==='surface'?weatherIcon(game.weatherKind()):'')+esc(weatherText);}
+    if(!game.secondFloor)return;document.getElementById('day-label').textContent='地下停车场 · 二层';
     const boss=game.zombies.find(z=>z.kind==='skeleton'&&z.hp>0&&z.noticed),r=game.skeleton?.remnant,bar=document.getElementById('boss-status');
     if(!alive||['menu','result'].includes(mode)||!boss&&!r){bar.classList.add('hidden');return;}bar.classList.remove('hidden');
     const textBar=boss?`骷髅 ${boss.hp.toFixed(1)} / 26 · ${boss.action?{melee:'骨爪',throw:'投骨',sweep:'横扫',empty:'空挥'}[boss.action.type]:'待战'} · 离层恢复26血`:`${r.destroyed?'遗骨已摧毁':`复活遗骨 ${r.hp.toFixed(1)} / 20`} · ${game.revivalHours(r.remaining).toFixed(1)}游戏小时后重组${r.destroyed?'':` · 摧毁追加${game.difficultyRules.shatterDays}天`}`;
     const html=`<div>${textBar}</div><div class="parking-boss-health"><i style="width:${(boss?boss.hp/26:r.hp/20)*100}%"></i></div>`;if(bar._parkingHtml!==html){bar._parkingHtml=html;bar.innerHTML=html;}
   }
-  window.WorldView={actor,items,weatherOverlay,aim,context,hud};
+  window.WorldView={actor,items,weatherOverlay,weatherIcon,dustOverlay,dustMap,aim,context,hud};
 })();

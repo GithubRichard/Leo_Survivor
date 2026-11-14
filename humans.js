@@ -50,7 +50,7 @@
     humanZombieHit(target,damage,source,z){if(target.human)return this.hurtHuman(target,this.enemyDamage(damage,source),source,z?.id);return false;}
     hurtHuman(a,n,source='unknown',actorId){
       if(!a||a.kind==='home_helper'||a.hp<=0||a.retreating||!(n>0))return false;const playerOwned=this._humanDeviceDamage||['weapon','molotov','device','bone_skill','loyal_follower','player'].includes(source);
-      a.hp=Math.max(0,a.hp-n);a.hurtUntil=this.seconds+.18;a.action=null;a.search=null;a.lastCombat=this.seconds;
+      a.hp=Math.max(0,a.hp-n);a.hurtUntil=this.seconds+.18;a.action=null;this.clearHumanSearch(a);a.lastCombat=this.seconds;
       if(a.kind==='starving_civilian'&&playerOwned)a.hostile=true;
       if(!playerOwned&&a.kind!=='loyal_follower'){const z=this.zombies.find(z=>!z.human&&z.hp>0&&(z.id===actorId||!actorId&&z.kind===source));if(z){a.defendId=z.id;a.defendAt=this.seconds;}}
       if(a.hp>1e-8){this.autosaveRequested=true;return true;}a.hp=0;if(a.deathCommitted)return true;a.deathCommitted=true;
@@ -99,7 +99,20 @@
       this.updateHumanFollower(elapsed);this.finishHumanSummon();if(this.scene==='surface'){this.checkHumanRaidExit();this.settleHumanRaid();this.flushHumanCampExchange();}this.syncHumanFood();this.humans.actors=this.humans.actors.filter(a=>a.hp>0);this.humans.corpses=this.humans.corpses.filter(c=>c.scene!==this.humanScene()||c.until>this.seconds);
     }
     snapshot(){const d=super.snapshot();if(this.humanMode)d.humans=copy(this.humans);return d;}
-    static restore(d){const g=Base.restore(d);Object.setPrototypeOf(g,HumansGame.prototype);if(g.humanMode){g.humans=d.humans?copy(d.humans):null;g.ensureHumans(false);g.initializeHumanFood();g.syncHumanFood();}else g.humans=null;return g;}
+    static restore(d){
+      const g=Base.restore(d);Object.setPrototypeOf(g,HumansGame.prototype);
+      if(g.humanMode){
+        g.humans=d.humans?copy(d.humans):null;g.ensureHumans(false);
+        const follower=g.humans.follower;
+        if(follower?.hp>0&&follower.maxHP!==H.loyalFollowerHP){
+          const previousMax=follower.maxHP??3;
+          follower.hp=Math.min(H.loyalFollowerHP,follower.hp+Math.max(0,H.loyalFollowerHP-previousMax));
+          follower.maxHP=H.loyalFollowerHP;g.autosaveRequested=true;
+        }
+        g.initializeHumanFood();g.syncHumanFood();
+      }else g.humans=null;
+      return g;
+    }
   }
   S.Game=HumansGame;root.HumansGame=HumansGame;
 })(globalThis);

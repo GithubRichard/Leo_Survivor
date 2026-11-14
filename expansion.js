@@ -130,7 +130,8 @@
       for(const s of h.sites)if(!['stone_pile','water_point','herb_bed'].includes(s.kind)){s.blocking=true;s.hp=18;s.maxHP=18;s.material='wood';s.invested={};}
       return h;
     }
-    active(o){return o.hp>0&&!(o.type==='door'&&o.open);}
+    resourcePresent(o){return !!o&&(this.difficulty!=='apocalypse'||!o.resourceDisabled);}
+    active(o){return o.hp>0&&this.resourcePresent(o)&&!(o.type==='door'&&o.open);}
     blocking(o){return !D.builds[o.kind]?.ground;}
     obstacles(a,b=a,padding=.22){
       const out=[],spacing=S.RULES.lotSpacing;this._collisionHomes=this._collisionHomes||new WeakMap();
@@ -177,13 +178,13 @@
       this.action={type,duration,elapsed:0,start:{x:this.player.x,y:this.player.y},...data};return true;
     }
     cancelAction(reason='操作已取消'){if(this.action){this.action=null;this.announce(reason);}}
-    dismantle(o){return o&&o.hp>0&&this.beginAction('dismantle',3,{target:o.id});}
+    dismantle(o){return this.resourcePresent(o)&&o.hp>0&&this.beginAction('dismantle',3,{target:o.id});}
     repair(o){return o&&o.hp>0&&o.hp<o.maxHP&&this.beginAction('repair',1,{target:o.id});}
     upgrade(o){const key=o.type==='door'?'door':o.kind==='ballista'&&o.level===1?'repeating':o.kind,def=D.upgrades[key];if(!def||o.level===(def.level)||this.day<def.day||(!this.stationNear('workbench')&&o.type!=='door')){this.announce('需要对应天数、工作台及可升级的装置。');return false;}return this.beginAction('upgrade',5,{target:o.id,key});}
     craft(kind){const def=D.weapons[kind]||D.crafts[kind];if(!def||this.day<def.day||def.station&&!this.stationNear(def.station)){this.announce('配方未开放，或请靠近工作台。');return false;}if(kind==='backpack_upgrade'&&this.inventory.length>=30)return false;return this.beginAction('craft',3,{kind});}
     updateAction(dt){
       const a=this.action;if(!a)return;if(dist(a.start,this.player)>.025){this.cancelAction('移动中断了操作。');return;}
-      const o=a.target?this.find(a.target):null;if(a.target&&(!o||o.hp<=0||dist(o,this.player)>2||!this.clearLine(this.player,o,o))){this.cancelAction('目标无法操作。');return;}
+      const o=a.target?this.find(a.target):null;if(a.target&&(!this.resourcePresent(o)||o.hp<=0||dist(o,this.player)>2||!this.clearLine(this.player,o,o))){this.cancelAction('目标无法操作。');return;}
       a.elapsed+=dt;if(a.elapsed+1e-8<a.duration)return;this.action=null;
       if(a.type==='build'){
         const def=D.builds[a.kind],error=this.canPlace(a.kind,a.p);if(error){this.announce(error);return;}if(!this.pay(def.cost))return;
@@ -261,28 +262,29 @@
     }
     nearbyInteraction(){
       const choices=[];for(const h of this.nearbyHomes(this.player,10)){
-        for(const s of h.sites)if(s.hp>0&&dist(s,this.player)<1.8&&(s.blocking||!s.searched||s.repeat))choices.push({type:s.searched&&!s.repeat&&s.blocking?'container':'site',object:s,distance:dist(s,this.player)});
-        for(const o of h.objects)if(o.hp>0&&dist(o,this.player)<1.6)choices.push({type:o.type==='furniture'?'furniture':'structure',object:o,distance:dist(o,this.player)});
+        for(const s of h.sites)if(s.hp>0&&this.resourcePresent(s)&&dist(s,this.player)<1.8&&(s.blocking||!s.searched||s.repeat))choices.push({type:s.searched&&!s.repeat&&s.blocking?'container':'site',object:s,distance:dist(s,this.player)});
+        for(const o of h.objects)if(o.hp>0&&this.resourcePresent(o)&&dist(o,this.player)<1.6)choices.push({type:o.type==='furniture'?'furniture':'structure',object:o,distance:dist(o,this.player)});
       }
       for(const o of this.devices)if(o.hp>0&&dist(o,this.player)<1.8)choices.push({type:'device',object:o,distance:dist(o,this.player)});
       for(const o of this.drops)if(dist(o,this.player)<1.5)choices.push({type:'drop',object:o,distance:dist(o,this.player)});
       for(const o of this.visitors)if(dist(o,this.player)<1.8)choices.push({type:o.recruited?'helper':'visitor',object:o,distance:dist(o,this.player)});
       return choices.filter(c=>this.clearLine(this.player,c.object,c.object)).sort((a,b)=>a.distance-b.distance)[0]||null;
     }
-    interact(target){if(target?.type==='site'){const o=target.object;if(o.hp<=0||o.searched&&!o.repeat)return false;return this.beginAction('search',o.time,{target:o.id});}if(target?.type==='drop')return super.interact(target);if(target?.type==='furniture')return this.dismantle(target.object);return false;}
+    interact(target){if(target?.type==='site'){const o=target.object;if(!this.resourcePresent(o)||o.hp<=0||o.searched&&!o.repeat)return false;return this.beginAction('search',o.time,{target:o.id});}if(target?.type==='drop')return super.interact(target);if(target?.type==='furniture')return this.dismantle(target.object);return false;}
     drop(){if(this.action){this.announce('操作中无法丢弃。');return false;}const kind=this.inventory[this.selectedSlot]?.kind,result=super.drop();if(result)this.recordResource('spent',{[kind]:1});if(!this.count(this.player.weapon))this.player.weapon='fists';return result;}
     equip(kind){if(kind==='fists'||this.count(kind)&&(D.weapons[kind]||kind==='molotov')){this.player.weapon=kind;this.announce(kind==='molotov'?'已手持燃烧瓶，调整朝向后按交互投掷。':`已装备${S.NAMES[kind]||'徒手'}。`);return true;}return false;}
     interruptBandage(reason){if(!this.bandage)return;this.bandage=null;this.announce(`${reason}中断了绷带治疗，剩余恢复已停止。`);}
+    foodReadyAt(kind){return D.foods[kind].water?this.waterAt:this.foodAt;}
     use(kind){
       if(!this.count(kind))return false;
       if(D.weapons[kind]||kind==='molotov')return this.equip(kind);
-      if(D.foods[kind]){const f=D.foods[kind];if(this.seconds<(f.water?this.waterAt:this.foodAt)){this.announce('食用冷却尚未结束。');return false;}return this.beginAction('eat',1.5,{kind});}
+      if(D.foods[kind]){if(this.seconds<this.foodReadyAt(kind)){this.announce('食用冷却尚未结束。');return false;}return this.beginAction('eat',1.5,{kind});}
       if(kind==='bandage'){if(this.bandage||this.player.hp>=this.maxHP||!this.remove(kind,1))return false;this.bandage={next:this.seconds+2,left:4};this.announce('绷带治疗中：可以步行。一旦奔跑、攻击或受伤，剩余治疗立即停止。');return true;}
       if(kind==='medkit'){if(this.player.hp>=this.maxHP){this.announce('血量已满，无需急救。');return false;}return this.day>=8&&this.beginAction('medkit',3);}
       this.announce('这件物品不能直接食用。');return false;
     }
     completeFood(kind){
-      const f=D.foods[kind];if(this.seconds<(f.water?this.waterAt:this.foodAt)||!this.remove(kind,1))return;
+      const f=D.foods[kind];if(this.seconds<this.foodReadyAt(kind)||!this.remove(kind,1))return;
       if(f.buff)this.mainBuff={type:f.buff,until:this.seconds+360};if(f.tea)this.teaBuff={until:this.seconds+360};
       if(f.regen)this.foodRegen={left:f.regen,next:this.seconds+30};
       this.player.hunger=Math.min(100,this.player.hunger+f.hunger);if(this.player.hunger>0)this.starving=0;
@@ -292,7 +294,7 @@
     }
     updateVitals(dt){
       for(const key of ['mainBuff','teaBuff'])if(this[key]?.until<=this.seconds)this[key]=null;
-      this.player.hp=Math.min(this.player.hp,this.maxHP);this.player.hunger=Math.max(0,this.player.hunger-dt/.75/60*3*this.traitEffects.metabolism*(this.hungerMetabolism||1));this.syncStaminaRecovery();
+      this.player.hp=Math.min(this.player.hp,this.maxHP);this.player.hunger=Math.max(0,this.player.hunger-dt/.75/60*3*this.traitEffects.metabolism*(this.hungerMetabolism||1)*(this.weatherHungerMultiplier??1));this.syncStaminaRecovery();
       if(!this.player.hunger){this.starving=(this.starving||0)+dt;while(this.starving+1e-8>=12&&!this.result){this.starving-=12;this.damagePlayer(1,'hunger',true);}}else this.starving=0;
       if(this.result)return;
       for(const [key,interval] of [['foodRegen',30],['bandage',2]]){const heal=this[key];if(heal&&this.seconds>=heal.next){this.healPlayer(1);heal.left--;heal.next+=interval;if(!heal.left)this[key]=null;}}
@@ -376,9 +378,18 @@
     plant(o,kind){if(o.kind!=='planter'||o.crop||!['potato','vegetable'].includes(kind)||!this.remove(kind,1))return false;o.crop={kind,dawns:0};return true;}
     harvest(o){if(o.crop?.dawns<2||!o.crop)return false;if(this.pay({}, {[o.crop.kind]:3})){o.crop=null;return true;}return false;}
     initVisit(){const allowed=this.day>=2&&(this.visitFailures>=2||this.random()<.4);this.visitDay={arrive:allowed?600+this.random()*360:null,arrived:false};}
+    spawnVisitor(position={x:0,y:6},debugAfterHours=false){
+      if(this.visitors.some(v=>!v.recruited))return false;
+      const id=`visitor:${this.day}`;
+      const visitor={id:this.visitors.some(v=>v.id===id)?`${id}:guest`:id,x:position.x,y:position.y,name:'来访幸存者',recruited:false,trades:Array(D.trades.length).fill(0)};
+      if(debugAfterHours)visitor.debugAfterHoursDay=this.day;
+      this.visitors.push(visitor);
+      this.autosaveRequested=true;return true;
+    }
     updateVisit(){
-      if(this.minutes<1320&&this.visitDay?.arrive!==null&&!this.visitDay.arrived&&this.minutes>=this.visitDay.arrive){this.visitDay.arrived=true;this.visitFailures=0;this.visitors.push({id:`visitor:${this.day}`,x:0,y:6,name:'来访幸存者',recruited:false,trades:Array(5).fill(0)});this.announce('幸存者来访，20:00前可以交易。');}
-      if(this.minutes>=1200)this.visitors=this.visitors.filter(v=>v.recruited);
+      if(this.minutes<1200&&this.visitDay?.arrive!=null&&!this.visitDay.arrived&&this.minutes>=this.visitDay.arrive){this.visitDay.arrived=true;this.visitFailures=0;if(this.spawnVisitor())this.announce('幸存者来访，20:00前可以交易。');}
+      const stays=v=>v.recruited||(v.debugAfterHoursDay!=null?v.debugAfterHoursDay===this.day:this.minutes<1200);
+      if(this.visitors.some(v=>!stays(v)))this.visitors=this.visitors.filter(stays);
       if(this.helper&&this.helper.fedDay===this.day&&this.minutes>=720&&!this.helper.collected)this.helper.ready=true;
     }
     tradeOffer(visitor,index){const t=D.trades[index];if(!this.visitors.includes(visitor)||visitor.recruited||visitor.trades[index]>=2)return false;if(this.pay(t.cost,t.gain)){visitor.trades[index]++;return true;}return false;}
@@ -573,7 +584,7 @@
     }
     step(dt,input={}){
       if(this.checkPlayerDeath()||this.result||dt<=0)return;this.seconds+=dt;this.pathBudget=2;this.updateDoors();this.movePlayer(dt,input);this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;
-      this.updateAction(dt);this.updatePlayerAttack();this.updateProduction(dt);this.advanceClock(dt);this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);this.effects=this.effects.filter(e=>e.until>this.seconds);if(this.devices.some(d=>d.hp<=0))this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);
+      this.updateAction(dt);this.updatePlayerAttack();this.updateProduction(dt);this.advanceClock(dt);if(this.result)return;this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);this.effects=this.effects.filter(e=>e.until>this.seconds);if(this.devices.some(d=>d.hp<=0))this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);
     }
   }
   S.Game=SurvivalGame;S.RECIPES=Object.fromEntries(Object.entries(D.builds).map(([k,d])=>[k,d.cost]));S.Expansion=D;S.nightPlan=nightPlan;S.transaction=transaction;

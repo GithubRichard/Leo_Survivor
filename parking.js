@@ -40,7 +40,7 @@
         if(pointRect(p,territory)<=0||pointRect(p,territory)>75||dist(p,this.player)<5)continue;
         const box=p.axis==='y'?{x:p.x,y:p.y-3,w:5.8,h:6.8}:{x:p.x-3,y:p.y,w:6.8,h:5.8};
         if(overlap(box,territory)||overlap(box,{...this.player,w:1,h:1}))continue;
-        if(this.nearbyHomes(box,8).some(h=>overlap(box,{x:h.x,y:h.y-3,w:12,h:8})||[...h.objects,...h.sites].some(o=>o.hp>0&&overlap(box,o)))||this.devices.some(o=>o.hp>0&&overlap(box,o)))continue;
+        if(this.nearbyHomes(box,8).some(h=>overlap(box,{x:h.x,y:h.y-3,w:12,h:8})||[...h.objects,...h.sites].some(o=>o.hp>0&&this.resourcePresent(o)&&overlap(box,o)))||this.devices.some(o=>o.hp>0&&overlap(box,o)))continue;
         const offRoad=q=>Math.abs(q.x-road(q.x))>3.15&&Math.abs(q.y-road(q.y))>3.15;
         const site=[[4,0],[-4,0],[0,4],[0,-4],[3,3],[-3,3],[3,-3],[-3,-3]].map(([x,y])=>({x:p.x+x,y:p.y+y})).find(q=>offRoad(q)&&!overlap(box,{...q,w:.7,h:.7})&&!super.obstacles(q,q,.5).length&&super.clearLine(p,q));
         if(site){entrance=p;toolbox=site;break;}
@@ -153,7 +153,7 @@
       for(const [k,n] of Object.entries(d.cost))if(this.count(k)<n)return `${S.NAMES[k]}不足，需要${n}`;
       if(kind==='planter')return '地下混凝土地面不支持种植';
       if(p.y<8||p.y>55||Math.abs(p.x)>22||Math.abs(p.x)<1.8||dist(p,{x:16,y:57})<3)return '请为主通道、出口和配电门保留空间';
-      if(this.obstacles(p,p,.5).length||this.devices.some(d=>d.hp>0&&dist(d,p)<1)||this.parking.layer.points.some(o=>dist(o,p)<1.2))return '请避开车辆、物资点和其他装置';
+      if(this.obstacles(p,p,.5).length||this.devices.some(d=>d.hp>0&&dist(d,p)<1)||this.parking.layer.points.some(o=>this.resourcePresent(o)&&dist(o,p)<1.2))return '请避开车辆、物资点和其他装置';
       if(!this.clearLine(this.player,p))return '不能隔着障碍建造';
       if(dist(p,this.player)<.5||this.zombies.some(z=>z.hp>0&&dist(z,p)<.6))return '这里有生物';
       if(!d.ground&&!this.parkingRouteSafe({...p,w:d.w||.7,h:d.h||.7,hp:1,type:'device',kind}))return '建造会堵塞现有通路';return null;
@@ -168,7 +168,7 @@
         if(current?.type==='device'&&P.lamps[current.object.kind])current.type='lamp';return current;
       }
       const layer=this.parking.layer,points=[...layer.points,...(layer.chest?[layer.chest]:[])],choices=[];
-      for(const o of points){const access=this.parkingAccess(o);if(access.distance<1.8&&this.clearLine(this.player,access.point,access.ignore))choices.push({type:'parking',object:o,distance:access.distance,access});}
+      for(const o of points){if(!this.resourcePresent(o))continue;const access=this.parkingAccess(o);if(access.distance<1.8&&this.clearLine(this.player,access.point,access.ignore))choices.push({type:'parking',object:o,distance:access.distance,access});}
       for(const o of this.devices)if(o.hp>0&&dist(o,this.player)<1.8)choices.push({type:P.lamps[o.kind]?'lamp':'device',object:o,distance:dist(o,this.player)});
       for(const o of this.drops)if(dist(o,this.player)<1.5)choices.push({type:'drop',object:o,distance:dist(o,this.player)});
       return choices.filter(c=>c.access||this.clearLine(this.player,c.object,c.object)).sort((a,b)=>a.distance-b.distance)[0]||null;
@@ -182,6 +182,7 @@
       }return super.interact(target);
     }
     parkingInteract(o){
+      if(!this.resourcePresent(o))return false;
       if(o.kind==='entrance'||o.kind==='exit')return this.beginAction('travel',2,{target:o.id});
       if(o.kind==='next_floor'){this.announce(this.parking.layer.nextUnlocked?'下一层入口已解锁，下一层地图与规则尚未开放。':'需击败潜伏者并打开Boss宝箱。');return false;}
       if(o.kind==='gate_control'){
@@ -198,6 +199,7 @@
       skill.unlocked=true;this.autosaveRequested=true;this.announce(o.kind==='boss_chest'?'已补领潜伏技能。':'已补领投掷技能。');return true;
     }
     takeParkingLoot(o,onlyKind=null){
+      if(!this.resourcePresent(o))return false;
       this.endStealth();const skillClaimed=this.claimParkingSkill(o);
       let taken=0;for(const [k,amount] of Object.entries(o.loot||{}))if(!onlyKind||onlyKind===k){let left=amount;while(left>0&&this.add(k,1)){left--;taken++;}o.loot[k]=left;}
       this.announce(taken?'已领取物资，装不下的部分留在原处。':Object.values(o.loot||{}).some(n=>n>0)?'背包空间不足，物资已保留。':'这里的物资已全部领取。');return taken>0||skillClaimed;
@@ -207,7 +209,7 @@
       if(dist(a.start,this.player)>.025){this.cancelAction('移动中断了操作。');return;}
       const o=a.target?this.find(a.target):null;
       const access=o&&this.parkingAccess(o);
-      if(a.target&&(!o||o.hp<=0||access.distance>2||!this.clearLine(this.player,access.point,access.ignore))){this.cancelAction('目标无法操作。');return;}
+      if(a.target&&(!this.resourcePresent(o)||o.hp<=0||access.distance>2||!this.clearLine(this.player,access.point,access.ignore))){this.cancelAction('目标无法操作。');return;}
       a.elapsed+=dt;if(a.elapsed+1e-8<a.duration)return;this.action=null;
       if(a.type==='travel'){this.switchScene();return;}
       if(a.type==='lamp'||a.type==='lamp_throw'){this.finishLampAction(a);return;}
@@ -269,7 +271,7 @@
       this.updateLamps(dt);this.updateDoors();this.movePlayer(dt,input);this._lights=this.lightSources();this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;
       this.updateAction(dt);if(this._sceneJustChanged)return;this._lights=this.lightSources();
       this.updatePlayerAttack();this.updateProduction(dt);this.advanceClock(dt);
-      if(this.parkingUnlockPending)return;
+      if(this.result||this.parkingUnlockPending)return;
       if(this.scene==='parking'){const boss=this.zombies.find(z=>z.kind==='lurker'&&z.hp>0);if(boss)this.updateBoss(boss,dt);}
       this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);if(this.scene==='parking')this.flushBossSummons();this.effects=this.effects.filter(e=>e.until>this.seconds);
       if(this.devices.some(d=>d.hp<=0))this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);

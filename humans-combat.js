@@ -58,7 +58,7 @@
     },
     finishHumanSummon(){
       const a=this._humanSummonReady,h=this.humans;this._humanSummonReady=null;if(!a||this.action!==a||this.result||!h.unlocked||h.follower?.hp>0||h.cooldownUntil>this.seconds||dist(a.start,this.player)>.025)return;
-      this.action=null;h.follower={id:'follower:'+ ++h.serial,human:true,type:'human',kind:'loyal_follower',faction:'player',hp:3,maxHP:3,w:.4,h:.4,weapon:'bare',nextAttack:this.seconds,path:[],rootUntil:0,lastCombat:-1e6,facing:{...this.player.facing},pending:true,scene:this.humanScene()};this.placeHumanFollower(1,2);this.autosaveRequested=true;this.sound?.('build');
+      this.action=null;h.follower={id:'follower:'+ ++h.serial,human:true,type:'human',kind:'loyal_follower',faction:'player',hp:H.loyalFollowerHP,maxHP:H.loyalFollowerHP,w:.4,h:.4,weapon:'bare',nextAttack:this.seconds,path:[],rootUntil:0,lastCombat:-1e6,facing:{...this.player.facing},pending:true,scene:this.humanScene()};this.placeHumanFollower(1,2);this.autosaveRequested=true;this.sound?.('build');
     },
     transferHumanFollower(){const f=this.humans?.follower;if(!f||f.hp<=0)return;f.pending=true;f.scene=this.humanScene();f.action=null;f.path=[];this.placeHumanFollower(1,2);this.autosaveRequested=true;},
     placeHumanFollower(min=1,max=2){

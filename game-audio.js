@@ -19,7 +19,7 @@
   }
   function tone(frequency,duration,volume,type='sine',delay=0){if(!context||!active||!enabled)return;const at=context.currentTime+delay,o=context.createOscillator(),g=context.createGain();o.type=type;o.frequency.setValueAtTime(frequency,at);o.frequency.exponentialRampToValueAtTime(Math.max(25,frequency*.55),at+duration);g.gain.setValueAtTime(volume,at);g.gain.exponentialRampToValueAtTime(.0001,at+duration);o.connect(g).connect(master);o.start(at);o.stop(at+duration+.01);o.onended=()=>{o.disconnect();g.disconnect();};}
   function openContainer(){burst(.12,.14,2200);tone(380,.1,.055,'triangle');burst(.3,.045,700,.07);tone(125,.2,.035,'triangle',.1);}
-  function ambience(rainAmount,noiseAmount){if(!context)return;rain.gain.setTargetAtTime(active?Math.max(0,rainAmount):0,context.currentTime,.25);staticNoise.gain.setTargetAtTime(active?Math.max(0,noiseAmount):0,context.currentTime,.08);}
+  function ambience(rainAmount,noiseAmount){if(!context)return;rain.gain.setTargetAtTime(active?Math.max(0,rainAmount)*.5:0,context.currentTime,.25);staticNoise.gain.setTargetAtTime(active?Math.max(0,noiseAmount):0,context.currentTime,.08);}
   const lastEffect=new Map();
   function effect(kind,volume=1){
     if(!context||!active||!enabled)return;const now=context.currentTime,interval=kind==='gun'?.055:kind==='impact'?.09:kind==='door'?.18:.12;if(now-(lastEffect.get(kind)??-10)<interval)return;lastEffect.set(kind,now);
