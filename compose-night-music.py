@@ -59,3 +59,7 @@ manifest=json.loads((OUT/'manifest.json').read_text(encoding='utf-8'))
 manifest=[x for x in manifest if x['id']!='night-siege']+[{'id':'night-siege','title':'危夜围城','file':'audio/music/night-siege.wav','seconds':round(duration,3),'bpm':BPM,'channels':2,'sampleRate':SR,'peak':.65,'use':'night'}]
 (OUT/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 print('Night score rendered:',round(duration,3),'seconds')
+
+# Encode the WAV master to the MP3 the game loads.
+import subprocess,sys
+subprocess.run([sys.executable,str(ROOT/'encode-music.py')],check=True)

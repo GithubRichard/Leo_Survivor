@@ -40,7 +40,7 @@
     if(type==='player'&&vehicleIntro){if(vehicleIntro.hidePlayer)return;p={...p,...vehicleIntro.actor};}
     if(p.kind==='lurker'&&p.state==='burrowed')return;
     ctx.save();
-    if(type!=='player'&&game.scene==='surface'&&game.weatherKind()==='fog'&&game.outdoors(game.player)){const limit=game.isLit(p)?game.illuminatedSight:game.personalSight;ctx.globalAlpha*=Math.max(0,Math.min(1,(limit-dist(p,game.player))/(limit*.35)));}
+    if(type!=='player')ctx.globalAlpha*=game.fogVisibility(p);
     try{
     const q=project(p.x,p.y),hero=type==='player',visitor=type==='visitor';
     if(HumansView.actor(ctx,game,p,type,{project,label,scale}))return;
@@ -215,6 +215,11 @@
     const showRoofs=!(game.developer?.enabled&&game.developer.hideRoofs);
     const roofVisible=home=>showRoofs&&home!==indoor&&home.objects.some(o=>o.type==='wall'&&o.hp>0);
     const visitorUnderRoof=visitor=>{const home=roomOf(visitor);return !!home&&roofVisible(home);};
+    const drawRoomObject=(o,draw)=>{
+      if(game.weatherKind()!=='fog'){draw();return;}
+      if(!game.canSee(o))return;
+      ctx.save();ctx.globalAlpha*=game.fogVisibility(o);draw();ctx.restore();
+    };
     // Rear and front walls use independent anchors, including the rear indoor corners.
     const actorDepth=o=>ArmoryView.depth(game,o,CampView.depth(game,o,Layers.actor(o,homes)));
     const visibleOutside=(o,draw)=>{if(!indoor||roomOf(o)===indoor){draw();return;}ctx.save();ctx.beginPath();ctx.rect(-2000,-2000,width+4000,height+4000);const corners=[project(indoor.x-5,indoor.y-6),project(indoor.x+5,indoor.y-6),project(indoor.x+5,indoor.y),project(indoor.x-5,indoor.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.clip('evenodd');draw();ctx.restore();};
@@ -224,8 +229,10 @@
       for(const o of home.objects){if(o.hp<=0||!game.resourcePresent(o)||(o.type==='furniture'&&!inside))continue;const rearWall=o.type==='wall'&&(Math.abs(o.x-home.x+5)<.15||Math.abs(o.y-home.y+6)<.15);items.push({layer:o.type==='wall'&&!rearWall?-1:0,depth:o.type==='wall'?(rearWall?Layers.rear(home)+.001:Layers.front(home)+.001):o.type==='furniture'?Math.min(o.x+o.y,home.x+home.y-.1):o.x+o.y+(o.type==='door'?.04:0),draw:()=>{
         if(o.type==='wall'){if(!art.available('house_base'))box(o,1.8,'#b9b7a4','#777d6b','#969b88');if(o.hp<o.maxHP){const q=project(o.x,o.y,1);art.sprite(ctx,'damage_stone',q.x,q.y,20,{width:24});}}
         else if(o.type==='furniture'){
-          const file={'铁柜':'metal_cabinet','铁架':'metal_shelf','木桌':'wood_table','木椅':'wood_chair','木柜':'wood_cabinet'}[o.name],p=project(o.x,o.y);
-          if(!art.sprite(ctx,file,p.x,p.y+4,o.name.includes('桌')?29:o.name.includes('椅')?32:45))box(o,.8,'#818876','#535f51','#687663');
+          drawRoomObject(o,()=>{
+            const file={'铁柜':'metal_cabinet','铁架':'metal_shelf','木桌':'wood_table','木椅':'wood_chair','木柜':'wood_cabinet'}[o.name],p=project(o.x,o.y);
+            if(!art.sprite(ctx,file,p.x,p.y+4,o.name.includes('桌')?29:o.name.includes('椅')?32:45))box(o,.8,'#818876','#535f51','#687663');
+          });
         }
         else if(o.type==='fence'){
           const p=project(o.x,o.y);if(!art.sprite(ctx,'fence',p.x,p.y,37,{width:46,flip:o.w>o.h,anchorY:.82}))box(o,.7,'#808975','#465142','#5d6a53');
@@ -244,17 +251,21 @@
         const outside=['stone_pile','water_point','herb_bed'].includes(site.kind);
         if(!outside&&!inside||site.searched&&!site.repeat&&site.kind==='stone_pile')continue;
         const key=site.kind==='supply'?`supply_box_${site.searched?'open':'closed'}`:site.kind==='freezer'?`freezer_${site.searched&&!site.resourceDisabled?'open':'closed'}`:site.kind==='herb_bed'?`herb_bed_${site.searched?'empty':'full'}`:site.kind==='misc'?'wood_cabinet':site.kind==='kitchen'?'stove':['repair_shop','security_room','pharmacy'].includes(site.kind)?`storage_chest_${site.searched&&!site.resourceDisabled?'open':'closed'}`:site.kind;
-        items.push({depth:Math.min(site.x+site.y,home.x+home.y-.1),draw:()=>{const q=project(site.x,site.y),size=['water_point','herb_bed'].includes(site.kind)?1:.78;if(!art.sprite(ctx,key,q.x,q.y,(site.kind==='water_point'?45:30)*size,{width:44*size}))box({...site,w:site.w*size,h:site.h*size},.4*size,'#8c8a69','#505948','#767e5a');}});
+        const draw=()=>{const q=project(site.x,site.y),size=['water_point','herb_bed'].includes(site.kind)?1:.78;if(!art.sprite(ctx,key,q.x,q.y,(site.kind==='water_point'?45:30)*size,{width:44*size}))box({...site,w:site.w*size,h:site.h*size},.4*size,'#8c8a69','#505948','#767e5a');};
+        items.push({depth:Math.min(site.x+site.y,home.x+home.y-.1),draw:outside?draw:()=>drawRoomObject(site,draw)});
       }
     }
     for(const d of game.devices){
       if(d.hp<=0||!inView(d))continue;const room=roomOf(d);
       if(room&&room!==indoor)continue;
-      items.push({depth:CampView.depth(game,d,room?Math.min(d.x+d.y,room.x+room.y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>drawDevice(d))});
+      items.push({depth:CampView.depth(game,d,room?Math.min(d.x+d.y,room.x+room.y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>room?drawRoomObject(d,()=>drawDevice(d)):drawDevice(d))});
     }
     for(const z of game.zombies)if(z.hp>0&&inView(z)&&game.canSee(z))items.push({depth:actorDepth(z),draw:()=>visibleOutside(z,()=>actor(z,'zombie'))});
     for(const v of game.visitors)if(inView(v)&&!visitorUnderRoof(v)&&game.canSee(v))items.push({depth:actorDepth(v),draw:()=>visibleOutside(v,()=>actor(v,'visitor'))});
-    for(const d of game.drops)if(inView(d))items.push({depth:CampView.depth(game,d,roomOf(d)?Math.min(d.x+d.y,roomOf(d).x+roomOf(d).y-.1):d.x+d.y),draw:()=>visibleOutside(d,()=>{const p=project(d.x,d.y);if(!ArmoryView.item(ctx,d.kind,{x:p.x,y:p.y+5},20)&&!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');})});
+    for(const d of game.drops)if(inView(d)){
+      const room=roomOf(d),draw=()=>{const p=project(d.x,d.y);if(!ArmoryView.item(ctx,d.kind,{x:p.x,y:p.y+5},20)&&!art.sprite(ctx,d.kind,p.x,p.y+5,20,{width:25}))box({x:d.x,y:d.y,w:.35,h:.35},.18,'#a9ae9a','#4d5846','#7c7952');};
+      items.push({depth:CampView.depth(game,d,room?Math.min(d.x+d.y,room.x+room.y-.1):d.x+d.y),draw:()=>visibleOutside(d,room?()=>drawRoomObject(d,draw):draw)});
+    }
     items.push({depth:actorDepth(game.player),draw:()=>actor(game.player,'player')});
     for(const zone of game.zones)if(inView(zone))items.push({depth:zone.x+zone.y+.06,draw:()=>art.drawZone(ctx,zone,project,scale,game.seconds)});
     for(const effect of game.effects)items.push({depth:effect.x+effect.y+.3,draw:()=>{const q=project(effect.x,effect.y);if(!ArmoryView.effect(ctx,effect,game.seconds,q,scale)&&!PV.effectModel(ctx,effect,game.seconds,q,scale))art.sprite(ctx,effect.kind,q.x,q.y,effect.radius?effect.radius*scale:25,{width:effect.radius?effect.radius*scale*2:35,anchorY:.5});}});
@@ -265,7 +276,7 @@
     }});
     PV.surface(game,{ctx,project,plane,label,items,scale,intro:parkingIntro});
     WorldView.items(game,{ctx,project,label,scale,items});AEDView.items(game,{ctx,project,label,scale,items});
-    BroadcastView.items(game,{ctx,project,scale,items});
+    BroadcastView.items(game,{ctx,project,scale,items,drawRoomObject});
     CampView.items(game,{ctx,project,plane,scale,label,items});
     ArmoryView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
     WestGateView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});

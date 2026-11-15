@@ -77,7 +77,7 @@
     const k=entry.kind,d=humanStats[k],helper=k==='home_helper';
     const stats=[['生命',helper?'不可受伤':d.hp],['移动速度',d.speed+'米/秒'],['攻击间隔',d.interval+'秒'],[k==='bandit'?'单次伤害':'近战伤害',k==='bandit'?'2—10（见武器）':helper?'2（仅天启守卫）':d.damage]];
     const details=[];
-    if(k==='starving_civilian')details.push('每天新增1—4名；20米内寻找容器，走到1米内连续搜索3秒。正在吃的食物60%掉落，真实携带的未学图纸10%掉落，独立2%掉落饥饿图腾。');
+    if(k==='starving_civilian')details.push(`每天新增1–4名，刷新在初始领地外边界30–${H.starvingSpawnRadius}米内，最多存活${H.starvingLifetimeDays}个游戏日。20米内寻找容器，走到1米内连续搜索3秒。正在吃的食物60%掉落，真实携带的未学图纸10%掉落，独立2%掉落饥饿图腾。`);
     if(k==='bandit')details.push('普通强盗最多存活6名；玩家阵营击败6名普通强盗获得复仇，进入营地触发6 / 10 / 15人的三波袭击。','普通强盗必掉所持武器（徒手除外）；袭击强盗不掉武器。手弩和散弹强盗均有60%概率掉对应弹药。');
     if(k==='loyal_follower')details.push('召唤耗时0.6秒，移动或受伤中断；最多1名，不自愈、不掉物品。死亡后冷却120秒，跨层不刷新血量；潜伏状态的潜伏者无法被它伤害。');
     if(helper)details.push('不占忠心随从名额、不作为敌方攻击目标；天启守卫不要求当天已吃到补给。正常后勤仍需要每日指定食物，中午可领取2木和1铁。');

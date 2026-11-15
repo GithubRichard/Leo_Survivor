@@ -55,3 +55,7 @@ for ident,title,bpm,roots,motif,minor in SCORES:
     manifest.append({'id':ident,'title':title,'file':path.relative_to(ROOT).as_posix(),'seconds':round(duration,3),'bpm':bpm,'channels':2,'sampleRate':SR,'peak':.65})
 (OUT/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps(manifest,ensure_ascii=False))
+
+# Encode the WAV master to the MP3 the game loads.
+import subprocess,sys
+subprocess.run([sys.executable,str(ROOT/'encode-music.py')],check=True)

@@ -61,9 +61,9 @@
     }
     for(const n of c.npcs){if(n.npcId==='C06'&&c.visit?.day!==game.day||!game.canSee(n))continue;const home=game.camp.nodes.find(b=>b.building&&S.pointRect(n,b)===0),dir=A.eightDirection(n.facing),moving=n.path.length>0&&n.visualMoveAt>game.seconds-.12,clip=art.clips.clips.find(k=>k.npcId===n.npcId&&k.direction===dir),engaged=game.action?.type==='camp_exchange'&&game.action.target===n.id;
       const frame=clip?.[engaged?'interact':moving?'walk':'idle']?.[moving&&!engaged?Math.floor(n.visualDistance/.28)%4:0],state=frame?.split('__')[1]||dir+'_idle';
-      v.items.push({depth:depth(game,n,n.x+n.y+.12),draw:()=>{const q=v.project(n.x,n.y);
+      v.items.push({depth:depth(game,n,n.x+n.y+.12),draw:()=>{const q=v.project(n.x,n.y);v.ctx.save();v.ctx.globalAlpha*=game.fogVisibility(n);
         if(engaged&&n.npcId==='C03'&&game.action.offer==='M04'){const elapsed=game.action.elapsed,frame=elapsed<.5?'f0':game.action.duration-elapsed<.5?'f2':'f1';A.worldSprite(v.ctx,'camp_doctor_treatment',frame,q.x,q.y,52*v.scale/27);}
-        else A.worldSprite(v.ctx,'camp_npc_'+n.npcId,state,q.x,q.y,50*v.scale/27);if(n.open&&!home)v.label(n.name+' · '+n.role,q.x,q.y-57*v.scale/27,'#ddd0a3',10);
+        else A.worldSprite(v.ctx,'camp_npc_'+n.npcId,state,q.x,q.y,50*v.scale/27);if(n.open&&!home)v.label(n.name+' · '+n.role,q.x,q.y-57*v.scale/27,'#ddd0a3',10);v.ctx.restore();
       }});
     }
     for(const [id,asset] of [['clinic','display_iron'],['workshop','display_wood']]){const n=game.campNode(id),p={x:n.x-.6,y:n.y-.3};v.items.push({depth:depth(game,p,p.x+p.y),draw:()=>{const q=v.project(p.x,p.y);A.worldSprite(v.ctx,'camp_'+asset,game.campOpen('C04')?'f0':'f1',q.x,q.y,35*v.scale/27);}});}

@@ -95,7 +95,7 @@
       this.ensureHumans();const before=this.seconds,day=this.day,minutes=this.minutes,scene=this.scene;this._humanCampReady=null;this._humanSummonReady=null;if(this.humanMode){this.checkHumanRaidExit();this.startHumanRaidIfNeeded();}super.step(dt,input);const elapsed=this.seconds-before;
       if(!this.humanMode||!(elapsed>0)||this.result||this._sceneJustChanged||this.parkingUnlockPending)return;
       this._humanGameMinutes=scene==='surface'?Math.max(0,(this.day-day)*1440+this.minutes-minutes):0;
-      if(this.scene==='surface'){this.checkHumanRaidExit();this.humanPlan();this.updateHumanPopulation(elapsed);this.updateHumanRaid(elapsed);this.updateHumanActors(elapsed);this.updateHelperGuard(elapsed);this.updateHumanShots(elapsed);}
+      if(this.scene==='surface'){this.expireStarvingCivilians();this.checkHumanRaidExit();this.humanPlan();this.updateHumanPopulation(elapsed);this.updateHumanRaid(elapsed);this.updateHumanActors(elapsed);this.updateHelperGuard(elapsed);this.updateHumanShots(elapsed);}
       this.updateHumanFollower(elapsed);this.finishHumanSummon();if(this.scene==='surface'){this.checkHumanRaidExit();this.settleHumanRaid();this.flushHumanCampExchange();}this.syncHumanFood();this.humans.actors=this.humans.actors.filter(a=>a.hp>0);this.humans.corpses=this.humans.corpses.filter(c=>c.scene!==this.humanScene()||c.until>this.seconds);
     }
     snapshot(){const d=super.snapshot();if(this.humanMode)d.humans=copy(this.humans);return d;}
@@ -103,6 +103,7 @@
       const g=Base.restore(d);Object.setPrototypeOf(g,HumansGame.prototype);
       if(g.humanMode){
         g.humans=d.humans?copy(d.humans):null;g.ensureHumans(false);
+        for(const actor of g.humans.actors)g.initializeStarvingLifetime(actor);
         const follower=g.humans.follower;
         if(follower?.hp>0&&follower.maxHP!==H.loyalFollowerHP){
           const previousMax=follower.maxHP??3;

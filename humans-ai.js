@@ -2,16 +2,38 @@
 (() => {
   const P=HumansGame.prototype,S=Survival,H=HumansData,{dist,pointRect}=S,copy=x=>JSON.parse(JSON.stringify(x));
   const searchableKinds=new Set(['kitchen','storage_chest','misc','freezer']);
+  const starvingDistance=p=>pointRect(p,{x:0,y:-1,w:10,h:10});
   Object.assign(P,{
-    newHuman(kind,p,weapon='bare',raidId=null){const h=this.humans,a={id:'human:'+ ++h.serial,human:true,type:'human',kind,...p,w:.4,h:.4,hp:kind==='starving_civilian'?2:3,maxHP:kind==='starving_civilian'?2:3,weapon,home:{x:p.x,y:p.y},raidId,hostile:kind==='bandit',faction:kind==='bandit'?'enemy':'neutral',carry:[],knowledge:[],eatLeft:0,nextAttack:this.seconds+1,path:[],repathAt:0,rootUntil:0,lastCombat:-1e6,facing:{x:0,y:1},aiDebt:0};h.actors.push(a);this.autosaveRequested=true;return a;},
+    newHuman(kind,p,weapon='bare',raidId=null){const h=this.humans,a={id:'human:'+ ++h.serial,human:true,type:'human',kind,...p,w:.4,h:.4,hp:kind==='starving_civilian'?2:3,maxHP:kind==='starving_civilian'?2:3,weapon,home:{x:p.x,y:p.y},raidId,hostile:kind==='bandit',faction:kind==='bandit'?'enemy':'neutral',carry:[],knowledge:[],eatLeft:0,nextAttack:this.seconds+1,path:[],repathAt:0,rootUntil:0,lastCombat:-1e6,facing:{x:0,y:1},aiDebt:0};this.initializeStarvingLifetime(a);h.actors.push(a);this.autosaveRequested=true;return a;},
+    initializeStarvingLifetime(a){
+      if(a.kind!=='starving_civilian'||a.hp<=0||Number.isFinite(a.expiresAtMinute))return;
+      const minute=this.scene==='parking'?this.surfaceState?.minutes??this.minutes:this.minutes;
+      a.expiresAtMinute=(this.day+H.starvingLifetimeDays)*1440+minute;
+      this.autosaveRequested=true;
+    },
+    expireStarvingCivilians(){
+      const minute=this.day*1440+this.minutes;
+      for(const a of this.humans.actors)if(a.kind==='starving_civilian'&&a.hp>0&&minute+1e-8>=a.expiresAtMinute)this.hurtHuman(a,a.hp,'starving_expired');
+    },
     humanSpawnCandidate(kind){
       for(let i=0;i<8;i++){
-        let p;if(kind==='starving_civilian'){const home=this.getHome(-6+Math.floor(this.random()*13),-6+Math.floor(this.random()*13));if(home.own||home.armoryReserved||!['house','food_shop'].includes(home.kind))continue;p={x:home.x+(this.random()-.5)*7,y:home.y-1-this.random()*4};}
-        else {const angle=this.random()*Math.PI*2,r=36+this.random()*165;p={x:Math.cos(angle)*r,y:Math.sin(angle)*r};}
-        const d=S.Camp.distanceFromTerritory({...p,w:.5,h:.5});if(d<30||d>(kind==='starving_civilian'?180:200)||dist(p,this.player)<25||this.inArmory(p)||this.camp?.position&&pointRect(p,this.camp.position)<2||this.obstacles(p,p,.3).length||this.humans.actors.some(a=>a.hp>0&&dist(a,p)<1))continue;
-        if(kind==='bandit'&&!this.outdoors(p))continue;return p;
+        let p;if(kind==='starving_civilian'){
+          const spacing=S.RULES.lotSpacing,range=Math.ceil(H.starvingSpawnRadius/spacing);
+          const cx=Math.floor(this.random()*(2*range+1))-range,cy=Math.floor(this.random()*(2*range+1))-range;
+          p={x:cx*spacing+(this.random()-.5)*7,y:cy*spacing-1-this.random()*4};
+          const d=starvingDistance(p);if(d<30||d>H.starvingSpawnRadius)continue;
+          const home=this.getHome(cx,cy);if(home.own||home.armoryReserved||!['house','food_shop'].includes(home.kind))continue;
+        }
+        else {
+          const angle=this.random()*Math.PI*2,r=36+this.random()*165;p={x:Math.cos(angle)*r,y:Math.sin(angle)*r};
+          const d=S.Camp.distanceFromTerritory({...p,w:.5,h:.5});if(d<30||d>200)continue;
+        }
+        if(!this.humanSpawnPointFree(p))continue;
+        if(kind==='bandit'&&!this.outdoors(p))continue;
+        return p;
       }return null;
     },
+    humanSpawnPointFree(p){return dist(p,this.player)>=25&&!this.inArmory(p)&&(!this.camp?.position||pointRect(p,this.camp.position)>=2)&&!this.obstacles(p,p,.3).length&&!this.humans.actors.some(a=>a.hp>0&&dist(a,p)<1);},
     updateHumanPopulation(){
       const h=this.humans,plan=h.plans[this.day],minute=this.minutes;
       for(const [day,p] of Object.entries(h.plans))if(Number(day)<this.day)for(const s of [...p.starving,...p.bandits])if(['pending','spawning'].includes(s.state)){s.state='blocked';this.autosaveRequested=true;}
@@ -19,10 +41,14 @@
       for(const s of plan.bandits)if(s.state==='pending'&&minute>=s.at){s.state=!s.roll?'failed':h.raid?.active?'raid-skipped':h.actors.filter(a=>a.kind==='bandit'&&!a.raidId&&a.hp>0).length>=6?'cap-skipped':'spawning';this.autosaveRequested=true;}
       const ready=[...plan.starving.filter(s=>s.state==='pending'&&minute>=s.at&&minute<1320).map(slot=>({slot,kind:'starving_civilian'})),...plan.bandits.filter(s=>s.state==='spawning').map(slot=>({slot,kind:'bandit'}))];
       const task=this._humanSpawnJob;
-      if(task){if(task.day!==this.day||!['pending','spawning'].includes(task.slot.state)){this._humanSpawnJob=null;return;}this.advanceCampRoute(task.route,48);if(task.route.done){this._humanSpawnJob=null;const alive=task.slot.state==='spawning'||task.kind==='starving_civilian'&&task.slot.state==='pending';if(task.kind==='bandit'&&(h.raid?.active||h.actors.filter(a=>a.kind==='bandit'&&!a.raidId&&a.hp>0).length>=6)){task.slot.state=h.raid?.active?'raid-skipped':'cap-skipped';this.autosaveRequested=true;return;}if(task.route.path&&alive&&!this.obstacles(task.p,task.p,.3).length&&dist(task.p,this.player)>=25){const r=this.random(),weapon=r<.4?'bare':r<.75?'iron_axe':r<.95?'hand_crossbow':'shotgun';this.newHuman(task.kind,task.p,task.kind==='bandit'?weapon:'bare');task.slot.state='spawned';}else if(task.kind==='bandit')task.slot.state='blocked';this.autosaveRequested=true;}return;}
+      if(task){if(task.day!==this.day||!['pending','spawning'].includes(task.slot.state)){this._humanSpawnJob=null;return;}this.advanceCampRoute(task.route,48);if(task.route.done){this._humanSpawnJob=null;const alive=task.slot.state==='spawning'||task.kind==='starving_civilian'&&task.slot.state==='pending';if(task.kind==='bandit'&&(h.raid?.active||h.actors.filter(a=>a.kind==='bandit'&&!a.raidId&&a.hp>0).length>=6)){task.slot.state=h.raid?.active?'raid-skipped':'cap-skipped';this.autosaveRequested=true;return;}if(task.route.path&&alive&&(task.kind==='starving_civilian'?this.humanSpawnPointFree(task.p):!this.obstacles(task.p,task.p,.3).length&&dist(task.p,this.player)>=25)){const r=this.random(),weapon=r<.4?'bare':r<.75?'iron_axe':r<.95?'hand_crossbow':'shotgun';this.newHuman(task.kind,task.p,task.kind==='bandit'?weapon:'bare');task.slot.state='spawned';}else if(task.kind==='bandit')task.slot.state='blocked';this.autosaveRequested=true;}return;}
       const work=ready.find(t=>this.seconds>=(t.slot.retryAt||0));if(!work)return;const p=this.humanSpawnCandidate(work.kind);
       if(!p){if(work.kind==='bandit')work.slot.state='blocked';else work.slot.retryAt=this.seconds+2;this.autosaveRequested=true;return;}
-      this._humanSpawnJob={...work,day:this.day,p,route:this.makeCampRoute({x:0,y:5},[p],false)};work.slot.retryAt=this.seconds+2;
+      // Validate access from the home's nearest public road without loading a 900 m route.
+      const spacing=S.RULES.lotSpacing,local=work.kind==='starving_civilian';
+      const start=local?{x:Math.round(p.x/spacing)*spacing,y:(Math.round(p.y/spacing)+.5)*spacing}:{x:0,y:5};
+      const route=this.makeCampRoute(start,[p]);if(local)route.maxExpanded=2000;
+      this._humanSpawnJob={...work,day:this.day,p,route};work.slot.retryAt=this.seconds+2;
     },
     moveHuman(a,goal,speed,dt,route=null){
       if(a.rootUntil>this.seconds)return false;

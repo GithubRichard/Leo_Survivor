@@ -4,7 +4,7 @@
   const read=(k,f)=>{try{return localStorage.getItem(k)??f;}catch{return f;}},save=(k,v)=>{try{localStorage.setItem(k,String(v));}catch{}};
   let enabled=read('survivor-music-enabled','true')!=='false',volume=Number(read('survivor-music-volume','.22')),index=0,dayIndex=0,night=null,active=false,duck=false,unlocked=false,pending=false,blocked=false,errors=0,request=0;
   volume=Number.isFinite(volume)?Math.max(0,Math.min(1,volume)):.22;
-  const audio=new Audio();audio.preload='none';audio.volume=0;audio.src=`audio/music/${tracks[0][0]}.wav?v=0.14.12`;
+  const audio=new Audio();audio.preload='none';audio.volume=0;audio.src=`audio/music/${tracks[0][0]}.mp3?v=0.15.1-mp3`;
   const button=document.getElementById('music-toggle'),select=document.getElementById('music-track'),slider=document.getElementById('music-volume'),value=document.getElementById('music-volume-label');
   select.innerHTML=tracks.map(([id,title],i)=>`<option value="${i}">${title}</option>`).join('');slider.value=Math.round(volume*100);
   const wanted=()=>enabled&&active&&unlocked&&!document.hidden&&document.hasFocus();
@@ -14,7 +14,7 @@
     if(!wanted()){pause();return;}
     if(audio.paused&&!pending&&!blocked){pending=true;const id=++request;audio.play().then(()=>{if(id!==request)return;pending=false;errors=0;if(!wanted())pause();}).catch(error=>{if(id!==request)return;pending=false;blocked=error.name!=='AbortError';});}
   }
-  function choose(i){index=i;pause();request++;audio.src=`audio/music/${tracks[index][0]}.wav?v=0.14.12`;blocked=false;sync();apply();}
+  function choose(i){index=i;pause();request++;audio.src=`audio/music/${tracks[index][0]}.mp3?v=0.15.1-mp3`;blocked=false;sync();apply();}
   audio.addEventListener('ended',()=>choose(night?3:(index+1)%3));
   audio.addEventListener('error',()=>{if(++errors<tracks.length)choose(night?3:(index+1)%3);else{blocked=true;button.title='音乐文件加载失败，可重新打开音乐重试';}});
   button.addEventListener('click',()=>{enabled=!enabled;unlocked=true;blocked=false;errors=0;save('survivor-music-enabled',enabled);sync();apply();});

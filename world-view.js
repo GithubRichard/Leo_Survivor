@@ -55,14 +55,45 @@
     if(boss?.action?.type==='sweep'&&boss.action.released&&game.canSee(boss)){const a=boss.action;items.push({depth:boss.x+boss.y+.1,draw:()=>{ctx.save();sector(ctx,game,boss,2.6,a.facing,180,v);ctx.clip();const q=project(boss.x,boss.y),angle=Math.atan2((a.facing.x+a.facing.y)*.5,a.facing.x-a.facing.y);A.worldSprite(ctx,'sweep_arc','f'+Math.min(2,Math.floor((game.seconds-a.releaseAt)*8)),q.x,q.y,75*v.scale/27,{rotate:angle});ctx.restore();}});}
     for(const f of game.effects)if(f.kind==='skeleton_fx'&&game.canSee(f))items.push({depth:f.x+f.y,draw:()=>{const q=project(f.x,f.y);if(f.state==='reconnect')A.worldSprite(ctx,'bone_reconnect_fx','f'+Math.min(2,Math.floor((game.seconds-f.startedAt)*7)),q.x,q.y,35);else if(f.state==='death')A.worldSprite(ctx,'skeleton_'+A.eightDirection(f.facing||{x:0,y:1}),game.seconds-f.startedAt<.2?'death_start':'death_end',q.x,q.y,64);else if(f.boneType==='remnant')A.worldSprite(ctx,'resurrection_bone','f5',q.x,q.y,50);else if(f.boneType==='player')A.worldSprite(ctx,'player_large_bone','f'+(6+Math.min(1,Math.floor((game.seconds-f.startedAt)*5))),q.x,q.y,50);else A.worldSprite(ctx,'ordinary_bone','f'+(9+Math.min(2,Math.floor((game.seconds-f.startedAt)*7))),q.x,q.y,25);}});
   }
-  function weatherOverlay(game,v){
-    if(game.scene!=='surface'||!game.outdoors(game.player))return;const {ctx,width,height,project}=v,kind=game.weatherKind();
-    if(!['rain','thunderstorm','fog','overcast'].includes(kind))return;
-    if(kind==='fog'){
-      const p=project(game.player.x,game.player.y),radius=Math.max(1,game.personalSight)*(v.scale||27)*Math.SQRT2;
-      ctx.save();ctx.translate(p.x,p.y-18);ctx.scale(1,.5);
-      const mist=ctx.createRadialGradient(0,0,radius*.25,0,0,radius*1.8);mist.addColorStop(0,'rgba(184,193,187,0)');mist.addColorStop(.25,'rgba(184,193,187,.04)');mist.addColorStop(.55,'rgba(184,193,187,.25)');mist.addColorStop(1,'rgba(184,193,187,.66)');ctx.fillStyle=mist;ctx.fillRect(-width*2,-height*4,width*4,height*8);ctx.restore();return;
+  let fogCanvas;
+  function fogOverlay(game,{ctx,width,height,project,scale}){
+    const p=project(game.player.x,game.player.y),unit=scale*Math.SQRT2,radius=game.personalSight*unit;
+    const lights=(game._lights||game.lightSources()).filter(l=>{
+      const d=S.dist(l,game.player);return d+l.radius>game.personalSight&&d-l.radius<game.illuminatedSight;
+    });
+    let layer=ctx;
+    if(lights.length){
+      fogCanvas??=document.createElement('canvas');
+      if(fogCanvas.width!==Math.ceil(width))fogCanvas.width=Math.ceil(width);
+      if(fogCanvas.height!==Math.ceil(height))fogCanvas.height=Math.ceil(height);
+      layer=fogCanvas.getContext('2d');layer.clearRect(0,0,width,height);
     }
+    layer.save();layer.translate(p.x,p.y);layer.scale(1,.5);
+    const mist=layer.createRadialGradient(0,0,radius*.28,0,0,radius);
+    mist.addColorStop(0,'#aab6af00');mist.addColorStop(.5,'#aab6af37');mist.addColorStop(.8,'#aab6afba');mist.addColorStop(1,'#aab6af');
+    layer.fillStyle=mist;layer.fillRect(-p.x,-2*p.y,width,height*2);
+    if(lights.length){
+      const reach=game.illuminatedSight*unit;
+      layer.beginPath();layer.arc(0,0,reach,0,Math.PI*2);layer.clip();layer.globalCompositeOperation='destination-out';
+      for(const light of lights){
+        const q=project(light.x,light.y),x=q.x-p.x,y=(q.y-p.y)*2,r=light.radius*unit;
+        layer.save();
+        if(light.angle){
+          const f=light.facing,angle=Math.atan2(f.x+f.y,f.x-f.y),half=light.angle*Math.PI/360;
+          layer.beginPath();layer.moveTo(x,y);layer.arc(x,y,r,angle-half,angle+half);layer.closePath();layer.clip();
+        }
+        const glow=layer.createRadialGradient(x,y,0,x,y,r);glow.addColorStop(0,'#000d');glow.addColorStop(.55,'#000a');glow.addColorStop(1,'#0000');
+        layer.fillStyle=glow;layer.fillRect(x-r,y-r,r*2,r*2);layer.restore();
+      }
+    }
+    layer.restore();
+    if(lights.length)ctx.drawImage(fogCanvas,0,0,width,height);
+  }
+  function weatherOverlay(game,v){
+    if(game.scene!=='surface')return;
+    const kind=game.weatherKind();if(kind==='fog'){fogOverlay(game,v);return;}
+    if(!game.outdoors(game.player)||!['rain','thunderstorm','overcast'].includes(kind))return;
+    const {ctx,width,height,project}=v;
     ctx.save();ctx.beginPath();ctx.rect(0,0,width,height);
     for(const h of game.nearbyHomes(game.player,40)){const corners=[project(h.x-5,h.y-6),project(h.x+5,h.y-6),project(h.x+5,h.y),project(h.x-5,h.y)];corners.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();}
     const p=project(game.player.x,game.player.y);ctx.moveTo(p.x+27,p.y-25);ctx.ellipse(p.x,p.y-25,27,43,0,0,Math.PI*2);ctx.clip('evenodd');
@@ -122,7 +153,7 @@
   function hud(game,mode){
     const alive=!game.result&&game.player.hp>0,button=document.getElementById('bone-skill'),s=game.boneSkill;button.classList.toggle('hidden',!alive||mode!=='play'||!s.unlocked);
     const text=s.charging?'松开发出 · 取消：Esc':game.seconds<s.cooldown?`投掷 ${Math.ceil(s.cooldown-game.seconds)}秒`:game.player.hp<=1?'投掷需大于1血':'投掷 R · 按住蓄力';if(button._text!==text){button._text=text;button.innerHTML=A.worldIcon('bone_throw_skill','f0')+`<span>${text}</span>`;}
-    const status=document.getElementById('weather-status'),storm=game.dustStorm;status.classList.toggle('dust-status',!!storm);status.title=storm?'每15秒喝一瓶清水，超时直接死亡。':'室外移动×'+game.weatherType().speed+'，室外作物生长×'+game.weatherType().growth+'；室内与地下免天气影响';const weatherText=storm?`沙尘暴 ${Math.ceil(storm.remaining)}秒 `:game.scene==='armory'?'军备库 · 阴天 · 地面时间暂停':game.scene==='parking'?'地面天气暂停':`${S.Weather[game.weatherKind()].name} · 剩余${Math.max(0,Math.ceil((game.weather.schedule[game.weather.index].hours*45-game.weather.elapsed)/.75))}游戏分钟${game.outdoors(game.player)?'':' · 室内豁免'}`;if(status._text!==weatherText){status._text=weatherText;status.innerHTML=(game.scene==='surface'?weatherIcon(game.weatherKind()):'')+esc(weatherText);}
+    const status=document.getElementById('weather-status'),storm=game.dustStorm;status.classList.toggle('dust-status',!!storm);status.title=storm?'每15秒喝一瓶清水，超时直接死亡。':game.weatherKind()==='fog'?'大雾在室内外都会限制视野。':'室外移动×'+game.weatherType().speed+'，室外作物生长×'+game.weatherType().growth+'；室内与地下免天气影响';const weatherText=storm?`沙尘暴 ${Math.ceil(storm.remaining)}秒 `:game.scene==='armory'?'军备库 · 阴天 · 地面时间暂停':game.scene==='parking'?'地面天气暂停':`${S.Weather[game.weatherKind()].name} · 剩余${Math.max(0,Math.ceil((game.weather.schedule[game.weather.index].hours*45-game.weather.elapsed)/.75))}游戏分钟${game.outdoors(game.player)||game.weatherKind()==='fog'?'':' · 室内豁免'}`;if(status._text!==weatherText){status._text=weatherText;status.innerHTML=(game.scene==='surface'?weatherIcon(game.weatherKind()):'')+esc(weatherText);}
     if(!game.secondFloor)return;document.getElementById('day-label').textContent='地下停车场 · 二层';
     const boss=game.zombies.find(z=>z.kind==='skeleton'&&z.hp>0&&z.noticed),r=game.skeleton?.remnant,bar=document.getElementById('boss-status');
     if(!alive||['menu','result'].includes(mode)||!boss&&!r){bar.classList.add('hidden');return;}bar.classList.remove('hidden');
