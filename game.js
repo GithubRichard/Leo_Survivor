@@ -16,7 +16,9 @@
   let lastTime=performance.now(),uiKey='',nearby=null,notifications=[];
   let playerMotion={moving:false,phase:0,facing:null};
   let nightAlert=null;
-  let parkingIntro=null,vehicleIntro=null;
+  let parkingIntro=null,vehicleIntro=null,evacuationFilm=null;
+  const creditsRevealAt=.65,creditsEndAt=4.5;
+  let creditsElapsed=0;
   let opening=null,openingPaused=false;
   let characterDraft=null,difficultyChoice='normal';
   const characterModes=['traits','character-preview'];
@@ -277,7 +279,7 @@
     PV.surface(game,{ctx,project,plane,label,items,scale,intro:parkingIntro});
     WorldView.items(game,{ctx,project,label,scale,items});AEDView.items(game,{ctx,project,label,scale,items});
     BroadcastView.items(game,{ctx,project,scale,items,drawRoomObject});
-    CampView.items(game,{ctx,project,plane,scale,label,items});
+    CampView.items(game,{ctx,project,plane,scale,label,items,width,height});
     ArmoryView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
     WestGateView.surface(game,{ctx,project,plane,box,scale,label,items,width,height});
     HumansView.items(game,{ctx,project,scale,label,items,depth:actorDepth,drawActor:a=>visibleOutside(a,()=>actor(a,'human'))});
@@ -296,6 +298,70 @@
     if(mode==='menu'){const p=project(0,0);label('红屋顶 · 你的第一处庇护所',p.x,p.y+50,'#d5c594');}
   }
   function showMenu(){$('gun-fire').classList.add('hidden');$('firepower-skill').classList.add('hidden');$('sweeper-hud').classList.add('hidden');game.stopAutomaticFire();GameSound.stopVoice();BroadcastView.subtitle('');game.tvSession=null;playerMotion={moving:false,phase:0,facing:null};mode='menu';PV.hideCombatHUD();placement=false;keys.clear();touch.clear();$('run-edge').style.opacity=0;$('hurt-edge').style.opacity=0;$('menu').classList.remove('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls','interaction'])$(id).classList.add('hidden');uiKey='';updateMenu();}
+  function beginEvacuation(){
+    evacuationFilm=new EndingView.Sequence(game.ending.phase,game.ending);
+    mode='evacuation';keys.clear();touch.clear();placement=false;nightAlert=null;
+    game.stopAutomaticFire();game.player.running=false;game.cancelBoneCharge();
+    GameSound.stopVoice();GameSound.setActive(false);GameMusic.update(false,false,0,game.minutes);BroadcastView.subtitle('');game.tvSession=null;
+    document.documentElement.classList.add('evacuation-active');
+    $('evacuation-film').classList.remove('hidden');$('overlay').classList.add('hidden');
+    $('evacuation-choices').classList.toggle('hidden',!evacuationFilm.shot.hold);
+    $('evacuation-skip').classList.toggle('hidden',evacuationFilm.shot.hold);
+    saveGame(false);
+  }
+  function showEvacuationChoice(){
+    game.awaitEvacuationChoice();
+    beginEvacuation();
+    $('evacuation-choices').classList.remove('hidden');
+    $('evacuation-skip').classList.add('hidden');
+    $('evacuation-caption').textContent=evacuationFilm.shot.subtitle;
+    $('evacuation-choices').focus({preventScroll:true});
+  }
+  function finishEvacuationFilm(){
+    if(!evacuationFilm||evacuationFilm.shot.hold)return;
+    if(game.ending.phase==='intro'){showEvacuationChoice();return;}
+    if(!game.finishEvacuation())return;
+    evacuationFilm=null;
+    document.documentElement.classList.remove('evacuation-active');
+    $('evacuation-film').classList.add('hidden');
+    if(game.result){beginEndCredits();return;}
+    mode='play';keys.clear();touch.clear();lastTime=performance.now();
+    playerMotion={moving:false,phase:0,facing:null};
+    saveGame(false);
+  }
+  function beginEndCredits(){
+    mode='credits';creditsElapsed=0;keys.clear();touch.clear();placement=false;nightAlert=null;
+    game.stopAutomaticFire();PV.hideCombatHUD();
+    GameSound.stopVoice();GameSound.setActive(false);GameMusic.update(false,false,0,game.minutes);
+    $('overlay').classList.add('hidden');
+    $('end-credits-content').classList.add('hidden');
+    $('end-credits').showModal();
+    saveGame(false);
+  }
+  function finishEndCredits(){
+    if(mode!=='credits')return;
+    $('end-credits').close();
+    openOverlay('result');
+    $('overlay-card').querySelector('button')?.focus({preventScroll:true});
+  }
+  function updateEndCredits(dt){
+    const previous=creditsElapsed;
+    creditsElapsed+=dt;
+    if(previous<creditsRevealAt&&creditsElapsed>=creditsRevealAt){
+      $('end-credits-content').classList.remove('hidden');
+      $('end-credits-continue').focus({preventScroll:true});
+    }
+    if(creditsElapsed>=creditsEndAt)finishEndCredits();
+  }
+  function updateEvacuation(dt){
+    if(evacuationFilm.advance(dt)){finishEvacuationFilm();if(!evacuationFilm)return;}
+    if(evacuationFilm.shot.hold&&game.ending.phase==='intro'){showEvacuationChoice();}
+    const waiting=evacuationFilm.shot.hold;
+    $('evacuation-choices').classList.toggle('hidden',!waiting);
+    $('evacuation-skip').classList.toggle('hidden',waiting);
+    const caption=evacuationFilm.draw(ctx,width,height),slot=$('evacuation-caption');
+    if(slot.textContent!==caption)slot.textContent=caption;
+  }
   function beginOpening(){
     mode='opening';openingPaused=false;keys.clear();touch.clear();PV.hideCombatHUD();GameSound.unlock();document.documentElement.classList.add('opening-active');$('opening-pause').textContent='暂停';
     opening=new BroadcastView.OpeningSequence(()=>{opening=null;document.documentElement.classList.remove('opening-active');game.broadcast.introDone=true;enterGame();saveGame(false);});
@@ -334,17 +400,18 @@
   $('difficulty-options').innerHTML=Object.entries(DifficultyRules.profiles).map(([id,p])=>`<button type="button" data-difficulty="${id}" class="difficulty-card" aria-pressed="false"><strong>${p.name}</strong><span>天赋≤${p.talents} · ${p.diseaseMin?'疾病至少3项':id==='easy'?'前2天赋免疾病':'每项天赋承担1疾病'} · 疾病不限${p.diseasePower>1?'，负面×1.5':''}</span><span>昼 ${duration(17*p.dayHour)} / 夜 ${duration(7*p.nightHour)}</span><small>${p.restock?`每${p.restock}日补货`:'普通容器不补货'} · ${p.residents}日补怪${p.repair?' · 3日修复':''}</small></button>`).join('');
   document.querySelectorAll('[data-difficulty]').forEach(b=>b.addEventListener('click',()=>chooseDifficulty(b.dataset.difficulty)));chooseDifficulty('normal');
   function updateMenu(){document.querySelectorAll('.menu-option').forEach((el,i)=>el.classList.toggle('selected',i===menuChoice));}
+  const canResume=data=>!!data&&(!data.result||data.ending?.phase==='complete');
   function savedData(key=SAVE_KEY){try{const value=JSON.parse(localStorage.getItem(key)||'null');return value?.version===1?value:null;}catch{return null;}}
   function saveGame(announce=true){
     if(mode==='menu'||characterModes.includes(mode))return false;
-    try{const test=!!game.developerUsed;localStorage.setItem(test?DEV_SAVE_KEY:SAVE_KEY,JSON.stringify(game.snapshot()));$(test?'continue-developer':'continue-game').disabled=!!game.result;if(announce)game.announce(test?'开发测试进度已保存，正常存档未被覆盖。':'进度已保存到当前浏览器。');return true;}
+    try{const test=!!game.developerUsed;localStorage.setItem(test?DEV_SAVE_KEY:SAVE_KEY,JSON.stringify(game.snapshot()));$(test?'continue-developer':'continue-game').disabled=!canResume(game);if(!test)$('continue-game').textContent=game.result&&canResume(game)?'查看通关记录':'继续存档';if(announce)game.announce(test?'开发测试进度已保存，正常存档未被覆盖。':'进度已保存到当前浏览器。');return true;}
     catch{game.announce('无法保存：浏览器存储不可用或已满。请保留本页，暂勿刷新。');return false;}
   }
   function enterGame(){
     mode='play';placement=false;playerMotion={moving:false,phase:0,facing:null};keys.clear();touch.clear();uiKey='';overlayNotice='';notifications=[];lastTime=performance.now();
     $('menu').classList.add('hidden');$('overlay').classList.add('hidden');for(const id of ['hud','controls'])$(id).classList.remove('hidden');$('player-name').textContent=game.player.name;
   }
-  function resumeGame(test=false){if(!art.ready)return;try{const data=savedData(test?DEV_SAVE_KEY:SAVE_KEY);if(!data||data.result)return;game=Game.restore(data);if(test)Dev.enable(game);enterGame();if(!game.broadcast.introDone)beginOpening();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
+  function resumeGame(test=false){if(!art.ready)return;try{const data=savedData(test?DEV_SAVE_KEY:SAVE_KEY);if(!canResume(data))return;game=Game.restore(data);if(test)Dev.enable(game);enterGame();if(game.ending?.phase==='complete')openOverlay('result');else if(game.endingPending){if(game.ending.phase==='choice')showEvacuationChoice();else beginEvacuation();}else if(!game.broadcast.introDone)beginOpening();}catch{$('asset-status').textContent='此存档无法恢复，请保留存档并重新开始。';}}
   document.querySelectorAll('.menu-option').forEach((el,i)=>el.addEventListener('pointerenter',()=>{if(mode==='menu'){menuChoice=i;updateMenu();}}));
   function start(developer=false){
     if(!art.ready)return;
@@ -403,7 +470,11 @@
     else if(action==='save')ok=saveGame();
     overlayNotice=ok?'开发操作完成。':'未完成：请检查输入、背包空间或目标位置是否被占用。';uiKey='';
   }
-  function inventoryOverlay(){return UI.inventory(game,buildKind,inventoryPane);}
+  function inventoryOverlay(){
+    const html=UI.inventory(game,buildKind,inventoryPane);
+    if(inventoryPane!=='bag'||!game.hasEvacuationRadio)return html;
+    return html+'<section class="ending-radio dev-section"><img src="'+EndingView.radioIcon()+'" alt="" width="44" height="44"><div><strong>关键物品 · 对讲机</strong><div>剩余使用次数 1</div></div><button data-command="evacuation-ask" aria-keyshortcuts="X">呼叫撤离 <span class="keyboard-hint">X</span></button></section>';
+  }
   function statsOverlay(){
     const damageNames={dehydration:'失水',hunger:'饥饿',acid_pool:'酸液区',fire_pool:'燃烧区'};
     const rows=game.history.map(h=>{
@@ -421,11 +492,16 @@
     if(characterModes.includes(mode)){key+=JSON.stringify(characterDraft);html=CharacterUI.selection(characterDraft,mode==='character-preview');}
     else if(mode==='inventory'){key+=game.selectedSlot+JSON.stringify(game.inventory)+buildKind+inventoryPane+art.parkingRevision;html=inventoryOverlay();}
     else if(mode==='context'){const o=contextTarget?.object;key+=o?.id+JSON.stringify(game.inventory)+JSON.stringify({hp:o?.hp,level:o?.level,energy:o?.energy,active:o?.active,opened:o?.opened,loot:o?.loot,gate:game.parking?.layer?.gateOpen,transport:game.armory?.transport,human:game.humans&&[game.humans.heroUntil>game.seconds,Math.max(0,game.humans.banUntil-game.seconds),game.humans.raid?.phase],selection:contextTarget?.campOffer,batches:contextTarget?.campBatches,camp:contextTarget?.type==='camp'&&[game.camp.stock,game.camp.completed,game.camp.reputation,game.camp.effectiveReputation]})+art.parkingRevision;html=UI.context(game,contextTarget);}
+    else if(mode==='evacuation-confirm'){html='<h2>呼叫撤离？</h2><p>确认后会用掉对讲机的最后一次机会，前往庇护所并结束本局。</p><div class="overlay-actions"><button data-command="evacuation-cancel">取消</button><button class="primary" data-command="evacuation-confirm">确认撤离</button></div>';}
     else if(mode==='stats'){html=statsOverlay();}
     else if(mode==='pause'){html='<div class="eyebrow">已暂停</div><h2>休息一下</h2><div id="pause-music-slot"></div><div class="overlay-actions"><button data-key="escape" class="primary">继续游戏</button><button data-command="save">保存进度</button><button data-command="stats">查看生存记录</button><button data-command="developer">开发者模式（F2）</button></div>';}
     else if(mode==='developer'){key+=JSON.stringify(Dev.state(game))+game.scene+JSON.stringify(game.humans&&[game.humans.actors.length,game.humans.regularKills,game.humans.revenge,game.humans.raid?.phase,game.humans.unlocked]);html=Dev.panel(game)+PV.developer(game)+(Dev.humanPanel?Dev.humanPanel(game):'')+'<div class="dev-section"><h3>幸存者营地 / 军备库</h3><button data-dev="armory">军备库入口 / 第17天（开发测试）</button><button data-dev="camp">第14天营地 / 定位入口（开发测试）</button></div>';}
     else if(mode==='map'){html='<div class="eyebrow">暂停中 · 以玩家为中心</div><h2>附近的小区</h2><p>金色：玩家与家　｜　红色：丧尸　｜　灰色：民居 · 食/修/药/保：商店 · 灰点：石头 · 蓝点：水 · 绿点：药草</p><canvas id="map-canvas" class="map-view" width="550" height="350"></canvas><div class="overlay-actions"><button data-key="m">返回游戏</button></div>';}
     else if(mode==='dialog'){key+=dialogChoice;const choices=['3木头 → 1铁','3铁 → 1木头','收留这位幸存者','结束交谈'];html=`<div class="eyebrow">暂停中 · 来访幸存者</div><h2>交换物资，或给予庇护</h2><p>以下交换比例与来访概率是初版演示规则，等待你试玩后确定。</p>${choices.map((s,i)=>`<button data-dialog="${i}" class="dialog-option ${i===dialogChoice?'selected':''}">${escapeText(s)}</button>`).join('')}<div class="key-hint keyboard-hint">W / S 选择　·　E 确认</div>`;}
+    else if(mode==='result'&&game.ending?.record){
+      const r=game.ending.record;key+='evacuation';
+      html=`<div class="eyebrow">撤离成功 · ${DifficultyRules.profile(r.difficulty).name}</div><h2>抵达庇护所</h2><p>第 ${r.day} 天撤离 · 已度过 ${r.nights} 晚 · 击败 ${r.kills} 名敌人</p><div class="overlay-actions"><button data-command="stats">查看生存记录</button><button data-key="e">返回主菜单</button></div>`;
+    }
     else if(mode==='result'){key+=game.result;html=`<div class="eyebrow">第${game.day}晚 · ${game.result==='win'?'完成':'结束'}</div><h2>${game.result==='win'?'你守到了天明。':'幸存者倒下了。'}</h2><p>${game.result==='win'?'05:00到了，所有剩余丧尸已经消失。':game.deathReason==='dehydration'?'沙尘暴中失水，未在时限内喝下清水。':'下次可以先搜补给箱、做武器和料理、修补受损的防线。'}</p><div class="result-number">${game.kills} <span style="font-size:16px">只丧尸被击败</span></div><p>已布置${game.devices.length}个装置，夜间出现${game.spawned}只丧尸。</p><div class="overlay-actions"><button data-key="e">返回开始画面</button></div>`;}
     if(overlayNotice)html+=`<p class="inline-notice">${escapeText(overlayNotice)}</p>`;key+=overlayNotice;
     if(key!==uiKey){
@@ -449,7 +525,7 @@
     $('stamina-label').textContent=`${game.player.stamina.toFixed(1)} / ${game.maxStamina}`;$('stamina-fill').style.width=`${game.player.stamina/game.maxStamina*100}%`;
     $('hunger-label').textContent=`${Math.round(game.player.hunger)} / 100`;$('hunger-fill').style.width=`${game.player.hunger}%`;
     $('stamina-label').title=game.player.hunger<=0?'饱食度为0：停止恢复体力':`每${game.staminaRecoveryInterval}秒恢复1点体力`;
-    $('day-label').textContent=`第${game.day}天 · ${game.difficultyRules.name} · ${game.day%7===0?'尸潮夜':'生存'}`;
+    $('day-label').textContent=`第${game.day}天 · ${game.difficultyRules.name} · ${game.day%7===0?'尸潮夜':game.ending?.phase==='endless'?'无尽模式':'生存'}`;
     $('buffs').textContent=[game.mainBuff?`${{health:'血量上限+2',stamina2:'体力上限+2',stamina4:'体力上限+4',melee:'近战+1',recovery:'恢复加快',armor:'减伤'}[game.mainBuff.type]} ${Math.ceil(game.mainBuff.until-game.seconds)}秒`:'',game.teaBuff?'茶：奔跑节省体力':'',`装备：${NAMES[game.player.weapon]||'徒手'}`].filter(Boolean).join(' · ');
     if(game.player.hunger<=60)$('buffs').textContent+=game.player.hunger<=0?' · 饥饿：不回体，每12秒失去1血':` · 饱食偏低：体力上限${Number(game.maxStamina.toFixed(1))}，每${Number(game.staminaRecoveryInterval.toFixed(1))}秒回1`;
     if(game.player.hunger<=60&&['stamina2','stamina4','recovery'].includes(game.mainBuff?.type))$('buffs').textContent+='（料理体力增益暂不生效）';
@@ -485,9 +561,25 @@
   }
   function chooseSlot(dx,dy){const row=Math.floor(game.selectedSlot/5),col=game.selectedSlot%5;game.selectedSlot=((row+dy+Math.ceil(game.inventory.length/5))%Math.ceil(game.inventory.length/5))*5+(col+dx+5)%5;}
   function handleKey(event){
+    if(mode==='credits'){
+      if(event.key==='Escape'&&creditsElapsed>=creditsRevealAt){
+        event.preventDefault();finishEndCredits();
+      }
+      return;
+    }
+    if(evacuationFilm){
+      if(event.key==='Escape'){event.preventDefault();finishEvacuationFilm();}
+      const k=event.key.toLowerCase();
+      if(evacuationFilm?.shot.hold&&['y','n'].includes(k)&&!event.repeat){event.preventDefault();$('evacuation-choices').querySelector(`[data-evacuation="${k==='y'?'yes':'no'}"]`).click();}
+      return;
+    }
+    if(mode==='evacuation-confirm'){
+      if(event.key==='Escape'){event.preventDefault();openOverlay('inventory');}
+      return;
+    }
     if($('bestiary-dialog').open||$('weather-guide').open||event.target instanceof Element&&event.target.closest('#open-bestiary,#open-weather-guide'))return;
     if(event.target instanceof Element&&event.target.closest('#music-controls,#sound-toggle')){if(event.key==='Escape'){event.preventDefault();event.target.blur();if(mode==='pause')closeOverlay();}return;}
-    if(event.key==='Tab'&&['menu','pause'].includes(mode))return;
+    if(event.key==='Tab'&&['menu','pause','result','stats'].includes(mode))return;
     if(event.key==='F2'){event.preventDefault();if(!event.repeat)performAction('f2');return;}
     if(event.target instanceof HTMLInputElement||event.target instanceof HTMLSelectElement||event.target instanceof HTMLTextAreaElement){if(event.key==='Escape'){event.preventDefault();performAction('escape');}if(event.key==='Enter'){event.target.blur();if(mode==='menu')start();}return;}
     if(characterModes.includes(mode)&&event.key==='Tab')return;
@@ -495,6 +587,8 @@
     keys.add(k);if(event.repeat)return;performAction(k);
   }
   function performAction(k){
+    if(evacuationFilm||mode==='credits')return;
+    if(mode==='stats'&&game.result){if(k==='escape')openOverlay('result');return;}
     if(opening){if(k==='escape')opening.finish();else if(k===' ')pauseOpening();return;}
     if(vehicleIntro){if(k==='escape')finishVehicleIntro();return;}
     if(parkingIntro)return;
@@ -506,7 +600,7 @@
       if(k==='e'||k==='enter'||k===' '){if(active>=0)buttons[active].click();else $('overlay-card').querySelector('[data-character="preview"], [data-character="confirm"]')?.click();}return;
     }
     if(k==='f2'){if(mode==='developer')closeOverlay();else openDeveloper();return;}
-    if(k==='escape'){if(mode==='play'&&game.boneSkill.charging){game.cancelBoneCharge();return;}if(mode==='play')openOverlay('pause');else if(['pause','inventory','map','context','stats','developer'].includes(mode))closeOverlay();return;}
+    if(k==='escape'){if(mode==='play'&&game.boneSkill.charging){game.cancelBoneCharge();return;}if(mode==='play')openOverlay('pause');else if(mode==='stats'&&game.result)openOverlay('result');else if(['pause','inventory','map','context','stats','developer'].includes(mode))closeOverlay();return;}
     if(mode==='developer')return;
     if(mode==='menu'){if(k==='a'||k==='d'||k==='arrowleft'||k==='arrowright'){const ids=Object.keys(DifficultyRules.profiles),i=ids.indexOf(difficultyChoice);chooseDifficulty(ids[(i+(k==='a'||k==='arrowleft'?-1:1)+ids.length)%ids.length]);return;}if(k==='w'||k==='s'){menuChoice=1-menuChoice;updateMenu();}if(k==='e')start();return;}
     if(mode==='result'){if(k==='e'){game=new Game();showMenu();}return;}
@@ -523,6 +617,7 @@
     if(k==='m'){mode==='map'?closeOverlay():openOverlay('map');return;}
     if(mode==='map'||mode==='pause'||mode==='stats')return;
     if(mode==='inventory'){
+      if(k==='x'&&inventoryPane==='bag'&&game.hasEvacuationRadio){openOverlay('evacuation-confirm');return;}
       if(inventoryPane==='character')return;
       if(inventoryPane!=='bag'&&(k==='w'||k==='s'||k==='e')){const buttons=[...$('overlay-card').querySelectorAll('.recipe-card:not([disabled])')];if(k==='w'||k==='s')contextChoice=(contextChoice+(k==='w'?-1:1)+buttons.length)%Math.max(1,buttons.length);if(k==='e')buttons[contextChoice]?.click();else buttons[contextChoice]?.focus();return;}
       if(k==='w')chooseSlot(0,-1);if(k==='s')chooseSlot(0,1);if(k==='a')chooseSlot(-1,0);if(k==='d')chooseSlot(1,0);
@@ -551,6 +646,14 @@
     }
   }
   function handleCommand(button){
+    const commandName=button.dataset.command;
+    if(commandName==='evacuation-ask'){if(game.hasEvacuationRadio)openOverlay('evacuation-confirm');return;}
+    if(commandName==='evacuation-cancel'){openOverlay('inventory');return;}
+    if(commandName==='evacuation-confirm'){
+      if(game.requestEvacuation())beginEvacuation();
+      else{overlayNotice='请结束当前操作后再呼叫撤离。';uiKey='';renderOverlay();}
+      return;
+    }
     if(button.dataset.command?.startsWith('vehicle-')){if(game.carAction(button.dataset.command.slice(8)))closeOverlay();return;}
     if(button.dataset.command==='armory-interact'){if(game.interact(contextTarget))closeOverlay();return;}
     const command=button.dataset.command,kind=button.dataset.kind,o=contextTarget?.object;let ok=false,leave=false;
@@ -592,10 +695,17 @@
   $('firepower-skill').addEventListener('click',()=>{if(mode==='play')game.activateFirepower();});
   $('gun-fire').addEventListener('pointerdown',event=>{if(mode!=='play'||parkingIntro||opening)return;event.preventDefault();touch.input.fireHeld=true;game.attack();event.currentTarget.setPointerCapture(event.pointerId);});
   for(const event of ['pointerup','pointercancel','lostpointercapture'])$('gun-fire').addEventListener(event,()=>{touch.input.fireHeld=false;game.stopAutomaticFire();});
+  $('evacuation-skip').addEventListener('click',finishEvacuationFilm);
+  $('end-credits-continue').addEventListener('click',finishEndCredits);
+  $('end-credits').addEventListener('cancel',event=>event.preventDefault());
+  $('evacuation-choices').addEventListener('click',event=>{
+    const choice=event.target.closest('[data-evacuation]')?.dataset.evacuation;
+    if(evacuationFilm?.shot.hold&&game.chooseEvacuation(choice))beginEvacuation();
+  });
   $('continue-game').addEventListener('click',()=>resumeGame());
   $('start-developer').addEventListener('click',()=>start(true));
   $('continue-developer').addEventListener('click',()=>resumeGame(true));
-  art.loading.then(()=>{$('continue-game').disabled=!savedData()||!!savedData()?.result;$('start-developer').disabled=false;$('continue-developer').disabled=!savedData(DEV_SAVE_KEY)||!!savedData(DEV_SAVE_KEY)?.result;});
+  art.loading.then(()=>{const saved=savedData();$('continue-game').disabled=!canResume(saved);$('continue-game').textContent=saved?.ending?.phase==='complete'?'查看通关记录':'继续存档';$('start-developer').disabled=false;$('continue-developer').disabled=!canResume(savedData(DEV_SAVE_KEY));});
   $('action-progress').addEventListener('pointerdown',event=>{if(event.target.closest('[data-command="cancel"]')){event.preventDefault();game.cancelAction();}});
   $('touch-toggle').addEventListener('click',resize);
   $('loyal-skill').addEventListener('click',event=>{event.currentTarget.blur();if(mode==='play')performAction('v');});
@@ -631,6 +741,15 @@
   });
   function frame(now){
     const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
+    if(mode==='credits'){
+      updateEndCredits(focused&&!document.hidden?dt:0);
+      requestAnimationFrame(frame);return;
+    }
+    if(game.day>=21&&!game.ending)EndingView.preload();
+    if(evacuationFilm){
+      updateEvacuation(focused&&!document.hidden?dt:0);
+      requestAnimationFrame(frame);return;
+    }
     const soundActive=focused&&!document.hidden&&(opening?!openingPaused:!!vehicleIntro||mode==='play'&&!parkingIntro);
     GameSound.setActive(soundActive);GameMusic.update(soundActive&&!opening&&!vehicleIntro&&!game.result,game.tvSession?.kind==='camp',dt,game.scene==='parking'?(game.surfaceState?.minutes??game.minutes):game.minutes);
     if(opening&&soundActive)opening.update(dt);
@@ -644,8 +763,9 @@
       const input={up:keys.has('w'),down:keys.has('s'),left:keys.has('a'),right:keys.has('d'),run:keys.has('shift')||touch.input.run,moveX:touch.input.moveX,moveY:touch.input.moveY,fireHeld:keys.has('e')||keys.has(' ')||touch.input.fireHeld};
       const debug=Dev.state(game),speed=debug.enabled?debug.speed:1;
       game.beginFrame();
-      for(let tick=0;tick<speed&&!game.result&&!game.parkingUnlockPending;tick++)game.step(dt,input);
+      for(let tick=0;tick<speed&&!game.result&&!game.parkingUnlockPending&&!game.endingPending;tick++)game.step(dt,input);
       game.endFrame();
+      if(game.endingPending){beginEvacuation();updateEvacuation(0);requestAnimationFrame(frame);return;}
       if(beforeScene!=='parking'&&game.scene!=='parking'&&beforeDay===game.day&&beforeMinutes<1320&&game.minutes>=1320)showNightAlert();
       const moved=dist(before,game.player),moving=moved>1e-7;
       if(moving){
@@ -657,7 +777,7 @@
         playerMotion.facing={x:(game.player.x-before.x)/moved,y:(game.player.y-before.y)/moved};
       }else playerMotion.phase=0;
       playerMotion.moving=moving;
-      if(game.result)openOverlay('result');
+      if(game.result){beginEndCredits();requestAnimationFrame(frame);return;}
     }
     touch.setContext(parkingIntro||opening||vehicleIntro?'cinematic':mode,placement);
     nearby=mode==='play'&&!parkingIntro&&!placement?game.nearbyInteraction():null;

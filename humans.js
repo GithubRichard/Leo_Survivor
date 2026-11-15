@@ -93,7 +93,7 @@
     completeVehicleTrip(...args){const ok=super.completeVehicleTrip(...args);if(ok){if(this.humans?.raid?.active&&this.guardDistance(this.player)>40)this.failHumanRaid('乘车离开守卫区');this.transferHumanFollower();}return ok;}
     step(dt,input={}){
       this.ensureHumans();const before=this.seconds,day=this.day,minutes=this.minutes,scene=this.scene;this._humanCampReady=null;this._humanSummonReady=null;if(this.humanMode){this.checkHumanRaidExit();this.startHumanRaidIfNeeded();}super.step(dt,input);const elapsed=this.seconds-before;
-      if(!this.humanMode||!(elapsed>0)||this.result||this._sceneJustChanged||this.parkingUnlockPending)return;
+      if(!this.humanMode||!(elapsed>0)||this.result||this._sceneJustChanged||this.parkingUnlockPending||this.endingPending)return;
       this._humanGameMinutes=scene==='surface'?Math.max(0,(this.day-day)*1440+this.minutes-minutes):0;
       if(this.scene==='surface'){this.expireStarvingCivilians();this.checkHumanRaidExit();this.humanPlan();this.updateHumanPopulation(elapsed);this.updateHumanRaid(elapsed);this.updateHumanActors(elapsed);this.updateHelperGuard(elapsed);this.updateHumanShots(elapsed);}
       this.updateHumanFollower(elapsed);this.finishHumanSummon();if(this.scene==='surface'){this.checkHumanRaidExit();this.settleHumanRaid();this.flushHumanCampExchange();}this.syncHumanFood();this.humans.actors=this.humans.actors.filter(a=>a.hp>0);this.humans.corpses=this.humans.corpses.filter(c=>c.scene!==this.humanScene()||c.until>this.seconds);

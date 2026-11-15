@@ -1,0 +1,15 @@
+#evacuation-film{position:fixed;inset:0;z-index:20;pointer-events:none}
+#evacuation-skip{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));pointer-events:auto}
+.evacuation-dialogue{position:absolute;bottom:max(6vh,env(safe-area-inset-bottom));left:50%;width:min(760px,92vw);transform:translateX(-50%);text-align:center;color:#fff5da}
+#evacuation-caption{width:fit-content;margin:0 auto 8px;padding:5px 12px;border-radius:5px;background:#171815e8;font-size:clamp(16px,2.5vw,25px)}
+#evacuation-caption:empty{display:none}
+#evacuation-choices{display:flex;justify-content:center;gap:10px}
+#evacuation-choices button{flex:0 1 220px;pointer-events:auto}
+#evacuation-choices small{display:block;color:#ddd2b2}
+.evacuation-active :is(#hud,#controls,#touch-controls,#interaction,#messages,#wave-warning,#action-progress,#skill-bar,#sweeper-hud,#boss-status,#human-status,#camp-map,#gun-fire,#sound-toggle,#story-subtitles,.screen-edge){display:none!important}
+.ending-radio{display:flex;align-items:center;gap:10px}
+.ending-radio img{object-fit:contain}
+#end-credits[open]{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;display:grid;place-items:center;padding:24px;overflow:auto;background:#000;color:#f4f0e6;text-align:center}
+#end-credits-title{margin:0;font-size:clamp(22px,5vw,36px);font-weight:600}
+#end-credits-content p{margin:12px 0 24px;color:#cbc5b8}
+#end-credits-continue{background:#171717;border-color:#68645b}

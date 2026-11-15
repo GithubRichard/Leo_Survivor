@@ -271,7 +271,7 @@
       this.updateLamps(dt);this.updateDoors();this.movePlayer(dt,input);this._lights=this.lightSources();this.updateDoors();this.updateIndoorHome();this.updateVitals(dt);if(this.result)return;
       this.updateAction(dt);if(this._sceneJustChanged)return;this._lights=this.lightSources();
       this.updatePlayerAttack();this.updateProduction(dt);this.advanceClock(dt);
-      if(this.result||this.parkingUnlockPending)return;
+      if(this.result||this.parkingUnlockPending||this.endingPending)return;
       if(this.scene==='parking'){const boss=this.zombies.find(z=>z.kind==='lurker'&&z.hp>0);if(boss)this.updateBoss(boss,dt);}
       this.updateDevices(dt);this.updateZombies(dt);this.updateProjectiles(dt);this.updateZones(dt);if(this.scene==='parking')this.flushBossSummons();this.effects=this.effects.filter(e=>e.until>this.seconds);
       if(this.devices.some(d=>d.hp<=0))this.devices=this.devices.filter(d=>d.hp>0);this.zombies=this.zombies.filter(z=>z.hp>0);

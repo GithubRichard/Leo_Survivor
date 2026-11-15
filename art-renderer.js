@@ -7,6 +7,22 @@
   Object.assign(entries,armed?.atlases||{});
   Object.assign(entries,parking?.atlases||{});
   Object.assign(entries,window.WORLD_ART?.atlases||{});
+  const campSceneAtlases=new Set(Object.keys(entries).filter(key=>/^world_atlas_camp_(?:npc_|stall_|building_|display_|camp_entrance_sign$|camp_notice_board$|traveler_cart$|doctor_treatment$)/.test(key)));
+  const campLoadQueue=[],campReady=new Set();
+  let campLoading=0,campPrimed=false,campLoadFrame=0;
+  function scheduleCampLoads(){
+    if(campLoadFrame||!campLoadQueue.length||campLoading>=2)return;
+    campLoadFrame=requestAnimationFrame(()=>{
+      campLoadFrame=0;
+      const start=campLoadQueue.shift();campLoading++;
+      start(()=>{campLoading--;scheduleCampLoads();});
+      scheduleCampLoads();
+    });
+  }
+  function prepareCamp(){
+    if(campPrimed)return;campPrimed=true;
+    for(const key of campSceneAtlases)load(key);
+  }
   for(const [name,meta] of Object.entries(parking?.masks||{}))entries['parking_mask_'+name]=meta;
   for(const frames of Object.values(animation?.frames||{}))for(const frame of frames)entries[frame.key]=frame;
   function keepWeaponAtlas(key){
@@ -21,15 +37,27 @@
   let ready=false;
   function load(key){
     if(pending[key])return pending[key];const data=entries[key];if(!data)return Promise.resolve();
-    return pending[key]=new Promise(resolve=>{const img=new Image();images[key]=img;img.onload=()=>{
-      const maxWidth=data.maxWidth||384;
-      if(!/^house_|^yard_|^grass$|^road$|_(base|roof)$/.test(key)&&img.width>maxWidth){const small=document.createElement('canvas');small.width=maxWidth;small.height=Math.round(img.height*maxWidth/img.width);small.getContext('2d').drawImage(img,0,0,small.width,small.height);images[key]=small;}
-      if(data.weaponAtlas)keepWeaponAtlas(key);
-      if(data.parkingAtlas){keepParkingAtlas(key);parkingRevision++;}
-      resolve();};img.onerror=()=>{failed.push(data.src);if(data.parkingAtlas)parkingRevision++;resolve();};img.src=data.src;});
+    const camp=campSceneAtlases.has(key);
+    return pending[key]=new Promise(resolve=>{
+      const start=done=>{
+        const finish=()=>{resolve();done?.();};
+        const img=new Image();if(camp)img.decoding='async';images[key]=img;
+        img.onload=()=>{
+          try{
+            const maxWidth=data.maxWidth||384;
+            if(!/^house_|^yard_|^grass$|^road$|_(base|roof)$/.test(key)&&img.width>maxWidth){const small=document.createElement('canvas');small.width=maxWidth;small.height=Math.round(img.height*maxWidth/img.width);small.getContext('2d').drawImage(img,0,0,small.width,small.height);images[key]=small;}
+            if(data.weaponAtlas)keepWeaponAtlas(key);
+            if(camp)campReady.add(key);else if(data.parkingAtlas){keepParkingAtlas(key);parkingRevision++;}
+          }catch{failed.push(data.src);}
+          finally{finish();}
+        };
+        img.onerror=()=>{failed.push(data.src);if(data.parkingAtlas&&!camp)parkingRevision++;finish();};img.src=data.src;
+      };
+      if(camp){campLoadQueue.push(start);scheduleCampLoads();}else start();
+    });
   }
   const loading=Promise.all(Object.keys(entries).filter(key=>!entries[key].lazy).map(load)).then(()=>{ready=true;});
-  function available(key){if(entries[key]&&!pending[key])load(key);const img=images[key],ready=Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));if(ready&&entries[key]?.weaponAtlas)keepWeaponAtlas(key);if(ready&&entries[key]?.parkingAtlas)keepParkingAtlas(key);return ready;}
+  function available(key){if(entries[key]&&!pending[key])load(key);if(campSceneAtlases.has(key))return campReady.has(key);const img=images[key],ready=Boolean(img&&(img instanceof HTMLCanvasElement||img.complete&&img.naturalWidth>0));if(ready&&entries[key]?.weaponAtlas)keepWeaponAtlas(key);if(ready&&entries[key]?.parkingAtlas)keepParkingAtlas(key);return ready;}
   function sprite(ctx,key,x,y,height,{width,flip=false,anchorY=1}={}){
     const alias=parking?.aliases[key];if(alias&&parkingSprite(ctx,...alias,x,y,height,{flip}))return true;
     if(!available(key))return false;
@@ -305,5 +333,5 @@
     ctx.save();ctx.fillStyle='#c44e1c99';ctx.beginPath();ctx.ellipse(q.x,q.y,r*Math.SQRT2,r/Math.SQRT2,0,0,Math.PI*2);ctx.fill();
     for(let i=0;i<7;i++){const a=i*2.4,x=q.x+Math.cos(a)*r*.75,y=q.y+Math.sin(a)*r*.35,h=r*(.3+.15*Math.sin(seconds*8+i));ctx.fillStyle=i%2?'#ffc45bd9':'#ed792bd9';ctx.beginPath();ctx.moveTo(x-r*.12,y);ctx.lineTo(x,y-h);ctx.lineTo(x+r*.12,y);ctx.closePath();ctx.fill();}ctx.restore();
   }
-  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,itemIcon,drawZone,animatedPlayer,armedPlayer,prepareWeapon,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,worldFrameSurface,house,houseBack,houseFront,roof,ground,door,direction};
+  window.GameArt={images,entries,failed,loading,get ready(){return ready;},get parkingRevision(){return parkingRevision;},available,sprite,itemIcon,drawZone,animatedPlayer,armedPlayer,prepareWeapon,prepareCamp,eightDirection,parkingSprite,parkingSurface,parkingMask,parkingSequence,parkingActor,parkingPlayer,parkingThumb,parkingIcon,worldSprite,worldIcon,worldFrameSurface,house,houseBack,houseFront,roof,ground,door,direction};
 })();

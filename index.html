@@ -3,23 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>守到天明 · 生存规则预览0.15.2</title>
-  <link rel="stylesheet" href="game.css?v=0.15.2-dust3">
+  <title>守到天明 · 生存规则预览0.15.3</title>
+  <link rel="stylesheet" href="game.css?v=0.15.3-dust3">
   <link rel="stylesheet" href="touch-layout.css">
-  <link rel="stylesheet" href="expansion.css?v=0.15.2">
+  <link rel="stylesheet" href="expansion.css?v=0.15.3">
   <link rel="stylesheet" href="developer-mode.css">
-  <link rel="stylesheet" href="parking.css?v=0.15.2">
-  <link rel="stylesheet" href="character.css?v=0.15.2">
-  <link rel="stylesheet" href="world.css?v=0.15.2">
-  <link rel="stylesheet" href="broadcast.css?v=0.15.2-night2">
-  <link rel="stylesheet" href="camp.css?v=0.15.2">
-  <link rel="stylesheet" href="armory.css?v=0.15.2">
-  <link rel="stylesheet" href="humans.css?v=0.15.2">
-  <link rel="stylesheet" href="item-icons.css?v=0.15.2">
-  <link rel="stylesheet" href="bestiary.css?v=0.15.2-weather-guide2">
+  <link rel="stylesheet" href="parking.css?v=0.15.3">
+  <link rel="stylesheet" href="character.css?v=0.15.3">
+  <link rel="stylesheet" href="world.css?v=0.15.3">
+  <link rel="stylesheet" href="broadcast.css?v=0.15.3-night2">
+  <link rel="stylesheet" href="camp.css?v=0.15.3">
+  <link rel="stylesheet" href="armory.css?v=0.15.3">
+  <link rel="stylesheet" href="humans.css?v=0.15.3">
+  <link rel="stylesheet" href="item-icons.css?v=0.15.3">
+  <link rel="stylesheet" href="bestiary.css?v=0.15.3-weather-guide2">
+  <link rel="stylesheet" href="ending.css?v=0.15.3-ending1">
 </head>
 <body>
   <canvas id="world" aria-label="末世塔防生存游戏场景"></canvas>
+  <dialog id="end-credits" aria-labelledby="end-credits-title">
+    <div id="end-credits-content" class="hidden">
+      <h2 id="end-credits-title">《守到天明》制作组</h2>
+      <p>GithubRichard</p>
+      <button id="end-credits-continue" type="button">查看结算</button>
+    </div>
+  </dialog>
+  <div id="evacuation-film" class="hidden" aria-label="军方撤离剧情">
+    <button id="evacuation-skip" type="button">跳过动画 · Esc</button>
+    <div class="evacuation-dialogue"><p id="evacuation-caption"></p><div id="evacuation-choices" class="hidden" role="group" tabindex="-1" aria-describedby="evacuation-caption"><button type="button" data-evacuation="yes">是</button><button type="button" data-evacuation="no">否</button></div></div>
+  </div>
   <div id="story-subtitles" class="hidden" aria-live="polite"><span id="subtitle-speaker"></span><span id="subtitle-text"></span></div>
   <div id="opening-controls" class="hidden"><button id="opening-pause">暂停</button><button id="opening-skip">跳过开场</button><span>空格 暂停 / 继续 · Esc 跳过</span></div>
   <button id="vehicle-skip" class="hidden">跳过行驶动画 · Esc</button>
@@ -56,15 +68,14 @@
   <div id="boss-status" class="hidden" aria-live="polite"></div>
   <footer id="controls" class="panel hidden"><b>WASD</b> 移动　<b>Shift</b> 奔跑　<b>E</b> 交互/攻击　<b>Tab</b> 背包　<b>M</b> 地图　<b>G</b> 丢弃　<b>F</b> 部署</footer>
   <div id="menu" class="scrim">
-    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存规则预览 0.15.2 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
+    <section class="menu-card"><div class="eyebrow">末世塔防生存 · 生存规则预览 0.15.3 · 支持触屏</div><h1>守到天明<span>活过第14晚，探索地下停车场。</span></h1>
       <p>红屋顶下是你的家。白天拆除家具收集材料，布置捕兽夹与巨弩。夜里，丧尸会从四周接近。</p>
-      <aside class="release-notice" aria-labelledby="release-notice-title" data-release-notice="0.15.2">
-        <div class="release-notice-heading"><h2 id="release-notice-title">更新公告 · 0.15.2</h2><time datetime="2026-11-15">2026.11.15</time></div>
+      <aside class="release-notice" aria-labelledby="release-notice-title" data-release-notice="0.15.3">
+        <div class="release-notice-heading"><h2 id="release-notice-title">更新公告 · 0.15.3</h2><time datetime="2026-11-15">2026.11.15</time></div>
         <ul>
-          <li><b>沙尘暴与大雾：</b>沙尘暴时地图可见宽高由 50% 缩至 30%。大雾进屋后仍会限制视野，靠近时物件与生物逐渐显现。</li>
-          <li><b>龙卷风：</b>各难度生成间隔缩短。天启首次等待 3–6 秒，上一根消散后再等 7–13 秒；困难分别为 5–9 秒和 13–22 秒。天气图鉴列出四档数据。</li>
-          <li><b>天启饥民：</b>刷新范围扩大至领地边界外 30–900 米内可达的民居或食品商店。存活满 3 个游戏日后死亡，照常结算掉落。</li>
-          <li><b>背景音乐：</b>四首曲目改用 MP3，下载体积从约 49 MB 降至约 4.8 MB。</li>
+          <li><b>第 21 晚双结局：</b>撑到第 22 天清晨可随军方撤离并保存通关记录，也可留下进入无尽模式，之后用对讲机呼叫一次撤离。</li>
+          <li><b>游戏片尾：</b>通关或死亡后，先切到黑屏，再显示《守到天明》制作组。字幕播完自动进入结算，也可点「查看结算」。</li>
+          <li><b>营地加载：</b>建筑、摊位和人物贴图在靠近前分批加载，画面外的营地物件跳过绘制，减少进入营地时的加载压力。</li>
         </ul>
       </aside>
       <h2 class="difficulty-heading">选择难度</h2><div id="difficulty-options" class="difficulty-options" role="group" aria-label="本局难度"></div>
@@ -96,68 +107,72 @@
     <div class="touch-actions"><button id="touch-run" aria-label="按住奔跑">奔跑<small>按住</small></button><button data-key="e" id="touch-interact" class="primary">交互</button><button data-key="f" id="touch-build">建造</button><button data-key="g">丢弃</button></div>
   </div>
   <script src="touch-controls.js"></script>
-  <script src="difficulty-data.js?v=0.15.2"></script>
-  <script src="simulation.js?v=0.15.2"></script>
+  <script src="difficulty-data.js?v=0.15.3"></script>
+  <script src="simulation.js?v=0.15.3"></script>
   <script src="expansion-data.js"></script>
   <script src="parking-data.js"></script>
-  <script src="character-traits.js?v=0.15.2"></script>
-  <script src="expansion.js?v=0.15.2-dust1"></script>
-  <script src="parking.js?v=0.15.2-dust1"></script>
-  <script src="parking-lights.js?v=0.15.2"></script>
-  <script src="parking-ai.js?v=0.15.2"></script>
-  <script src="weather.js?v=0.15.2-tornado1"></script>
-  <script src="skeleton.js?v=0.15.2"></script>
-  <script src="broadcast.js?v=0.15.2"></script>
-  <script src="camp-data.js?v=0.15.2-dust1"></script>
-  <script src="camp.js?v=0.15.2-hunger1"></script>
-  <script src="armory-data.js?v=0.15.2"></script>
-  <script src="armory.js?v=0.15.2-hunger1"></script>
-  <script src="thermal-combat.js?v=0.15.2"></script>
-  <script src="armory-ai.js?v=0.15.2"></script>
-  <script src="armory-world.js?v=0.15.2-dust2"></script>
-  <script src="resident-refresh.js?v=0.15.2"></script>
-  <script src="west-gate.js?v=0.15.2"></script>
-  <script src="difficulty.js?v=0.15.2"></script>
-  <script src="aed.js?v=0.15.2"></script>
-  <script src="feedback-audio.js?v=0.15.2"></script>
-  <script src="armory-transport.js?v=0.15.2"></script>
-  <script src="humans-data.js?v=0.15.2-starving1"></script>
-  <script src="humans.js?v=0.15.2-starving1"></script>
-  <script src="humans-food.js?v=0.15.2"></script>
-  <script src="humans-ai.js?v=0.15.2-starving1"></script>
-  <script src="humans-combat.js?v=0.15.2-follower1"></script>
-  <script src="humans-raid.js?v=0.15.2"></script>
-  <script src="developer-mode.js?v=0.15.2-dev-weather1"></script>
+  <script src="character-traits.js?v=0.15.3"></script>
+  <script src="expansion.js?v=0.15.3-dust1"></script>
+  <script src="parking.js?v=0.15.3-ending1"></script>
+  <script src="parking-lights.js?v=0.15.3"></script>
+  <script src="parking-ai.js?v=0.15.3"></script>
+  <script src="weather.js?v=0.15.3-tornado1"></script>
+  <script src="skeleton.js?v=0.15.3"></script>
+  <script src="broadcast.js?v=0.15.3"></script>
+  <script src="camp-data.js?v=0.15.3-dust1"></script>
+  <script src="camp.js?v=0.15.3-hunger1"></script>
+  <script src="armory-data.js?v=0.15.3"></script>
+  <script src="armory.js?v=0.15.3-hunger1"></script>
+  <script src="thermal-combat.js?v=0.15.3"></script>
+  <script src="armory-ai.js?v=0.15.3"></script>
+  <script src="armory-world.js?v=0.15.3-dust2"></script>
+  <script src="resident-refresh.js?v=0.15.3"></script>
+  <script src="west-gate.js?v=0.15.3"></script>
+  <script src="difficulty.js?v=0.15.3"></script>
+  <script src="aed.js?v=0.15.3"></script>
+  <script src="feedback-audio.js?v=0.15.3"></script>
+  <script src="armory-transport.js?v=0.15.3"></script>
+  <script src="humans-data.js?v=0.15.3-starving1"></script>
+  <script src="humans.js?v=0.15.3-ending1"></script>
+  <script src="humans-food.js?v=0.15.3"></script>
+  <script src="humans-ai.js?v=0.15.3-starving1"></script>
+  <script src="humans-combat.js?v=0.15.3-follower1"></script>
+  <script src="humans-raid.js?v=0.15.3"></script>
+  <script src="ending.js?v=0.15.3-ending1"></script>
+  <script src="developer-mode.js?v=0.15.3-dev-weather1"></script>
   <script src="scene-layers.js"></script>
   <script src="asset-manifest.js"></script>
   <script src="expansion-assets.js"></script>
   <script src="player-animation-assets.js"></script>
   <script src="weapon-animation-assets.js"></script>
-  <script src="parking-assets.js?v=0.15.2"></script>
-  <script src="world-assets.js?v=0.15.2"></script>
-  <script src="camp-assets.js?v=0.15.2"></script>
-  <script src="armory-assets.js?v=0.15.2"></script>
-  <script src="west-gate-assets.js?v=0.15.2"></script>
-  <script src="aed-assets.js?v=0.15.2"></script>
-  <script src="assault-car-assets.js?v=0.15.2"></script>
-  <script src="humans-assets.js?v=0.15.2"></script>
-  <script src="art-renderer.js?v=0.15.2"></script>
-  <script src="parking-view.js?v=0.15.2-night2"></script>
-  <script src="art/2d/talent-disease-v1/game-art.js?v=0.15.2"></script>
-  <script src="character-ui.js?v=0.15.2"></script>
-  <script src="world-view.js?v=0.15.2-dust3"></script>
-  <script src="expansion-ui.js?v=0.15.2"></script>
-  <script src="game-audio.js?v=0.15.2-rain1"></script>
-  <script src="game-music.js?v=0.15.2-mp3"></script>
-  <script src="opening-view.js?v=0.15.2"></script>
-  <script src="camp-view.js?v=0.15.2"></script>
-  <script src="armory-view.js?v=0.15.2-night1"></script>
-  <script src="west-gate-view.js?v=0.15.2"></script>
-  <script src="aed-view.js?v=0.15.2"></script>
-  <script src="assault-car-view.js?v=0.15.2-night1"></script>
-  <script src="bestiary.js?v=0.15.2-starving1"></script>
-  <script src="humans-view.js?v=0.15.2-follower1"></script>
-  <script src="weather-guide.js?v=0.15.2-tornado1"></script>
-  <script src="game.js?v=0.15.2-dust3"></script>
+  <script src="parking-assets.js?v=0.15.3"></script>
+  <script src="world-assets.js?v=0.15.3"></script>
+  <script src="camp-assets.js?v=0.15.3"></script>
+  <script src="armory-assets.js?v=0.15.3"></script>
+  <script src="west-gate-assets.js?v=0.15.3"></script>
+  <script src="aed-assets.js?v=0.15.3"></script>
+  <script src="assault-car-assets.js?v=0.15.3"></script>
+  <script src="humans-assets.js?v=0.15.3"></script>
+  <script src="art-renderer.js?v=0.15.3-camp-load1"></script>
+  <script src="parking-view.js?v=0.15.3-night2"></script>
+  <script src="art/2d/talent-disease-v1/game-art.js?v=0.15.3"></script>
+  <script src="character-ui.js?v=0.15.3"></script>
+  <script src="world-view.js?v=0.15.3-dust3"></script>
+  <script src="expansion-ui.js?v=0.15.3"></script>
+  <script src="game-audio.js?v=0.15.3-rain1"></script>
+  <script src="game-music.js?v=0.15.3-mp3"></script>
+  <script src="opening-view.js?v=0.15.3"></script>
+  <script src="camp-view.js?v=0.15.3-camp-load1"></script>
+  <script src="armory-view.js?v=0.15.3-night1"></script>
+  <script src="west-gate-view.js?v=0.15.3"></script>
+  <script src="aed-view.js?v=0.15.3"></script>
+  <script src="assault-car-view.js?v=0.15.3-night1"></script>
+  <script src="bestiary.js?v=0.15.3-starving1"></script>
+  <script src="humans-view.js?v=0.15.3-follower1"></script>
+  <script src="weather-guide.js?v=0.15.3-tornado1"></script>
+  <script src="art/2d/day21-endings-v1/catalog.js?v=2"></script>
+  <script src="art/2d/day21-endings-v1/story-data.js?v=2"></script>
+  <script src="ending-view.js?v=0.15.3-ending2"></script>
+  <script src="game.js?v=0.15.3-camp-load1"></script>
 </body>
 </html>
